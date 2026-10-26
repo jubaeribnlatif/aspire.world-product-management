@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chevening Scholarship — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  textarea,input,select{font-family:inherit;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-ghost-dark{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);color:var(--white);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.16);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .btn-xs{padding:6px 11px;font-size:11.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:6px;}
+
+  /* modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(14,27,61,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);}
+  .modal-backdrop.show{display:flex;}
+  .modal-card{background:var(--white);border-radius:var(--r-xl);max-width:520px;width:100%;padding:32px;animation:modalIn .3s cubic-bezier(.2,.7,.3,1);}
+  @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .modal-icon{width:44px;height:44px;border-radius:13px;background:var(--royal-soft);color:var(--royal-dark);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .modal-title{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;}
+  .modal-sub{font-size:12.5px;color:var(--slate);margin-bottom:20px;line-height:1.5;}
+  .modal-point{display:flex;gap:11px;margin-bottom:14px;}
+  .modal-point svg{color:var(--teal-text);flex-shrink:0;margin-top:2px;}
+  .modal-point-title{font-size:13px;font-weight:700;margin-bottom:2px;}
+  .modal-point-text{font-size:12px;color:var(--slate);line-height:1.5;}
+  .modal-actions{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+  .how-link{font-size:12px;color:var(--royal);font-weight:600;cursor:pointer;}
+
+  /* hero */
+  .hero{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:30px 0 26px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+  .hero-id{display:flex;gap:16px;align-items:center;}
+  .hero-mark{width:58px;height:58px;border-radius:15px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hero-mark span{font-family:var(--mono);font-size:15px;font-weight:600;}
+  .hero-name{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-.015em;line-height:1.1;}
+  .hero-org{font-size:13.5px;color:rgba(255,255,255,.6);margin-top:4px;}
+  .verified-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,163,137,.16);border:1px solid rgba(0,163,137,.4);color:#5FE0C7;font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;margin-top:8px;}
+  .hero-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+  .ticket-strip{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);overflow-x:auto;margin-bottom:18px;}
+  .ticket-seg{padding:13px 22px;border-left:1px dashed rgba(255,255,255,.2);flex-shrink:0;}
+  .ticket-seg:first-child{border-left:none;}
+  .ticket-seg-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.42);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;}
+  .ticket-seg-val{font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap;}
+
+  .hero-progress-row{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);padding:14px 18px;flex-wrap:wrap;}
+  .hero-progress-ring{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .hero-progress-ring-inner{width:34px;height:34px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9.5px;font-weight:700;}
+  .hero-progress-text{font-size:13px;font-weight:700;}
+  .hero-progress-sub{font-size:11.5px;color:rgba(255,255,255,.55);}
+  .hero-progress-cta{margin-left:auto;flex-shrink:0;}
+  .how-link-hero{font-size:11px;color:rgba(255,255,255,.5);text-decoration:underline;text-underline-offset:2px;cursor:pointer;flex-shrink:0;}
+  .hero-pre-icon{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:rgba(255,255,255,.6);}
+
+  .layout{display:grid;grid-template-columns:1fr 260px;gap:40px;padding:32px 0 64px;}
+  section{scroll-margin-top:24px;margin-bottom:40px;}
+  .sec-title{font-size:20px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+  .sec-sub{font-size:13px;color:var(--slate);max-width:540px;line-height:1.55;margin-bottom:18px;}
+
+  /* about section */
+  .about-text{font-size:14px;line-height:1.7;color:#2A3352;margin-bottom:18px;}
+  .benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+  .benefit-tile{padding:14px 15px;}
+  .benefit-icon{color:var(--teal-text);margin-bottom:8px;}
+  .benefit-name{font-size:12.5px;font-weight:700;}
+  .callout{background:var(--violet-soft);border-radius:var(--r-md);padding:16px 18px;display:flex;gap:12px;margin-bottom:14px;}
+  .callout svg{color:#5333C9;flex-shrink:0;margin-top:2px;}
+  .callout-title{font-size:13px;font-weight:700;color:#3D2A9C;margin-bottom:4px;}
+  .callout-text{font-size:12.5px;color:#4A3A7A;line-height:1.6;}
+  .scale-note{font-size:12px;color:var(--slate);line-height:1.6;display:flex;gap:8px;}
+  .scale-note svg{flex-shrink:0;margin-top:2px;color:var(--slate);}
+
+  /* fit module */
+  .fit-card{padding:20px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .fit-ring{width:64px;height:64px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .fit-ring-inner{width:50px;height:50px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .fit-ring-num{font-family:var(--mono);font-weight:800;font-size:14px;}
+  .fit-ring-label{font-size:6.5px;color:var(--slate);}
+  .fit-text-title{font-size:13.5px;font-weight:700;margin-bottom:2px;}
+  .fit-text-sub{font-size:12px;color:var(--slate);}
+  .fit-expand-link{margin-left:auto;font-size:12px;font-weight:600;color:var(--royal);flex-shrink:0;cursor:pointer;}
+  .fit-breakdown{display:none;padding:0 22px 20px;}
+  .fit-breakdown.open{display:block;}
+  .rb-row{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:12.5px;border-top:1px solid var(--border);}
+  .rb-check{width:18px;height:18px;border-radius:50%;background:var(--teal-soft);color:var(--teal-text);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .rb-check.unknown{background:var(--violet-soft);color:#5333C9;font-family:var(--mono);font-size:9px;font-weight:700;}
+  .rb-fix{margin-left:auto;font-size:11px;font-weight:600;color:var(--royal);flex-shrink:0;}
+
+  /* gate card */
+  .gate-card{background:var(--ink);color:var(--white);border-radius:var(--r-xl);padding:30px 32px;position:relative;overflow:hidden;}
+  .gate-card::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 220px at 90% 0%, rgba(108,79,246,.35), transparent 60%);pointer-events:none;}
+  .gate-inner{position:relative;z-index:1;}
+  .gate-icon{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .gate-title{font-size:21px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;}
+  .gate-text{font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.6;max-width:520px;margin-bottom:20px;}
+  .gate-points{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:22px;}
+  .gate-point{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,.7);max-width:220px;}
+  .gate-point svg{color:#5FE0C7;flex-shrink:0;margin-top:2px;}
+
+  .active-strip{display:flex;align-items:center;gap:14px;background:var(--teal-soft);border-radius:var(--r-md);padding:14px 18px;margin-bottom:26px;}
+  .active-strip-icon{width:32px;height:32px;border-radius:50%;background:var(--teal);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .active-strip-text{font-size:13px;font-weight:700;color:var(--teal-text);}
+  .active-strip-sub{font-size:11.5px;color:#00806C;}
+
+  /* tracker layer */
+  #trackerLayer{display:none;}
+  #trackerLayer.show{display:block;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .journey-progress{display:flex;align-items:center;margin-bottom:26px;position:relative;}
+  .jp-step{flex:1;text-align:center;position:relative;}
+  .jp-line{position:absolute;top:13px;left:-50%;width:100%;height:2px;background:var(--border);z-index:0;}
+  .jp-step:first-child .jp-line{display:none;}
+  .jp-step.done .jp-line{background:var(--teal);}
+  .jp-dot{width:26px;height:26px;border-radius:50%;background:var(--white);border:2px solid var(--border);margin:0 auto 6px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--slate);}
+  .jp-step.done .jp-dot{background:var(--teal);border-color:var(--teal);color:var(--white);}
+  .jp-step.current .jp-dot{border-color:var(--royal);color:var(--royal);box-shadow:0 0 0 4px var(--royal-soft);}
+  .jp-step.locked .jp-dot{opacity:.4;}
+  .jp-label{font-size:9.5px;font-weight:600;color:var(--slate);letter-spacing:.02em;}
+  .jp-step.done .jp-label, .jp-step.current .jp-label{color:var(--ink);}
+
+  .stage-card{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--white);margin-bottom:12px;overflow:hidden;}
+  .stage-head{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;}
+  .stage-num{width:34px;height:34px;border-radius:50%;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:12px;flex-shrink:0;}
+  .stage-card.done .stage-num{background:var(--teal-soft);color:var(--teal-text);}
+  .stage-card.locked .stage-num{opacity:.5;}
+  .stage-title-row{flex:1;min-width:0;}
+  .stage-title{font-size:14.5px;font-weight:700;}
+  .stage-sub{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .stage-status{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0;}
+  .status-done{background:var(--teal-soft);color:var(--teal-text);}
+  .status-progress{background:var(--royal-soft);color:var(--royal-dark);}
+  .status-todo{background:var(--slate-soft);color:var(--slate);}
+  .status-locked{background:var(--slate-soft);color:var(--slate);}
+  .stage-chev{color:var(--slate);flex-shrink:0;transition:transform .2s ease;}
+  .stage-card.open .stage-chev{transform:rotate(180deg);}
+  .stage-body{display:none;padding:0 20px 22px;border-top:1px solid var(--border);}
+  .stage-card.open .stage-body{display:block;animation:fadeIn .3s ease;}
+  .stage-guide{background:var(--paper);border-radius:var(--r-sm);padding:12px 14px;font-size:12.5px;color:#2A3352;line-height:1.6;margin:16px 0;display:flex;gap:9px;}
+  .stage-guide svg{color:var(--royal);flex-shrink:0;margin-top:2px;}
+  .stage-deadline-note{font-size:11px;color:var(--slate);margin-top:14px;display:flex;align-items:center;gap:6px;}
+  .stage-private-note{font-size:11px;color:var(--slate);background:var(--slate-soft);border-radius:var(--r-sm);padding:9px 12px;margin-top:14px;display:flex;gap:7px;align-items:flex-start;line-height:1.5;}
+  .stage-private-note svg{flex-shrink:0;margin-top:1px;}
+
+  /* subject tracks */
+  .track-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .track-tab{background:var(--paper);border:1.5px solid var(--border);border-radius:999px;padding:9px 17px;font-size:12.5px;font-weight:700;color:var(--slate);}
+  .track-tab.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .track-tab-add{background:none;border:1.5px dashed var(--border);color:var(--royal);}
+  .track-panel{display:none;}
+  .track-panel.active{display:block;animation:fadeIn .3s ease;}
+
+  .track-summary{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .track-summary-name{font-size:14px;font-weight:800;}
+  .track-summary-stats{font-size:11.5px;color:var(--slate);}
+
+  .subhead{font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 10px;display:flex;align-items:center;gap:7px;}
+
+  .suggest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px;}
+  .suggest-card{border:1px solid var(--border);border-radius:var(--r-md);padding:13px 14px;}
+  .suggest-card.shortlisted{border-color:var(--teal);background:var(--teal-soft);}
+  .suggest-top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .suggest-name{font-size:12.5px;font-weight:700;line-height:1.3;}
+  .suggest-course{font-size:11px;color:var(--slate);margin-top:2px;}
+  .suggest-why{font-size:11px;color:#2A3352;background:var(--paper);border-radius:var(--r-sm);padding:8px 10px;margin-top:9px;line-height:1.5;}
+  .suggest-card.shortlisted .suggest-why{background:rgba(255,255,255,.6);}
+  .suggest-actions{display:flex;gap:8px;margin-top:10px;}
+  .shortlist-toggle{flex:1;justify-content:center;}
+  .shortlist-toggle.on{background:var(--teal);color:var(--white);border-color:var(--teal);}
+  .view-uni-link{font-size:11px;font-weight:600;color:var(--royal);display:flex;align-items:center;gap:4px;white-space:nowrap;}
+
+  /* essays */
+  .essay-item{border:1px solid var(--border);border-radius:var(--r-md);margin-top:12px;overflow:hidden;}
+  .essay-head{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;background:var(--paper);cursor:pointer;}
+  .essay-name{font-size:13px;font-weight:700;}
+  .essay-limit{font-family:var(--mono);font-size:10.5px;color:var(--slate);}
+  .essay-status-dot{width:8px;height:8px;border-radius:50%;background:var(--slate-soft);margin-right:8px;flex-shrink:0;}
+  .essay-status-dot.drafted{background:var(--teal);}
+  .essay-body{display:none;padding:16px;}
+  .essay-item.open .essay-body{display:block;}
+  .essay-prompt{font-size:12.5px;color:#2A3352;line-height:1.55;margin-bottom:10px;font-style:italic;}
+  .essay-tip{font-size:11.5px;color:var(--royal-dark);background:var(--royal-soft);border-radius:var(--r-sm);padding:9px 12px;margin-bottom:12px;line-height:1.5;}
+  .essay-textarea{width:100%;min-height:100px;border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-size:13px;resize:vertical;}
+  .essay-textarea:focus{outline:2px solid var(--royal);outline-offset:1px;border-color:var(--royal);}
+  .essay-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+  .essay-count{font-family:var(--mono);font-size:11px;color:var(--slate);}
+  .essay-count.over{color:var(--destructive);font-weight:700;}
+  .essay-reuse-tag{font-size:10px;color:#5333C9;background:var(--violet-soft);padding:3px 9px;border-radius:999px;}
+  .save-draft-row{display:flex;align-items:center;gap:10px;margin-top:8px;}
+  .save-state{font-size:10.5px;color:var(--slate);display:flex;align-items:center;gap:4px;}
+  .save-state.saved{color:var(--teal-text);}
+
+  .add-track-panel{border:1.5px dashed var(--border);border-radius:var(--r-md);padding:16px;margin-top:6px;}
+  .att-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+  .att-input{border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-size:13px;width:100%;}
+
+  /* referee tracker */
+  .referee-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .referee-card{border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;}
+  .referee-top{display:flex;align-items:flex-start;gap:12px;}
+  .referee-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;}
+  .referee-name{font-size:13px;font-weight:700;}
+  .referee-role{font-size:11px;color:var(--slate);}
+  .referee-assign{margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:7px;}
+  .assign-switch{width:30px;height:18px;border-radius:999px;background:var(--slate-soft);position:relative;flex-shrink:0;border:none;}
+  .assign-switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--white);box-shadow:0 1px 2px rgba(0,0,0,.2);}
+  .assign-switch.on{background:var(--royal);}
+  .assign-switch.on::after{transform:translateX(12px);}
+  .assign-label{font-size:10px;color:var(--slate);font-weight:600;}
+  .referee-stepper{display:flex;align-items:center;margin-top:12px;}
+  .rs-step{flex:1;text-align:center;position:relative;cursor:pointer;}
+  .rs-line{position:absolute;top:8px;left:-50%;width:100%;height:2px;background:var(--border);z-index:0;}
+  .rs-step:first-child .rs-line{display:none;}
+  .rs-step.active .rs-line{background:var(--royal);}
+  .rs-dot{width:16px;height:16px;border-radius:50%;background:var(--white);border:2px solid var(--border);margin:0 auto 5px;position:relative;z-index:1;}
+  .rs-step.active .rs-dot{background:var(--royal);border-color:var(--royal);}
+  .rs-text{font-size:9px;font-weight:600;color:var(--slate);}
+  .rs-step.active .rs-text{color:var(--ink);}
+  .referee-meta-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
+  .referee-date{font-size:10.5px;color:var(--slate);}
+  .referee-also{font-size:9.5px;color:#5333C9;background:var(--violet-soft);padding:3px 8px;border-radius:999px;}
+  .add-referee-form{border:1.5px dashed var(--border);border-radius:var(--r-md);padding:16px;margin-top:12px;display:none;}
+  .add-referee-form.show{display:block;animation:fadeIn .25s ease;}
+  .arf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+  .arf-input{border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-size:13px;width:100%;}
+  .add-referee-trigger{margin-top:12px;width:100%;justify-content:center;}
+
+  /* visual document grid */
+  .doc-progress-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .doc-ring{width:56px;height:56px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .doc-ring-inner{width:44px;height:44px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .doc-ring-num{font-family:var(--mono);font-weight:800;font-size:13px;}
+  .doc-ring-label{font-size:6px;color:var(--slate);}
+  .doc-cat{margin-bottom:16px;}
+  .doc-cat-label{font-size:10.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+  .doc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .doc-card{border:1.5px solid var(--border);border-radius:var(--r-md);padding:13px;cursor:pointer;transition:border-color .15s ease,background .15s ease;}
+  .doc-card.ready{border-color:var(--teal);background:var(--teal-soft);}
+  .doc-card-icon{width:30px;height:30px;border-radius:9px;background:var(--slate-soft);display:flex;align-items:center;justify-content:center;color:var(--ink);margin-bottom:9px;}
+  .doc-card.ready .doc-card-icon{background:var(--teal);color:var(--white);}
+  .doc-card-name{font-size:12px;font-weight:700;line-height:1.3;}
+  .doc-card-status{font-size:10px;color:var(--slate);margin-top:3px;}
+  .doc-card.ready .doc-card-status{color:var(--teal-text);}
+  .cv-guide-link{font-size:10.5px;font-weight:600;color:var(--royal);display:block;margin-top:6px;}
+  .cv-guide-panel{display:none;background:var(--paper);border-radius:var(--r-sm);padding:14px 16px;margin-top:12px;}
+  .cv-guide-panel.open{display:block;animation:fadeIn .25s ease;}
+  .cv-guide-title{font-size:12.5px;font-weight:700;margin-bottom:8px;}
+  .cv-guide-list{display:flex;flex-direction:column;gap:7px;}
+  .cv-guide-row{display:flex;gap:8px;font-size:12px;color:#2A3352;line-height:1.5;}
+  .cv-guide-row svg{color:var(--royal);flex-shrink:0;margin-top:3px;}
+
+  /* interview locked */
+  .locked-preview{background:var(--paper);border-radius:var(--r-md);padding:16px 18px;display:flex;gap:12px;align-items:flex-start;margin-top:14px;}
+  .locked-preview svg{color:var(--slate);flex-shrink:0;margin-top:2px;}
+  .locked-preview-text{font-size:12.5px;color:var(--slate);line-height:1.55;}
+
+  /* export center */
+  .export-card{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);border-radius:var(--r-xl);padding:30px 32px;position:relative;overflow:hidden;}
+  .export-card::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 220px at 90% 0%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .export-inner{position:relative;z-index:1;}
+  .export-title{font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;}
+  .export-sub{font-size:12.5px;color:rgba(255,255,255,.6);max-width:520px;line-height:1.55;margin-bottom:22px;}
+  .export-track-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .export-track-card{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:var(--r-md);padding:15px 16px;cursor:pointer;}
+  .export-track-card.selected{border-color:#5FE0C7;background:rgba(0,163,137,.14);}
+  .export-track-name{font-size:13.5px;font-weight:700;}
+  .export-track-stats{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px;}
+  .export-preview{background:rgba(255,255,255,.06);border-radius:var(--r-md);padding:16px 18px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,.7);line-height:1.7;}
+  .export-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .export-disclaimer{font-size:11px;color:rgba(255,255,255,.5);margin-top:14px;line-height:1.6;}
+
+  /* content section */
+  .content-row{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;margin-bottom:8px;cursor:pointer;}
+  .content-row:hover{box-shadow:0 8px 20px -14px rgba(14,27,61,.35);}
+  .content-title{font-size:13.5px;font-weight:600;}
+  .content-meta{font-family:var(--mono);font-size:10.5px;color:var(--slate);margin-top:3px;}
+
+  /* faq */
+  .qa-item{margin-bottom:8px;overflow:hidden;}
+  .qa-q{width:100%;text-align:left;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;background:none;border:none;font-size:13.5px;font-weight:600;color:var(--ink);}
+  .qa-a{padding:0 18px 16px;font-size:13px;color:var(--slate);line-height:1.6;display:none;}
+  .qa-item.open .qa-a{display:block;}
+  .qa-item.open .qa-chev{transform:rotate(180deg);}
+  .qa-chev{transition:transform .15s ease;color:var(--slate);flex-shrink:0;}
+
+  /* sidebar */
+  .side-card{padding:20px;position:sticky;top:70px;display:flex;flex-direction:column;gap:18px;}
+  .side-label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;}
+  .side-deadline{text-align:center;padding:14px;background:var(--destructive-soft);border-radius:var(--r-md);}
+  .side-deadline-val{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--destructive);}
+  .side-deadline-label{font-size:10.5px;color:var(--destructive);margin-top:2px;}
+  .side-ring{width:80px;height:80px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;}
+  .side-ring-inner{width:62px;height:62px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .side-ring-num{font-family:var(--mono);font-weight:800;font-size:16px;}
+  .side-ring-label{font-size:7.5px;color:var(--slate);text-align:center;}
+  .jump-list{display:flex;flex-direction:column;gap:2px;}
+  .jump-list a{font-size:12.5px;color:var(--slate);padding:5px 0;}
+  .jump-list a:hover{color:var(--ink);}
+  .alum-card{display:flex;align-items:center;gap:10px;}
+  .alum-avatar{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:700;flex-shrink:0;}
+  .alum-name{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:5px;}
+  .alum-sub{font-size:10.5px;color:var(--slate);}
+  .full-outline{width:100%;justify-content:center;}
+  .full-primary{width:100%;justify-content:center;}
+  .side-privacy{font-size:10.5px;color:var(--slate);line-height:1.5;display:flex;gap:7px;background:var(--paper);border-radius:var(--r-sm);padding:10px 12px;}
+  .side-privacy svg{flex-shrink:0;margin-top:1px;color:var(--teal-text);}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--white);padding:11px 20px;border-radius:999px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px;opacity:0;pointer-events:none;transition:all .25s ease;z-index:100;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast svg{color:#5FE0C7;}
+
+  @media(max-width:960px){
+    .benefit-grid{grid-template-columns:repeat(2,1fr);}
+    .layout{grid-template-columns:1fr;}
+    .side-card{position:static;}
+    .journey-progress{overflow-x:auto;}
+    .arf-grid, .att-grid{grid-template-columns:1fr;}
+    .suggest-grid, .doc-grid, .export-track-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- START TRACKING MODAL -->
+  <div class="modal-backdrop" id="startModal">
+    <div class="modal-card">
+      <div class="modal-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+      <div class="modal-title">Here's what this tracker actually does.</div>
+      <div class="modal-sub">Three things worth knowing before you start.</div>
+
+      <div class="modal-point">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><div class="modal-point-title">Guidance and tracking — not a submission system</div><div class="modal-point-text">Your actual application is always completed and submitted on Chevening's official portal. Nothing you write or track here is ever sent anywhere on your behalf.</div></div>
+      </div>
+      <div class="modal-point">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><div class="modal-point-title">Your drafts and referee details stay private</div><div class="modal-point-text">Essays, notes, and referee contact information are visible only to you — never shared with agencies, universities, or other students, even ones you're connected to elsewhere on aspire.world.</div></div>
+      </div>
+      <div class="modal-point">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><div class="modal-point-title">Built to replace your spreadsheet, not add to it</div><div class="modal-point-text">Build separate application sets for each subject you're considering, track what's done, and export it when you're ready.</div></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary full-primary" onclick="closeModal(); activateTracker();">Got it — create my tracker</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a class="back-link" href="#"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to Scholarships</a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-top">
+        <div class="hero-id">
+          <div class="hero-mark"><span>UK</span></div>
+          <div>
+            <div class="hero-name">Chevening Scholarship</div>
+            <div class="hero-org">UK Government · Full funding, all subjects</div>
+            <span class="verified-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Verified by aspire.world</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-ghost-dark btn-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg> Saved</button>
+          <a class="btn btn-outline btn-sm" href="#" target="_blank" rel="noopener">Official site
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ticket-strip">
+        <div class="ticket-seg"><div class="ticket-seg-label">Award</div><div class="ticket-seg-val">Full funding</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Deadline</div><div class="ticket-seg-val">4 weeks · 14 Nov 2025</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Effort</div><div class="ticket-seg-val">4 essays + 1 reference + interview</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Est. time</div><div class="ticket-seg-val">~8 hrs, spread over 3 weeks</div></div>
+      </div>
+
+      <!-- pre-activation hero state -->
+      <div class="hero-progress-row" id="heroPre">
+        <div class="hero-pre-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+        <div>
+          <div class="hero-progress-text">You haven't started tracking this application yet</div>
+          <div class="hero-progress-sub">Build your shortlist, draft essays, and track everything in one place</div>
+        </div>
+        <button class="btn btn-primary hero-progress-cta" onclick="openModal()">Create my application tracker</button>
+      </div>
+
+      <!-- post-activation hero state -->
+      <div class="hero-progress-row" id="heroPost" style="display:none;">
+        <div class="hero-progress-ring" style="background:conic-gradient(var(--teal) 0deg 180deg, rgba(255,255,255,.15) 180deg 360deg);"><div class="hero-progress-ring-inner">2/4</div></div>
+        <div>
+          <div class="hero-progress-text">2 of 4 stages underway</div>
+          <div class="hero-progress-sub">Next up: finish your Data Science essays</div>
+        </div>
+        <span class="how-link-hero" onclick="openModal()">How this tracker works</span>
+        <button class="btn btn-primary hero-progress-cta" onclick="jumpToStage(1)">Continue where you left off →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap layout">
+    <div>
+
+      <!-- ABOUT (public layer) -->
+      <section id="about">
+        <div class="eyebrow">Know it properly</div>
+        <div class="sec-title">About the Chevening Scholarship.</div>
+        <div class="about-text">The UK government's flagship international scholarship, running since 1983. It funds a fully-funded one-year master's degree for future leaders, chosen for potential and impact rather than academic record alone — which is exactly why the essays in your tracker carry more weight than the form itself.</div>
+
+        <div class="benefit-grid">
+          <div class="card benefit-tile"><div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div><div class="benefit-name">Full tuition, any eligible course</div></div>
+          <div class="card benefit-tile"><div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/></svg></div><div class="benefit-name">Monthly living stipend</div></div>
+          <div class="card benefit-tile"><div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M16 6l6 6-6 6"/></svg></div><div class="benefit-name">Return flights to the UK</div></div>
+          <div class="card benefit-tile"><div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><div class="benefit-name">Arrival &amp; departure allowance</div></div>
+          <div class="card benefit-tile"><div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div class="benefit-name">Thesis &amp; travel grants</div></div>
+          <div class="card benefit-tile"><div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="benefit-name">Lifetime alumni network</div></div>
+        </div>
+
+        <div class="callout">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <div>
+            <div class="callout-title">One requirement worth checking before you invest 8 hours</div>
+            <div class="callout-text">Chevening also asks for a minimum of two years' work experience by the time your course starts — internships and substantial part-time work can sometimes count. If you're a recent or soon-to-be graduate without this, it's worth confirming below before you go further. Commonwealth Scholarship, also in your strong matches, has no such requirement.</div>
+          </div>
+        </div>
+
+        <div class="scale-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          Genuinely competitive — tens of thousands apply worldwide each year for around 1,500 awards. Confirmed against Chevening's published guidance, 3 Aug 2026.
+        </div>
+      </section>
+
+      <!-- FIT MODULE (public layer) -->
+      <section id="fit">
+        <div class="card">
+          <div class="fit-card">
+            <div class="fit-ring" onclick="document.getElementById('fitBreakdown').classList.toggle('open')" style="background:conic-gradient(var(--teal) 0deg 300deg, var(--violet) 300deg 360deg);">
+              <div class="fit-ring-inner"><div class="fit-ring-num">6/7</div><div class="fit-ring-label">CHECKED</div></div>
+            </div>
+            <div>
+              <div class="fit-text-title">6 of 7 criteria confirmed — 1 needs your input</div>
+              <div class="fit-text-sub">Matched against your saved profile. Work experience isn't collected for your track yet.</div>
+            </div>
+            <span class="fit-expand-link" onclick="document.getElementById('fitBreakdown').classList.toggle('open')">See why ▾</span>
+          </div>
+          <div class="fit-breakdown" id="fitBreakdown">
+            <div class="rb-row"><div class="rb-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+            <div class="rb-row"><div class="rb-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Field of study — open to all subjects</div>
+            <div class="rb-row"><div class="rb-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Target country — United Kingdom</div>
+            <div class="rb-row"><div class="rb-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>CGPA — 3.30 meets minimum</div>
+            <div class="rb-row"><div class="rb-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>IELTS — 6.5 meets minimum</div>
+            <div class="rb-row"><div class="rb-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible</div>
+            <div class="rb-row"><div class="rb-check unknown">?</div>Work experience — needs 2 years, not yet in your profile<span class="rb-fix">Add it →</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GATE CARD (shown when tracker not yet activated) -->
+      <div id="gateCard">
+        <div class="gate-card">
+          <div class="gate-inner">
+            <div class="gate-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></div>
+            <div class="gate-title">Ready to prepare your application?</div>
+            <div class="gate-text">Create your personal tracker to build subject-specific shortlists, draft your essays, and manage your references — your private homework space for this scholarship.</div>
+            <div class="gate-points">
+              <div class="gate-point"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Separate sets for each subject you're considering</div>
+              <div class="gate-point"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Everything private, saved as you go</div>
+              <div class="gate-point"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Export your work when you're ready to apply</div>
+            </div>
+            <button class="btn btn-primary" onclick="openModal()">Create my application tracker</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRACKER LAYER -->
+      <div id="trackerLayer">
+        <section id="journey">
+          <div class="active-strip">
+            <div class="active-strip-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div><div class="active-strip-text">Your tracker is active</div><div class="active-strip-sub">Private to you — nothing shared unless you choose to.</div></div>
+          </div>
+
+          <div class="eyebrow">Application journey</div>
+          <div class="sec-title">Your homework space for this application.</div>
+          <div class="sec-sub">Backward-planned from the 14 Nov deadline. Build your shortlist and drafts here, then export when ready.</div>
+
+          <div class="journey-progress">
+            <div class="jp-step current"><div class="jp-line"></div><div class="jp-dot">1</div><div class="jp-label">By subject</div></div>
+            <div class="jp-step current"><div class="jp-line"></div><div class="jp-dot">2</div><div class="jp-label">References</div></div>
+            <div class="jp-step"><div class="jp-line"></div><div class="jp-dot">3</div><div class="jp-label">Submit</div></div>
+            <div class="jp-step locked"><div class="jp-line"></div><div class="jp-dot">4</div><div class="jp-label">Interview</div></div>
+          </div>
+
+          <!-- STAGE 1: BUILD BY SUBJECT -->
+          <div class="stage-card open" id="stage-1">
+            <div class="stage-head" onclick="toggleStage(1)">
+              <div class="stage-num">1</div>
+              <div class="stage-title-row"><div class="stage-title">Build your application by subject</div><div class="stage-sub">Universities and essays, kept separate per subject track</div></div>
+              <span class="stage-status status-progress">2 tracks started</span>
+              <svg class="stage-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="stage-body">
+              <div class="stage-guide"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Considering more than one subject? Build a complete, coherent set for each — Chevening rewards one clear story per application, not a mix of themes.</div>
+
+              <div class="track-tabs" id="trackTabs">
+                <button class="track-tab active" onclick="switchTrack('track1')">Track 1: Data Science</button>
+                <button class="track-tab" onclick="switchTrack('track2')">Track 2: Public Policy</button>
+                <button class="track-tab track-tab-add" onclick="document.getElementById('addTrackPanel').classList.toggle('show')">+ Add subject track</button>
+              </div>
+
+              <div class="add-track-panel" id="addTrackPanel" style="display:none;">
+                <div class="att-grid">
+                  <input class="att-input" id="newTrackName" placeholder="Subject name — e.g. International Development">
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="addTrack()">Create track</button>
+              </div>
+
+              <!-- TRACK 1: DATA SCIENCE -->
+              <div class="track-panel active" id="track1Panel">
+                <div class="track-summary">
+                  <span class="track-summary-name">Data Science</span>
+                  <span class="track-summary-stats" id="track1Stats">3 universities shortlisted · 1 of 4 essays drafted</span>
+                </div>
+
+                <div class="subhead"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/></svg>SUGGESTED FOR YOU</div>
+                <div class="suggest-grid" id="track1Suggestions">
+                  <div class="suggest-card shortlisted">
+                    <div class="suggest-top-row"><div><div class="suggest-name">University of Manchester</div><div class="suggest-course">MSc Data Science</div></div></div>
+                    <div class="suggest-why">Why suggested: strong applied stats faculty, matches your CGPA and IELTS, active Bangladeshi alumni network.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle on" onclick="toggleShortlist(this,'track1')">✓ Shortlisted</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                  <div class="suggest-card shortlisted">
+                    <div class="suggest-top-row"><div><div class="suggest-name">Imperial College London</div><div class="suggest-course">MSc Statistics</div></div></div>
+                    <div class="suggest-why">Why suggested: top-ranked quantitative program, closely aligned with your Statistics background.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle on" onclick="toggleShortlist(this,'track1')">✓ Shortlisted</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                  <div class="suggest-card shortlisted">
+                    <div class="suggest-top-row"><div><div class="suggest-name">University of Leeds</div><div class="suggest-course">MSc Data Science</div></div></div>
+                    <div class="suggest-why">Why suggested: strong industry placement record, realistic odds alongside your reach choices.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle on" onclick="toggleShortlist(this,'track1')">✓ Shortlisted</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                  <div class="suggest-card">
+                    <div class="suggest-top-row"><div><div class="suggest-name">University of Edinburgh</div><div class="suggest-course">MSc Artificial Intelligence</div></div></div>
+                    <div class="suggest-why">Why suggested: growing AI research group, meets your CGPA and IELTS profile.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle" onclick="toggleShortlist(this,'track1')">+ Shortlist</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                </div>
+
+                <div class="subhead"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>ESSAYS FOR THIS TRACK</div>
+                <div class="stage-private-note" style="margin-top:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Your private workspace only. Copy final answers into Chevening's official portal when ready — we never submit for you.</div>
+
+                <div class="essay-item open">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot drafted"></span><span class="essay-name">1. Leadership &amp; influence</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Describe an example of your own leadership or influencing skills, and explain how this experience will help you to contribute to your community, country, and/or the world."</div>
+                    <div class="essay-tip"><b>Tip:</b> Use one concrete example with a measurable outcome — not a definition of leadership.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)">During my final year, I led a five-person team analyzing local flood-risk data for a university project no one had signed up to supervise. I set weekly check-ins, split the modeling work by strength, and we ended up presenting findings to the university's civil engineering department, who used two of our recommendations in their next report.</textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">54 / 100 words</span><span class="essay-reuse-tag">Similar to Commonwealth's Q2</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state saved">✓ Saved just now</span></div>
+                  </div>
+                </div>
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">2. Networking</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Provide an example of how you built a relationship that had a positive impact, either on you or the person you were networking with."</div>
+                    <div class="essay-tip"><b>Tip:</b> Pick one relationship, one specific moment it mattered, and what changed because of it.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Reused nowhere yet</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">3. Career plan</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Outline your immediate career plans, and how the knowledge and skills gained on your Chevening course will help you achieve this."</div>
+                    <div class="essay-tip"><b>Tip:</b> Be specific about the first job title you're aiming for, not just the industry.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Also useful for: DAAD motivation letter</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">4. Why Chevening, why the UK</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Explain why you have chosen your particular course and universities, and how this relates to your previous study or work experience."</div>
+                    <div class="essay-tip"><b>Tip:</b> Name the actual course content or faculty that drew you in — generic answers are the most cited rejection reason.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Also useful for: Commonwealth's Q1</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TRACK 2: PUBLIC POLICY -->
+              <div class="track-panel" id="track2Panel">
+                <div class="track-summary">
+                  <span class="track-summary-name">Public Policy</span>
+                  <span class="track-summary-stats">0 universities shortlisted · 0 of 4 essays drafted</span>
+                </div>
+
+                <div class="subhead"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/></svg>SUGGESTED FOR YOU</div>
+                <div class="suggest-grid" id="track2Suggestions">
+                  <div class="suggest-card">
+                    <div class="suggest-top-row"><div><div class="suggest-name">LSE</div><div class="suggest-course">MSc Public Policy &amp; Data Analytics</div></div></div>
+                    <div class="suggest-why">Why suggested: combines your quantitative background with policy analysis, strong Chevening alumni presence.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle" onclick="toggleShortlist(this,'track2')">+ Shortlist</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                  <div class="suggest-card">
+                    <div class="suggest-top-row"><div><div class="suggest-name">University of Oxford</div><div class="suggest-course">MPP, Blavatnik School</div></div></div>
+                    <div class="suggest-why">Why suggested: prestigious policy program with a strong leadership focus, mirroring Chevening's own emphasis.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle" onclick="toggleShortlist(this,'track2')">+ Shortlist</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                  <div class="suggest-card">
+                    <div class="suggest-top-row"><div><div class="suggest-name">King's College London</div><div class="suggest-course">MA Public Policy</div></div></div>
+                    <div class="suggest-why">Why suggested: strong faculty in data-driven policy, realistic acceptance profile alongside your reach choices.</div>
+                    <div class="suggest-actions"><button class="btn btn-outline btn-xs shortlist-toggle" onclick="toggleShortlist(this,'track2')">+ Shortlist</button><a class="view-uni-link" href="university-detail.html">View details →</a></div>
+                  </div>
+                </div>
+
+                <div class="subhead"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>ESSAYS FOR THIS TRACK</div>
+                <div class="stage-private-note" style="margin-top:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>A fresh set — content here should reflect your Public Policy narrative, not reuse Track 1's answers directly.</div>
+
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">1. Leadership &amp; influence</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Describe an example of your own leadership or influencing skills, and explain how this experience will help you to contribute to your community, country, and/or the world."</div>
+                    <div class="essay-tip"><b>Tip:</b> If reusing the flood-risk story, reframe it around policy impact rather than the technical modeling.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Adapt from Track 1</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">2. Networking</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Provide an example of how you built a relationship that had a positive impact, either on you or the person you were networking with."</div>
+                    <div class="essay-tip"><b>Tip:</b> A policy-relevant relationship (professor, mentor, community contact) will land better here than a purely technical one.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Fresh for this track</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">3. Career plan</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Outline your immediate career plans, and how the knowledge and skills gained on your Chevening course will help you achieve this."</div>
+                    <div class="essay-tip"><b>Tip:</b> Name a specific policy role or institution — vague "I want to help shape policy" answers read as unconvincing.</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Fresh for this track</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+                <div class="essay-item">
+                  <div class="essay-head" onclick="toggleEssay(this)"><span style="display:flex;align-items:center;"><span class="essay-status-dot"></span><span class="essay-name">4. Why Chevening, why the UK</span></span><span class="essay-limit">~100 words</span></div>
+                  <div class="essay-body">
+                    <div class="essay-prompt">"Explain why you have chosen your particular course and universities, and how this relates to your previous study or work experience."</div>
+                    <div class="essay-tip"><b>Tip:</b> Explain the pivot from Data Science honestly — panelists respond well to a clear, reasoned "why now."</div>
+                    <textarea class="essay-textarea" oninput="updateWordCount(this)" placeholder="Start drafting here…"></textarea>
+                    <div class="essay-footer"><span class="essay-count" data-limit="100">0 / 100 words</span><span class="essay-reuse-tag">Fresh for this track</span></div>
+                    <div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveDraft(this)">Save &amp; exit</button><span class="save-state">Not saved yet</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-deadline-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Come back and adjust anytime — nothing here locks in until Chevening's portal does.</div>
+            </div>
+          </div>
+
+          <!-- STAGE 2: REFERENCES -->
+          <div class="stage-card open" id="stage-2">
+            <div class="stage-head" onclick="toggleStage(2)">
+              <div class="stage-num">2</div>
+              <div class="stage-title-row"><div class="stage-title">Line up your references</div><div class="stage-sub">Shortlist a few, track everyone in one place</div></div>
+              <span class="stage-status status-progress">1 assigned, awaiting</span>
+              <svg class="stage-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="stage-body">
+              <div class="stage-guide"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>One reference covers both tracks above — Chevening asks for a single reference regardless of subject. Shortlist a backup, and give whoever you assign at least 3 weeks.</div>
+
+              <div class="referee-list" id="refereeList">
+                <div class="referee-card">
+                  <div class="referee-top">
+                    <div class="referee-avatar">DR</div>
+                    <div><div class="referee-name">Dr. Rahman</div><div class="referee-role">Faculty of Statistics · academic reference</div></div>
+                    <div class="referee-assign"><span class="assign-label">Assigned</span><button class="assign-switch on" onclick="this.classList.toggle('on')"></button></div>
+                  </div>
+                  <div class="referee-stepper">
+                    <div class="rs-step active" onclick="setRefStatus(this,0)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Not asked</div></div>
+                    <div class="rs-step active" onclick="setRefStatus(this,1)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Requested</div></div>
+                    <div class="rs-step active" onclick="setRefStatus(this,2)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Reminded</div></div>
+                    <div class="rs-step" onclick="setRefStatus(this,3)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Received</div></div>
+                  </div>
+                  <div class="referee-meta-row">
+                    <span class="referee-date">Requested 6 Nov · Reminded 20 Nov</span>
+                    <span class="referee-also">Also covers: Commonwealth</span>
+                  </div>
+                  <div style="margin-top:10px;"><button class="btn btn-outline btn-xs" onclick="reminderFromCard(this)">Send reminder</button></div>
+                </div>
+
+                <div class="referee-card">
+                  <div class="referee-top">
+                    <div class="referee-avatar">MC</div>
+                    <div><div class="referee-name">Ms. Chowdhury</div><div class="referee-role">Former internship supervisor</div></div>
+                    <div class="referee-assign"><span class="assign-label">Backup</span><button class="assign-switch" onclick="this.classList.toggle('on')"></button></div>
+                  </div>
+                  <div class="referee-stepper">
+                    <div class="rs-step active" onclick="setRefStatus(this,0)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Not asked</div></div>
+                    <div class="rs-step" onclick="setRefStatus(this,1)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Requested</div></div>
+                    <div class="rs-step" onclick="setRefStatus(this,2)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Reminded</div></div>
+                    <div class="rs-step" onclick="setRefStatus(this,3)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Received</div></div>
+                  </div>
+                  <div class="referee-meta-row"><span class="referee-date">Shortlisted as a backup, not yet asked</span><span></span></div>
+                  <div style="margin-top:10px;"><button class="btn btn-outline btn-xs" onclick="reminderFromCard(this)">Request now</button></div>
+                </div>
+              </div>
+
+              <button class="btn btn-outline add-referee-trigger" onclick="document.getElementById('addRefForm').classList.toggle('show')">+ Add another referee</button>
+              <div class="add-referee-form" id="addRefForm">
+                <div class="arf-grid">
+                  <input class="arf-input" placeholder="Full name">
+                  <input class="arf-input" placeholder="Role — e.g. course instructor">
+                  <input class="arf-input" placeholder="Email" style="grid-column:1/-1;">
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="addReferee()">Add to your roster</button>
+              </div>
+              <div class="stage-private-note" style="margin-top:16px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Your referee roster is personal and reused across scholarships — never shared with anyone, including your connected agency.</div>
+            </div>
+          </div>
+
+          <!-- STAGE 3: SUBMIT (moved above interview) -->
+          <div class="stage-card" id="stage-3">
+            <div class="stage-head" onclick="toggleStage(3)">
+              <div class="stage-num">3</div>
+              <div class="stage-title-row"><div class="stage-title">Submit &amp; confirm</div><div class="stage-sub">A visual check before you go to the official portal</div></div>
+              <span class="stage-status status-progress" id="stage3Status">4 of 7 ready</span>
+              <svg class="stage-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="stage-body">
+              <div class="stage-guide"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Check you have everything physically in hand — this is a personal checklist, not an upload. Click any card to mark it ready.</div>
+
+              <div class="doc-progress-row">
+                <div class="doc-ring" id="docRing" style="background:conic-gradient(var(--teal) 0deg 205deg, var(--slate-soft) 205deg 360deg);"><div class="doc-ring-inner"><div class="doc-ring-num" id="docRingNum">4/7</div><div class="doc-ring-label">READY</div></div></div>
+                <div style="font-size:12.5px;color:var(--slate);">Passport, transcripts and IELTS are already confirmed from your document wallet.</div>
+              </div>
+
+              <div class="doc-cat">
+                <div class="doc-cat-label">Identity</div>
+                <div class="doc-grid">
+                  <div class="doc-card ready" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/></svg></div><div class="doc-card-name">Passport</div><div class="doc-card-status">Ready · from wallet</div></div>
+                  <div class="doc-card ready" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6"/></svg></div><div class="doc-card-name">National ID</div><div class="doc-card-status">Ready · from wallet</div></div>
+                  <div class="doc-card" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3"/></svg></div><div class="doc-card-name">Passport-size photo</div><div class="doc-card-status">Not yet ready</div></div>
+                </div>
+              </div>
+
+              <div class="doc-cat">
+                <div class="doc-cat-label">Academic</div>
+                <div class="doc-grid">
+                  <div class="doc-card ready" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div><div class="doc-card-name">Academic transcripts</div><div class="doc-card-status">Ready · from wallet</div></div>
+                  <div class="doc-card ready" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><div class="doc-card-name">IELTS certificate</div><div class="doc-card-status">Ready · expires in 42 days</div></div>
+                </div>
+              </div>
+
+              <div class="doc-cat">
+                <div class="doc-cat-label">Application-specific</div>
+                <div class="doc-grid">
+                  <div class="doc-card" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 13h6M9 17h4"/></svg></div><div class="doc-card-name">CV / Resume</div><div class="doc-card-status">Not yet ready</div><a class="cv-guide-link" onclick="event.stopPropagation(); document.getElementById('cvGuide').classList.toggle('open')">How this should look →</a></div>
+                  <div class="doc-card" onclick="toggleDoc(this)"><div class="doc-card-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="doc-card-name">Proof of address</div><div class="doc-card-status">Not yet ready</div></div>
+                </div>
+                <div class="cv-guide-panel" id="cvGuide">
+                  <div class="cv-guide-title">A Chevening-ready CV, UK style</div>
+                  <div class="cv-guide-list">
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Keep it to 1–2 pages — UK reviewers expect concise, not exhaustive.</div>
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>No photograph. Unlike common practice in Bangladesh, UK-style CVs omit photos entirely.</div>
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Reverse-chronological: most recent education or role first.</div>
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Order: Education → Work experience → Leadership &amp; extracurricular → Skills.</div>
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Quantify achievements — "led a team of 5" beats "worked in a team."</div>
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Drop "References available on request" — just omit references entirely.</div>
+                    <div class="cv-guide-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Lead with leadership and community impact — it's what Chevening panelists weigh most.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage-deadline-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Target submission: 11 Nov 2025 — 3 days before the actual deadline. Chevening's portal gets heavy traffic in the final 48 hours.</div>
+            </div>
+          </div>
+
+          <!-- STAGE 4: INTERVIEW (locked, now last) -->
+          <div class="stage-card locked" id="stage-4">
+            <div class="stage-head" onclick="toggleStage(4)">
+              <div class="stage-num"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+              <div class="stage-title-row"><div class="stage-title">Panel interview</div><div class="stage-sub">Unlocks after you submit and if you're shortlisted</div></div>
+              <span class="stage-status status-locked">Locked</span>
+              <svg class="stage-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="stage-body">
+              <div class="locked-preview">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+                <div class="locked-preview-text">Chevening interviews are panel-style, around 20 minutes, typically held February–March. We'll unlock full prep — common questions, panel format, and a mock-interview guide — the moment your shortlist result comes in.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EXPORT CENTER -->
+        <section id="export">
+          <div class="export-card">
+            <div class="export-inner">
+              <div class="eyebrow" style="color:#9DB0FF;">The outcome of this tracker</div>
+              <div class="export-title">Export your work, then apply.</div>
+              <div class="export-sub">Pick which track you're moving forward with. We'll compile your shortlisted universities and essay drafts into a reference document — you paste the final answers into Chevening's official portal yourself.</div>
+
+              <div class="export-track-grid" id="exportTrackGrid">
+                <div class="export-track-card selected" onclick="selectExportTrack(this,'Data Science')">
+                  <div class="export-track-name">Data Science</div>
+                  <div class="export-track-stats">3 universities · 1 of 4 essays drafted</div>
+                </div>
+                <div class="export-track-card" onclick="selectExportTrack(this,'Public Policy')">
+                  <div class="export-track-name">Public Policy</div>
+                  <div class="export-track-stats">0 universities · 0 of 4 essays drafted</div>
+                </div>
+              </div>
+
+              <div class="export-preview" id="exportPreview">
+                Exporting <b style="color:#5FE0C7;">Data Science</b> — includes 3 shortlisted universities (Manchester, Imperial, Leeds) and 1 completed essay draft. Incomplete essays will be included as prompts only.
+              </div>
+
+              <div class="export-actions">
+                <button class="btn btn-primary" onclick="exportTrack()">Export as document</button>
+                <a class="btn btn-ghost-dark" href="#" target="_blank" rel="noopener">Go to Chevening's official portal
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+              </div>
+              <div class="export-disclaimer">This creates a reference document only — nothing is submitted anywhere. Your real application is always completed on Chevening's own site.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- END TRACKER LAYER -->
+
+      <!-- RELEVANT CONTENT (public) -->
+      <section id="content">
+        <div class="eyebrow">Worth reading</div>
+        <div class="sec-title" style="margin-bottom:16px;">What actually helps at this stage</div>
+        <div class="content-row card"><div><div class="content-title">What Chevening panelists actually look for</div><div class="content-meta">6 MIN READ</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg></div>
+        <div class="content-row card"><div><div class="content-title">Writing the leadership essay without sounding rehearsed</div><div class="content-meta">5 MIN READ</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg></div>
+        <div class="content-row card"><div><div class="content-title">How to ask for a reference without it being awkward</div><div class="content-meta">4 MIN READ</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg></div>
+      </section>
+
+      <!-- FAQ (public) -->
+      <section id="faq">
+        <div class="eyebrow">Before you commit</div>
+        <div class="sec-title">Frequently asked.</div>
+        <div class="sec-sub">The specific questions that come up most, not a generic FAQ.</div>
+
+        <div class="qa-item card open" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Can I apply while still finishing my final semester?</span><svg class="qa-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">Yes — as long as your qualification will be confirmed before your course starts. Check the exact cutoff date on Chevening's own site, since it can shift slightly year to year.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Does my work experience have to be paid?</span><svg class="qa-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">No — internships and substantial volunteering can count toward the two-year requirement, though paid roles are generally viewed most favorably.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Can I reuse the same essay content across different subject tracks?</span><svg class="qa-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">The underlying experience, yes — but reframe it for each track's narrative, as shown in Track 2's tips above. Panelists notice generic, copy-pasted answers immediately.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>What happens if my reference misses the deadline?</span><svg class="qa-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">Chevening doesn't extend deadlines for late references — this is exactly why we recommend shortlisting a backup referee, not just one option.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Is there an application fee?</span><svg class="qa-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">No — Chevening is free to apply to. Be wary of anyone, including agencies, charging a fee specifically for a Chevening application.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Can I edit my application after submitting?</span><svg class="qa-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">No — the portal locks submissions immediately. This is exactly why we suggest submitting a few days early rather than right at the deadline.</div>
+        </div>
+      </section>
+
+    </div>
+
+    <aside>
+      <div class="card side-card">
+        <div class="side-deadline">
+          <div class="side-deadline-val">28</div>
+          <div class="side-deadline-label">DAYS UNTIL DEADLINE</div>
+        </div>
+        <div>
+          <div class="side-ring" style="background:conic-gradient(var(--teal) 0deg 180deg, var(--slate-soft) 180deg 360deg);"><div class="side-ring-inner"><div class="side-ring-num">2/4</div><div class="side-ring-label">STAGES<br>UNDERWAY</div></div></div>
+        </div>
+        <div>
+          <div class="side-label" style="margin-bottom:8px;">Jump to</div>
+          <div class="jump-list">
+            <a href="#about">About this scholarship</a>
+            <a href="#fit">Why this matches you</a>
+            <a href="#stage-1">Build by subject</a>
+            <a href="#stage-2">References</a>
+            <a href="#export">Export your work</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+        <div>
+          <div class="side-label" style="margin-bottom:8px;">Ask someone who's done it</div>
+          <div class="alum-card">
+            <div class="alum-avatar">TR</div>
+            <div><div class="alum-name">Tanvir R. <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--teal-text)" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="alum-sub">Chevening 2024 · verified winner</div></div>
+          </div>
+          <button class="btn btn-outline full-outline" style="margin-top:10px;">Ask Tanvir</button>
+        </div>
+        <div class="side-privacy">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          Everything here — drafts, referees, notes — is private by default. <span class="how-link" onclick="openModal()">How this works →</span>
+        </div>
+        <button class="btn btn-primary full-primary" onclick="jumpToStage(1)">Continue application</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span id="toastText">Reminder sent</span></div>
+
+<script>
+  var trackerActivated = false;
+
+  // ---- modal ----
+  function openModal(){ document.getElementById('startModal').classList.add('show'); }
+  function closeModal(){ document.getElementById('startModal').classList.remove('show'); }
+  document.getElementById('startModal').addEventListener('click', function(e){
+    if(e.target === this) closeModal();
+  });
+
+  // ---- gate / activation ----
+  function activateTracker(){
+    if(trackerActivated) return;
+    trackerActivated = true;
+    document.getElementById('gateCard').style.display = 'none';
+    document.getElementById('trackerLayer').classList.add('show');
+    document.getElementById('heroPre').style.display = 'none';
+    document.getElementById('heroPost').style.display = 'flex';
+    showToast('Your application tracker is ready');
+    setTimeout(function(){
+      document.getElementById('trackerLayer').scrollIntoView({behavior:'smooth', block:'start'});
+    }, 250);
+  }
+
+  // ---- stage accordion ----
+  function toggleStage(n){
+    var card = document.getElementById('stage-'+n);
+    if(card.classList.contains('locked')) return;
+    card.classList.toggle('open');
+  }
+  function jumpToStage(n){
+    if(!trackerActivated){ openModal(); return; }
+    var card = document.getElementById('stage-'+n);
+    card.classList.add('open');
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  function toggleEssay(headEl){
+    headEl.parentElement.classList.toggle('open');
+  }
+
+  // ---- subject tracks ----
+  function switchTrack(id){
+    document.querySelectorAll('.track-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.track-panel').forEach(function(p){ p.classList.remove('active'); });
+    event.currentTarget.classList.add('active');
+    document.getElementById(id+'Panel').classList.add('active');
+  }
+  function addTrack(){
+    var name = document.getElementById('newTrackName').value.trim();
+    if(!name){ showToast('Give the track a subject name first'); return; }
+    showToast('Created track: ' + name + ' — add universities and essays anytime');
+    document.getElementById('newTrackName').value = '';
+    document.getElementById('addTrackPanel').style.display = 'none';
+  }
+  function toggleShortlist(btn, trackId){
+    var card = btn.closest('.suggest-card');
+    var isOn = btn.classList.toggle('on');
+    card.classList.toggle('shortlisted', isOn);
+    btn.textContent = isOn ? '✓ Shortlisted' : '+ Shortlist';
+    var count = document.querySelectorAll('#'+trackId+'Suggestions .suggest-card.shortlisted').length;
+    var statsEl = document.querySelector('#'+trackId+'Panel .track-summary-stats');
+    if(statsEl){
+      statsEl.textContent = count + ' universities shortlisted · ' + statsEl.textContent.split('·')[1].trim();
+    }
+    showToast(isOn ? 'Added to your shortlist' : 'Removed from shortlist');
+  }
+
+  // ---- essay word count + save ----
+  function updateWordCount(el){
+    var words = el.value.trim().length ? el.value.trim().split(/\s+/).length : 0;
+    var counter = el.closest('.essay-body').querySelector('.essay-count');
+    var limit = parseInt(counter.dataset.limit);
+    counter.textContent = words + ' / ' + limit + ' words';
+    counter.classList.toggle('over', words > limit);
+    var dot = el.closest('.essay-item').querySelector('.essay-status-dot');
+    dot.classList.toggle('drafted', words > 10);
+  }
+  function saveDraft(btn){
+    var row = btn.closest('.save-draft-row');
+    var state = row.querySelector('.save-state');
+    state.classList.add('saved');
+    state.innerHTML = '✓ Saved just now';
+    showToast('Draft saved — safe to exit anytime');
+  }
+
+  // ---- referee tracker ----
+  function setRefStatus(el, index){
+    var steps = el.parentElement.querySelectorAll('.rs-step');
+    steps.forEach(function(s, i){ s.classList.toggle('active', i <= index); });
+  }
+  function reminderFromCard(btn){
+    var name = btn.closest('.referee-card').querySelector('.referee-name').textContent;
+    showToast('Reminder sent to ' + name);
+    var steps = btn.closest('.referee-card').querySelectorAll('.rs-step');
+    var lastActive = 0;
+    steps.forEach(function(s,i){ if(s.classList.contains('active')) lastActive = i; });
+    if(lastActive < 2){ setRefStatus(steps[lastActive+1], lastActive+1); }
+  }
+  function addReferee(){
+    var inputs = document.querySelectorAll('#addRefForm .arf-input');
+    var name = inputs[0].value.trim() || 'New referee';
+    var role = inputs[1].value.trim() || 'Reference';
+    var initials = name.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+    var card = document.createElement('div');
+    card.className = 'referee-card';
+    card.innerHTML =
+      '<div class="referee-top"><div class="referee-avatar">'+initials+'</div>' +
+      '<div><div class="referee-name">'+name+'</div><div class="referee-role">'+role+'</div></div>' +
+      '<div class="referee-assign"><span class="assign-label">Backup</span><button class="assign-switch" onclick="this.classList.toggle(\'on\')"></button></div></div>' +
+      '<div class="referee-stepper">' +
+      '<div class="rs-step active" onclick="setRefStatus(this,0)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Not asked</div></div>' +
+      '<div class="rs-step" onclick="setRefStatus(this,1)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Requested</div></div>' +
+      '<div class="rs-step" onclick="setRefStatus(this,2)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Reminded</div></div>' +
+      '<div class="rs-step" onclick="setRefStatus(this,3)"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">Received</div></div></div>' +
+      '<div class="referee-meta-row"><span class="referee-date">Added just now, not yet asked</span><span></span></div>' +
+      '<div style="margin-top:10px;"><button class="btn btn-outline btn-xs" onclick="reminderFromCard(this)">Request now</button></div>';
+    document.getElementById('refereeList').appendChild(card);
+    inputs.forEach(function(i){ i.value=''; });
+    document.getElementById('addRefForm').classList.remove('show');
+    showToast('Added ' + name + ' to your referee roster');
+  }
+
+  // ---- document checklist ----
+  function toggleDoc(card){
+    card.classList.toggle('ready');
+    var statusEl = card.querySelector('.doc-card-status');
+    statusEl.textContent = card.classList.contains('ready') ? 'Ready' : 'Not yet ready';
+    var total = document.querySelectorAll('.doc-card').length;
+    var ready = document.querySelectorAll('.doc-card.ready').length;
+    document.getElementById('docRingNum').textContent = ready + '/' + total;
+    document.getElementById('docRing').style.background = 'conic-gradient(var(--teal) 0deg ' + (ready/total*360) + 'deg, var(--slate-soft) ' + (ready/total*360) + 'deg 360deg)';
+    document.getElementById('stage3Status').textContent = ready + ' of ' + total + ' ready';
+  }
+
+  // ---- export ----
+  var exportTrackName = 'Data Science';
+  function selectExportTrack(card, name){
+    document.querySelectorAll('.export-track-card').forEach(function(c){ c.classList.remove('selected'); });
+    card.classList.add('selected');
+    exportTrackName = name;
+    var stats = card.querySelector('.export-track-stats').textContent;
+    document.getElementById('exportPreview').innerHTML =
+      'Exporting <b style="color:#5FE0C7;">' + name + '</b> — includes ' + stats.toLowerCase() + '. Incomplete essays will be included as prompts only.';
+  }
+  function exportTrack(){
+    showToast('Exported your ' + exportTrackName + ' draft — check your downloads');
+  }
+
+  // ---- toast ----
+  function showToast(msg){
+    var t = document.getElementById('toast');
+    document.getElementById('toastText').textContent = msg;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2600);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EduBridge Bangladesh — Verified partner · aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* top bar */
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-ghost-dark{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--white);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.14);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .btn-icon{width:38px;height:38px;border-radius:50%;padding:0;justify-content:center;}
+
+  /* hero */
+  .hero{background:radial-gradient(120% 140% at 100% 0%, #1B2E63 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:32px 0 28px;}
+  .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+  .hero-id{display:flex;gap:16px;align-items:center;}
+  .hero-mark{width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hero-mark span{font-family:var(--mono);font-size:17px;font-weight:600;}
+  .hero-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .hero-name{font-size:24px;font-weight:700;letter-spacing:-.01em;}
+  .verified-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,163,137,.16);border:1px solid rgba(0,163,137,.4);color:#5FE0C7;font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;}
+  .verify-link{font-size:11px;color:rgba(255,255,255,.45);text-decoration:underline;text-underline-offset:2px;}
+  .verify-link:hover{color:rgba(255,255,255,.8);}
+  .hero-meta{display:flex;align-items:center;gap:10px;font-size:12.5px;color:rgba(255,255,255,.55);flex-wrap:wrap;}
+  .hero-actions{display:flex;gap:8px;}
+
+  .live-row{display:flex;align-items:center;gap:8px;margin-bottom:22px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:#3ED6A8;animation:blink 1.6s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .pipeline-mini{display:flex;gap:14px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.4);}
+  .pipeline-mini strong{color:rgba(255,255,255,.75);}
+
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  .stat-tile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:14px 15px;}
+  .stat-icon{color:rgba(255,255,255,.4);margin-bottom:10px;}
+  .stat-val{font-size:19px;font-weight:700;letter-spacing:-.01em;}
+  .stat-label{font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.45);letter-spacing:.03em;margin-top:3px;}
+  .stat-evidence{font-size:10px;color:rgba(255,255,255,.35);margin-top:6px;line-height:1.4;}
+
+  .disclosure{display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-sm);padding:10px 14px;}
+  .disclosure svg{flex-shrink:0;color:rgba(255,255,255,.5);}
+
+  /* sponsored ad slider */
+  .ad-section{padding:22px 0 6px;}
+  .ad-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .ad-head-label{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);}
+  .ad-head-note{font-size:11px;color:var(--slate);}
+  .ad-slider{position:relative;border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden;background:var(--white);}
+  .ad-track{display:flex;transition:transform .45s ease;}
+  .ad-slide{min-width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 26px;}
+  .ad-slide-left{display:flex;align-items:center;gap:16px;min-width:0;}
+  .ad-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--white);font-family:var(--mono);font-weight:700;font-size:13px;}
+  .ad-copy-tag{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;margin-bottom:3px;}
+  .ad-copy-title{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .ad-copy-sub{font-size:12.5px;color:var(--slate);}
+  .ad-cta{flex-shrink:0;}
+  .ad-arrow{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink);}
+  .ad-arrow:hover{border-color:var(--royal);}
+  .ad-arrow.left{left:10px;}
+  .ad-arrow.right{right:10px;}
+  .ad-dots{display:flex;gap:6px;justify-content:center;padding:11px 0;background:var(--paper);border-top:1px solid var(--border);}
+  .ad-dot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;padding:0;}
+  .ad-dot.active{background:var(--slate);width:16px;border-radius:4px;transition:width .2s ease;}
+
+  /* sticky subnav */
+  .subnav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .subnav-inner{display:flex;gap:4px;overflow-x:auto;}
+  .subnav a{font-size:13px;font-weight:500;color:var(--slate);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;display:block;}
+  .subnav a.active{color:var(--ink);font-weight:600;border-bottom-color:var(--royal);}
+  .subnav a:hover{color:var(--ink);}
+
+  /* layout */
+  .layout{display:grid;grid-template-columns:1fr 260px;gap:40px;padding:36px 0 64px;}
+  section{scroll-margin-top:64px;margin-bottom:44px;}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:6px;}
+  .sec-title{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+  .sec-sub{font-size:13px;color:var(--slate);max-width:520px;line-height:1.5;margin-bottom:18px;}
+  .sec-nosub{margin-bottom:18px;}
+
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* overview */
+  .overview-text{font-size:14.5px;line-height:1.7;color:#2A3352;max-width:600px;}
+  .country-chips{display:flex;gap:8px;margin-top:16px;}
+  .chip{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--slate-soft);color:var(--ink);}
+
+  /* fees */
+  .fee-fresh{font-size:11.5px;color:var(--slate);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .fee-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+  .fee-row:last-child{border-bottom:none;}
+  .fee-item{font-size:14px;font-weight:600;}
+  .fee-detail{font-size:12px;color:var(--slate);margin-top:2px;}
+  .fee-amount{font-family:var(--mono);font-size:13.5px;font-weight:600;}
+  .fee-amount.free{color:var(--teal-text);}
+
+  /* case files */
+  .case-card{padding:16px 18px;margin-bottom:10px;}
+  .case-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .case-profile{font-family:var(--mono);font-size:10.5px;padding:4px 10px;border-radius:999px;background:var(--slate-soft);color:var(--ink);}
+  .case-outcome{font-family:var(--mono);font-size:10.5px;color:var(--teal-text);font-weight:600;}
+  .case-route{font-size:13.5px;font-weight:700;margin-bottom:3px;}
+  .case-timeline{font-size:12px;color:var(--slate);}
+
+  /* specializations */
+  .spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .spec-card{padding:16px;}
+  .spec-icon{color:var(--royal);margin-bottom:10px;}
+  .spec-label{font-size:13.5px;font-weight:700;margin-bottom:4px;}
+  .spec-stat{font-family:var(--mono);font-size:11px;color:var(--slate);}
+
+  /* team */
+  .video-card{overflow:hidden;margin-bottom:16px;}
+  .video-frame{height:210px;background:linear-gradient(135deg,var(--ink-2),var(--ink));display:flex;align-items:center;justify-content:center;position:relative;}
+  .play-btn{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;}
+  .video-tag{position:absolute;bottom:12px;left:16px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.6);}
+  .quote-block{padding:18px 20px;display:flex;gap:12px;}
+  .quote-block svg{color:var(--royal);flex-shrink:0;margin-top:2px;}
+  .quote-text{font-size:13.5px;font-style:italic;color:#2A3352;line-height:1.6;}
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .team-card{padding:14px;display:flex;align-items:center;gap:10px;}
+  .team-avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;flex-shrink:0;}
+  .team-name{font-size:13px;font-weight:600;}
+  .team-role{font-size:11px;color:var(--slate);}
+
+  /* articles */
+  .article-row{padding:15px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;transition:box-shadow .15s ease;}
+  .article-row:hover{box-shadow:0 8px 20px -14px rgba(14,27,61,.35);}
+  .article-title{font-size:13.5px;font-weight:600;}
+  .article-meta{font-family:var(--mono);font-size:10.5px;color:var(--slate);margin-top:3px;}
+
+  /* qa */
+  .qa-item{margin-bottom:8px;overflow:hidden;}
+  .qa-q{width:100%;text-align:left;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;background:none;border:none;font-size:13.5px;font-weight:600;color:var(--ink);}
+  .qa-a{padding:0 18px 16px;font-size:13px;color:var(--slate);line-height:1.6;display:none;}
+  .qa-a .by{font-family:var(--mono);font-size:10.5px;color:var(--teal-text);display:block;margin-top:8px;}
+  .qa-item.open .qa-a{display:block;}
+  .qa-item.open .chev{transform:rotate(90deg);}
+  .chev{transition:transform .15s ease;color:var(--slate);flex-shrink:0;}
+  .qa-ask{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:6px 6px 6px 16px;}
+  .qa-ask input{flex:1;border:none;font-size:13px;background:none;}
+  .qa-ask input:focus{outline:none;}
+  .qa-ask button{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--white);border:none;display:flex;align-items:center;justify-content:center;}
+
+  /* sidebar */
+  .side-card{padding:20px;position:sticky;top:70px;display:flex;flex-direction:column;gap:18px;}
+  .side-label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;}
+  .past-client{display:flex;align-items:center;gap:10px;margin:10px 0 12px;}
+  .pc-avatar{width:34px;height:34px;border-radius:50%;background:var(--slate-soft);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:600;}
+  .pc-name{font-size:12.5px;font-weight:600;}
+  .pc-status{font-size:10.5px;color:var(--teal-text);display:flex;align-items:center;gap:5px;}
+  .pc-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);}
+  .full-outline{width:100%;justify-content:center;}
+  .jump-list{display:flex;flex-direction:column;gap:2px;}
+  .jump-list a{font-size:12.5px;color:var(--slate);padding:5px 0;}
+  .jump-list a:hover{color:var(--ink);}
+  .compare-box{background:var(--paper);border-radius:var(--r-sm);padding:12px 14px;font-size:12px;color:var(--slate);line-height:1.5;}
+  .full-primary{width:100%;justify-content:center;}
+
+  @media(max-width:900px){
+    .hero-stats{grid-template-columns:repeat(2,1fr);}
+    .layout{grid-template-columns:1fr;}
+    .spec-grid,.team-grid{grid-template-columns:1fr;}
+    .side-card{position:static;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <span class="brand-name">aspire.world</span>
+      </div>
+      <a class="back-link" href="#">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        All verified partners
+      </a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-top">
+        <div class="hero-id">
+          <div class="hero-mark"><span>ED</span></div>
+          <div>
+            <div class="hero-name-row">
+              <span class="hero-name">EduBridge Bangladesh</span>
+              <span class="verified-chip">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                Verified since 2022
+              </span>
+              <a class="verify-link" href="#">How we verify this →</a>
+            </div>
+            <div class="hero-meta">
+              <span>Dhaka, Chattogram</span><span>·</span>
+              <span>United Kingdom, Canada</span><span>·</span>
+              <span>3,420 students helped since 2022</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-icon btn-ghost-dark" aria-label="Save partner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+          </button>
+          <button class="btn btn-outline" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:var(--white);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+            Compare
+          </button>
+          <button class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-9 8.5A8.5 8.5 0 013 12a8.38 8.38 0 018.5-8.5 8.5 8.5 0 019.5 8z"/></svg>
+            Request consultation
+          </button>
+        </div>
+      </div>
+
+      <div class="live-row">
+        <span class="live-dot"></span>
+        <span>Currently helping 34 students for UK · Fall 2026</span>
+        <span class="pipeline-mini">
+          <span><strong>22</strong> UK</span>
+          <span><strong>12</strong> Canada</span>
+        </span>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-tile">
+          <div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg></div>
+          <div class="stat-val">91%</div>
+          <div class="stat-label">VISA SUCCESS RATE</div>
+          <div class="stat-evidence">172 of 189 filed this year</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div class="stat-val">3,420</div>
+          <div class="stat-label">STUDENTS PLACED</div>
+          <div class="stat-evidence">Since verification, 2022</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+          <div class="stat-val">4 hrs</div>
+          <div class="stat-label">MEDIAN FIRST REPLY</div>
+          <div class="stat-evidence">Last 218 conversations, 90 days</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l3 6 6 1-4.5 4.5L17.5 21 12 17.5 6.5 21l1-6.5L3 10l6-1z"/></svg></div>
+          <div class="stat-val">3</div>
+          <div class="stat-label">VERIFIED SPECIALIZATIONS</div>
+          <div class="stat-evidence">Backed by filed-case data</div>
+        </div>
+      </div>
+
+      <div class="disclosure">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Independently verified by aspire.world. This placement is not paid for and does not affect ranking.
+      </div>
+    </div>
+  </div>
+
+  <!-- SPONSORED SLIDER -->
+  <div class="wrap ad-section">
+    <div class="ad-head">
+      <span class="ad-head-label">Sponsored</span>
+      <span class="ad-head-note">Doesn't affect this agency's verification or ranking</span>
+    </div>
+    <div class="ad-slider">
+      <div class="ad-track" id="adTrack">
+        <div class="ad-slide">
+          <div class="ad-slide-left">
+            <div class="ad-logo" style="background:var(--royal);">MB</div>
+            <div>
+              <div class="ad-copy-tag">Modhumoti Bank · Partner offer</div>
+              <div class="ad-copy-title">Student loans from 9% — apply before your intake</div>
+              <div class="ad-copy-sub">No collateral for loans under ৳10L. Decision in 5 working days.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm ad-cta">See rates</button>
+        </div>
+        <div class="ad-slide">
+          <div class="ad-slide-left">
+            <div class="ad-logo" style="background:var(--violet);">SR</div>
+            <div>
+              <div class="ad-copy-tag">SecureRemit · Partner offer</div>
+              <div class="ad-copy-title">Send tuition abroad with no hidden fees</div>
+              <div class="ad-copy-sub">Locked exchange rate, funds arrive in 48 hours.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm ad-cta">Compare cost</button>
+        </div>
+        <div class="ad-slide">
+          <div class="ad-slide-left">
+            <div class="ad-logo" style="background:#3D4A63;">NA</div>
+            <div>
+              <div class="ad-copy-tag">NestAway Housing · Partner offer</div>
+              <div class="ad-copy-title">Verified student housing near Manchester</div>
+              <div class="ad-copy-sub">Book before you land — refundable up to 14 days out.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm ad-cta">Browse rooms</button>
+        </div>
+      </div>
+      <button class="ad-arrow left" onclick="adGo(adIndex-1)" aria-label="Previous offer">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="ad-arrow right" onclick="adGo(adIndex+1)" aria-label="Next offer">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="ad-dots" id="adDots">
+        <button class="ad-dot active" onclick="adGo(0)" aria-label="Offer 1"></button>
+        <button class="ad-dot" onclick="adGo(1)" aria-label="Offer 2"></button>
+        <button class="ad-dot" onclick="adGo(2)" aria-label="Offer 3"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBNAV -->
+  <div class="subnav">
+    <div class="wrap subnav-inner">
+      <a href="#overview" class="active">Overview</a>
+      <a href="#fees">Fees</a>
+      <a href="#cases">Case files</a>
+      <a href="#specializations">Specializations</a>
+      <a href="#team">Team &amp; story</a>
+      <a href="#articles">Articles</a>
+      <a href="#qa">Q&amp;A</a>
+    </div>
+  </div>
+
+  <div class="wrap layout">
+    <div>
+      <section id="overview">
+        <div class="eyebrow">About</div>
+        <div class="sec-title">The world of EduBridge Bangladesh</div>
+        <div class="overview-text">
+          Founded by two former international students who went through the UK application process themselves, EduBridge Bangladesh has spent four years focused on one thing: getting Bangladeshi students into UK and Canadian universities without the guesswork.
+        </div>
+        <div class="country-chips">
+          <span class="chip">United Kingdom</span>
+          <span class="chip">Canada</span>
+        </div>
+      </section>
+
+      <section id="fees">
+        <div class="eyebrow">Transparent pricing</div>
+        <div class="sec-title">What it actually costs</div>
+        <div class="sec-sub">Same format across every verified agency on aspire.world, so you can compare directly.</div>
+        <div class="fee-fresh">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          Fees last confirmed 12 days ago
+        </div>
+        <div class="card">
+          <div class="fee-row">
+            <div><div class="fee-item">Initial consultation</div><div class="fee-detail">Profile review, destination shortlist</div></div>
+            <span class="fee-amount free">Free</span>
+          </div>
+          <div class="fee-row">
+            <div><div class="fee-item">Application handling</div><div class="fee-detail">Per university, includes SOP review</div></div>
+            <span class="fee-amount">৳8,000 / university</span>
+          </div>
+          <div class="fee-row">
+            <div><div class="fee-item">Visa filing assistance</div><div class="fee-detail">Document prep, mock interview, submission</div></div>
+            <span class="fee-amount">৳15,000</span>
+          </div>
+          <div class="fee-row">
+            <div><div class="fee-item">Scholarship guidance</div><div class="fee-detail">Included with application handling</div></div>
+            <span class="fee-amount free">Included</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="cases">
+        <div class="eyebrow">Real journeys</div>
+        <div class="sec-title">Case files</div>
+        <div class="sec-sub">Anonymized profiles of students this agency actually took from application to enrollment.</div>
+        <div class="case-card card">
+          <div class="case-top"><span class="case-profile">CGPA 3.2 · IELTS 6.5</span><span class="case-outcome">Enrolled, Fall 2025</span></div>
+          <div class="case-route">Business grad, Dhaka → University of Leeds, UK</div>
+          <div class="case-timeline">Applied → Offer in 6 weeks → Visa in 3 weeks</div>
+        </div>
+        <div class="case-card card">
+          <div class="case-top"><span class="case-profile">CGPA 2.9 · IELTS 6.0</span><span class="case-outcome">Enrolled, Jan 2026</span></div>
+          <div class="case-route">Engineering grad, Chattogram → Coventry University, UK</div>
+          <div class="case-timeline">2 rejections before this match → Offer in 4 weeks</div>
+        </div>
+        <div class="case-card card">
+          <div class="case-top"><span class="case-profile">CGPA 3.6 · IELTS 7.0</span><span class="case-outcome">Enrolled, Fall 2025</span></div>
+          <div class="case-route">CS grad, Sylhet → University of Manitoba, Canada</div>
+          <div class="case-timeline">Applied → Offer in 5 weeks → Study permit in 8 weeks</div>
+        </div>
+      </section>
+
+      <section id="specializations">
+        <div class="eyebrow">Proven, not claimed</div>
+        <div class="sec-title sec-nosub">Specializations</div>
+        <div class="spec-grid">
+          <div class="spec-card card">
+            <div class="spec-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="spec-label">UK Visa Specialist</div>
+            <div class="spec-stat">94% success · 120 filed this year</div>
+          </div>
+          <div class="spec-card card">
+            <div class="spec-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="spec-label">STEM Program Placement</div>
+            <div class="spec-stat">68 students placed</div>
+          </div>
+          <div class="spec-card card">
+            <div class="spec-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="spec-label">Scholarship Applications</div>
+            <div class="spec-stat">22 scholarships won for students</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="team">
+        <div class="eyebrow">Meet the team</div>
+        <div class="sec-title">The people behind the profile</div>
+        <div class="sec-sub">Their founding story, in their own words.</div>
+        <div class="video-card card">
+          <div class="video-frame">
+            <button class="play-btn" aria-label="Play founder interview">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="video-tag">FOUNDER INTERVIEW · 3:40</span>
+          </div>
+          <div class="quote-block">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 8.5C6.5 8.5 4 11 4 14s2 5.5 5 5.5v-3c-1.1 0-2-1-2-2.5s.9-2.5 2-2.5h.5V8.5h0zm10.5 0c-3 0-5.5 2.5-5.5 5.5s2.5 5.5 5.5 5.5v-3c-1.1 0-2-1-2-2.5s.9-2.5 2-2.5h.5V8.5h-.5z"/></svg>
+            <div class="quote-text">"We started this because we remembered exactly what it felt like to not know if the advice we were getting was real. Every process we run, we ask: would this have helped us four years ago?"</div>
+          </div>
+        </div>
+        <div class="team-grid">
+          <div class="team-card card"><div class="team-avatar">NI</div><div><div class="team-name">Nadia Islam</div><div class="team-role">Co-founder · UK specialist</div></div></div>
+          <div class="team-card card"><div class="team-avatar">FA</div><div><div class="team-name">Farhan Ahmed</div><div class="team-role">Co-founder · Canada specialist</div></div></div>
+          <div class="team-card card"><div class="team-avatar">MR</div><div><div class="team-name">Mithila Rahman</div><div class="team-role">Visa documentation lead</div></div></div>
+        </div>
+      </section>
+
+      <section id="articles">
+        <div class="eyebrow">From this agency</div>
+        <div class="sec-title sec-nosub">Articles</div>
+        <div class="article-row card">
+          <div><div class="article-title">What UK universities actually check in your bank statement</div><div class="article-meta">6 MIN READ</div></div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="article-row card">
+          <div><div class="article-title">Why we tell most students to apply to 4 universities, not 1</div><div class="article-meta">4 MIN READ</div></div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </section>
+
+      <section id="qa">
+        <div class="eyebrow">Public Q&amp;A</div>
+        <div class="sec-title">Ask before you commit</div>
+        <div class="sec-sub">Every answer here is visible to all students — nothing hidden in a private chat.</div>
+
+        <div class="qa-item card open" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Do you charge extra if I win a scholarship?</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="qa-a">No — our fee is fixed at application handling. Scholarship guidance is included, not billed separately.<span class="by">— Answered by EduBridge Bangladesh</span></div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>What happens if my visa gets rejected?</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="qa-a">We re-file once at no extra charge if the rejection was on a document we prepared. We'll walk you through exactly why it happened first.<span class="by">— Answered by EduBridge Bangladesh</span></div>
+        </div>
+
+        <div class="qa-ask">
+          <input placeholder="Ask this agency a question…" />
+          <button aria-label="Send question"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <div class="card side-card">
+        <div>
+          <div class="side-label">Chat with the agency</div>
+          <div class="past-client">
+            <div class="pc-avatar" style="background:var(--ink);color:var(--white);">NI</div>
+            <div>
+              <div class="pc-name" style="display:flex;align-items:center;gap:5px;">
+                Nadia Islam
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--teal-text)" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              </div>
+              <div style="font-size:11px;color:var(--slate);margin-bottom:2px;">Co-founder · UK specialist</div>
+              <div class="pc-status"><span class="pc-dot"></span>Replies within 4 hours</div>
+            </div>
+          </div>
+          <button class="btn btn-outline full-outline">Message Nadia</button>
+        </div>
+
+        <div>
+          <div class="side-label" style="margin-bottom:8px;">Jump to</div>
+          <div class="jump-list">
+            <a href="#overview">Overview</a>
+            <a href="#fees">Fees</a>
+            <a href="#cases">Case files</a>
+            <a href="#specializations">Specializations</a>
+            <a href="#team">Team &amp; story</a>
+            <a href="#articles">Articles</a>
+            <a href="#qa">Q&amp;A</a>
+          </div>
+        </div>
+
+        <div class="compare-box">
+          Comparing agencies? Add up to 3 to a side-by-side fee and outcome table.
+          <br><br>
+          <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Add to comparison</button>
+        </div>
+
+        <button class="btn btn-primary full-primary">
+          Request consultation
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+<script>
+  var adIndex = 0;
+  var adTrack = document.getElementById('adTrack');
+  var adSlideCount = adTrack.children.length;
+  var adDots = document.querySelectorAll('.ad-dot');
+  var adTimer;
+
+  function adGo(i){
+    adIndex = (i + adSlideCount) % adSlideCount;
+    adTrack.style.transform = 'translateX(-' + (adIndex * 100) + '%)';
+    adDots.forEach(function(d, n){ d.classList.toggle('active', n === adIndex); });
+  }
+
+  function adStart(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    adTimer = setInterval(function(){ adGo(adIndex + 1); }, 5000);
+  }
+  function adStop(){ clearInterval(adTimer); }
+
+  var adSliderEl = document.querySelector('.ad-slider');
+  adSliderEl.addEventListener('mouseenter', adStop);
+  adSliderEl.addEventListener('mouseleave', adStart);
+  adStart();
+
+  document.querySelectorAll('.qa-item').forEach(function(){}); // preserved
+</script>
+</body>
+</html>

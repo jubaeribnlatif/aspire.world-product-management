@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Set up your profile — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+
+  /* progress bar + header */
+  .progress-track{position:fixed;top:0;left:0;right:0;height:4px;background:var(--slate-soft);z-index:50;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--royal),var(--violet));transition:width .5s cubic-bezier(.4,.1,.2,1);}
+  .top-header{position:fixed;top:4px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:40;}
+  .top-header-inner{max-width:680px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:13.5px;}
+  .step-tally{font-family:var(--mono);font-size:11px;color:var(--slate);}
+  .exit-link{font-size:12px;color:var(--slate);}
+  .exit-link:hover{color:var(--ink);}
+
+  .wizard-outer{padding-top:76px;min-height:100vh;display:flex;flex-direction:column;}
+  .wizard-content{flex:1;max-width:640px;margin:0 auto;width:100%;padding:36px 24px 40px;}
+
+  .step{display:none;animation:stepIn .4s cubic-bezier(.2,.7,.3,1);}
+  .step.active{display:block;}
+  @keyframes stepIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .step-icon{width:52px;height:52px;border-radius:16px;background:var(--royal-soft);color:var(--royal-dark);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .step-eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--royal);text-transform:uppercase;margin-bottom:8px;}
+  .step-title{font-size:25px;font-weight:800;letter-spacing:-.015em;line-height:1.2;margin-bottom:8px;}
+  .step-sub{font-size:13.5px;color:var(--slate);line-height:1.55;margin-bottom:20px;max-width:520px;}
+
+  .why-box{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-md);margin-bottom:22px;overflow:hidden;}
+  .why-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:none;border:none;text-align:left;}
+  .why-toggle-label{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink);}
+  .why-toggle-label svg{color:var(--royal);flex-shrink:0;}
+  .why-chev{color:var(--slate);transition:transform .2s ease;flex-shrink:0;}
+  .why-box.open .why-chev{transform:rotate(180deg);}
+  .why-content{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .why-box.open .why-content{max-height:200px;}
+  .why-content-inner{padding:0 16px 14px;font-size:12.5px;color:var(--slate);line-height:1.6;}
+
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+  .field-card{padding:24px 26px;}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .field-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field-label{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px;}
+  .field-label .req{color:var(--destructive);}
+  .field-input, .field-select, .field-textarea{
+    border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 13px;font-size:13.5px;color:var(--ink);
+    background:var(--white);width:100%;
+  }
+  .field-textarea{resize:vertical;min-height:70px;}
+  .field-input:focus, .field-select:focus, .field-textarea:focus{outline:2px solid var(--royal);outline-offset:1px;border-color:var(--royal);}
+  .field-hint{font-size:11px;color:var(--slate);}
+  .field-hint.ok{color:var(--teal-text);}
+  .field-hint.warn{color:var(--destructive);}
+  .divider{border-top:1px solid var(--border);margin:18px 0;}
+
+  .track-choice-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:22px;}
+  .track-choice{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:18px 16px;text-align:left;display:flex;flex-direction:column;gap:8px;}
+  .track-choice:hover{border-color:var(--royal);}
+  .track-choice.on{border-color:var(--royal);background:var(--royal-soft);}
+  .track-choice-icon{color:var(--royal);}
+  .track-choice-title{font-size:13px;font-weight:700;line-height:1.3;}
+  .track-choice-sub{font-size:11px;color:var(--slate);line-height:1.4;}
+
+  .radio-row, .check-row{display:flex;align-items:center;gap:9px;padding:9px 0;font-size:13.5px;cursor:pointer;}
+  .radio-dot{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .radio-dot.on{border-color:var(--royal);}
+  .radio-dot.on::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--royal);}
+
+  .chip-select{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-opt{font-size:12.5px;font-weight:600;padding:8px 15px;border-radius:999px;border:1px solid var(--border);color:var(--slate);background:var(--white);}
+  .chip-opt.on{background:var(--royal-soft);border-color:var(--royal);color:var(--royal-dark);}
+
+  input[type=range]{width:100%;accent-color:var(--royal);height:4px;}
+  .slider-row{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px;}
+  .slider-val{font-family:var(--mono);color:var(--royal);}
+  .slider-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate);margin-top:4px;}
+
+  .switch{width:34px;height:20px;border-radius:999px;background:var(--slate-soft);position:relative;flex-shrink:0;border:none;}
+  .switch::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--white);box-shadow:0 1px 2px rgba(0,0,0,.2);}
+  .switch.on{background:var(--royal);}
+  .switch.on::after{transform:translateX(14px);}
+
+  .cond-group{display:none;}
+  .cond-group.show{display:block;animation:stepIn .3s ease;}
+
+  .optional-expand{margin-top:14px;}
+  .optional-expand-trigger{font-size:12.5px;font-weight:600;color:var(--royal);display:flex;align-items:center;gap:6px;}
+  .optional-expand-body{display:none;margin-top:14px;}
+  .optional-expand.open .optional-expand-body{display:block;}
+  .optional-expand.open .optional-expand-trigger svg{transform:rotate(45deg);}
+
+  /* scan zones */
+  .scan-zone{border:1.5px dashed var(--border);border-radius:var(--r-lg);padding:26px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;background:var(--paper);}
+  .scan-zone.dragging, .scan-zone:hover{border-color:var(--royal);}
+  .scan-icon{color:var(--royal);}
+  .scan-title{font-size:13.5px;font-weight:700;}
+  .scan-sub{font-size:11.5px;color:var(--slate);}
+  .scan-btn{margin-top:6px;}
+
+  .scan-loading{display:none;flex-direction:column;align-items:center;gap:12px;padding:30px;}
+  .scan-loading.active{display:flex;}
+  .scan-spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--royal-soft);border-top-color:var(--royal);animation:spin 0.9s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .scan-loading-text{font-size:12.5px;color:var(--slate);font-family:var(--mono);}
+
+  .scan-result{display:none;}
+  .scan-result.active{display:block;animation:stepIn .35s ease;}
+  .scan-result-banner{display:flex;align-items:center;gap:10px;background:var(--teal-soft);color:var(--teal-text);border-radius:var(--r-md);padding:12px 16px;font-size:12.5px;font-weight:600;margin-bottom:16px;}
+  .scan-result-banner svg{flex-shrink:0;}
+  .scan-field-tag{font-size:9px;font-weight:700;letter-spacing:.03em;color:var(--teal-text);background:var(--teal-soft);padding:2px 7px;border-radius:999px;margin-left:6px;}
+
+  .doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .doc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+  .doc-top{padding:15px 16px 12px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .doc-icon{width:34px;height:34px;border-radius:10px;background:var(--slate-soft);display:flex;align-items:center;justify-content:center;color:var(--ink);flex-shrink:0;}
+  .doc-card.have .doc-icon{background:var(--teal-soft);color:var(--teal-text);}
+  .doc-name{font-size:12.5px;font-weight:700;line-height:1.3;}
+  .doc-status{font-size:10.5px;margin-top:3px;}
+  .doc-status.ok{color:#00806C;}
+  .doc-status.missing{color:var(--slate);}
+  .doc-req{font-size:8.5px;font-weight:700;letter-spacing:.03em;padding:2px 6px;border-radius:999px;flex-shrink:0;}
+  .doc-req.req{background:var(--destructive-soft);color:var(--destructive);}
+  .doc-req.opt{background:var(--slate-soft);color:var(--slate);}
+  .doc-bottom{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:var(--paper);}
+  .doc-share{font-size:10px;color:var(--slate);}
+  .switch-sm{width:26px;height:16px;}
+  .switch-sm::after{width:12px;height:12px;}
+  .switch-sm.on::after{transform:translateX(10px);}
+  .doc-upload-btn{width:100%;padding:14px;text-align:center;font-size:11.5px;font-weight:600;color:var(--royal);}
+
+  .privacy-note{display:flex;gap:10px;align-items:flex-start;background:var(--ink);color:rgba(255,255,255,.85);border-radius:var(--r-md);padding:14px 16px;font-size:12px;line-height:1.55;margin-bottom:20px;}
+  .privacy-note svg{flex-shrink:0;margin-top:2px;color:#5FE0C7;}
+
+  /* welcome step */
+  .principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0;}
+  .principle-card{padding:18px;}
+  .principle-icon{width:34px;height:34px;border-radius:10px;background:var(--violet-soft);color:#5333C9;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+  .principle-title{font-size:13px;font-weight:700;margin-bottom:5px;}
+  .principle-text{font-size:11.5px;color:var(--slate);line-height:1.55;}
+
+  /* review step */
+  .review-section{margin-bottom:14px;}
+  .review-row{display:flex;justify-content:space-between;align-items:center;padding:13px 20px;border-bottom:1px solid var(--border);}
+  .review-row:last-child{border-bottom:none;}
+  .review-label{font-size:11px;color:var(--slate);}
+  .review-val{font-size:13px;font-weight:600;text-align:right;}
+  .review-edit{font-size:11px;font-weight:600;color:var(--royal);}
+  .review-head{display:flex;justify-content:space-between;align-items:center;padding:2px 4px 8px;}
+  .review-head-title{font-size:12px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;font-family:var(--mono);}
+
+  .complete-ring-big{width:90px;height:90px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;}
+  .complete-ring-big-inner{width:72px;height:72px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .complete-ring-big-num{font-family:var(--mono);font-size:20px;font-weight:800;}
+  .complete-ring-big-label{font-size:8px;color:var(--slate);}
+
+  .next-list{display:flex;flex-direction:column;gap:10px;margin:18px 0;}
+  .next-item{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#2A3352;line-height:1.5;}
+  .next-item svg{color:var(--teal-text);flex-shrink:0;margin-top:2px;}
+
+  /* footer nav */
+  .wizard-footer{position:sticky;bottom:0;background:var(--white);border-top:1px solid var(--border);}
+  .wizard-footer-inner{max-width:640px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:11px 22px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease,opacity .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-text{background:none;color:var(--slate);font-size:13px;padding:11px 10px;}
+  .btn-text:hover{color:var(--ink);}
+
+  @media(max-width:640px){
+    .field-grid, .field-grid.cols-3{grid-template-columns:1fr;}
+    .track-choice-grid{grid-template-columns:1fr;}
+    .principle-grid{grid-template-columns:1fr;}
+    .doc-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:11%;"></div></div>
+  <div class="top-header">
+    <div class="top-header-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <span class="step-tally" id="stepTally">STEP 1 OF 9</span>
+      <a class="exit-link" href="#">Save &amp; exit</a>
+    </div>
+  </div>
+
+  <div class="wizard-outer">
+    <div class="wizard-content">
+
+      <!-- STEP 0: WELCOME -->
+      <div class="step active" data-step="1">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+        <div class="step-eyebrow">Before we start</div>
+        <div class="step-title">Here's exactly how we use what you tell us.</div>
+        <div class="step-sub">Four things worth knowing before you fill in a single field. Takes about 8 minutes — you can save and come back anytime.</div>
+
+        <div class="principle-grid">
+          <div class="card principle-card">
+            <div class="principle-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+            <div class="principle-title">Used only when a feature needs it</div>
+            <div class="principle-text">Your data sits quietly until a specific tool needs it — a matching check, a loan estimate, a deadline reminder. Nothing runs in the background without a reason.</div>
+          </div>
+          <div class="card principle-card">
+            <div class="principle-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div>
+            <div class="principle-title">Never shared automatically</div>
+            <div class="principle-text">Agencies and banks see only what you explicitly switch on, one document at a time. Connecting with an agency does not hand over your file.</div>
+          </div>
+          <div class="card principle-card">
+            <div class="principle-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="principle-title">Scanned, never guessed</div>
+            <div class="principle-text">When you upload a document, we may read it to save you retyping — you'll always see exactly what we found before anything is saved.</div>
+          </div>
+          <div class="card principle-card">
+            <div class="principle-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></div>
+            <div class="principle-title">Yours to change, anytime</div>
+            <div class="principle-text">Edit, revoke sharing, or delete any of this whenever you like. Nothing here is locked in once submitted.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: PERSONAL -->
+      <div class="step" data-step="2">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <div class="step-eyebrow">About you</div>
+        <div class="step-title">Let's start with the basics.</div>
+        <div class="step-sub">Just enough to build your Student File and keep your account secure.</div>
+
+        <div class="why-box" onclick="this.classList.toggle('open')">
+          <button class="why-toggle"><span class="why-toggle-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Why we ask this</span><svg class="why-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="why-content"><div class="why-content-inner">We use this to build your Student File and verify your identity when you connect with a partner. It's never shown to other students, and never used for marketing.</div></div>
+        </div>
+
+        <div class="card field-card">
+          <div class="field-grid">
+            <div class="field"><label class="field-label">Full name (as in passport) <span class="req">*</span></label><input class="field-input" value="Samira Rahman"></div>
+            <div class="field"><label class="field-label">Date of birth <span class="req">*</span></label><input class="field-input" value="14 March 2005"></div>
+            <div class="field"><label class="field-label">Gender</label><select class="field-select"><option>Female</option></select></div>
+            <div class="field"><label class="field-label">Current city / division</label><select class="field-select"><option>Dhaka</option></select></div>
+            <div class="field"><label class="field-label">Phone number <span class="req">*</span></label><input class="field-input" value="+880 1XXX XXXXXX"></div>
+            <div class="field"><label class="field-label">Email <span class="req">*</span></label><input class="field-input" value="samira.rahman@email.com"><span class="field-hint ok">Verified</span></div>
+          </div>
+          <div class="divider"></div>
+          <div class="field-grid">
+            <div class="field"><label class="field-label">Emergency / guardian contact name</label><input class="field-input" value="Rafiqul Rahman"></div>
+            <div class="field"><label class="field-label">Guardian phone</label><input class="field-input" value="+880 1XXX XXXXXX"><span class="field-hint">We'll ask if this person is your financial sponsor later</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: ACADEMIC -->
+      <div class="step" data-step="3">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <div class="step-eyebrow">Your education</div>
+        <div class="step-title">Tell us about your academic background.</div>
+        <div class="step-sub">We'll only ask what's relevant to your stage — this looks different depending on where you are.</div>
+
+        <div class="why-box" onclick="this.classList.toggle('open')">
+          <button class="why-toggle"><span class="why-toggle-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Why we ask this</span><svg class="why-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="why-content"><div class="why-content-inner">This is what our matching engine uses to check which universities and scholarships you actually qualify for — not just what looks impressive.</div></div>
+        </div>
+
+        <div class="track-choice-grid" id="trackChoices">
+          <button class="track-choice on" data-track="hsc">
+            <span class="track-choice-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></span>
+            <span class="track-choice-title">Completed / completing HSC or A-Levels</span>
+            <span class="track-choice-sub">Applying for a Bachelor's</span>
+          </button>
+          <button class="track-choice" data-track="bachelor">
+            <span class="track-choice-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 4 2 10l10 6 10-6z"/></svg></span>
+            <span class="track-choice-title">Completed / completing Bachelor's</span>
+            <span class="track-choice-sub">Applying for a Master's or higher</span>
+          </button>
+          <button class="track-choice" data-track="professional">
+            <span class="track-choice-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></span>
+            <span class="track-choice-title">Working professional</span>
+            <span class="track-choice-sub">Applying alongside experience</span>
+          </button>
+        </div>
+
+        <!-- HSC/A-Level track -->
+        <div class="cond-group show" id="track-hsc">
+          <div class="card field-card">
+            <div class="field full" style="margin-bottom:16px;">
+              <label class="field-label">Curriculum</label>
+              <div class="chip-select">
+                <span class="chip-opt on" data-curr="national">National Curriculum (SSC / HSC)</span>
+                <span class="chip-opt" data-curr="cambridge">Cambridge / Edexcel (O-Level / A-Level)</span>
+              </div>
+            </div>
+            <div id="curr-national">
+              <div class="field-grid cols-3">
+                <div class="field"><label class="field-label">SSC board <span class="req">*</span></label><select class="field-select"><option>Dhaka Board</option><option>Chittagong Board</option><option>Rajshahi Board</option><option>Sylhet Board</option><option>Barisal Board</option><option>Comilla Board</option><option>Dinajpur Board</option><option>Jashore Board</option><option>Mymensingh Board</option><option>Madrasah Board</option><option>Technical Board</option></select></div>
+                <div class="field"><label class="field-label">SSC group <span class="req">*</span></label><select class="field-select"><option>Science</option><option>Business Studies</option><option>Humanities</option></select></div>
+                <div class="field"><label class="field-label">SSC GPA <span class="req">*</span></label><input class="field-input" value="5.00" placeholder="out of 5.00"></div>
+              </div>
+              <div class="divider"></div>
+              <div class="field-grid cols-3">
+                <div class="field"><label class="field-label">HSC board <span class="req">*</span></label><select class="field-select"><option>Dhaka Board</option></select></div>
+                <div class="field"><label class="field-label">HSC group <span class="req">*</span></label><select class="field-select"><option>Science</option></select></div>
+                <div class="field"><label class="field-label">HSC GPA <span class="req">*</span></label><input class="field-input" value="4.83" placeholder="out of 5.00"></div>
+              </div>
+            </div>
+            <div id="curr-cambridge" style="display:none;">
+              <div class="field-grid">
+                <div class="field"><label class="field-label">O-Level — subjects &amp; grades <span class="req">*</span></label><input class="field-input" placeholder="e.g. 7 subjects, mostly A*/A"></div>
+                <div class="field"><label class="field-label">O-Level year</label><input class="field-input" placeholder="e.g. 2021"></div>
+                <div class="field"><label class="field-label">A-Level — subjects &amp; grades <span class="req">*</span></label><input class="field-input" placeholder="e.g. Maths A, Physics A, Chem B"></div>
+                <div class="field"><label class="field-label">A-Level year</label><input class="field-input" placeholder="e.g. 2023"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bachelor's / Professional track -->
+        <div class="cond-group" id="track-bachelor">
+          <div class="card field-card">
+            <div class="field-grid cols-3">
+              <div class="field full"><label class="field-label">University / institution <span class="req">*</span></label><input class="field-input" value="University of Dhaka"></div>
+              <div class="field"><label class="field-label">Department / major <span class="req">*</span></label><input class="field-input" value="Statistics"></div>
+              <div class="field"><label class="field-label">CGPA <span class="req">*</span></label><input class="field-input" value="3.30"></div>
+              <div class="field"><label class="field-label">Scale</label><select class="field-select"><option>out of 4.00</option></select></div>
+              <div class="field"><label class="field-label">Graduation year (or expected) <span class="req">*</span></label><input class="field-input" value="2026"></div>
+            </div>
+
+            <div class="optional-expand" id="expandSscHsc">
+              <button class="optional-expand-trigger" onclick="document.getElementById('expandSscHsc').classList.toggle('open')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="transition:transform .2s ease;"><path d="M12 5v14M5 12h14"/></svg>
+                Add SSC / HSC results — some universities still ask for these
+              </button>
+              <div class="optional-expand-body">
+                <div class="divider"></div>
+                <div class="field-grid cols-3">
+                  <div class="field"><label class="field-label">SSC board</label><select class="field-select"><option>Dhaka Board</option></select></div>
+                  <div class="field"><label class="field-label">SSC GPA</label><input class="field-input" placeholder="out of 5.00"></div>
+                  <div class="field"><label class="field-label">HSC GPA</label><input class="field-input" placeholder="out of 5.00"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional extra fields -->
+        <div class="cond-group" id="track-professional-extra">
+          <div class="card field-card" style="margin-top:14px;">
+            <div class="field-grid cols-3">
+              <div class="field"><label class="field-label">Years of work experience</label><input class="field-input" placeholder="e.g. 3"></div>
+              <div class="field"><label class="field-label">Current job title</label><input class="field-input" placeholder="e.g. Business Analyst"></div>
+              <div class="field"><label class="field-label">Organization</label><input class="field-input" placeholder="Optional"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: TEST SCORES -->
+      <div class="step" data-step="4">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="step-eyebrow">English proficiency</div>
+        <div class="step-title">Got a test result yet?</div>
+        <div class="step-sub">Upload your certificate and we'll pull the scores out for you — no retyping.</div>
+
+        <div class="why-box" onclick="this.classList.toggle('open')">
+          <button class="why-toggle"><span class="why-toggle-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Why we ask this</span><svg class="why-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="why-content"><div class="why-content-inner">Entry requirements are checked against this automatically, and we'll warn you before your certificate expires — a real problem we've seen catch people out.</div></div>
+        </div>
+
+        <div class="chip-select" style="margin-bottom:18px;">
+          <span class="chip-opt on" id="hasScoreYes" onclick="setScoreState(true)">Yes, I have a result</span>
+          <span class="chip-opt" id="hasScoreNo" onclick="setScoreState(false)">Not yet</span>
+        </div>
+
+        <div id="scoreYesBlock">
+          <div class="scan-zone" id="ieltsScanZone">
+            <svg class="scan-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+            <div class="scan-title">Upload your IELTS / TOEFL certificate</div>
+            <div class="scan-sub">JPG, PNG or PDF — we'll scan it and fill the fields below</div>
+            <button class="btn btn-outline btn-sm scan-btn" onclick="runScan('ielts')">Choose file</button>
+          </div>
+          <div class="scan-loading" id="ielts-loading"><div class="scan-spinner"></div><div class="scan-loading-text">READING CERTIFICATE…</div></div>
+
+          <div class="scan-result" id="ielts-result">
+            <div class="scan-result-banner"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Found your scores — please confirm they're correct.</div>
+            <div class="card field-card">
+              <div class="field-grid cols-3">
+                <div class="field"><label class="field-label">Test type</label><select class="field-select"><option>IELTS Academic</option></select></div>
+                <div class="field"><label class="field-label">Overall score <span class="scan-field-tag">AUTO-FILLED</span></label><input class="field-input" value="6.5"></div>
+                <div class="field"><label class="field-label">Lowest band <span class="scan-field-tag">AUTO-FILLED</span></label><input class="field-input" value="6.0"></div>
+                <div class="field"><label class="field-label">Test date <span class="scan-field-tag">AUTO-FILLED</span></label><input class="field-input" value="3 Mar 2025"><span class="field-hint warn">Expires in 42 days</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="optional-expand" id="expandGre" style="margin-top:14px;">
+            <button class="optional-expand-trigger" onclick="document.getElementById('expandGre').classList.toggle('open')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+              Add GRE / GMAT — only if your program requires it
+            </button>
+            <div class="optional-expand-body">
+              <div class="card field-card" style="margin-top:10px;">
+                <div class="field-grid">
+                  <div class="field"><label class="field-label">Test</label><select class="field-select"><option>GRE</option><option>GMAT</option></select></div>
+                  <div class="field"><label class="field-label">Score</label><input class="field-input" placeholder="e.g. 315"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="scoreNoBlock" style="display:none;">
+          <div class="card field-card" style="text-align:center;padding:30px;">
+            <div style="font-size:13.5px;font-weight:600;margin-bottom:6px;">No problem — plenty of time.</div>
+            <div style="font-size:12.5px;color:var(--slate);">We'll remind you closer to your target intake deadlines, and match you to universities that fit either way.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: PREFERENCES -->
+      <div class="step" data-step="5">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+        <div class="step-eyebrow">Your direction</div>
+        <div class="step-title">What are you aiming for?</div>
+        <div class="step-sub">This shapes everything we show you from here on.</div>
+
+        <div class="why-box" onclick="this.classList.toggle('open')">
+          <button class="why-toggle"><span class="why-toggle-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Why we ask this</span><svg class="why-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="why-content"><div class="why-content-inner">This shapes every recommendation you see — universities, cost estimates, and country content are all filtered through this.</div></div>
+        </div>
+
+        <div class="card field-card">
+          <div class="field full" style="margin-bottom:16px;">
+            <label class="field-label">Target degree level <span class="req">*</span></label>
+            <div class="chip-select"><span class="chip-opt">Bachelor's</span><span class="chip-opt on">Master's</span><span class="chip-opt">PhD</span><span class="chip-opt">Diploma</span></div>
+          </div>
+          <div class="field full" style="margin-bottom:16px;">
+            <label class="field-label">Target countries <span class="req">*</span></label>
+            <div class="chip-select"><span class="chip-opt on">United Kingdom</span><span class="chip-opt">Canada</span><span class="chip-opt">Australia</span><span class="chip-opt">Germany</span><span class="chip-opt">USA</span><span class="chip-opt">+ Add another</span></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label class="field-label">Target field / major <span class="req">*</span></label><input class="field-input" value="Data Science"></div>
+            <div class="field"><label class="field-label">Target intake <span class="req">*</span></label><select class="field-select"><option>September 2026</option></select></div>
+          </div>
+          <div class="divider"></div>
+          <div class="field full">
+            <div class="slider-row"><span>Budget per year, all-in</span><span class="slider-val">৳ 22,00,000</span></div>
+            <input type="range" min="500000" max="4000000" step="100000" value="2200000">
+            <div class="slider-scale"><span>৳5L</span><span>৳40L</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: FINANCIAL -->
+      <div class="step" data-step="6">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="6" cy="14.5" r="1"/></svg></div>
+        <div class="step-eyebrow">Money</div>
+        <div class="step-title">Who's funding this move?</div>
+        <div class="step-sub">Helps us show you realistic loan options, not just a generic checklist.</div>
+
+        <div class="why-box" onclick="this.classList.toggle('open')">
+          <button class="why-toggle"><span class="why-toggle-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Why we ask this</span><svg class="why-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="why-content"><div class="why-content-inner">Only used to match you with realistic loan options and eligibility checks. Never shown to universities or agencies unless you choose to share it later.</div></div>
+        </div>
+
+        <div class="card field-card">
+          <div class="field full" style="margin-bottom:6px;">
+            <label class="field-label">Funding source <span class="req">*</span></label>
+          </div>
+          <div class="radio-row" onclick="setFunding(this)"><div class="radio-dot"></div>Self-funded</div>
+          <div class="radio-row" onclick="setFunding(this)"><div class="radio-dot on"></div>Family funded</div>
+          <div class="radio-row" onclick="setFunding(this)"><div class="radio-dot"></div>Will need a loan</div>
+          <div class="radio-row" onclick="setFunding(this)"><div class="radio-dot"></div>Seeking full scholarship</div>
+
+          <div id="sponsorFields">
+            <div class="divider"></div>
+            <div class="field-grid cols-3">
+              <div class="field"><label class="field-label">Sponsor's relationship to you <span class="req">*</span></label><select class="field-select"><option>Father</option><option>Mother</option><option>Sibling</option><option>Self</option><option>Other legal guardian</option></select></div>
+              <div class="field"><label class="field-label">Sponsor's occupation</label><input class="field-input" value="Business owner"></div>
+              <div class="field"><label class="field-label">Sponsor's monthly income</label><select class="field-select"><option>৳80,000 – ৳1,50,000</option></select></div>
+            </div>
+            <div class="field-hint" style="margin-top:8px;">Pre-filled from your guardian contact in Step 2 — edit if your sponsor is someone else.</div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="field-grid">
+            <div class="field"><label class="field-label">Collateral available</label>
+              <div class="chip-select"><span class="chip-opt on">FDR or property</span><span class="chip-opt">Not yet</span></div>
+            </div>
+            <div class="field"><label class="field-label">Existing bank relationship</label><select class="field-select"><option>Pubali Bank</option><option>None yet</option></select></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7: PASSPORT & TRAVEL HISTORY -->
+      <div class="step" data-step="7">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 010 18M12 3a15 15 0 000 18M3 12h18"/></svg></div>
+        <div class="step-eyebrow">Identity &amp; travel</div>
+        <div class="step-title">A few things visa officers will ask anyway.</div>
+        <div class="step-sub">Better we know now than your agency finding out at the visa stage.</div>
+
+        <div class="why-box" onclick="this.classList.toggle('open')">
+          <button class="why-toggle"><span class="why-toggle-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Why we ask this</span><svg class="why-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="why-content"><div class="why-content-inner">Visa applications ask about refusals and study gaps directly. Flagging them here means your agency can help you prepare an honest, well-framed explanation — instead of being blindsided at the visa stage. Neither disqualifies you.</div></div>
+        </div>
+
+        <div class="scan-zone" id="passportScanZone">
+          <svg class="scan-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+          <div class="scan-title">Upload your passport bio page</div>
+          <div class="scan-sub">We'll pull your passport number and expiry date automatically</div>
+          <button class="btn btn-outline btn-sm scan-btn" onclick="runScan('passport')">Choose file</button>
+        </div>
+        <div class="scan-loading" id="passport-loading"><div class="scan-spinner"></div><div class="scan-loading-text">READING PASSPORT…</div></div>
+
+        <div class="scan-result" id="passport-result">
+          <div class="scan-result-banner"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Found your details — name matches what you entered in Step 2 ✓</div>
+          <div class="card field-card">
+            <div class="field-grid cols-3">
+              <div class="field"><label class="field-label">Passport number <span class="scan-field-tag">AUTO-FILLED</span></label><input class="field-input" value="EJ 0847213"></div>
+              <div class="field"><label class="field-label">Issue date <span class="scan-field-tag">AUTO-FILLED</span></label><input class="field-input" value="12 Jan 2022"></div>
+              <div class="field"><label class="field-label">Expiry date <span class="scan-field-tag">AUTO-FILLED</span></label><input class="field-input" value="11 Jan 2032"><span class="field-hint ok">Valid well beyond your intake</span></div>
+            </div>
+            <div class="divider"></div>
+            <div class="field"><label class="field-label">National ID (NID) number <span class="req">*</span></label><input class="field-input" value="•••• •••• 4821" style="max-width:260px;"></div>
+          </div>
+        </div>
+
+        <div class="card field-card" style="margin-top:18px;">
+          <div class="field full" style="margin-bottom:16px;">
+            <label class="field-label">Have you ever been refused a visa for any country?</label>
+            <div class="chip-select"><span class="chip-opt" id="refusalYes" onclick="toggleExplain('refusal')">Yes</span><span class="chip-opt on" id="refusalNo" onclick="toggleExplain('refusal', false)">No</span></div>
+            <div class="cond-group" id="refusalExplain"><textarea class="field-textarea" placeholder="Briefly — which country, roughly when, and the reason if you know it."></textarea></div>
+          </div>
+          <div class="field full">
+            <label class="field-label">Any gap year(s) in your education?</label>
+            <div class="chip-select"><span class="chip-opt" id="gapYes" onclick="toggleExplain('gap')">Yes</span><span class="chip-opt on" id="gapNo" onclick="toggleExplain('gap', false)">No</span></div>
+            <div class="cond-group" id="gapExplain"><textarea class="field-textarea" placeholder="Briefly — how long, and what you were doing."></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 8: DOCUMENTS -->
+      <div class="step" data-step="8">
+        <div class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div>
+        <div class="step-eyebrow">Almost done</div>
+        <div class="step-title">Your document wallet.</div>
+        <div class="step-sub">Upload once, reuse everywhere — every university and bank page checks against this automatically.</div>
+
+        <div class="privacy-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          Everything below stays private by default. Sharing with your agency is a switch you control, per document, and can turn off anytime.
+        </div>
+
+        <div class="doc-grid">
+          <div class="doc-card have">
+            <div class="doc-top"><div class="doc-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/></svg></div><span class="doc-req opt">CAPTURED IN STEP 7 ✓</span></div>
+            <div style="padding:0 16px 12px;"><div class="doc-name">Passport</div><div class="doc-status ok">Valid to 2032</div></div>
+            <div class="doc-bottom"><span class="doc-share">Shared with agency</span><button class="switch switch-sm on"></button></div>
+          </div>
+          <div class="doc-card have">
+            <div class="doc-top"><div class="doc-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><span class="doc-req opt">CAPTURED IN STEP 4 ✓</span></div>
+            <div style="padding:0 16px 12px;"><div class="doc-name">IELTS certificate</div><div class="doc-status ok">Expires in 42 days</div></div>
+            <div class="doc-bottom"><span class="doc-share">Shared with agency</span><button class="switch switch-sm on"></button></div>
+          </div>
+          <div class="doc-card">
+            <div class="doc-top"><div class="doc-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+            <div style="padding:0 16px 12px;"><div class="doc-name">Bank statement, 6 months</div><div class="doc-status missing">Not yet added</div></div>
+            <button class="doc-upload-btn">+ Upload</button>
+          </div>
+          <div class="doc-card">
+            <div class="doc-top"><div class="doc-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+            <div style="padding:0 16px 12px;"><div class="doc-name">Academic transcripts</div><div class="doc-status missing">Not yet added</div></div>
+            <button class="doc-upload-btn">+ Upload</button>
+          </div>
+          <div class="doc-card">
+            <div class="doc-top"><div class="doc-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+            <div style="padding:0 16px 12px;"><div class="doc-name">Sponsor's NID</div><div class="doc-status missing">Not yet added</div></div>
+            <button class="doc-upload-btn">+ Upload</button>
+          </div>
+          <div class="doc-card">
+            <div class="doc-top"><div class="doc-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span class="doc-req opt">OPTIONAL</span></div>
+            <div style="padding:0 16px 12px;"><div class="doc-name">Recommendation letters</div><div class="doc-status missing">Add later — no rush</div></div>
+            <button class="doc-upload-btn">+ Upload</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 9: REVIEW -->
+      <div class="step" data-step="9">
+        <div class="complete-ring-big" style="background:conic-gradient(var(--teal) 0deg 331deg, var(--slate-soft) 331deg 360deg);">
+          <div class="complete-ring-big-inner"><div class="complete-ring-big-num">92%</div><div class="complete-ring-big-label">COMPLETE</div></div>
+        </div>
+        <div class="step-title" style="text-align:center;">You're set, Samira.</div>
+        <div class="step-sub" style="text-align:center;margin-left:auto;margin-right:auto;">Two optional documents left whenever you're ready. Everything else is already working in the background.</div>
+
+        <div class="next-list">
+          <div class="next-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Your university and scholarship matches have already updated based on what you entered.</div>
+          <div class="next-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>We'll remind you before your IELTS certificate expires — no need to track it yourself.</div>
+          <div class="next-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Nothing has been shared with EduBridge Bangladesh yet — you'll choose that per document, whenever you're ready.</div>
+        </div>
+
+        <div class="card review-section">
+          <div class="review-row"><div><div class="review-head-title">PERSONAL</div><div class="review-label">Samira Rahman · 14 Mar 2005 · Dhaka</div></div><span class="review-edit">Edit</span></div>
+          <div class="review-row"><div><div class="review-head-title">EDUCATION</div><div class="review-label">HSC, Dhaka Board · GPA 4.83 · Science</div></div><span class="review-edit">Edit</span></div>
+          <div class="review-row"><div><div class="review-head-title">TEST SCORE</div><div class="review-label">IELTS 6.5 overall · tested 3 Mar 2025</div></div><span class="review-edit">Edit</span></div>
+          <div class="review-row"><div><div class="review-head-title">TARGET</div><div class="review-label">Master's · Data Science · United Kingdom · Sept 2026</div></div><span class="review-edit">Edit</span></div>
+          <div class="review-row"><div><div class="review-head-title">FUNDING</div><div class="review-label">Family funded · sponsor: father</div></div><span class="review-edit">Edit</span></div>
+          <div class="review-row"><div><div class="review-head-title">DOCUMENTS</div><div class="review-label">4 of 6 uploaded — bank statement &amp; sponsor's NID remaining</div></div><span class="review-edit">Edit</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wizard-footer">
+      <div class="wizard-footer-inner">
+        <button class="btn btn-text" id="backBtn" onclick="goStep(currentStep-1)" style="visibility:hidden;">← Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="goStep(currentStep+1)">Continue</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var TOTAL_STEPS = 9;
+  var currentStep = 1;
+
+  function goStep(n){
+    if(n < 1) n = 1;
+    if(n > TOTAL_STEPS) n = TOTAL_STEPS;
+    document.querySelectorAll('.step').forEach(function(s){ s.classList.toggle('active', parseInt(s.dataset.step)===n); });
+    currentStep = n;
+    document.getElementById('progressFill').style.width = (n/TOTAL_STEPS*100) + '%';
+    document.getElementById('stepTally').textContent = 'STEP ' + n + ' OF ' + TOTAL_STEPS;
+    document.getElementById('backBtn').style.visibility = n===1 ? 'hidden' : 'visible';
+    var nextBtn = document.getElementById('nextBtn');
+    nextBtn.textContent = n===TOTAL_STEPS ? 'Go to my dashboard' : (n===1 ? "I understand — let's start" : 'Continue');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // academic track switching
+  document.querySelectorAll('.track-choice').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.track-choice').forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+      var track = btn.dataset.track;
+      document.getElementById('track-hsc').classList.toggle('show', track==='hsc');
+      document.getElementById('track-bachelor').classList.toggle('show', track==='bachelor' || track==='professional');
+      document.getElementById('track-professional-extra').classList.toggle('show', track==='professional');
+    });
+  });
+
+  // curriculum toggle within HSC track
+  document.querySelectorAll('[data-curr]').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('[data-curr]').forEach(function(c){ c.classList.remove('on'); });
+      chip.classList.add('on');
+      var curr = chip.dataset.curr;
+      document.getElementById('curr-national').style.display = curr==='national' ? 'block' : 'none';
+      document.getElementById('curr-cambridge').style.display = curr==='cambridge' ? 'block' : 'none';
+    });
+  });
+
+  // generic chip toggles (single-select within a group), skip ones with special handlers
+  document.querySelectorAll('.chip-select').forEach(function(group){
+    if(group.closest('#curr-national, #curr-cambridge')) return;
+    group.querySelectorAll('.chip-opt').forEach(function(chip){
+      if(chip.id==='refusalYes'||chip.id==='refusalNo'||chip.id==='gapYes'||chip.id==='gapNo'||chip.id==='hasScoreYes'||chip.id==='hasScoreNo') return;
+      chip.addEventListener('click', function(){
+        if(chip.textContent.trim().indexOf('Add another')>-1) return;
+        group.querySelectorAll('.chip-opt').forEach(function(c){ c.classList.remove('on'); });
+        chip.classList.add('on');
+      });
+    });
+  });
+
+  function setScoreState(has){
+    document.getElementById('hasScoreYes').classList.toggle('on', has);
+    document.getElementById('hasScoreNo').classList.toggle('on', !has);
+    document.getElementById('scoreYesBlock').style.display = has ? 'block' : 'none';
+    document.getElementById('scoreNoBlock').style.display = has ? 'none' : 'block';
+  }
+
+  function setFunding(row){
+    row.parentElement.querySelectorAll('.radio-row').forEach(function(r){ r.querySelector('.radio-dot').classList.remove('on'); });
+    row.querySelector('.radio-dot').classList.add('on');
+    var needsSponsor = row.textContent.indexOf('Self-funded') === -1;
+    document.getElementById('sponsorFields').style.display = needsSponsor ? 'block' : 'none';
+  }
+
+  function toggleExplain(key, show){
+    if(show === undefined) show = true;
+    document.getElementById(key+'Yes').classList.toggle('on', show);
+    document.getElementById(key+'No').classList.toggle('on', !show);
+    document.getElementById(key+'Explain').classList.toggle('show', show);
+  }
+
+  function runScan(key){
+    var zone = document.getElementById(key+'ScanZone');
+    var loading = document.getElementById(key+'-loading');
+    var result = document.getElementById(key+'-result');
+    zone.style.display = 'none';
+    loading.classList.add('active');
+    setTimeout(function(){
+      loading.classList.remove('active');
+      result.classList.add('active');
+    }, 1500);
+  }
+
+  goStep(1);
+</script>
+</body>
+</html>

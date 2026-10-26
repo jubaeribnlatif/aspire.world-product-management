@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Notifications — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+
+  .shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh;}
+  .sidebar{background:var(--ink);color:var(--white);padding:24px 18px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh;}
+  .brand{display:flex;align-items:center;gap:9px;padding:0 4px;}
+  .brand-mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:15px;letter-spacing:-.01em;}
+  .nav-group{display:flex;flex-direction:column;gap:2px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.72);}
+  .nav-item svg{opacity:.8;flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:var(--white);}
+  .nav-item.active{background:rgba(37,71,244,.28);color:var(--white);box-shadow:inset 0 0 0 1px rgba(88,116,255,.4);}
+  .nav-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.45);}
+  .sidebar-spacer{flex:1;}
+  .side-user{display:flex;align-items:center;gap:10px;padding:8px 4px;}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--royal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--white);flex-shrink:0;}
+  .side-user-name{font-size:13px;font-weight:600;}
+  .side-user-sub{font-size:11px;color:rgba(255,255,255,.45);}
+
+  .main{padding:22px 36px 64px;max-width:800px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+  .page-title{font-size:24px;font-weight:800;letter-spacing:-.01em;}
+  .mark-all{font-size:12.5px;font-weight:600;color:var(--royal);}
+
+  .filter-pills{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+  .filter-pill{background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:8px 16px;font-size:12.5px;font-weight:700;color:var(--slate);display:flex;align-items:center;gap:7px;}
+  .filter-pill.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .filter-count{font-family:var(--mono);font-size:10.5px;background:var(--slate-soft);color:var(--slate);padding:1px 7px;border-radius:999px;}
+  .filter-pill.active .filter-count{background:rgba(255,255,255,.18);color:var(--white);}
+
+  .day-label{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 10px;}
+  .day-label:first-of-type{margin-top:0;}
+
+  .notif-card{display:flex;gap:14px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:10px;position:relative;transition:box-shadow .15s ease;}
+  .notif-card:hover{box-shadow:0 10px 22px -16px rgba(14,27,61,.3);}
+  .notif-card.unread{background:var(--royal-soft);border-color:rgba(37,71,244,.25);}
+  .notif-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--white);flex-shrink:0;}
+  .notif-body{flex:1;min-width:0;}
+  .notif-title{font-size:13.5px;font-weight:700;line-height:1.4;}
+  .notif-text{font-size:12.5px;color:var(--slate);line-height:1.5;margin-top:3px;}
+  .notif-time{font-family:var(--mono);font-size:10.5px;color:var(--slate);margin-top:7px;}
+  .notif-cta{font-size:11.5px;font-weight:700;color:var(--royal);margin-top:8px;display:inline-block;}
+  .notif-dismiss{width:26px;height:26px;border-radius:50%;background:none;color:var(--slate);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .notif-dismiss:hover{background:var(--slate-soft);color:var(--ink);}
+  .unread-marker{width:8px;height:8px;border-radius:50%;background:var(--royal);position:absolute;top:18px;right:52px;}
+
+  .empty-state{text-align:center;padding:80px 20px;}
+  .empty-icon{width:56px;height:56px;border-radius:50%;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  .empty-title{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .empty-sub{font-size:13px;color:var(--slate);}
+
+  @media(max-width:900px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark"></div><div class="brand-name">aspire.world</div></div>
+    <nav class="nav-group">
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Dashboard</a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Messages</a>
+      <a class="nav-item active" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notifications<span class="nav-count" id="navUnreadCount">4</span></a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>Documents</a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l3 6 6 1-4.5 4.5L17.5 21 12 17.5 6.5 21l1-6.5L3 10l6-1z"/></svg>Scholarships</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="side-user"><div class="avatar">S</div><div><div class="side-user-name">Samira Rahman</div><div class="side-user-sub">AW / 024813</div></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="page-title">Notifications</div>
+      <button class="mark-all" onclick="markAllRead()">Mark all as read</button>
+    </div>
+
+    <div class="filter-pills" id="filterPills">
+      <button class="filter-pill active" data-filter="all" onclick="setFilter('all')">All <span class="filter-count" id="count-all">7</span></button>
+      <button class="filter-pill" data-filter="unread" onclick="setFilter('unread')">Unread <span class="filter-count" id="count-unread">4</span></button>
+      <button class="filter-pill" data-filter="deadline" onclick="setFilter('deadline')">Deadlines <span class="filter-count" id="count-deadline">2</span></button>
+      <button class="filter-pill" data-filter="document" onclick="setFilter('document')">Documents <span class="filter-count" id="count-document">2</span></button>
+      <button class="filter-pill" data-filter="message" onclick="setFilter('message')">Messages <span class="filter-count" id="count-message">2</span></button>
+      <button class="filter-pill" data-filter="agency" onclick="setFilter('agency')">Agency &amp; bank <span class="filter-count" id="count-agency">1</span></button>
+    </div>
+
+    <div id="notifList"></div>
+  </main>
+</div>
+
+<script>
+  var NOTIFS = [
+    { id:1, day:'TODAY', type:'deadline', unread:true, icon:'clock', color:'var(--destructive)', title:'Chevening deadline in 4 weeks', text:'Your Leadership essay is drafted — 3 more to go before 14 Nov.', time:'2 hours ago', cta:'Continue application →' },
+    { id:2, day:'TODAY', type:'message', unread:true, icon:'msg', color:'var(--violet)', title:'New message from Nadia Islam', text:'"Great — I\'ve flagged your transcript request to the university."', time:'3 hours ago', cta:'Reply →' },
+    { id:3, day:'TODAY', type:'document', unread:true, icon:'doc', color:'#3D3D3D', title:'IELTS certificate expires in 42 days', text:'Worth booking a retake before your visa application window opens.', time:'6 hours ago', cta:'View document wallet →' },
+    { id:4, day:'YESTERDAY', type:'message', unread:true, icon:'msg', color:'var(--violet)', title:'New message from Pubali Bank', text:'"Your eligibility pre-check looks good — a few docs needed to proceed."', time:'Yesterday, 4:12 PM', cta:'Reply →' },
+    { id:5, day:'YESTERDAY', type:'agency', unread:false, icon:'agency', color:'var(--teal)', title:'EduBridge marked a step complete', text:'"Submitted personal statement and application" — synced from your agency.', time:'Yesterday, 11:30 AM', cta:'View journey →' },
+    { id:6, day:'THIS WEEK', type:'deadline', unread:false, icon:'clock', color:'var(--destructive)', title:'Commonwealth Scholarship deadline in 6 weeks', text:'A strong match — worth starting while Chevening is still fresh.', time:'3 days ago', cta:'View scholarship →' },
+    { id:7, day:'THIS WEEK', type:'document', unread:false, icon:'doc', color:'#3D3D3D', title:'Bank statement needs a refresh', text:'Pubali Bank asks for a statement within the last 6 months.', time:'4 days ago', cta:'View document wallet →' }
+  ];
+
+  var ICONS = {
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+    msg:'<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',
+    doc:'<path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/>',
+    agency:'<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>'
+  };
+
+  var activeFilter = 'all';
+
+  function iconSvg(key){
+    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+ICONS[key]+'</svg>';
+  }
+
+  function updateCounts(){
+    var counts = { all:NOTIFS.length, unread:0, deadline:0, document:0, message:0, agency:0 };
+    NOTIFS.forEach(function(n){
+      if(n.unread) counts.unread++;
+      counts[n.type]++;
+    });
+    Object.keys(counts).forEach(function(k){
+      var el = document.getElementById('count-'+k);
+      if(el) el.textContent = counts[k];
+    });
+    document.getElementById('navUnreadCount').textContent = counts.unread;
+  }
+
+  function render(){
+    updateCounts();
+    var list = document.getElementById('notifList');
+    var filtered = activeFilter === 'all' ? NOTIFS : (activeFilter === 'unread' ? NOTIFS.filter(function(n){return n.unread;}) : NOTIFS.filter(function(n){return n.type === activeFilter;}));
+
+    if(filtered.length === 0){
+      list.innerHTML = '<div class="empty-state"><div class="empty-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><div class="empty-title">All caught up</div><div class="empty-sub">Nothing here right now — check back later.</div></div>';
+      return;
+    }
+
+    var html = '';
+    var lastDay = null;
+    filtered.forEach(function(n){
+      if(n.day !== lastDay){
+        html += '<div class="day-label">'+n.day+'</div>';
+        lastDay = n.day;
+      }
+      html += '<div class="notif-card'+(n.unread?' unread':'')+'" id="notif-'+n.id+'">' +
+        (n.unread ? '<span class="unread-marker"></span>' : '') +
+        '<div class="notif-icon" style="background:'+n.color+';">'+iconSvg(n.icon)+'</div>' +
+        '<div class="notif-body">' +
+          '<div class="notif-title">'+n.title+'</div>' +
+          '<div class="notif-text">'+n.text+'</div>' +
+          '<div class="notif-time">'+n.time+'</div>' +
+          '<a class="notif-cta" href="#" onclick="markRead('+n.id+')">'+n.cta+'</a>' +
+        '</div>' +
+        '<button class="notif-dismiss" onclick="dismiss('+n.id+')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+      '</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  function setFilter(f){
+    activeFilter = f;
+    document.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === f); });
+    render();
+  }
+
+  function markRead(id){
+    var n = NOTIFS.find(function(x){ return x.id === id; });
+    if(n) n.unread = false;
+    render();
+  }
+
+  function markAllRead(){
+    NOTIFS.forEach(function(n){ n.unread = false; });
+    render();
+  }
+
+  function dismiss(id){
+    NOTIFS = NOTIFS.filter(function(n){ return n.id !== id; });
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>

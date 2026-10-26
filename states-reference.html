@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>States reference — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 28px 80px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  .page-eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:8px;}
+  .page-title{font-size:28px;font-weight:800;letter-spacing:-.015em;margin-bottom:8px;}
+  .page-sub{font-size:13.5px;color:var(--slate);max-width:600px;line-height:1.6;margin-bottom:48px;}
+
+  .cat-section{margin-bottom:56px;}
+  .cat-title{font-size:19px;font-weight:800;margin-bottom:4px;}
+  .cat-sub{font-size:12.5px;color:var(--slate);margin-bottom:20px;}
+
+  .spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  .spec-card{overflow:hidden;}
+  .spec-label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--slate);text-transform:uppercase;padding:12px 18px;border-bottom:1px solid var(--border);background:var(--paper);}
+  .spec-demo{padding:36px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+
+  /* empty state */
+  .empty-icon{width:52px;height:52px;border-radius:50%;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .empty-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .empty-text{font-size:12.5px;color:var(--slate);max-width:280px;line-height:1.55;margin-bottom:16px;}
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:12.5px;padding:9px 17px;}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+
+  /* error state */
+  .error-icon{width:52px;height:52px;border-radius:50%;background:var(--destructive-soft);color:var(--destructive);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .error-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .error-text{font-size:12.5px;color:var(--slate);max-width:280px;line-height:1.55;margin-bottom:16px;}
+
+  .field-inline{width:100%;max-width:260px;text-align:left;}
+  .field-label-sm{font-size:12px;font-weight:600;margin-bottom:6px;display:block;}
+  .field-input-err{border:1.5px solid var(--destructive);border-radius:var(--r-sm);padding:10px 13px;font-size:13px;width:100%;}
+  .field-err-text{font-size:11px;color:var(--destructive);margin-top:5px;display:flex;align-items:center;gap:5px;}
+
+  /* loading skeleton */
+  .skel{background:linear-gradient(90deg, var(--slate-soft) 25%, #E4E7EE 37%, var(--slate-soft) 63%);background-size:400% 100%;animation:skelShimmer 1.4s ease infinite;border-radius:8px;}
+  @keyframes skelShimmer{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
+  .skel-row{width:100%;max-width:280px;text-align:left;}
+  .skel-avatar{width:44px;height:44px;border-radius:50%;margin-bottom:14px;}
+  .skel-line{height:12px;margin-bottom:8px;}
+  .skel-line.w-80{width:80%;}
+  .skel-line.w-60{width:60%;}
+  .skel-line.w-40{width:40%;}
+
+  .spinner{width:32px;height:32px;border-radius:50%;border:3px solid var(--royal-soft);border-top-color:var(--royal);animation:spin .9s linear infinite;margin-bottom:16px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading-label{font-family:var(--mono);font-size:11.5px;color:var(--slate);}
+
+  .card-skel-row{display:flex;align-items:center;gap:14px;width:100%;max-width:320px;text-align:left;}
+
+  .toast-demo{background:var(--ink);color:var(--white);padding:11px 20px;border-radius:999px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px;}
+  .toast-demo.error{background:var(--destructive);}
+  .toast-demo svg{color:#5FE0C7;flex-shrink:0;}
+  .toast-demo.error svg{color:var(--white);}
+
+  .notfound-code{font-family:var(--mono);font-size:52px;font-weight:800;color:var(--slate-soft);line-height:1;margin-bottom:8px;}
+
+  @media(max-width:760px){
+    .spec-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-eyebrow">Component reference</div>
+  <div class="page-title">Empty, error &amp; loading states</div>
+  <div class="page-sub">Canonical patterns for every surface on aspire.world — reuse these rather than inventing new treatments per page. Each follows the same voice: calm, specific, never blaming the user.</div>
+
+  <!-- EMPTY STATES -->
+  <div class="cat-section">
+    <div class="cat-title">Empty states</div>
+    <div class="cat-sub">When there's genuinely nothing to show yet — never treat this as an error.</div>
+    <div class="spec-grid">
+      <div class="card spec-card">
+        <div class="spec-label">No search results</div>
+        <div class="spec-demo">
+          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+          <div class="empty-title">No results for 'manchestr uni'</div>
+          <div class="empty-text">Try a broader term, or check the spelling — we couldn't find a match.</div>
+          <button class="btn btn-outline">Clear search</button>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">No documents yet</div>
+        <div class="spec-demo">
+          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div>
+          <div class="empty-title">Your wallet is empty</div>
+          <div class="empty-text">Upload your first document and we'll check it against every requirement automatically.</div>
+          <button class="btn btn-primary">+ Upload a document</button>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">No notifications</div>
+        <div class="spec-demo">
+          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div class="empty-title">All caught up</div>
+          <div class="empty-text">Nothing here right now — check back later.</div>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">No conversations</div>
+        <div class="spec-demo">
+          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <div class="empty-title">No messages yet</div>
+          <div class="empty-text">Once you connect with a verified agency or bank, conversations show up here.</div>
+          <button class="btn btn-outline">Browse verified agencies</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR STATES -->
+  <div class="cat-section">
+    <div class="cat-title">Error states</div>
+    <div class="cat-sub">Specific about what went wrong and what to do next — never a bare "something went wrong."</div>
+    <div class="spec-grid">
+      <div class="card spec-card">
+        <div class="spec-label">Network / load failure</div>
+        <div class="spec-demo">
+          <div class="error-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <div class="error-title">Couldn't load this page</div>
+          <div class="error-text">Check your connection and try again — your saved progress hasn't been affected.</div>
+          <button class="btn btn-primary">Retry</button>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">Form field validation</div>
+        <div class="spec-demo">
+          <div class="field-inline">
+            <label class="field-label-sm">Email</label>
+            <input class="field-input-err" value="samira.rahman@" placeholder="you@email.com">
+            <div class="field-err-text"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a valid email address</div>
+          </div>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">404 — page not found</div>
+        <div class="spec-demo">
+          <div class="notfound-code">404</div>
+          <div class="error-title">This page doesn't exist</div>
+          <div class="error-text">It may have moved, or the link might be out of date.</div>
+          <button class="btn btn-outline">Back to dashboard</button>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">Inline error toast</div>
+        <div class="spec-demo">
+          <div class="toast-demo error"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Couldn't save your draft — try again</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING STATES -->
+  <div class="cat-section">
+    <div class="cat-title">Loading states</div>
+    <div class="cat-sub">Skeleton screens for content-heavy loads, a spinner for short actions — match the shape of what's loading.</div>
+    <div class="spec-grid">
+      <div class="card spec-card">
+        <div class="spec-label">Card list skeleton</div>
+        <div class="spec-demo">
+          <div class="skel-row">
+            <div class="card-skel-row" style="margin-bottom:20px;">
+              <div class="skel skel-avatar" style="margin-bottom:0;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div class="skel skel-line w-60"></div>
+                <div class="skel skel-line w-40" style="margin-bottom:0;"></div>
+              </div>
+            </div>
+            <div class="card-skel-row">
+              <div class="skel skel-avatar" style="margin-bottom:0;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div class="skel skel-line w-80"></div>
+                <div class="skel skel-line w-60" style="margin-bottom:0;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">Text block skeleton</div>
+        <div class="spec-demo">
+          <div class="skel-row">
+            <div class="skel skel-line w-80"></div>
+            <div class="skel skel-line w-80"></div>
+            <div class="skel skel-line w-60" style="margin-bottom:0;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">Short action (spinner)</div>
+        <div class="spec-demo">
+          <div class="spinner"></div>
+          <div class="loading-label">SAVING YOUR CHANGES…</div>
+        </div>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-label">Full-page load</div>
+        <div class="spec-demo">
+          <div class="spinner"></div>
+          <div class="loading-label">LOADING YOUR DASHBOARD…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Interests — Aspire.World</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --navy:#0E1B3D; --navy-2:#152A54; --paper:#FAF7F2;
+  --royal:#2547F4; --teal:#00A389; --violet:#6C4FF6; --slate:#64707D;
+  --hairline: rgba(14,27,61,0.14);
+  --hairline-strong: rgba(14,27,61,0.24);
+  --danger:#B3261E;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  font-family:'Inter',sans-serif;
+  color:var(--navy);
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:96px;
+}
+.aw-mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ---------- Header ---------- */
+.aw-topbar{background:#fff;border-bottom:1px solid var(--hairline);}
+.aw-topbar-inner{max-width:760px;margin:0 auto;padding:22px 24px 24px;}
+.aw-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.aw-eyebrow{font-size:11px;letter-spacing:0.14em;color:var(--royal);font-weight:600;text-transform:uppercase;}
+.aw-title{font-size:26px;font-weight:600;color:var(--navy);margin:6px 0 6px;letter-spacing:-0.01em;}
+.aw-subtitle{font-size:13.5px;color:var(--slate);max-width:560px;line-height:1.55;margin:0;}
+.aw-mode-toggle{display:flex;border:1px solid var(--hairline-strong);border-radius:999px;padding:3px;background:var(--paper);flex-shrink:0;}
+.aw-mode-btn{border:none;background:transparent;padding:7px 13px;border-radius:999px;font-size:11.5px;font-weight:600;letter-spacing:0.02em;color:var(--slate);white-space:nowrap;}
+.aw-mode-btn.active{background:var(--navy);color:#fff;}
+
+/* ---------- Panel ---------- */
+.aw-panel-outer{max-width:760px;margin:0 auto;padding:28px 24px 40px;}
+.aw-panel{background:#fff;border:1px solid var(--hairline);border-radius:16px;padding:28px;}
+.aw-note{
+  display:flex;gap:10px;
+  background:rgba(0,163,137,0.06);
+  border-left:3px solid var(--teal);
+  border-radius:8px;padding:12px 14px;
+  font-size:12.5px;color:var(--navy-2);line-height:1.55;
+  margin-bottom:26px;
+}
+.aw-note .ic{color:var(--teal);flex-shrink:0;font-weight:700;}
+
+.aw-section-label{
+  font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px;
+}
+.aw-section-sub{font-size:12px;color:var(--slate);margin-bottom:14px;}
+
+.aw-pill-group{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.aw-pill-option{
+  display:flex;align-items:center;gap:7px;
+  border:1px solid var(--hairline-strong);
+  background:#fff;border-radius:10px;
+  padding:9px 13px;font-size:12.5px;font-weight:500;color:var(--navy);
+  transition:all .15s ease;
+}
+.aw-pill-option:hover{border-color:var(--navy);}
+.aw-pill-option .code{font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:0.65;}
+.aw-pill-option.selected{background:var(--navy);border-color:var(--navy);color:#fff;}
+.aw-pill-option.selected .code{opacity:0.75;}
+.aw-pill-option.undecided{border-style:dashed;}
+.aw-pill-option.undecided.selected{background:var(--violet);border-color:var(--violet);color:#fff;}
+
+.aw-divider{border:none;border-top:1px solid var(--hairline);margin:22px 0;}
+
+/* undecided card */
+.aw-undecided-card{
+  border:1px dashed rgba(108,79,246,0.35);
+  background:rgba(108,79,246,0.05);
+  border-radius:12px;padding:16px 18px;
+  font-size:13px;color:var(--navy-2);line-height:1.55;
+}
+
+/* majors */
+.aw-majors-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.aw-majors-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);}
+.aw-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;min-height:0;}
+.aw-major-chip{
+  display:flex;align-items:center;gap:8px;
+  background:var(--navy);color:#fff;
+  border-radius:9px;padding:8px 8px 8px 13px;
+  font-size:12.5px;font-weight:500;
+}
+.aw-major-chip .tag-cat{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+  opacity:0.7;text-transform:uppercase;letter-spacing:0.04em;
+}
+.aw-major-chip .rm{
+  background:rgba(255,255,255,0.16);
+  border-radius:6px;width:19px;height:19px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#fff;border:none;flex-shrink:0;
+}
+.aw-major-chip .rm:hover{background:rgba(255,255,255,0.3);}
+.aw-major-chip.other{background:var(--royal);}
+
+.aw-search-wrap{position:relative;}
+.aw-search-input{
+  width:100%;border:1px solid var(--hairline-strong);border-radius:10px;
+  padding:11px 14px;font-size:13px;color:var(--navy);background:#fff;
+  font-family:'Inter',sans-serif;
+}
+.aw-search-input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(14,27,61,0.08);}
+.aw-search-input:disabled{background:var(--paper);color:var(--slate);cursor:not-allowed;}
+.aw-search-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:#fff;border:1px solid var(--hairline-strong);border-radius:10px;
+  box-shadow:0 8px 24px rgba(14,27,61,0.12);
+  max-height:240px;overflow-y:auto;z-index:8;
+}
+.aw-search-result{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 14px;font-size:13px;color:var(--navy);
+}
+.aw-search-result:hover{background:var(--paper);}
+.aw-search-result .cat{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--slate);text-transform:uppercase;letter-spacing:0.03em;}
+.aw-search-empty{padding:14px;font-size:12.5px;color:var(--slate);}
+
+.aw-limit-note{font-size:11.5px;color:var(--slate);margin-top:8px;}
+.aw-other-toggle{
+  background:none;border:none;padding:0;margin-top:12px;
+  font-size:12px;color:var(--royal);font-weight:600;
+  text-decoration:underline;text-underline-offset:2px;
+}
+.aw-other-row{display:flex;gap:8px;margin-top:12px;}
+.aw-other-row input{
+  flex:1;border:1px solid var(--hairline-strong);border-radius:9px;
+  padding:9px 12px;font-size:13px;color:var(--navy);
+}
+.aw-other-row input:focus{outline:none;border-color:var(--navy);}
+.aw-other-row button{
+  border:1px solid var(--navy);background:var(--navy);color:#fff;
+  border-radius:9px;padding:9px 16px;font-size:12.5px;font-weight:600;
+}
+
+.aw-error-msg{
+  display:none;
+  font-size:12px;color:var(--danger);margin-top:10px;
+}
+.aw-error-msg.visible{display:block;}
+
+/* bottom nav */
+.aw-bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--hairline);z-index:10;}
+.aw-bottom-inner{max-width:760px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.aw-skip-link{font-size:12.5px;color:var(--slate);font-weight:500;text-decoration:underline;text-underline-offset:2px;background:none;border:none;}
+.aw-skip-link:hover{color:var(--navy);}
+.aw-bottom-right{display:flex;gap:10px;}
+.aw-btn{border-radius:10px;padding:11px 20px;font-size:12.5px;font-weight:600;border:1px solid transparent;}
+.aw-btn-ghost{background:#fff;border-color:var(--hairline-strong);color:var(--navy);}
+.aw-btn-ghost:hover{border-color:var(--navy);}
+.aw-btn-primary{background:var(--royal);color:#fff;}
+.aw-btn-primary:hover{background:#1c37c9;}
+
+@media (max-width:640px){
+  .aw-top-row{flex-direction:column;}
+  .aw-mode-toggle{align-self:flex-start;}
+  .aw-title{font-size:22px;}
+  .aw-bottom-inner{flex-direction:column-reverse;align-items:stretch;}
+  .aw-bottom-right{width:100%;}
+  .aw-bottom-right .aw-btn{flex:1;}
+  .aw-skip-link{align-self:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="aw-topbar">
+  <div class="aw-topbar-inner">
+    <div class="aw-top-row">
+      <div>
+        <div class="aw-eyebrow">Academic interests</div>
+        <h1 class="aw-title">What do you want to study?</h1>
+        <p class="aw-subtitle">Pick the field and major you're most interested in — this shapes every program, university and scholarship match we show you. Not sure yet? That's completely fine too.</p>
+      </div>
+      <div class="aw-mode-toggle" role="group" aria-label="Preview context">
+        <button class="aw-mode-btn active" id="modeSignup" onclick="setMode('signup')">SIGNUP</button>
+        <button class="aw-mode-btn" id="modeProfile" onclick="setMode('profile')">PROFILE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="aw-panel-outer">
+  <div class="aw-panel">
+    <div class="aw-note"><span class="ic">i</span><span>This is the single biggest input into your matches — we use it to rank programs, filter scholarships, and shape your Decider results. You can change it any time from your profile.</span></div>
+
+    <div class="aw-section-label">Field category</div>
+    <div class="aw-section-sub">Choose one or more — you can search a specific major once you've picked at least one.</div>
+    <div class="aw-pill-group" id="categoryPills"></div>
+
+    <hr class="aw-divider">
+
+    <div id="majorsArea"></div>
+
+    <div class="aw-error-msg" id="errorMsg">Pick at least one major, or choose "Still exploring" above, before continuing.</div>
+  </div>
+</div>
+
+<div class="aw-bottom-nav">
+  <div class="aw-bottom-inner">
+    <button class="aw-skip-link" id="backOrCancel" onclick="handleBack()">Back</button>
+    <div class="aw-bottom-right">
+      <button class="aw-skip-link" id="skipLink" onclick="handleSkip()">Skip for now</button>
+      <button class="aw-btn aw-btn-primary" id="continueBtn" onclick="handleContinue()">Continue</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- config ---------------- */
+const CATEGORIES = [
+  { id:'business', label:'Business', code:'BUS', majors:['Business Administration','Finance','Accounting','Marketing','International Business','Human Resource Management','Entrepreneurship','Supply Chain Management','Economics','Business Analytics'] },
+  { id:'cs', label:'Computer Science & IT', code:'CS', majors:['Computer Science','Software Engineering','Data Science','Artificial Intelligence & Machine Learning','Cybersecurity','Information Systems','Cloud Computing','Game Development','Web & App Development','Computer Engineering'] },
+  { id:'engineering', label:'Engineering', code:'ENG', majors:['Mechanical Engineering','Electrical Engineering','Civil Engineering','Chemical Engineering','Industrial Engineering','Biomedical Engineering','Aerospace Engineering','Environmental Engineering','Robotics'] },
+  { id:'health', label:'Health & Medicine', code:'MED', majors:['Medicine (MBBS/MD)','Public Health','Nursing','Pharmacy','Biomedical Sciences','Dentistry','Physiotherapy','Nutrition & Dietetics','Health Administration'] },
+  { id:'data', label:'Data & Analytics', code:'DATA', majors:['Data Analytics','Statistics','Data Engineering','Business Intelligence','Quantitative Finance','Actuarial Science'] },
+  { id:'design', label:'Design & Creative Arts', code:'DES', majors:['Graphic Design','UX/UI Design','Architecture','Fashion Design','Fine Arts','Film & Media Production','Interior Design','Animation'] },
+  { id:'law', label:'Law & Social Sciences', code:'LAW', majors:['Law (LLB/JD)','International Relations','Political Science','Public Policy','Psychology','Sociology','Criminology','Journalism & Media Studies'] },
+  { id:'science', label:'Natural Sciences', code:'SCI', majors:['Biology','Chemistry','Physics','Environmental Science','Mathematics','Biotechnology','Marine Science','Earth Sciences'] }
+];
+const MAX_MAJORS = 2;
+
+/* ---------------- state ---------------- */
+let state = {
+  mode:'signup',
+  selectedCategories: [],
+  selectedMajors: [],   // [{name, catCode, isOther}]
+  undecided:false,
+  searchQuery:'',
+  otherOpen:false,
+};
+
+function byCatId(id){ return CATEGORIES.find(c=>c.id===id); }
+
+/* ---------------- rendering ---------------- */
+function renderAll(){
+  renderCategoryPills();
+  renderMajorsArea();
+  renderBottomNav();
+}
+
+function renderCategoryPills(){
+  const wrap = document.getElementById('categoryPills');
+  let html = CATEGORIES.map(c=>{
+    const sel = state.selectedCategories.includes(c.id);
+    return `<button class="aw-pill-option ${sel?'selected':''}" onclick="toggleCategory('${c.id}')">
+      ${c.label} <span class="code">${c.code}</span>
+    </button>`;
+  }).join('');
+  html += `<button class="aw-pill-option undecided ${state.undecided?'selected':''}" onclick="toggleUndecided()">
+    Undecided — still exploring
+  </button>`;
+  wrap.innerHTML = html;
+}
+
+function renderMajorsArea(){
+  const area = document.getElementById('majorsArea');
+
+  if(state.undecided){
+    area.innerHTML = `
+      <div class="aw-undecided-card">
+        No problem — a lot of students start here. We'll ask a few quick questions later (through the Decider) to help you narrow down a field, and you can always come back and set this once something clicks.
+      </div>
+    `;
+    return;
+  }
+
+  if(state.selectedCategories.length === 0){
+    area.innerHTML = `<div class="aw-section-sub" style="margin-bottom:0;">Pick a field category above to search for your specific major.</div>`;
+    return;
+  }
+
+  const chipsHtml = state.selectedMajors.map(m=>`
+    <div class="aw-major-chip ${m.isOther?'other':''}">
+      ${m.isOther ? '' : `<span class="tag-cat">${m.catCode}</span>`}
+      ${m.name}
+      <button class="rm" onclick="removeMajor('${m.name.replace(/'/g,"\\'")}')">✕</button>
+    </div>
+  `).join('');
+
+  const atLimit = state.selectedMajors.length >= MAX_MAJORS;
+
+  area.innerHTML = `
+    <div class="aw-majors-head">
+      <div class="aw-section-label" style="margin-bottom:0;">Your major</div>
+      <div class="aw-majors-count">${state.selectedMajors.length} of ${MAX_MAJORS} selected</div>
+    </div>
+    ${chipsHtml ? `<div class="aw-chip-row">${chipsHtml}</div>` : ''}
+    <div class="aw-search-wrap">
+      <input type="text" class="aw-search-input" id="majorSearch"
+        placeholder="${atLimit ? 'Remove a major above to add another' : 'Search majors in your selected fields…'}"
+        value="${state.searchQuery}"
+        ${atLimit ? 'disabled' : ''}
+        oninput="onSearchInput(this.value)"
+        onfocus="onSearchInput(this.value)">
+      <div id="searchDropdown"></div>
+    </div>
+    ${!atLimit ? `<div class="aw-limit-note">You can pick up to ${MAX_MAJORS} majors.</div>` : ''}
+    ${state.otherOpen ? `
+      <div class="aw-other-row">
+        <input type="text" id="otherInput" placeholder="Type your major">
+        <button onclick="addOtherMajor()">Add</button>
+      </div>
+    ` : `<button class="aw-other-toggle" onclick="openOtherInput()">Can't find your major? Add it manually</button>`}
+  `;
+
+  if(state.searchQuery && !atLimit){
+    renderSearchDropdown();
+  }
+}
+
+function renderSearchDropdown(){
+  const dd = document.getElementById('searchDropdown');
+  if(!dd) return;
+  const selectedCats = CATEGORIES.filter(c=>state.selectedCategories.includes(c.id));
+  const q = state.searchQuery.toLowerCase();
+  const already = state.selectedMajors.map(m=>m.name);
+  let results = [];
+  selectedCats.forEach(c=>{
+    c.majors.forEach(m=>{
+      if(!already.includes(m) && m.toLowerCase().includes(q)){
+        results.push({name:m, catLabel:c.label, catCode:c.code});
+      }
+    });
+  });
+  results = results.slice(0, 8);
+
+  if(results.length === 0){
+    dd.innerHTML = `<div class="aw-search-dropdown"><div class="aw-search-empty">No match in your selected fields — try "Add it manually" below.</div></div>`;
+    return;
+  }
+  dd.innerHTML = `<div class="aw-search-dropdown">` + results.map(r=>`
+    <div class="aw-search-result" onclick="selectMajor('${r.name.replace(/'/g,"\\'")}','${r.catCode}')">
+      <span>${r.name}</span><span class="cat">${r.catLabel}</span>
+    </div>
+  `).join('') + `</div>`;
+}
+
+function renderBottomNav(){
+  const backBtn = document.getElementById('backOrCancel');
+  const continueBtn = document.getElementById('continueBtn');
+  const skipLink = document.getElementById('skipLink');
+  if(state.mode === 'profile'){
+    backBtn.textContent = 'Cancel';
+    continueBtn.textContent = 'Save changes';
+    skipLink.style.display = 'none';
+  } else {
+    backBtn.textContent = 'Back';
+    continueBtn.textContent = 'Continue';
+    skipLink.style.display = 'inline-block';
+  }
+}
+
+/* ---------------- interactions ---------------- */
+function toggleCategory(id){
+  if(state.selectedCategories.includes(id)){
+    state.selectedCategories = state.selectedCategories.filter(c=>c!==id);
+    const cat = byCatId(id);
+    state.selectedMajors = state.selectedMajors.filter(m=>m.isOther || m.catCode !== cat.code);
+  } else {
+    state.selectedCategories.push(id);
+  }
+  state.undecided = false;
+  document.getElementById('errorMsg').classList.remove('visible');
+  renderAll();
+}
+
+function toggleUndecided(){
+  state.undecided = !state.undecided;
+  if(state.undecided){
+    state.selectedCategories = [];
+    state.selectedMajors = [];
+    state.searchQuery = '';
+    state.otherOpen = false;
+  }
+  document.getElementById('errorMsg').classList.remove('visible');
+  renderAll();
+}
+
+function onSearchInput(val){
+  state.searchQuery = val;
+  renderSearchDropdown();
+}
+
+function selectMajor(name, catCode){
+  if(state.selectedMajors.length >= MAX_MAJORS) return;
+  state.selectedMajors.push({name, catCode, isOther:false});
+  state.searchQuery = '';
+  document.getElementById('errorMsg').classList.remove('visible');
+  renderMajorsArea();
+}
+
+function removeMajor(name){
+  state.selectedMajors = state.selectedMajors.filter(m=>m.name!==name);
+  renderMajorsArea();
+}
+
+function openOtherInput(){
+  state.otherOpen = true;
+  renderMajorsArea();
+  const input = document.getElementById('otherInput');
+  if(input) input.focus();
+}
+
+function addOtherMajor(){
+  const input = document.getElementById('otherInput');
+  const val = input.value.trim();
+  if(!val) return;
+  if(state.selectedMajors.length >= MAX_MAJORS) return;
+  state.selectedMajors.push({name:val, catCode:'', isOther:true});
+  state.otherOpen = false;
+  document.getElementById('errorMsg').classList.remove('visible');
+  renderMajorsArea();
+}
+
+function setMode(mode){
+  state.mode = mode;
+  document.getElementById('modeSignup').classList.toggle('active', mode==='signup');
+  document.getElementById('modeProfile').classList.toggle('active', mode==='profile');
+  renderBottomNav();
+}
+
+function handleBack(){
+  alert(state.mode==='profile' ? 'Would discard unsaved changes and return to profile.' : 'Would return to the previous signup step.');
+}
+function handleSkip(){
+  alert('Would continue signup without setting a field of study — this can be added later from the profile.');
+}
+function handleContinue(){
+  const valid = state.undecided || state.selectedMajors.length > 0;
+  if(!valid){
+    document.getElementById('errorMsg').classList.add('visible');
+    return;
+  }
+  const summary = state.undecided
+    ? 'Undecided / still exploring'
+    : state.selectedMajors.map(m=>m.name).join(', ');
+  alert(state.mode==='profile'
+    ? `Would save changes. Field of study: ${summary}`
+    : `Would continue to the next signup step. Field of study: ${summary}`);
+}
+
+// close dropdown on outside click
+document.addEventListener('click', (e)=>{
+  const wrap = document.querySelector('.aw-search-wrap');
+  if(wrap && !wrap.contains(e.target)){
+    state.searchQuery = '';
+    const dd = document.getElementById('searchDropdown');
+    if(dd) dd.innerHTML = '';
+    const input = document.getElementById('majorSearch');
+    if(input) input.value = '';
+  }
+});
+
+renderAll();
+</script>
+</body>
+</html>

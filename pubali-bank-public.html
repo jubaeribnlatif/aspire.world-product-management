@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pubali Bank — Title partner · aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .btn-icon{width:38px;height:38px;border-radius:50%;padding:0;justify-content:center;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* hero */
+  .hero{background:radial-gradient(120% 140% at 100% 0%, #1B2E63 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.28), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:32px 0 28px;}
+  .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+  .hero-id{display:flex;gap:16px;align-items:center;}
+  .hero-mark{width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hero-mark span{font-family:var(--mono);font-size:16px;font-weight:600;}
+  .hero-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .hero-name{font-size:24px;font-weight:700;letter-spacing:-.01em;}
+  .title-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(108,79,246,.2);border:1px solid rgba(108,79,246,.45);color:#B7A6FF;font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;}
+  .verified-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,163,137,.16);border:1px solid rgba(0,163,137,.4);color:#5FE0C7;font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;}
+  .hero-meta{display:flex;align-items:center;gap:10px;font-size:12.5px;color:rgba(255,255,255,.55);flex-wrap:wrap;}
+  .hero-actions{display:flex;gap:8px;}
+  .btn-ghost-dark{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--white);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.14);}
+
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  .stat-tile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:14px 15px;}
+  .stat-icon{color:rgba(255,255,255,.4);margin-bottom:10px;}
+  .stat-val{font-size:19px;font-weight:700;letter-spacing:-.01em;}
+  .stat-label{font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.45);letter-spacing:.03em;margin-top:3px;}
+
+  .disclosure{display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-sm);padding:10px 14px;}
+  .disclosure svg{flex-shrink:0;color:rgba(255,255,255,.5);}
+
+  /* boarding-pass ticket strip */
+  .ticket-strip{display:flex;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-md);margin-bottom:16px;overflow-x:auto;}
+  .ticket-seg{padding:13px 22px;border-left:1px dashed rgba(255,255,255,.18);flex-shrink:0;}
+  .ticket-seg:first-child{border-left:none;}
+  .ticket-seg-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;}
+  .ticket-seg-val{font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  .ticket-seg-val svg{color:rgba(255,255,255,.35);}
+
+  /* self-promotional slider */
+  .promo-section{padding:22px 0 6px;}
+  .promo-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .promo-head-label{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);}
+  .promo-head-note{font-size:11px;color:var(--slate);}
+  .promo-slider{position:relative;border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden;background:var(--white);}
+  .promo-track{display:flex;transition:transform .45s ease;}
+  .promo-slide{min-width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 26px;}
+  .promo-slide-left{display:flex;align-items:center;gap:16px;min-width:0;}
+  .promo-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--white);font-family:var(--mono);font-weight:700;font-size:12px;}
+  .promo-copy-tag{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;margin-bottom:3px;}
+  .promo-copy-title{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .promo-copy-sub{font-size:12.5px;color:var(--slate);}
+  .promo-cta{flex-shrink:0;}
+  .promo-arrow{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink);}
+  .promo-arrow:hover{border-color:var(--royal);}
+  .promo-arrow.left{left:10px;}
+  .promo-arrow.right{right:10px;}
+  .promo-dots{display:flex;gap:6px;justify-content:center;padding:11px 0;background:var(--paper);border-top:1px solid var(--border);}
+  .promo-dot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;padding:0;}
+  .promo-dot.active{background:var(--royal);width:16px;border-radius:4px;transition:width .2s ease;}
+
+  /* document wallet awareness */
+  .doc-progress{display:flex;align-items:center;gap:14px;margin-bottom:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 18px;}
+  .doc-progress-ring{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--teal) 0deg 180deg, var(--slate-soft) 180deg 360deg);}
+  .doc-progress-ring-inner{width:36px;height:36px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;}
+  .doc-progress-text{font-size:13px;font-weight:700;}
+  .doc-progress-sub{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .doc-progress-cta{margin-left:auto;flex-shrink:0;}
+  .doc-status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .doc-status-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column;gap:8px;}
+  .doc-status-card.have{border-color:rgba(0,163,137,.35);background:linear-gradient(180deg,var(--teal-soft) 0%, var(--white) 45%);}
+  .doc-status-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--slate-soft);color:var(--slate);}
+  .doc-status-card.have .doc-status-icon{background:var(--teal);color:var(--white);}
+  .doc-status-name{font-size:12.5px;font-weight:700;line-height:1.3;}
+  .doc-status-tag{font-size:10px;font-weight:600;display:flex;align-items:center;gap:4px;}
+  .doc-status-tag.have{color:var(--teal-text);}
+  .doc-status-tag.missing{color:var(--slate);}
+
+  /* eligibility icon grid */
+  .elig-icon-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  .elig-icon-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+  .elig-icon{width:32px;height:32px;border-radius:9px;background:var(--royal-soft);color:var(--royal-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .elig-icon-text{font-size:12.5px;line-height:1.5;color:#2A3352;padding-top:4px;}
+
+  /* content: video + articles */
+  .content-video{overflow:hidden;margin-bottom:14px;}
+  .content-video-frame{height:220px;background:linear-gradient(135deg,var(--ink-2),var(--ink));display:flex;align-items:center;justify-content:center;position:relative;}
+  .content-video-frame::after{content:'';position:absolute;inset:0;background:radial-gradient(280px 180px at 75% 20%, rgba(108,79,246,.35), transparent 65%);}
+  .content-play-btn{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+  .content-video-tag{position:absolute;bottom:12px;left:16px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.6);z-index:1;}
+  .content-video-title{padding:14px 18px;font-size:13.5px;font-weight:700;}
+  .content-article-row{padding:15px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;transition:box-shadow .15s ease;}
+  .content-article-row:hover{box-shadow:0 8px 20px -14px rgba(14,27,61,.35);}
+  .content-article-title{font-size:13.5px;font-weight:600;}
+  .content-article-meta{font-family:var(--mono);font-size:10.5px;color:var(--slate);margin-top:3px;}
+
+  /* disbursement timeline */
+  .timeline-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px 24px;margin-bottom:14px;}
+  .timeline-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:6px;}
+  .timeline-name{font-size:13.5px;font-weight:700;}
+  .timeline-total{font-family:var(--mono);font-size:11px;color:var(--teal-text);font-weight:600;background:var(--teal-soft);padding:3px 10px;border-radius:999px;}
+  .timeline-track{display:flex;align-items:flex-start;position:relative;}
+  .tl-step{flex:1;text-align:center;position:relative;padding:0 4px;}
+  .tl-line{position:absolute;top:11px;left:-50%;width:100%;height:2px;background:var(--teal-soft);z-index:0;}
+  .tl-step:first-child .tl-line{display:none;}
+  .tl-dot{width:22px;height:22px;border-radius:50%;background:var(--teal);color:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative;z-index:1;}
+  .tl-label{font-size:10.5px;font-weight:600;color:var(--ink);line-height:1.3;}
+  .tl-day{font-family:var(--mono);font-size:9.5px;color:var(--slate);margin-top:3px;}
+  .timeline-note{font-size:12px;color:var(--slate);margin-top:6px;line-height:1.5;}
+
+  /* subnav */
+  .subnav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .subnav-inner{display:flex;gap:4px;overflow-x:auto;}
+  .subnav a{font-size:13px;font-weight:500;color:var(--slate);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;display:block;}
+  .subnav a.active{color:var(--ink);font-weight:600;border-bottom-color:var(--royal);}
+  .subnav a:hover{color:var(--ink);}
+
+  .layout{display:grid;grid-template-columns:1fr 260px;gap:40px;padding:36px 0 64px;}
+  section{scroll-margin-top:64px;margin-bottom:44px;}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:6px;}
+  .sec-title{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+  .sec-sub{font-size:13px;color:var(--slate);max-width:520px;line-height:1.5;margin-bottom:18px;}
+  .sec-nosub{margin-bottom:18px;}
+  .overview-text{font-size:14.5px;line-height:1.7;color:#2A3352;max-width:600px;}
+  .chip-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+  .chip{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--slate-soft);color:var(--ink);}
+
+  /* spec table */
+  .spec-fresh{font-size:11.5px;color:var(--slate);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .spec-row{display:flex;align-items:flex-start;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);gap:20px;}
+  .spec-row:last-child{border-bottom:none;}
+  .spec-item{font-size:13.5px;font-weight:600;flex-shrink:0;width:180px;}
+  .spec-val{font-size:13px;color:#2A3352;text-align:right;flex:1;}
+  .spec-val.mono-val{font-family:var(--mono);font-weight:600;color:var(--ink);}
+
+  /* other products */
+  .prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .prod-card{padding:18px;}
+  .prod-icon{width:36px;height:36px;border-radius:10px;background:var(--royal-soft);color:var(--royal);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .prod-title{font-size:14px;font-weight:700;margin-bottom:5px;}
+  .prod-sub{font-size:12.5px;color:var(--slate);line-height:1.5;}
+
+  /* eligibility checklist */
+  .elig-list{padding:6px 0;}
+  .elig-row{display:flex;align-items:flex-start;gap:10px;padding:11px 20px;border-bottom:1px solid var(--border);font-size:13.5px;line-height:1.5;}
+  .elig-row:last-child{border-bottom:none;}
+  .elig-row svg{flex-shrink:0;margin-top:2px;color:var(--teal-text);}
+
+  .doc-tags{display:flex;flex-wrap:wrap;gap:8px;padding:18px 20px;}
+  .doc-tag{font-size:11.5px;padding:6px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--border);color:#2A3352;}
+
+  /* calculator */
+  .calc-panel{padding:26px 28px;display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .calc-field{margin-bottom:20px;}
+  .calc-field:last-child{margin-bottom:0;}
+  .calc-label-row{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px;}
+  .calc-value{font-family:var(--mono);color:var(--royal);}
+  input[type=range]{width:100%;accent-color:var(--royal);height:4px;}
+  .calc-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate);margin-top:4px;}
+  .calc-result{background:var(--paper);border-radius:var(--r-md);padding:20px;display:flex;flex-direction:column;justify-content:center;}
+  .calc-emi-label{font-size:11.5px;color:var(--slate);margin-bottom:4px;}
+  .calc-emi-val{font-size:30px;font-weight:700;font-family:var(--mono);color:var(--ink);margin-bottom:14px;}
+  .calc-breakdown-row{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px dashed var(--border);}
+  .calc-note{font-size:10.5px;color:var(--slate);margin-top:12px;line-height:1.5;}
+
+  /* case stories */
+  .story-card{padding:16px 18px;margin-bottom:10px;}
+  .story-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .story-name{font-size:13.5px;font-weight:700;}
+  .story-time{font-family:var(--mono);font-size:10.5px;color:var(--teal-text);font-weight:600;}
+  .story-text{font-size:12.5px;color:var(--slate);line-height:1.6;}
+
+  /* faq */
+  .qa-item{margin-bottom:8px;overflow:hidden;}
+  .qa-q{width:100%;text-align:left;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;background:none;border:none;font-size:13.5px;font-weight:600;color:var(--ink);}
+  .qa-a{padding:0 18px 16px;font-size:13px;color:var(--slate);line-height:1.6;display:none;}
+  .qa-item.open .qa-a{display:block;}
+  .qa-item.open .chev{transform:rotate(90deg);}
+  .chev{transition:transform .15s ease;color:var(--slate);flex-shrink:0;}
+
+  /* sidebar */
+  .side-card{padding:20px;position:sticky;top:70px;display:flex;flex-direction:column;gap:18px;}
+  .side-label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;}
+  .rep{display:flex;align-items:center;gap:10px;margin:10px 0 12px;}
+  .rep-avatar{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:600;}
+  .rep-name{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:5px;}
+  .rep-status{font-size:10.5px;color:var(--teal-text);display:flex;align-items:center;gap:5px;}
+  .rep-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);}
+  .full-outline{width:100%;justify-content:center;}
+  .jump-list{display:flex;flex-direction:column;gap:2px;}
+  .jump-list a{font-size:12.5px;color:var(--slate);padding:5px 0;}
+  .jump-list a:hover{color:var(--ink);}
+  .full-primary{width:100%;justify-content:center;}
+  .branch-note{background:var(--paper);border-radius:var(--r-sm);padding:12px 14px;font-size:11.5px;color:var(--slate);line-height:1.5;}
+
+  @media(max-width:900px){
+    .hero-stats{grid-template-columns:repeat(2,1fr);}
+    .layout{grid-template-columns:1fr;}
+    .prod-grid{grid-template-columns:1fr;}
+    .calc-panel{grid-template-columns:1fr;}
+    .side-card{position:static;}
+    .spec-row{flex-direction:column;gap:4px;}
+    .spec-val{text-align:left;}
+    .doc-status-grid{grid-template-columns:repeat(2,1fr);}
+    .elig-icon-grid{grid-template-columns:1fr;}
+    .ticket-strip{flex-wrap:wrap;}
+    .timeline-track{overflow-x:auto;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a class="back-link" href="#"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> All financial partners</a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-top">
+        <div class="hero-id">
+          <div class="hero-mark"><span>PB</span></div>
+          <div>
+            <div class="hero-name-row">
+              <span class="hero-name">Pubali Bank PLC</span>
+              <span class="title-chip">★ Title partner</span>
+              <span class="verified-chip">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                Verified
+              </span>
+            </div>
+            <div class="hero-meta">
+              <span>500+ branches nationwide</span><span>·</span>
+              <span>Foreign Education Loan, Student File</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-icon btn-ghost-dark" aria-label="Save partner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+          </button>
+          <button class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.68 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0122 16.92z"/></svg>
+            Request a call back
+          </button>
+        </div>
+      </div>
+
+      <div class="ticket-strip">
+        <div class="ticket-seg">
+          <div class="ticket-seg-label">Loan file</div>
+          <div class="ticket-seg-val">PB · 2026 · 0847</div>
+        </div>
+        <div class="ticket-seg">
+          <div class="ticket-seg-label">Route</div>
+          <div class="ticket-seg-val">APPLY
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            DISBURSE</div>
+        </div>
+        <div class="ticket-seg">
+          <div class="ticket-seg-label">Typical time</div>
+          <div class="ticket-seg-val">11–19 days</div>
+        </div>
+        <div class="ticket-seg">
+          <div class="ticket-seg-label">Est. start</div>
+          <div class="ticket-seg-val">Within 2 business days</div>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div><div class="stat-val">৳25L</div><div class="stat-label">MAX LOAN AMOUNT</div></div>
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><div class="stat-val">12–60</div><div class="stat-label">EMI TENURE, MONTHS</div></div>
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="stat-val">0.50%</div><div class="stat-label">PROCESSING FEE</div></div>
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1"/></svg></div><div class="stat-val">500+</div><div class="stat-label">BRANCH NETWORK</div></div>
+      </div>
+
+      <div class="disclosure">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Product terms are provided by Pubali Bank PLC and confirmed on 3 Aug 2026. Usage stats below are computed from platform activity.
+      </div>
+    </div>
+  </div>
+
+  <!-- FROM PUBALI: SELF-PROMOTIONAL SLIDER -->
+  <div class="wrap promo-section">
+    <div class="promo-head">
+      <span class="promo-head-label">From Pubali Bank</span>
+      <span class="promo-head-note">Pubali's own offers and updates — not third-party advertising</span>
+    </div>
+    <div class="promo-slider">
+      <div class="promo-track" id="promoTrack">
+        <div class="promo-slide">
+          <div class="promo-slide-left">
+            <div class="promo-logo" style="background:var(--royal);">PB</div>
+            <div>
+              <div class="promo-copy-tag">Limited time</div>
+              <div class="promo-copy-title">Processing fee waived for Fall 2026 intake applications</div>
+              <div class="promo-copy-sub">Submit your Foreign Education Loan application before 30 September.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm promo-cta">Learn more</button>
+        </div>
+        <div class="promo-slide">
+          <div class="promo-slide-left">
+            <div class="promo-logo" style="background:var(--violet);">PB</div>
+            <div>
+              <div class="promo-copy-tag">For younger siblings</div>
+              <div class="promo-copy-title">Open a Pubali Junior account and start early</div>
+              <div class="promo-copy-sub">A head start on school fees for the next child in the family.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm promo-cta">See details</button>
+        </div>
+        <div class="promo-slide">
+          <div class="promo-slide-left">
+            <div class="promo-logo" style="background:var(--teal);">PB</div>
+            <div>
+              <div class="promo-copy-tag">Referral offer</div>
+              <div class="promo-copy-title">Refer a friend — you both get ৳500 off processing</div>
+              <div class="promo-copy-sub">Applies once their loan is sanctioned.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm promo-cta">Refer now</button>
+        </div>
+      </div>
+      <button class="promo-arrow left" onclick="promoGo(promoIndex-1)" aria-label="Previous">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="promo-arrow right" onclick="promoGo(promoIndex+1)" aria-label="Next">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="promo-dots">
+        <button class="promo-dot active" onclick="promoGo(0)" aria-label="Slide 1"></button>
+        <button class="promo-dot" onclick="promoGo(1)" aria-label="Slide 2"></button>
+        <button class="promo-dot" onclick="promoGo(2)" aria-label="Slide 3"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBNAV -->
+  <div class="subnav">
+    <div class="wrap subnav-inner">
+      <a href="#overview" class="active">Overview</a>
+      <a href="#loan">Foreign Education Loan</a>
+      <a href="#products">Other products</a>
+      <a href="#eligibility">Eligibility & documents</a>
+      <a href="#calculator">Loan calculator</a>
+      <a href="#content">Content</a>
+      <a href="#stories">Disbursement stories</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+
+  <div class="wrap layout">
+    <div>
+      <section id="overview">
+        <div class="eyebrow">About</div>
+        <div class="sec-title">Pubali Bank PLC</div>
+        <div class="overview-text">
+          Pubali Bank is one of Bangladesh's largest private commercial banks, with a nationwide branch network and a real-time centralized online banking system. As aspire.world's title financial partner, Pubali supports students through the Foreign Education Loan and Student File services described below.
+        </div>
+        <div class="chip-row">
+          <span class="chip">Foreign Education Loan</span>
+          <span class="chip">Student File Service</span>
+          <span class="chip">Foreign remittance for tuition</span>
+        </div>
+      </section>
+
+      <section id="loan">
+        <div class="eyebrow">Flagship product</div>
+        <div class="sec-title">Foreign Education Loan</div>
+        <div class="sec-sub">To meet the cost of foreign education — tuition, boarding and lodging — for a child or first relative studying abroad.</div>
+        <div class="spec-fresh">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          Terms confirmed with Pubali Bank, 3 Aug 2026
+        </div>
+        <div class="card">
+          <div class="spec-row"><span class="spec-item">Loan amount</span><span class="spec-val mono-val">Up to ৳25,00,000, or 80% of security value — whichever is lower</span></div>
+          <div class="spec-row"><span class="spec-item">Repayment (EMI)</span><span class="spec-val mono-val">12 to 60 months</span></div>
+          <div class="spec-row"><span class="spec-item">Interest rate</span><span class="spec-val">Confirmed at application — ask a Pubali representative for your rate</span></div>
+          <div class="spec-row"><span class="spec-item">Processing fee</span><span class="spec-val mono-val">0.50% of loan amount</span></div>
+          <div class="spec-row"><span class="spec-item">Moratorium period</span><span class="spec-val mono-val">Up to 3 months</span></div>
+          <div class="spec-row"><span class="spec-item">Early settlement</span><span class="spec-val">Option for early & partial settlement, no hidden charge</span></div>
+          <div class="spec-row"><span class="spec-item">Collateral</span><span class="spec-val">Required — property or FDR with Pubali or another bank, duly lien-marked</span></div>
+        </div>
+      </section>
+
+      <section id="products">
+        <div class="eyebrow">Beyond the loan</div>
+        <div class="sec-title sec-nosub">Other products</div>
+        <div class="prod-grid">
+          <div class="prod-card card">
+            <div class="prod-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+            <div class="prod-title">Student File Service</div>
+            <div class="prod-sub">Keeps offer letters, cost breakdowns and required documents organized under one account before you apply for the loan itself.</div>
+          </div>
+          <div class="prod-card card">
+            <div class="prod-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M16 6l6 6-6 6"/></svg></div>
+            <div class="prod-title">Foreign remittance for tuition</div>
+            <div class="prod-sub">Send tuition and living costs abroad through proper banking channels once your Student File and loan are in place.</div>
+          </div>
+        </div>
+        <div style="font-size:11.5px;color:var(--slate);margin-top:12px;">More services, including student cards, are available in-branch — ask a representative for what's current.</div>
+      </section>
+
+      <section id="eligibility">
+        <div class="eyebrow">Before you apply</div>
+        <div class="sec-title">Eligibility & your documents</div>
+        <div class="sec-sub">The specific criteria Pubali checks — and which documents you already have in your aspire.world wallet.</div>
+
+        <div style="font-size:12px;font-weight:700;color:var(--slate);margin-bottom:10px;">WHO QUALIFIES</div>
+        <div class="elig-icon-grid" style="margin-bottom:26px;">
+          <div class="elig-icon-card">
+            <div class="elig-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div class="elig-icon-text">Applicant must be the parent or first relative bearing the student's educational expenses.</div>
+          </div>
+          <div class="elig-icon-card">
+            <div class="elig-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 8h4M15 12h4M6 16h12"/></svg></div>
+            <div class="elig-icon-text">Applicant must be a Bangladeshi individual, supported by NID.</div>
+          </div>
+          <div class="elig-icon-card">
+            <div class="elig-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div class="elig-icon-text">Minimum monthly net income should be at least 3× the monthly EMI.</div>
+          </div>
+          <div class="elig-icon-card">
+            <div class="elig-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div>
+            <div class="elig-icon-text">For loans over ৳5,00,000, the applicant must be a registered taxpayer.</div>
+          </div>
+          <div class="elig-icon-card">
+            <div class="elig-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+            <div class="elig-icon-text">Applicant's age must not exceed 65 at the time the loan matures.</div>
+          </div>
+          <div class="elig-icon-card">
+            <div class="elig-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="elig-icon-text">No hidden charges — full terms disclosed before you sign anything.</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;font-weight:700;color:var(--slate);margin-bottom:10px;">DOCUMENTS YOU'LL NEED</div>
+        <div class="doc-progress">
+          <div class="doc-progress-ring"><div class="doc-progress-ring-inner">4/8</div></div>
+          <div>
+            <div class="doc-progress-text">4 of 8 documents already in your wallet</div>
+            <div class="doc-progress-sub">Checked against Samira's aspire.world document wallet</div>
+          </div>
+          <button class="btn btn-outline btn-sm doc-progress-cta">Open document wallet</button>
+        </div>
+        <div class="doc-status-grid">
+          <div class="doc-status-card have">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c0-2 1.8-3 4-3s4 1 4 3"/></svg></div>
+            <div class="doc-status-name">Passport — student</div>
+            <div class="doc-status-tag have"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>In your wallet</div>
+          </div>
+          <div class="doc-status-card have">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div>
+            <div class="doc-status-name">Offer letter</div>
+            <div class="doc-status-tag have"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>In your wallet</div>
+          </div>
+          <div class="doc-status-card have">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l6-6M8 6h1M8 10h1M8 14h1"/><path d="M4 4h11l5 5v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg></div>
+            <div class="doc-status-name">IELTS certificate</div>
+            <div class="doc-status-tag have"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>In your wallet</div>
+          </div>
+          <div class="doc-status-card">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div>
+            <div class="doc-status-name">6 months' bank statement</div>
+            <div class="doc-status-tag missing">Needs refresh in wallet</div>
+          </div>
+          <div class="doc-status-card">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 8h4M15 12h4M6 16h12"/></svg></div>
+            <div class="doc-status-name">NID — applicant & guarantor</div>
+            <div class="doc-status-tag missing">Not yet added</div>
+          </div>
+          <div class="doc-status-card">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div>
+            <div class="doc-status-name">Salary certificate / trade license</div>
+            <div class="doc-status-tag missing">Not yet added</div>
+          </div>
+          <div class="doc-status-card">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+            <div class="doc-status-name">Study plan & budget</div>
+            <div class="doc-status-tag missing">Not yet added</div>
+          </div>
+          <div class="doc-status-card">
+            <div class="doc-status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+            <div class="doc-status-name">Collateral / FDR documents</div>
+            <div class="doc-status-tag missing">Not yet added</div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="calculator">
+        <div class="eyebrow">Try it yourself</div>
+        <div class="sec-title">Loan calculator</div>
+        <div class="sec-sub">Move the sliders to estimate a monthly payment. Your confirmed rate may differ — Pubali sets it per applicant.</div>
+        <div class="card calc-panel">
+          <div>
+            <div class="calc-field">
+              <div class="calc-label-row"><span>Loan amount</span><span class="calc-value" id="calcAmtLabel">৳ 12,00,000</span></div>
+              <input type="range" id="calcAmt" min="200000" max="2500000" step="50000" value="1200000" oninput="updateCalc()">
+              <div class="calc-scale"><span>৳2L</span><span>৳25L</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="calc-label-row"><span>Tenure</span><span class="calc-value" id="calcTenLabel">36 months</span></div>
+              <input type="range" id="calcTen" min="12" max="60" step="6" value="36" oninput="updateCalc()">
+              <div class="calc-scale"><span>12 mo</span><span>60 mo</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="calc-label-row"><span>Illustrative rate</span><span class="calc-value" id="calcRateLabel">12.0% p.a.</span></div>
+              <input type="range" id="calcRate" min="8" max="16" step="0.5" value="12" oninput="updateCalc()">
+              <div class="calc-scale"><span>8%</span><span>16%</span></div>
+            </div>
+          </div>
+          <div class="calc-result">
+            <div class="calc-emi-label">Estimated monthly EMI</div>
+            <div class="calc-emi-val" id="emiVal">৳ 39,850</div>
+            <div class="calc-breakdown-row"><span>Processing fee (0.50%)</span><span class="mono" id="calcFee">৳ 6,000</span></div>
+            <div class="calc-breakdown-row"><span>Total repaid over term</span><span class="mono" id="calcTotal">৳ 14,34,600</span></div>
+            <div class="calc-note">Rate shown is illustrative and not published by Pubali. Your confirmed rate is set at application — request a call back to get yours.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="content">
+        <div class="eyebrow">From Pubali</div>
+        <div class="sec-title">Content that actually helps</div>
+        <div class="sec-sub">Explained by the people who process these applications every day.</div>
+        <div class="content-video card">
+          <div class="content-video-frame">
+            <button class="content-play-btn" aria-label="Play video">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="content-video-tag">FEATURE VIDEO · 4:12</span>
+          </div>
+          <div class="content-video-title">Your Foreign Education Loan, explained in 4 minutes</div>
+        </div>
+        <div class="content-article-row card">
+          <div><div class="content-article-title">How to prepare a bank statement that won't get flagged</div><div class="content-article-meta">5 MIN READ</div></div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="content-article-row card">
+          <div><div class="content-article-title">FDR vs property: which collateral processes faster</div><div class="content-article-meta">4 MIN READ</div></div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--slate)"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </section>
+
+      <section id="stories">
+        <div class="eyebrow">How long it really took</div>
+        <div class="sec-title">Disbursement stories</div>
+        <div class="sec-sub">No polished timelines — just what actually happened, from application to funds released.</div>
+
+        <div class="timeline-wrap">
+          <div class="timeline-header">
+            <span class="timeline-name">Business studies, headed to Leeds · FDR collateral</span>
+            <span class="timeline-total">Sanctioned in 11 days</span>
+          </div>
+          <div class="timeline-track">
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Applied</div><div class="tl-day">Day 0</div></div>
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Documents verified</div><div class="tl-day">Day 4</div></div>
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Collateral lien marked</div><div class="tl-day">Day 8</div></div>
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Disbursed</div><div class="tl-day">Day 11</div></div>
+          </div>
+          <div class="timeline-note">An existing FDR with Pubali sped up verification. Offer letter and bank statement were the only documents requested twice for clarification.</div>
+        </div>
+
+        <div class="timeline-wrap">
+          <div class="timeline-header">
+            <span class="timeline-name">Engineering, headed to Toronto · Property collateral</span>
+            <span class="timeline-total">Sanctioned in 19 days</span>
+          </div>
+          <div class="timeline-track">
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Applied</div><div class="tl-day">Day 0</div></div>
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Documents verified</div><div class="tl-day">Day 5</div></div>
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Property valuation</div><div class="tl-day">Day 14</div></div>
+            <div class="tl-step"><div class="tl-line"></div><div class="tl-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="tl-label">Disbursed</div><div class="tl-day">Day 19</div></div>
+          </div>
+          <div class="timeline-note">Property collateral needed a valuation visit, adding roughly a week versus an FDR-backed application.</div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="eyebrow">Before you commit</div>
+        <div class="sec-title sec-nosub">Frequently asked</div>
+        <div class="qa-item card open" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>Can I use an existing FDR as collateral?</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="qa-a">Yes — an FDR with Pubali or another bank can be used as collateral, provided it's duly discharged and properly lien-marked in the bank's favor.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>My loan is under ৳5 lakh — do I still need to be a taxpayer?</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="qa-a">No. The taxpayer requirement only applies to loan amounts exceeding ৳5,00,000.</div>
+        </div>
+        <div class="qa-item card" onclick="this.classList.toggle('open')">
+          <button class="qa-q"><span>How long does disbursement take after my visa is approved?</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="qa-a">This varies by collateral type and documentation completeness. See the disbursement stories above for two real timelines.</div>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <div class="card side-card">
+        <div>
+          <div class="side-label">Talk to Pubali</div>
+          <div class="rep">
+            <div class="rep-avatar">RH</div>
+            <div>
+              <div class="rep-name">Rezaul Haque <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--teal-text)" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+              <div style="font-size:11px;color:var(--slate);margin-bottom:2px;">Foreign Education Loan desk</div>
+              <div class="rep-status"><span class="rep-dot"></span>Replies within 1 business day</div>
+            </div>
+          </div>
+          <button class="btn btn-outline full-outline">Message Pubali</button>
+        </div>
+
+        <div>
+          <div class="side-label" style="margin-bottom:8px;">Jump to</div>
+          <div class="jump-list">
+            <a href="#overview">Overview</a>
+            <a href="#loan">Foreign Education Loan</a>
+            <a href="#products">Other products</a>
+            <a href="#eligibility">Eligibility & documents</a>
+            <a href="#calculator">Loan calculator</a>
+            <a href="#content">Content</a>
+            <a href="#stories">Disbursement stories</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+
+        <div class="branch-note">
+          Prefer in person? Pubali has 500+ branches and sub-branches nationwide — a Student File can be opened at any of them.
+        </div>
+
+        <button class="btn btn-primary full-primary">
+          Request a call back
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+<script>
+  function fmtBDT(n){ return '৳ ' + Math.round(n).toLocaleString('en-IN'); }
+  function updateCalc(){
+    var P = parseInt(document.getElementById('calcAmt').value);
+    var n = parseInt(document.getElementById('calcTen').value);
+    var r = parseFloat(document.getElementById('calcRate').value);
+    document.getElementById('calcAmtLabel').textContent = fmtBDT(P);
+    document.getElementById('calcTenLabel').textContent = n + ' months';
+    document.getElementById('calcRateLabel').textContent = r.toFixed(1) + '% p.a.';
+    var i = (r/100)/12;
+    var emi = P * i * Math.pow(1+i, n) / (Math.pow(1+i, n) - 1);
+    document.getElementById('emiVal').textContent = fmtBDT(emi) + ' /mo';
+    document.getElementById('calcFee').textContent = fmtBDT(P * 0.005);
+    document.getElementById('calcTotal').textContent = fmtBDT(emi * n);
+  }
+  updateCalc();
+
+  var promoIndex = 0;
+  var promoTrack = document.getElementById('promoTrack');
+  var promoSlideCount = promoTrack.children.length;
+  var promoDots = document.querySelectorAll('.promo-dot');
+  var promoTimer;
+  function promoGo(i){
+    promoIndex = (i + promoSlideCount) % promoSlideCount;
+    promoTrack.style.transform = 'translateX(-' + (promoIndex * 100) + '%)';
+    promoDots.forEach(function(d, n){ d.classList.toggle('active', n === promoIndex); });
+  }
+  function promoStart(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    promoTimer = setInterval(function(){ promoGo(promoIndex + 1); }, 5000);
+  }
+  function promoStop(){ clearInterval(promoTimer); }
+  var promoSliderEl = document.querySelector('.promo-slider');
+  promoSliderEl.addEventListener('mouseenter', promoStop);
+  promoSliderEl.addEventListener('mouseleave', promoStart);
+  promoStart();
+</script>
+</body>
+</html>

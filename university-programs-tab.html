@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programs — Acadia University — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE; --violet-deep:#5333C9;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:700;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-sm{padding:8px 14px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* university identity bar */
+  .uni-id-bar{background:var(--white);border-bottom:1px solid var(--border);}
+  .uni-id-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:16px;flex-wrap:wrap;}
+  .uni-id-left{display:flex;align-items:center;gap:13px;}
+  .uni-id-logo{width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+  .uni-id-name{font-size:18px;font-weight:800;letter-spacing:-.01em;}
+  .uni-id-loc{font-size:12.5px;color:var(--slate);display:flex;align-items:center;gap:5px;margin-top:2px;}
+
+  /* tab bar */
+  .tabbar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;}
+  .tabbar{display:flex;gap:6px;overflow-x:auto;}
+  .tab-btn{background:none;border:none;padding:15px 4px;margin-right:22px;font-size:13.5px;font-weight:700;color:var(--slate);border-bottom:2.5px solid transparent;white-space:nowrap;flex-shrink:0;}
+  .tab-btn.active{color:var(--ink);border-bottom-color:var(--royal);}
+  .tab-btn:hover{color:var(--ink);}
+
+  .page-head{padding:28px 0 4px;}
+  .page-eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--royal);margin-bottom:7px;}
+  .page-title{font-size:24px;font-weight:800;letter-spacing:-.015em;}
+  .page-sub{font-size:13.5px;color:var(--slate);margin-top:5px;max-width:620px;}
+
+  /* search + filters */
+  .search-filter-bar{padding:20px 0;display:flex;flex-direction:column;gap:12px;}
+  .search-row{display:flex;gap:10px;}
+  .search-input-wrap{flex:1;position:relative;}
+  .search-input-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--slate);}
+  .search-input{width:100%;padding:11px 14px 11px 40px;border:1px solid var(--border);border-radius:999px;font-size:13.5px;background:var(--white);}
+  .search-input:focus{outline:2px solid var(--royal);border-color:var(--royal);}
+  .filter-rows{display:flex;flex-direction:column;gap:9px;}
+  .filter-row-label{font-size:10.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+  .filter-pills{display:flex;gap:7px;flex-wrap:wrap;}
+  .filter-pill{background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;color:var(--slate);}
+  .filter-pill.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .result-count{font-size:12px;color:var(--slate);}
+
+  /* split layout */
+  .programs-split{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;padding-bottom:60px;align-items:start;}
+
+  /* dossier (left, large) — matches the verified-file pattern */
+  .dossier-card{background:var(--ink);border-radius:var(--r-xl);padding:28px;position:relative;overflow:hidden;color:var(--white);position:sticky;top:76px;}
+  .dossier-card::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 92% -10%, rgba(108,79,246,.32), transparent 60%);pointer-events:none;}
+  .dossier-inner{position:relative;z-index:1;}
+  .dossier-top-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+  .dossier-file-label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.45);text-transform:uppercase;}
+  .checked-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,163,137,.16);color:#5FE0C7;font-size:11px;font-weight:700;padding:6px 13px;border-radius:999px;border:1px solid rgba(95,224,199,.3);}
+  .dossier-rec-tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.05em;color:#9DB0FF;text-transform:uppercase;margin-bottom:14px;}
+  .dossier-id-row{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .dossier-logo{width:52px;height:52px;border-radius:13px;background:var(--white);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;}
+  .dossier-name{font-size:23px;font-weight:800;letter-spacing:-.015em;line-height:1.15;}
+  .dossier-level-badge{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:700;color:#9DB0FF;background:rgba(157,176,255,.12);padding:3px 10px;border-radius:999px;margin-top:6px;}
+  .dossier-divider{height:1px;background:rgba(255,255,255,.12);margin:18px 0;}
+  .dossier-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
+  .dossier-stat-val{font-size:19px;font-weight:800;}
+  .dossier-stat-label{font-size:9.5px;color:rgba(255,255,255,.48);text-transform:uppercase;letter-spacing:.03em;margin-top:4px;}
+  .dossier-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+  .dossier-tag-chip{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.8);font-size:11.5px;font-weight:600;padding:6px 13px;border-radius:999px;}
+
+  .dossier-section-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.03em;margin-bottom:12px;}
+  .intake-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:13px 16px;margin-bottom:9px;}
+  .intake-term{font-size:13px;font-weight:700;}
+  .intake-dates{display:flex;gap:16px;font-size:11px;color:rgba(255,255,255,.6);}
+  .intake-dates b{color:#fff;font-weight:700;}
+  .intake-status{font-family:var(--mono);font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;}
+  .intake-status.open{background:rgba(0,163,137,.18);color:#5FE0C7;}
+  .intake-status.closed{background:rgba(255,255,255,.08);color:rgba(255,255,255,.4);}
+
+  .dossier-cta-row{display:flex;gap:10px;margin-top:22px;}
+  .dossier-decor{position:absolute;right:24px;bottom:20px;opacity:.12;pointer-events:none;}
+
+  /* program list (right, scrollable) */
+  .list-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+  .list-panel-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .list-panel-title{font-size:11px;font-weight:700;color:var(--royal);text-transform:uppercase;letter-spacing:.04em;}
+  .list-panel-count{font-size:11px;color:var(--slate);}
+  .prog-list{max-height:640px;overflow-y:auto;}
+  .prog-row{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);cursor:pointer;border-left:3px solid transparent;transition:background .12s ease;}
+  .prog-row:last-child{border-bottom:none;}
+  .prog-row:hover{background:var(--paper);}
+  .prog-row.selected{background:var(--royal-soft);border-left-color:var(--royal);}
+  .prog-row-icon{width:34px;height:34px;border-radius:9px;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;}
+  .prog-row.selected .prog-row-icon{background:var(--royal);color:var(--white);}
+  .prog-row-name{font-size:13px;font-weight:700;line-height:1.35;}
+  .prog-row-meta{font-size:11px;color:var(--slate);margin-top:2px;}
+  .prog-row-chev{margin-left:auto;color:var(--slate);flex-shrink:0;}
+  .prog-row.selected .prog-row-chev{color:var(--royal);}
+  .empty-list{padding:50px 20px;text-align:center;color:var(--slate);font-size:13px;}
+
+  .trust{padding:20px 0 40px;text-align:center;font-size:11.5px;color:var(--slate);}
+
+  @media (max-width:900px){
+    .programs-split{grid-template-columns:1fr;}
+    .dossier-card{position:static;}
+    .dossier-stats{grid-template-columns:repeat(3,1fr);gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a href="#" class="back-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>All universities</a>
+    </div>
+  </div>
+
+  <div class="uni-id-bar">
+    <div class="wrap uni-id-inner">
+      <div class="uni-id-left">
+        <div class="uni-id-logo">AC</div>
+        <div>
+          <div class="uni-id-name">Acadia University</div>
+          <div class="uni-id-loc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Wolfville, Canada · Est. 1838</div>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Add to compare
+      </button>
+    </div>
+  </div>
+
+  <div class="tabbar-wrap">
+    <div class="wrap">
+      <div class="tabbar">
+        <button class="tab-btn">Overview</button>
+        <button class="tab-btn active">Programs</button>
+        <button class="tab-btn">Costs</button>
+        <button class="tab-btn">Requirements</button>
+        <button class="tab-btn">Your journey</button>
+        <button class="tab-btn">Scholarships</button>
+        <button class="tab-btn">Campus life</button>
+        <button class="tab-btn">Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="page-head">
+      <div class="page-eyebrow">Programs at Acadia University</div>
+      <div class="page-title">Explore every verified program, one file at a time.</div>
+      <div class="page-sub">Search or filter to narrow the list on the right — select any program to open its full file on the left. Tuition, duration and intake dates update with your selection.</div>
+    </div>
+
+    <div class="search-filter-bar">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input class="search-input" id="searchInput" placeholder="Search programs by name…" oninput="renderList(); renderDossier();">
+        </div>
+      </div>
+      <div class="filter-rows">
+        <div>
+          <div class="filter-row-label">Level</div>
+          <div class="filter-pills" id="levelFilters">
+            <button class="filter-pill active" data-level="all">All levels</button>
+            <button class="filter-pill" data-level="Bachelor's">Bachelor's</button>
+            <button class="filter-pill" data-level="Master's">Master's</button>
+          </div>
+        </div>
+        <div>
+          <div class="filter-row-label">Subject</div>
+          <div class="filter-pills" id="subjectFilters">
+            <button class="filter-pill active" data-subject="all">All subjects</button>
+            <button class="filter-pill" data-subject="Business">Business</button>
+            <button class="filter-pill" data-subject="Computer Science">Computer Science</button>
+            <button class="filter-pill" data-subject="Environmental Science">Environmental Science</button>
+            <button class="filter-pill" data-subject="Psychology">Psychology</button>
+            <button class="filter-pill" data-subject="Education">Education</button>
+            <button class="filter-pill" data-subject="Kinesiology">Kinesiology</button>
+            <button class="filter-pill" data-subject="Biology">Biology</button>
+            <button class="filter-pill" data-subject="English">English</button>
+          </div>
+        </div>
+      </div>
+      <div class="result-count" id="resultCount">Showing all 10 programs</div>
+    </div>
+
+    <div class="programs-split">
+      <div id="dossierContainer"></div>
+
+      <div class="list-panel">
+        <div class="list-panel-head">
+          <span class="list-panel-title">Browse programs</span>
+          <span class="list-panel-count" id="listCount">10 verified files</span>
+        </div>
+        <div class="prog-list" id="progList"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="trust">Backed by The Daily Star · Every program checked against the university's own published fee schedule.</footer>
+
+<script>
+// ============ DATA — matching the programs / UV / intakes schema ============
+var UV = { name: 'Acadia University', logo: 'AC', city: 'Wolfville', country_code: 'CA' };
+
+var PROGRAMS = [
+  { id:'bba', name:'Bachelor of Business Administration', program_level:"Bachelor's", tuition:25172, currency:'CAD', length_months:48, success_score:88, tags:['Business','High job availability','Top programs'] },
+  { id:'bcs', name:'Bachelor of Science — Computer Science', program_level:"Bachelor's", tuition:25172, currency:'CAD', length_months:48, success_score:91, tags:['Computer Science','High job availability','Top programs'] },
+  { id:'benv', name:'Bachelor of Science — Environmental Science', program_level:"Bachelor's", tuition:25172, currency:'CAD', length_months:48, success_score:82, tags:['Environmental Science','Research-intensive'] },
+  { id:'bpsy', name:'Bachelor of Arts — Psychology', program_level:"Bachelor's", tuition:25172, currency:'CAD', length_months:48, success_score:85, tags:['Psychology','Popular'] },
+  { id:'bed', name:'Bachelor of Education', program_level:"Bachelor's", tuition:26190, currency:'CAD', length_months:24, success_score:93, tags:['Education','High job availability'] },
+  { id:'bkin', name:'Bachelor of Science — Kinesiology', program_level:"Bachelor's", tuition:25172, currency:'CAD', length_months:48, success_score:84, tags:['Kinesiology','Health Sciences'] },
+  { id:'beng', name:'Bachelor of Arts — English', program_level:"Bachelor's", tuition:25172, currency:'CAD', length_months:48, success_score:79, tags:['English','Humanities'] },
+  { id:'mba', name:'Master of Business Administration', program_level:"Master's", tuition:28000, currency:'CAD', length_months:24, success_score:90, tags:['Business','Top programs'] },
+  { id:'med', name:'Master of Education', program_level:"Master's", tuition:22000, currency:'CAD', length_months:24, success_score:89, tags:['Education'] },
+  { id:'mbio', name:'Master of Science — Biology', program_level:"Master's", tuition:24000, currency:'CAD', length_months:24, success_score:86, tags:['Biology','Research-intensive'] }
+];
+
+var INTAKES = {
+  bba: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-02-01'}, {start_date:'2027-01-06', open_date:'2026-06-01', submission_deadline:'2026-11-01'} ],
+  bcs: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-02-01'} ],
+  benv: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-02-01'} ],
+  bpsy: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-02-01'}, {start_date:'2027-01-06', open_date:'2026-06-01', submission_deadline:'2026-11-01'} ],
+  bed: [ {start_date:'2026-09-03', open_date:'2025-11-01', submission_deadline:'2026-03-01'} ],
+  bkin: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-02-01'} ],
+  beng: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-02-01'}, {start_date:'2027-01-06', open_date:'2026-06-01', submission_deadline:'2026-11-01'} ],
+  mba: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-04-01'} ],
+  med: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-04-01'}, {start_date:'2027-01-06', open_date:'2026-06-01', submission_deadline:'2026-11-15'} ],
+  mbio: [ {start_date:'2026-09-03', open_date:'2025-10-01', submission_deadline:'2026-04-01'} ]
+};
+
+var CURRENCY_SYMBOL = { CAD: 'CAD $' };
+var TODAY = new Date('2026-09-14');
+
+var state = { search:'', level:'all', subject:'all', selectedId:'bba' };
+
+function filteredPrograms(){
+  var q = state.search.trim().toLowerCase();
+  return PROGRAMS.filter(function(p){
+    if(state.level !== 'all' && p.program_level !== state.level) return false;
+    if(state.subject !== 'all' && p.tags.indexOf(state.subject) === -1) return false;
+    if(q && p.name.toLowerCase().indexOf(q) === -1) return false;
+    return true;
+  });
+}
+
+function formatDate(d){
+  var parts = d.split('-');
+  var dt = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  return dt.toLocaleDateString('en-US', {day:'numeric', month:'short', year:'numeric'});
+}
+function monthsToDuration(m){
+  var yrs = Math.floor(m/12), rem = m%12;
+  if(rem === 0) return yrs + ' year' + (yrs>1?'s':'');
+  return yrs + 'y ' + rem + 'mo';
+}
+function initialsFor(name){
+  return name.replace(/^(Bachelor of|Bachelor of Science —|Bachelor of Arts —|Master of|Master of Science —)\s*/,'').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
+}
+
+// ============ RENDER: program list ============
+function renderList(){
+  state.search = document.getElementById('searchInput').value;
+  var list = filteredPrograms();
+  document.getElementById('resultCount').textContent = list.length === PROGRAMS.length
+    ? 'Showing all ' + list.length + ' programs' : 'Showing ' + list.length + ' of ' + PROGRAMS.length + ' programs';
+  document.getElementById('listCount').textContent = list.length + ' verified file' + (list.length===1?'':'s');
+
+  var wrap = document.getElementById('progList');
+  wrap.innerHTML = '';
+  if(list.length === 0){
+    wrap.innerHTML = '<div class="empty-list">No programs match those filters. Try clearing one.</div>';
+    return;
+  }
+  // if current selection got filtered out, select the first visible program
+  if(!list.some(function(p){ return p.id === state.selectedId; })){
+    state.selectedId = list[0].id;
+  }
+  list.forEach(function(p){
+    var row = document.createElement('div');
+    row.className = 'prog-row' + (p.id === state.selectedId ? ' selected' : '');
+    row.innerHTML =
+      '<div class="prog-row-icon">' + initialsFor(p.name) + '</div>' +
+      '<div><div class="prog-row-name">' + p.name + '</div><div class="prog-row-meta">' + p.program_level + ' · ' + CURRENCY_SYMBOL[p.currency] + p.tuition.toLocaleString('en-US') + '/yr</div></div>' +
+      '<svg class="prog-row-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>';
+    row.onclick = function(){ state.selectedId = p.id; renderList(); renderDossier(); };
+    wrap.appendChild(row);
+  });
+}
+
+// ============ RENDER: dossier ============
+function renderDossier(){
+  var p = PROGRAMS.find(function(x){ return x.id === state.selectedId; });
+  var wrap = document.getElementById('dossierContainer');
+  if(!p){ wrap.innerHTML = ''; return; }
+  var intakes = INTAKES[p.id] || [];
+
+  var intakesHtml = intakes.map(function(ik){
+    var deadline = new Date(ik.submission_deadline);
+    var isOpen = deadline >= TODAY;
+    var termLabel = new Date(ik.start_date).toLocaleDateString('en-US', {month:'long', year:'numeric'}) + ' intake';
+    return '<div class="intake-row">' +
+      '<div><div class="intake-term">' + termLabel + '</div><div class="intake-dates">' +
+        '<span>Opens <b>' + formatDate(ik.open_date) + '</b></span>' +
+        '<span>Deadline <b>' + formatDate(ik.submission_deadline) + '</b></span>' +
+        '<span>Starts <b>' + formatDate(ik.start_date) + '</b></span>' +
+      '</div></div>' +
+      '<span class="intake-status ' + (isOpen?'open':'closed') + '">' + (isOpen?'Open':'Closed') + '</span>' +
+    '</div>';
+  }).join('');
+  if(intakes.length === 0){ intakesHtml = '<div style="font-size:12.5px;color:rgba(255,255,255,.5);">No open intakes published for this program yet.</div>'; }
+
+  wrap.innerHTML =
+    '<div class="dossier-card">' +
+      '<div class="dossier-inner">' +
+        '<div class="dossier-top-row">' +
+          '<div class="dossier-file-label">Verified program file</div>' +
+          '<span class="checked-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg>Checked by Aspire</span>' +
+        '</div>' +
+        '<div class="dossier-rec-tag">' + (p.tags[0] || '').toUpperCase() + ' · AT ' + UV.name.toUpperCase() + '</div>' +
+        '<div class="dossier-id-row">' +
+          '<div class="dossier-logo">' + UV.logo + '</div>' +
+          '<div><div class="dossier-name">' + p.name + '</div><span class="dossier-level-badge">' + p.program_level + '</span></div>' +
+        '</div>' +
+        '<div class="dossier-divider"></div>' +
+        '<div class="dossier-stats">' +
+          '<div><div class="dossier-stat-val">' + CURRENCY_SYMBOL[p.currency] + p.tuition.toLocaleString('en-US') + '</div><div class="dossier-stat-label">Typical annual tuition</div></div>' +
+          '<div><div class="dossier-stat-val">' + monthsToDuration(p.length_months) + '</div><div class="dossier-stat-label">Programme length</div></div>' +
+          '<div><div class="dossier-stat-val">' + p.success_score + '/100</div><div class="dossier-stat-label">Aspire success score</div></div>' +
+        '</div>' +
+        '<div class="dossier-tags">' + p.tags.map(function(t){ return '<span class="dossier-tag-chip">' + t + '</span>'; }).join('') + '</div>' +
+        '<div class="dossier-section-label">Intakes</div>' +
+        intakesHtml +
+        '<div class="dossier-cta-row">' +
+          '<button class="btn btn-primary" style="flex:1;justify-content:center;">View full program details →</button>' +
+          '<button class="btn btn-outline" style="background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2);color:#fff;">Save</button>' +
+        '</div>' +
+      '</div>' +
+      '<svg class="dossier-decor" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.3"><path d="M3 9l9-6 9 6-9 6-9-6z"/><path d="M12 15v6M6 12v5c0 1 3 2 6 2s6-1 6-2v-5"/></svg>' +
+    '</div>';
+}
+
+// ============ FILTERS ============
+document.querySelectorAll('#levelFilters .filter-pill').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    state.level = btn.dataset.level;
+    document.querySelectorAll('#levelFilters .filter-pill').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderList();
+    renderDossier();
+  });
+});
+document.querySelectorAll('#subjectFilters .filter-pill').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    state.subject = btn.dataset.subject;
+    document.querySelectorAll('#subjectFilters .filter-pill').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderList();
+    renderDossier();
+  });
+});
+
+renderList();
+renderDossier();
+</script>
+</body>
+</html>

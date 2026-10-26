@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stories & Guides — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .topnav-links{display:flex;gap:26px;font-size:13px;color:rgba(255,255,255,.75);}
+  .topnav-links a:hover{color:var(--white);}
+  .topnav-links .current{color:var(--white);font-weight:700;}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-sm{padding:8px 14px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* hero */
+  .hero{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:44px 0 36px;}
+  .hero-eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9DB0FF;margin-bottom:12px;}
+  .hero-title{font-size:clamp(30px,4.2vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.08;margin-bottom:10px;}
+  .hero-title span{color:#9DB0FF;}
+  .hero-sub{font-size:15px;color:rgba(255,255,255,.68);max-width:600px;line-height:1.6;margin-bottom:24px;}
+  .search-row{display:flex;gap:10px;max-width:520px;}
+  .search-input{flex:1;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:12px 20px;color:var(--white);font-size:13.5px;}
+  .search-input::placeholder{color:rgba(255,255,255,.45);}
+  .search-input:focus{outline:none;border-color:#9DB0FF;background:rgba(255,255,255,.14);}
+
+  .content-section{padding:36px 0;}
+  .section-divider{border-top:1px solid var(--border);}
+  .section-head-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;}
+  .section-head-left .sec-label{margin-bottom:4px;}
+  .section-head-title{font-size:19px;font-weight:800;letter-spacing:-.01em;}
+  .see-all-link{font-size:12.5px;font-weight:700;color:var(--royal);white-space:nowrap;}
+  .sec-label{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--violet);text-transform:uppercase;margin-bottom:8px;}
+  .sec-title{font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:18px;}
+
+  /* featured */
+  .featured-card{display:grid;grid-template-columns:1.3fr 1fr;overflow:hidden;cursor:pointer;transition:box-shadow .2s ease;}
+  .featured-card:hover{box-shadow:0 20px 40px -24px rgba(14,27,61,.35);}
+  .featured-media{background:linear-gradient(135deg,#2547F4,#6C4FF6);min-height:260px;display:flex;align-items:center;justify-content:center;position:relative;}
+  .featured-play{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;color:var(--white);backdrop-filter:blur(4px);}
+  .featured-duration{position:absolute;bottom:14px;right:14px;background:rgba(14,27,61,.7);color:var(--white);font-family:var(--mono);font-size:11px;padding:4px 9px;border-radius:6px;}
+  .featured-body{padding:30px 32px;display:flex;flex-direction:column;justify-content:center;}
+  .featured-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--violet);background:var(--violet-soft);padding:5px 11px;border-radius:999px;width:fit-content;margin-bottom:14px;}
+  .featured-title{font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.25;margin-bottom:10px;}
+  .featured-excerpt{font-size:13.5px;color:var(--slate);line-height:1.6;margin-bottom:16px;}
+  .featured-meta{font-size:11.5px;color:var(--slate);}
+  .featured-read-icon{width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;color:var(--white);backdrop-filter:blur(4px);}
+  .featured-tag.read-variant{color:var(--royal-dark);background:var(--royal-soft);}
+
+  /* Partner / sponsored content — deliberately distinct treatment */
+  .partner-section{background:var(--slate-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .partner-explainer{font-size:12.5px;color:var(--slate);max-width:560px;line-height:1.55;margin-bottom:20px;}
+  .partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .partner-card{background:var(--white);border:1.5px dashed #C7CCD9;border-radius:var(--r-lg);padding:18px;position:relative;cursor:pointer;transition:border-color .15s ease;}
+  .partner-card:hover{border-color:var(--slate);}
+  .sponsored-badge{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.05em;color:var(--slate);background:var(--slate-soft);padding:4px 8px;border-radius:5px;border:1px solid var(--border);}
+  .partner-brand-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .partner-logo{width:36px;height:36px;border-radius:9px;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;}
+  .partner-name{font-size:12.5px;font-weight:700;}
+  .partner-type{font-size:10px;color:var(--slate);}
+  .partner-title{font-size:13.5px;font-weight:700;line-height:1.4;margin-bottom:8px;padding-right:60px;}
+  .partner-excerpt{font-size:11.5px;color:var(--slate);line-height:1.5;margin-bottom:12px;}
+  .partner-cta{font-size:11.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:5px;}
+
+  /* filters */
+  .filter-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:22px;}
+  .filter-group{display:flex;gap:7px;flex-wrap:wrap;}
+  .filter-pill{background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:8px 15px;font-size:12px;font-weight:700;color:var(--slate);}
+  .filter-pill.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .type-toggle{display:flex;background:var(--slate-soft);border-radius:999px;padding:3px;}
+  .type-btn{border:none;background:none;padding:7px 15px;font-size:12px;font-weight:700;color:var(--slate);border-radius:999px;}
+  .type-btn.active{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(14,27,61,.12);}
+  .result-count{font-size:12px;color:var(--slate);margin-bottom:16px;}
+
+  /* content grid */
+  .content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .content-card{overflow:hidden;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease;}
+  .content-card:hover{border-color:var(--royal);box-shadow:0 14px 28px -20px rgba(37,71,244,.3);}
+  .cc-media{height:130px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .cc-play{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--white);}
+  .cc-duration{position:absolute;bottom:9px;right:9px;background:rgba(14,27,61,.7);color:var(--white);font-family:var(--mono);font-size:10px;padding:3px 7px;border-radius:5px;}
+  .cc-body{padding:16px 17px;}
+  .cc-tag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+  .cc-tag{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;}
+  .cc-tag.read{background:var(--royal-soft);color:var(--royal-dark);}
+  .cc-tag.watch{background:var(--violet-soft);color:#5333C9;}
+  .cc-cat{font-size:10px;color:var(--slate);font-weight:600;}
+  .cc-title{font-size:13.5px;font-weight:700;line-height:1.4;margin-bottom:8px;}
+  .cc-excerpt{font-size:11.5px;color:var(--slate);line-height:1.5;margin-bottom:10px;}
+  .cc-meta{font-size:10.5px;color:var(--slate);border-top:1px solid var(--border);padding-top:10px;}
+
+  .empty-state{text-align:center;padding:60px 20px;color:var(--slate);font-size:13px;grid-column:1/-1;}
+
+  .trust{padding:30px 0 40px;text-align:center;font-size:11.5px;color:var(--slate);}
+
+  @media (max-width:860px){
+    .featured-card{grid-template-columns:1fr;}
+    .content-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .content-grid{grid-template-columns:1fr;}
+    .filter-row{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <div class="topnav-links">
+        <a href="#">Destinations</a>
+        <a href="#">Scholarships</a>
+        <a href="#">Partners</a>
+        <a href="#" class="current">Stories</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-eyebrow">Stories & Guides</div>
+      <div class="hero-title">Everything useful,<br><span>written or filmed by people who've done it.</span></div>
+      <div class="hero-sub">Real costs, real visa files, real timelines. No sales pitch disguised as advice — just what actually helps, in whichever format you'd rather absorb it.</div>
+      <div class="search-row">
+        <input class="search-input" id="searchInput" placeholder="Search articles and videos…" oninput="renderArticles(); renderVideos();">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ARTICLES ============ -->
+  <div class="wrap content-section">
+    <div class="section-head-row">
+      <div class="section-head-left">
+        <div class="sec-label">Articles</div>
+        <div class="section-head-title">Read when you've got a question to answer.</div>
+      </div>
+    </div>
+
+    <div class="card featured-card" id="featuredArticleCard" onclick="location.href='article-detail.html'" style="margin-bottom:24px;">
+      <div class="featured-media">
+        <div class="featured-read-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></div>
+      </div>
+      <div class="featured-body">
+        <div class="featured-tag read-variant">READ · FEATURED</div>
+        <div class="featured-title">The real cost of your first year abroad.</div>
+        <div class="featured-excerpt">Tuition is never the whole number. A country-by-country breakdown of what actually adds up before you land.</div>
+        <div class="featured-meta">Aspire Desk · Money & Costs · 10 min read</div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-group" id="articleCatFilters">
+        <button class="filter-pill active" data-cat="all" onclick="setArticleFilter('all',this)">All topics</button>
+        <button class="filter-pill" data-cat="money" onclick="setArticleFilter('money',this)">Money & Costs</button>
+        <button class="filter-pill" data-cat="visa" onclick="setArticleFilter('visa',this)">Visa & Immigration</button>
+        <button class="filter-pill" data-cat="country" onclick="setArticleFilter('country',this)">Country Guides</button>
+        <button class="filter-pill" data-cat="scholarship" onclick="setArticleFilter('scholarship',this)">Scholarships</button>
+        <button class="filter-pill" data-cat="application" onclick="setArticleFilter('application',this)">Application & Documents</button>
+        <button class="filter-pill" data-cat="advice" onclick="setArticleFilter('advice',this)">Agencies & Advice</button>
+        <button class="filter-pill" data-cat="stories" onclick="setArticleFilter('stories',this)">Real Stories</button>
+      </div>
+    </div>
+    <div class="result-count" id="articleResultCount">Showing all articles</div>
+    <div class="content-grid" id="articleGrid"></div>
+  </div>
+
+  <!-- ============ VIDEOS ============ -->
+  <div class="wrap content-section section-divider">
+    <div class="section-head-row">
+      <div class="section-head-left">
+        <div class="sec-label">Videos</div>
+        <div class="section-head-title">Watch when you'd rather see it than read it.</div>
+      </div>
+    </div>
+
+    <div class="card featured-card" onclick="location.href='video-detail.html'" style="margin-bottom:24px;">
+      <div class="featured-media">
+        <div class="featured-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="featured-duration">8 min</div>
+      </div>
+      <div class="featured-body">
+        <div class="featured-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>WATCH · FEATURED</div>
+        <div class="featured-title">How to choose your first country when every tab says "best."</div>
+        <div class="featured-excerpt">A useful first conversation for students comparing countries, costs, and the shape of life after graduation — not a ranking, a way of thinking about the decision.</div>
+        <div class="featured-meta">Aspire Desk · Country Guides</div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-group" id="videoCatFilters">
+        <button class="filter-pill active" data-cat="all" onclick="setVideoFilter('all',this)">All topics</button>
+        <button class="filter-pill" data-cat="scholarship" onclick="setVideoFilter('scholarship',this)">Scholarships</button>
+        <button class="filter-pill" data-cat="application" onclick="setVideoFilter('application',this)">Application & Documents</button>
+        <button class="filter-pill" data-cat="country" onclick="setVideoFilter('country',this)">Country Guides</button>
+      </div>
+    </div>
+    <div class="result-count" id="videoResultCount">Showing all videos</div>
+    <div class="content-grid" id="videoGrid"></div>
+  </div>
+
+  <!-- ============ PARTNER CONTENT ============ -->
+  <div class="partner-section">
+    <div class="wrap content-section">
+      <div class="sec-label">Partner Content</div>
+      <div class="section-head-title" style="margin-bottom:10px;">Produced by our verified partners.</div>
+      <div class="partner-explainer">Clearly marked, always. These pieces are written or commissioned by the banks and agencies verified on this platform — useful, but worth reading knowing who's speaking. Nothing here affects how destinations, universities or scholarships are ranked elsewhere on aspire.world.</div>
+      <div class="partner-grid" id="partnerGrid"></div>
+    </div>
+  </div>
+
+  <footer class="trust">Backed by The Daily Star · Study abroad, with context.</footer>
+
+
+<script>
+var CATEGORY_LABELS = {money:'Money & Costs', visa:'Visa & Immigration', country:'Country Guides', scholarship:'Scholarships', application:'Application & Documents', advice:'Agencies & Advice', stories:'Real Stories'};
+
+var ARTICLES = [
+  {cat:'money', title:'The real cost of your first year abroad', excerpt:'Tuition is never the whole number. A country-by-country breakdown of what actually adds up before you land.', readtime:'10 min read', source:'Aspire Desk'},
+  {cat:'visa', title:'A visa file that does not make your head hurt', excerpt:'The document order that actually matters, and the three mistakes that cause the most delays.', readtime:'7 min read', source:'Aspire Desk'},
+  {cat:'advice', title:'Seven questions to ask an agency first', excerpt:'Before you sign anything, ask these — and notice which ones they answer directly.', readtime:'6 min read', source:'Aspire Desk'},
+  {cat:'money', title:"Why your blocked account isn't the same as savings", excerpt:"Germany's Sperrkonto system explained plainly — what it releases, when, and why you can't just withdraw it.", readtime:'8 min read', source:'Aspire Desk'},
+  {cat:'money', title:'Student loans without collateral: what Bangladeshi banks actually offer', excerpt:'A realistic look at unsecured education loan options and what lenders actually check.', readtime:'9 min read', source:'Aspire Desk'},
+  {cat:'visa', title:'What "Genuine Student" checks actually look for', excerpt:"Australia's GS requirement replaced the old GTE test in 2024 — here's what officers actually assess.", readtime:'6 min read', source:'Aspire Desk'},
+  {cat:'visa', title:"Reading Australia's Evidence Level system, in plain English", excerpt:'Why Bangladesh moved tiers overnight in January 2026, and what it actually changes for your application.', readtime:'7 min read', source:'Aspire Desk'},
+  {cat:'visa', title:'The paperwork nobody warns you about', excerpt:'Anmeldung, CAQ, Sperrkonto — a glossary of the bureaucratic terms every destination hides in plain sight.', readtime:'8 min read', source:'Aspire Desk'},
+  {cat:'country', title:'Reversed seasons, real consequences', excerpt:'Planning a Bangladeshi winter wardrobe for an Australian summer, and vice versa.', readtime:'5 min read', source:'Aspire Desk'},
+  {cat:'country', title:"Why Canada's cheapest city might not be your cheapest option", excerpt:"Tuition, living costs and job markets don't always move together — a real comparison across ten cities.", readtime:'9 min read', source:'Aspire Desk'},
+  {cat:'scholarship', title:'How Erasmus Mundus actually works', excerpt:"It's not one scholarship — it's hundreds of independent programmes. Here's the difference that matters.", readtime:'7 min read', source:'Aspire Desk'},
+  {cat:'scholarship', title:'What makes a strong Erasmus Mundus motivation letter?', excerpt:'The five questions every reviewer is really asking, even when the prompt does not say so directly.', readtime:'6 min read', source:'Aspire Desk'},
+  {cat:'scholarship', title:'Chevening vs. Erasmus Mundus: which one actually fits you?', excerpt:'Two of the most-asked-about scholarships, compared honestly on what each actually rewards.', readtime:'8 min read', source:'Aspire Desk'},
+  {cat:'application', title:'Document preparation, country by country', excerpt:'Attestation, apostilles and translation requirements vary more than students expect.', readtime:'10 min read', source:'Aspire Desk'},
+  {cat:'application', title:'The last-week review checklist that actually catches mistakes', excerpt:'The specific things reviewers say get missed most often, in the final 72 hours.', readtime:'5 min read', source:'Aspire Desk'},
+  {cat:'stories', title:'Waiting well: what a normal Erasmus timeline looks like', excerpt:'Real turnaround times from real applicants, so the silence after submitting feels less alarming.', readtime:'6 min read', source:'Aspire Desk'},
+  {cat:'stories', title:'What I wish I knew before my first winter abroad', excerpt:'A Bangladeshi student on the adjustment nobody prepares you for — and what actually helped.', readtime:'7 min read', source:'Student voices'},
+  {cat:'advice', title:"What 'verified partner' actually means on this platform", excerpt:'The specific checks an agency or bank goes through before earning that badge — and what it does not guarantee.', readtime:'5 min read', source:'Aspire Desk'}
+];
+
+var VIDEOS = [
+  {cat:'country', title:'How to choose your first country when every tab says "best."', excerpt:'A useful first conversation for students comparing countries, costs, and the shape of life after graduation.', duration:'8 min', source:'Aspire Desk'},
+  {cat:'scholarship', title:'Inside the Erasmus Mundus application process', excerpt:'A walkthrough of what actually happens between submitting and hearing back.', duration:'11 min', source:'Aspire Desk'},
+  {cat:'application', title:'Getting transcripts translated and attested', excerpt:'A practical walkthrough of the process most students only learn about after missing a deadline.', duration:'6 min', source:'Aspire Desk'}
+];
+
+var PARTNER_CONTENT = [
+  {partner:'Pubali Bank', partnerInitials:'PB', partnerType:'Financial Partner', title:"What our education loan actually covers — and what it doesn't", excerpt:'A plain breakdown of processing fees, margin money, and what counts as an eligible expense.', cta:"Read on Pubali Bank's page"},
+  {partner:'EduBridge Bangladesh', partnerInitials:'EB', partnerType:'Verified Agency', title:'What we tell every student before their UK visa interview', excerpt:'Our own checklist, used with the 120+ students we file for every year.', cta:"Read EduBridge's guide"},
+  {partner:'Pubali Bank', partnerInitials:'PB', partnerType:'Financial Partner', title:'Disbursement timelines: what actually happens after approval', excerpt:'A realistic week-by-week look at how disbursement lines up against your I-20 or CAS deadline.', cta:"Read on Pubali Bank's page"}
+];
+
+var GRADIENTS = [
+  'linear-gradient(135deg,#2547F4,#1B36C4)', 'linear-gradient(135deg,#6C4FF6,#5333C9)',
+  'linear-gradient(135deg,#00A389,#00806C)', 'linear-gradient(135deg,#2547F4,#6C4FF6)',
+  'linear-gradient(135deg,#152A5C,#2547F4)', 'linear-gradient(135deg,#5333C9,#2547F4)'
+];
+
+var articleFilter = 'all';
+var videoFilter = 'all';
+
+function setArticleFilter(val, btn){
+  articleFilter = val;
+  document.getElementById('articleCatFilters').querySelectorAll('.filter-pill').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderArticles();
+}
+function setVideoFilter(val, btn){
+  videoFilter = val;
+  document.getElementById('videoCatFilters').querySelectorAll('.filter-pill').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderVideos();
+}
+
+function matchesQuery(item, query){
+  return !query || item.title.toLowerCase().indexOf(query) > -1 || item.excerpt.toLowerCase().indexOf(query) > -1;
+}
+
+function buildCard(item, type, i){
+  var card = document.createElement('div');
+  card.className = 'card content-card';
+  var grad = GRADIENTS[i % GRADIENTS.length];
+  var mediaHtml = type === 'video'
+    ? '<div class="cc-media" style="background:' + grad + ';"><div class="cc-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="cc-duration">' + item.duration + '</div></div>'
+    : '<div class="cc-media" style="background:' + grad + ';"></div>';
+  var tagHtml = type === 'video' ? '<span class="cc-tag watch">WATCH</span>' : '<span class="cc-tag read">READ</span>';
+  card.innerHTML = mediaHtml +
+    '<div class="cc-body">' +
+      '<div class="cc-tag-row">' + tagHtml + '<span class="cc-cat">' + CATEGORY_LABELS[item.cat] + '</span></div>' +
+      '<div class="cc-title">' + item.title + '</div>' +
+      '<div class="cc-excerpt">' + item.excerpt + '</div>' +
+      '<div class="cc-meta">' + item.source + ' · ' + (type === 'video' ? item.duration : item.readtime) + '</div>' +
+    '</div>';
+  card.onclick = function(){ location.href = type === 'video' ? 'video-detail.html' : 'article-detail.html'; };
+  return card;
+}
+
+function renderArticles(){
+  var grid = document.getElementById('articleGrid');
+  var query = document.getElementById('searchInput').value.trim().toLowerCase();
+  var list = ARTICLES.filter(function(item){
+    if(articleFilter !== 'all' && item.cat !== articleFilter) return false;
+    return matchesQuery(item, query);
+  });
+  document.getElementById('articleResultCount').textContent = list.length === ARTICLES.length
+    ? 'Showing all ' + list.length + ' articles' : 'Showing ' + list.length + ' of ' + ARTICLES.length + ' articles';
+  grid.innerHTML = '';
+  if(list.length === 0){ grid.innerHTML = '<div class="empty-state">Nothing matches yet — try a different term or filter.</div>'; return; }
+  list.forEach(function(item, i){ grid.appendChild(buildCard(item, 'article', i)); });
+}
+
+function renderVideos(){
+  var grid = document.getElementById('videoGrid');
+  var query = document.getElementById('searchInput').value.trim().toLowerCase();
+  var list = VIDEOS.filter(function(item){
+    if(videoFilter !== 'all' && item.cat !== videoFilter) return false;
+    return matchesQuery(item, query);
+  });
+  document.getElementById('videoResultCount').textContent = list.length === VIDEOS.length
+    ? 'Showing all ' + list.length + ' videos' : 'Showing ' + list.length + ' of ' + VIDEOS.length + ' videos';
+  grid.innerHTML = '';
+  if(list.length === 0){ grid.innerHTML = '<div class="empty-state">Nothing matches yet — try a different term or filter.</div>'; return; }
+  list.forEach(function(item, i){ grid.appendChild(buildCard(item, 'video', i)); });
+}
+
+function renderPartnerGrid(){
+  var grid = document.getElementById('partnerGrid');
+  grid.innerHTML = '';
+  PARTNER_CONTENT.forEach(function(item){
+    var card = document.createElement('div');
+    card.className = 'partner-card';
+    card.innerHTML =
+      '<span class="sponsored-badge">SPONSORED</span>' +
+      '<div class="partner-brand-row"><div class="partner-logo">' + item.partnerInitials + '</div><div><div class="partner-name">' + item.partner + '</div><div class="partner-type">' + item.partnerType + '</div></div></div>' +
+      '<div class="partner-title">' + item.title + '</div>' +
+      '<div class="partner-excerpt">' + item.excerpt + '</div>' +
+      '<div class="partner-cta">' + item.cta + ' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>';
+    card.onclick = function(){ location.href = 'article-detail.html'; };
+    grid.appendChild(card);
+  });
+}
+
+renderArticles();
+renderVideos();
+renderPartnerGrid();
+</script>
+</body>
+</html>

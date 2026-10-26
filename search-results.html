@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Search — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{max-width:1080px;margin:0 auto;padding:15px 28px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* HERO */
+  .hero{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(460px 280px at 90% -10%, rgba(108,79,246,.32), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:52px 0 44px;}
+  .hero-eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#9DB0FF;margin-bottom:14px;}
+  .hero-title{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.08;margin-bottom:26px;max-width:640px;}
+
+  .search-box{display:flex;align-items:center;gap:14px;background:var(--white);border-radius:999px;padding:18px 26px;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);}
+  .search-box svg{color:var(--slate);flex-shrink:0;}
+  .search-input{border:none;outline:none;font-size:19px;width:100%;background:none;color:var(--ink);font-weight:500;}
+  .search-input::placeholder{color:#A6ACBE;}
+  .search-clear{color:var(--slate);flex-shrink:0;display:none;width:32px;height:32px;border-radius:50%;background:var(--slate-soft);align-items:center;justify-content:center;border:none;transition:background .15s ease;}
+  .search-clear:hover{background:var(--border);color:var(--ink);}
+  .search-clear.show{display:flex;}
+
+  .chip-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px;align-items:center;}
+  .chip-row-label{font-size:12.5px;color:rgba(255,255,255,.5);margin-right:2px;}
+  .sugg-chip{font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--white);}
+  .sugg-chip:hover{background:rgba(255,255,255,.16);}
+
+  /* RESULT META BAR */
+  .meta-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding:32px 0 20px;}
+  .result-count{font-size:15px;color:var(--slate);}
+  .result-count b{color:var(--ink);font-weight:700;}
+
+  .tab-bar{display:flex;gap:9px;overflow-x:auto;margin-bottom:36px;padding-bottom:4px;}
+  .tab-btn{background:var(--white);border:1.5px solid var(--border);border-radius:999px;font-size:13.5px;font-weight:700;color:var(--slate);padding:11px 19px;white-space:nowrap;display:flex;align-items:center;gap:9px;transition:background .15s ease,border-color .15s ease,color .15s ease;}
+  .tab-btn.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .tab-btn:hover:not(.active){border-color:var(--royal);color:var(--ink);}
+  .tab-count{font-family:var(--mono);font-size:11px;color:var(--slate);background:var(--slate-soft);padding:2px 9px;border-radius:999px;}
+  .tab-btn.active .tab-count{background:rgba(255,255,255,.18);color:var(--white);}
+
+  /* GROUPS */
+  .result-group{margin-bottom:52px;}
+  .group-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;}
+  .group-title{font-size:19px;font-weight:800;letter-spacing:-.01em;}
+  .group-title-count{font-family:var(--mono);font-size:13px;color:var(--slate);font-weight:500;margin-left:8px;}
+  .group-see-all{font-size:13.5px;font-weight:700;color:var(--royal);}
+
+  /* IMAGE CARDS (university / country) */
+  .image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  .image-card{border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border);background:var(--white);transition:transform .18s ease,box-shadow .18s ease;position:relative;}
+  .image-card:hover{transform:translateY(-3px);box-shadow:0 22px 44px -22px rgba(14,27,61,.4);}
+  .image-photo{height:150px;position:relative;overflow:hidden;}
+  .image-photo svg{width:100%;height:100%;display:block;transition:transform .3s ease;}
+  .image-card:hover .image-photo svg{transform:scale(1.05);}
+  .image-flag-badge{position:absolute;top:14px;left:14px;background:rgba(14,27,61,.55);backdrop-filter:blur(4px);color:var(--white);font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px;display:flex;align-items:center;gap:6px;z-index:2;}
+  .image-save-btn{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(14,27,61,.55);backdrop-filter:blur(4px);color:var(--white);display:flex;align-items:center;justify-content:center;z-index:2;opacity:0;transition:opacity .15s ease;}
+  .image-card:hover .image-save-btn{opacity:1;}
+  .image-save-btn.saved{opacity:1;background:var(--teal);}
+  .image-body{padding:20px 22px 22px;}
+  .image-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;}
+  .image-title{font-size:19px;font-weight:800;letter-spacing:-.01em;line-height:1.2;}
+  .image-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0;}
+  .image-sub{font-size:13.5px;color:var(--slate);line-height:1.55;margin-bottom:14px;}
+  .image-stat-row{display:flex;gap:16px;flex-wrap:wrap;}
+  .image-stat{font-size:12.5px;color:var(--ink);font-weight:600;display:flex;align-items:center;gap:5px;}
+  .image-stat svg{color:var(--slate);flex-shrink:0;}
+
+  /* RICH ROWS (scholarship / agency / bank) */
+  .rich-row{display:flex;gap:20px;padding:24px 26px;margin-bottom:14px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;align-items:flex-start;}
+  .rich-row:hover{transform:translateY(-2px);box-shadow:0 20px 40px -22px rgba(14,27,61,.35);}
+  .rich-icon{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;color:var(--white);flex-shrink:0;}
+  .rich-body{flex:1;min-width:0;}
+  .rich-title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .rich-title{font-size:18px;font-weight:800;letter-spacing:-.01em;}
+  .rich-flag{font-size:16px;}
+  .rich-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+  .rich-sub{font-size:13.5px;color:var(--slate);line-height:1.55;margin-bottom:14px;max-width:560px;}
+  .rich-stat-row{display:flex;gap:22px;flex-wrap:wrap;}
+  .rich-stat-label{font-family:var(--mono);font-size:9.5px;color:var(--slate);letter-spacing:.03em;text-transform:uppercase;}
+  .rich-stat-val{font-size:13.5px;font-weight:700;margin-top:2px;}
+  .rich-side{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0;}
+  .rich-arrow{color:var(--slate);}
+  .rich-save-btn{width:32px;height:32px;border-radius:50%;background:var(--paper);border:1px solid var(--border);color:var(--slate);display:flex;align-items:center;justify-content:center;}
+  .rich-save-btn.saved{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-text);}
+
+  .tag-strong{background:var(--teal-soft);color:var(--teal-text);}
+  .tag-partial{background:var(--violet-soft);color:#5333C9;}
+  .tag-verified{background:var(--teal-soft);color:var(--teal-text);}
+  .tag-target{background:var(--royal-soft);color:var(--royal-dark);}
+
+  /* STORY CARDS (articles / video) */
+  .story-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  .story-card{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);background:var(--white);display:flex;gap:0;transition:transform .15s ease,box-shadow .15s ease;}
+  .story-card:hover{transform:translateY(-2px);box-shadow:0 18px 36px -20px rgba(14,27,61,.35);}
+  .story-thumb{width:110px;flex-shrink:0;position:relative;overflow:hidden;}
+  .story-thumb svg{width:100%;height:100%;display:block;}
+  .story-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .story-play-icon{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;color:var(--ink);}
+  .story-body{padding:16px 18px;flex:1;min-width:0;}
+  .story-type-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .story-type-chip{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;}
+  .story-type-chip.article{background:var(--royal-soft);color:var(--royal-dark);}
+  .story-type-chip.video{background:var(--violet-soft);color:#5333C9;}
+  .story-meta{font-size:11px;color:var(--slate);}
+  .story-title{font-size:14.5px;font-weight:700;line-height:1.35;}
+
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:90px 20px;}
+  .empty-icon{width:64px;height:64px;border-radius:50%;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+  .empty-title{font-size:20px;font-weight:800;margin-bottom:8px;}
+  .empty-sub{font-size:14px;color:var(--slate);max-width:400px;margin:0 auto 22px;line-height:1.6;}
+
+  .footer-cta{display:flex;justify-content:space-between;align-items:center;padding:26px 30px;margin:16px 0 70px;flex-wrap:wrap;gap:16px;}
+  .footer-cta-text{font-size:16px;font-weight:800;}
+  .footer-cta-sub{font-size:13px;color:var(--slate);margin-top:3px;}
+
+  @media(max-width:760px){
+    .image-grid, .story-grid{grid-template-columns:1fr;}
+    .footer-cta{flex-direction:column;align-items:flex-start;}
+    .rich-row{flex-direction:column;}
+    .rich-side{flex-direction:row;width:100%;justify-content:space-between;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a class="back-link" href="#"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to home</a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-eyebrow">Search aspire.world</div>
+      <div class="hero-title">Universities, scholarships, agencies, and guidance — one search.</div>
+      <div class="search-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input class="search-input" id="searchInput" value="manchester" placeholder="Search countries, universities, scholarships…" autocomplete="off">
+        <button class="search-clear" id="clearBtn" onclick="clearSearch()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="chip-row">
+        <span class="chip-row-label">Try:</span>
+        <button class="sugg-chip" onclick="runSearch('chevening')">Chevening</button>
+        <button class="sugg-chip" onclick="runSearch('uk')">UK</button>
+        <button class="sugg-chip" onclick="runSearch('loan')">Loan</button>
+        <button class="sugg-chip" onclick="runSearch('agency')">Verified agency</button>
+        <button class="sugg-chip" onclick="runSearch('compare')">Compare universities</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="meta-bar">
+      <div class="result-count" id="resultCount"></div>
+    </div>
+    <div class="tab-bar" id="tabBar"></div>
+    <div id="resultsArea"></div>
+
+    <div class="card footer-cta">
+      <div><div class="footer-cta-text">Can't find what you're looking for?</div><div class="footer-cta-sub">Browse the full scholarship and university hubs directly.</div></div>
+      <div style="display:flex;gap:10px;">
+        <a class="btn" style="background:var(--white);border:1px solid var(--border);color:var(--ink);" href="scholarship-matching.html">Scholarships hub</a>
+        <a class="btn btn-primary" href="comparison-tool.html">Compare universities</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var DATA = [
+    { id:1, type:'university', title:'University of Manchester', flag:'🇬🇧', flagName:'United Kingdom', sub:'Russell Group · School of Computer Science · MSc Data Science, Computer Science, Business Analytics', tag:'Matches your profile', tagClass:'tag-strong', link:'university-detail.html', kw:['manchester','data science','computer science','uk','university'], stats:[['#32','World ranking'],['56%','Acceptance rate'],['44,000','Students']], illustration:'manchester' },
+    { id:2, type:'country', title:'United Kingdom', flag:'🇬🇧', flagName:'United Kingdom', sub:'Universities, visas and funding — featuring Manchester, London, Edinburgh', tag:'Your target country', tagClass:'tag-target', link:'uk-country-page.html', kw:['uk','united kingdom','manchester','london','britain'], stats:[['130+','Universities'],['£558','Visa fee'],['2 yrs','Graduate Route']], illustration:'uk' },
+    { id:3, type:'scholarship', title:'Chevening Scholarship', flag:'🇬🇧', sub:'UK Government · Full funding, all subjects · deadline in 4 weeks', tag:'Strong match', tagClass:'tag-strong', link:'scholarship-detail.html', kw:['chevening','uk','scholarship','manchester','government','funding','full funding'], mark:'UK', markColor:'var(--ink)', stats:[['Full funding','Award'],['4 weeks','Deadline'],['~8 hrs','Effort']] },
+    { id:4, type:'scholarship', title:'GREAT Scholarships', flag:'🇬🇧', sub:'British Council · tied to your University of Manchester shortlist', tag:'Strong match', tagClass:'tag-strong', link:'scholarship-matching.html', kw:['great','manchester','british council','scholarship'], mark:'GS', markColor:'#5333C9', stats:[['£10,000','Award'],['Rolling','Deadline'],['No extra form','Effort']] },
+    { id:5, type:'scholarship', title:'Commonwealth Scholarship', flag:'🇬🇧', sub:'UK Government · Masters & PhD · full funding', tag:'Strong match', tagClass:'tag-strong', link:'scholarship-matching.html', kw:['commonwealth','uk','scholarship','government'], mark:'CW', markColor:'var(--royal)', stats:[['Full funding','Award'],['6 weeks','Deadline'],['~5 hrs','Effort']] },
+    { id:6, type:'scholarship', title:'DAAD Study Grant', flag:'🇩🇪', sub:'Germany · needs IELTS 7.0, you have 6.5', tag:'Partial match', tagClass:'tag-partial', link:'scholarship-matching.html', kw:['daad','germany','scholarship'], mark:'DE', markColor:'#3D3D3D', stats:[['€11,208','Award'],['9 weeks','Deadline'],['~6 hrs','Effort']] },
+    { id:7, type:'scholarship', title:'Global Wales Masters', flag:'🏴', sub:'Welsh Government · 1 short form only', tag:'Strong match', tagClass:'tag-strong', link:'scholarship-matching.html', kw:['wales','uk','scholarship'], mark:'GW', markColor:'var(--violet)', stats:[['£10,000','Award'],['11 weeks','Deadline'],['~2 hrs','Effort']] },
+    { id:8, type:'agency', title:'EduBridge Bangladesh', sub:'Verified partner · works with University of Manchester · Dhaka, Chattogram', tag:'Verified partner', tagClass:'tag-verified', link:'agency-profile-public.html', kw:['edubridge','agency','manchester','uk','visa'], mark:'ED', markColor:'var(--ink)', stats:[['94%','UK visa success'],['120','Filed this year'],['UK, CA','Specializes in']] },
+    { id:9, type:'bank', title:'Pubali Bank', sub:'Education loan program · verified partner on aspire.world', tag:'Verified partner', tagClass:'tag-verified', link:'pubali-bank-public.html', kw:['pubali','bank','loan','finance'], mark:'PB', markColor:'#3D3D3D', stats:[['৳25L','Loan up to'],['0.50%','Processing fee'],['12–60mo','EMI term']] },
+    { id:10, type:'bank', title:'Financial Partners Hub', sub:'Compare loan eligibility across every verified bank', tag:null, link:'financial-hub-public.html', kw:['loan','bank','eligibility','finance'], mark:'FH', markColor:'var(--royal)', stats:[['5+','Banks compared'],['Free','To use']] },
+    { id:11, type:'bank', title:'Compare universities', sub:'Side-by-side comparison, any country', tag:null, link:'comparison-tool.html', kw:['compare','universities','tool'], mark:'CT', markColor:'var(--royal-dark)', stats:[['3','Universities at once']] },
+    { id:12, type:'story', title:'Inside Manchester: what campus life actually looks like', mediaType:'video', meta:'4:32 · Video', link:'#', kw:['manchester','campus','video','life'] },
+    { id:13, type:'story', title:'What Chevening panelists actually look for', mediaType:'article', meta:'6 min read', link:'scholarship-detail.html', kw:['chevening','essay','article'] },
+    { id:14, type:'story', title:'Writing the leadership essay without sounding rehearsed', mediaType:'article', meta:'5 min read', link:'scholarship-detail.html', kw:['essay','leadership','article'] },
+    { id:15, type:'story', title:'UK student visa: what actually happens at the interview', mediaType:'video', meta:'6:10 · Video', link:'uk-country-page.html', kw:['uk','visa','interview','video'] }
+  ];
+
+  var TYPE_META = {
+    university:{ label:'Universities', layout:'image' },
+    country:{ label:'Countries', layout:'image' },
+    scholarship:{ label:'Scholarships', layout:'rich', color:'var(--teal)', icon:'<path d="M12 3l3 6 6 1-4.5 4.5L17.5 21 12 17.5 6.5 21l1-6.5L3 10l6-1z"/>' },
+    agency:{ label:'Agencies', layout:'rich', color:'var(--violet)', icon:'<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>' },
+    bank:{ label:'Banks & tools', layout:'rich', color:'#3D3D3D', icon:'<rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/>' },
+    story:{ label:'Stories & guides', layout:'story' }
+  };
+  var TYPE_ORDER = ['university','country','scholarship','agency','bank','story'];
+  var activeTab = 'all';
+  var savedIds = {};
+
+  function svgIllustration(key){
+    if(key === 'manchester'){
+      return '<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs><linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A3E8F"/><stop offset="1" stop-color="#0E1B3D"/></linearGradient></defs>' +
+        '<rect width="400" height="150" fill="url(#mg1)"/>' +
+        '<rect x="30" y="60" width="46" height="90" fill="#152A5C"/>' +
+        '<rect x="82" y="40" width="30" height="110" fill="#1B2E63"/>' +
+        '<polygon points="150,150 150,50 175,20 200,50 200,150" fill="#1B2E63"/>' +
+        '<rect x="160" y="65" width="10" height="16" fill="#6C4FF6" opacity=".6"/>' +
+        '<rect x="182" y="65" width="10" height="16" fill="#6C4FF6" opacity=".6"/>' +
+        '<rect x="215" y="55" width="34" height="95" fill="#152A5C"/>' +
+        '<rect x="256" y="75" width="26" height="75" fill="#1B2E63"/>' +
+        '<rect x="290" y="45" width="20" height="105" fill="#152A5C"/>' +
+        '<rect x="318" y="65" width="52" height="85" fill="#1B2E63"/>' +
+        '<circle cx="335" cy="30" r="14" fill="#2547F4" opacity=".5"/>' +
+        '</svg>';
+    }
+    if(key === 'uk'){
+      return '<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs><linearGradient id="ug1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B36C4"/><stop offset="1" stop-color="#0E1B3D"/></linearGradient></defs>' +
+        '<rect width="400" height="150" fill="url(#ug1)"/>' +
+        '<rect x="170" y="35" width="24" height="115" fill="#152A5C"/>' +
+        '<rect x="163" y="20" width="38" height="18" fill="#152A5C"/>' +
+        '<circle cx="182" cy="14" r="7" fill="#2547F4" opacity=".7"/>' +
+        '<rect x="40" y="80" width="40" height="70" fill="#1B2E63"/>' +
+        '<rect x="90" y="60" width="30" height="90" fill="#152A5C"/>' +
+        '<rect x="230" y="70" width="34" height="80" fill="#1B2E63"/>' +
+        '<rect x="272" y="50" width="24" height="100" fill="#152A5C"/>' +
+        '<rect x="304" y="85" width="60" height="65" fill="#1B2E63"/>' +
+        '<rect x="178" y="55" width="8" height="12" fill="#5FE0C7" opacity=".55"/>' +
+        '<rect x="178" y="75" width="8" height="12" fill="#5FE0C7" opacity=".55"/>' +
+        '</svg>';
+    }
+    return '';
+  }
+
+  function iconSvg(type){ return '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+TYPE_META[type].icon+'</svg>'; }
+
+  function filterData(query){
+    var q = query.trim().toLowerCase();
+    if(!q) return [];
+    return DATA.filter(function(item){
+      if(item.title.toLowerCase().indexOf(q) > -1) return true;
+      return item.kw.some(function(k){ return k.indexOf(q) > -1; });
+    });
+  }
+
+  function renderTabs(results){
+    var counts = {};
+    TYPE_ORDER.forEach(function(t){ counts[t] = 0; });
+    results.forEach(function(r){ counts[r.type]++; });
+    var html = '<button class="tab-btn'+(activeTab==='all'?' active':'')+'" onclick="setTab(\'all\')">All <span class="tab-count">'+results.length+'</span></button>';
+    TYPE_ORDER.forEach(function(t){
+      html += '<button class="tab-btn'+(activeTab===t?' active':'')+'" onclick="setTab(\''+t+'\')">'+TYPE_META[t].label+' <span class="tab-count">'+counts[t]+'</span></button>';
+    });
+    document.getElementById('tabBar').innerHTML = html;
+  }
+
+  function statHtml(stats){
+    if(!stats) return '';
+    return stats.map(function(s){
+      return '<div><div class="rich-stat-label">'+s[1]+'</div><div class="rich-stat-val">'+s[0]+'</div></div>';
+    }).join('');
+  }
+  function imageStatHtml(stats){
+    if(!stats) return '';
+    return stats.map(function(s){ return '<span class="image-stat">'+s[0]+' '+s[1]+'</span>'; }).join('');
+  }
+
+  function imageCardHtml(item){
+    var tagHtml = item.tag ? '<span class="image-tag '+item.tagClass+'">'+item.tag+'</span>' : '';
+    var saved = savedIds[item.id] ? ' saved' : '';
+    return '<div class="image-card">' +
+      '<a href="'+item.link+'">' +
+        '<div class="image-photo">'+svgIllustration(item.illustration)+
+          '<span class="image-flag-badge">'+item.flag+' '+item.flagName+'</span>' +
+        '</div>' +
+      '</a>' +
+      '<button class="image-save-btn'+saved+'" onclick="toggleSave(event,'+item.id+')">'+(savedIds[item.id]?'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg>':'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg>')+'</button>' +
+      '<a href="'+item.link+'"><div class="image-body">' +
+        '<div class="image-title-row"><span class="image-title">'+item.title+'</span>'+tagHtml+'</div>' +
+        '<div class="image-sub">'+item.sub+'</div>' +
+        '<div class="image-stat-row">'+imageStatHtml(item.stats)+'</div>' +
+      '</div></a>' +
+    '</div>';
+  }
+
+  function richRowHtml(item){
+    var tagHtml = item.tag ? '<span class="rich-tag '+item.tagClass+'">'+item.tag+'</span>' : '';
+    var flagHtml = item.flag ? '<span class="rich-flag">'+item.flag+'</span>' : '';
+    var iconContent = item.mark ? item.mark : iconSvg(item.type);
+    var iconStyle = item.mark ? 'font-family:var(--mono);font-weight:700;font-size:13px;' : '';
+    var saved = savedIds[item.id];
+    return '<div class="card rich-row" onclick="location.href=\''+item.link+'\'">' +
+      '<div class="rich-icon" style="background:'+(item.markColor||TYPE_META[item.type].color)+';'+iconStyle+'">'+iconContent+'</div>' +
+      '<div class="rich-body">' +
+        '<div class="rich-title-row">'+flagHtml+'<span class="rich-title">'+item.title+'</span>'+tagHtml+'</div>' +
+        '<div class="rich-sub">'+item.sub+'</div>' +
+        '<div class="rich-stat-row">'+statHtml(item.stats)+'</div>' +
+      '</div>' +
+      '<div class="rich-side">' +
+        '<button class="rich-save-btn'+(saved?' saved':'')+'" onclick="toggleSave(event,'+item.id+')">'+(saved?'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg>')+'</button>' +
+        '<svg class="rich-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function storyCardHtml(item){
+    var isVideo = item.mediaType === 'video';
+    var thumb = isVideo
+      ? '<svg viewBox="0 0 110 90" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="110" height="90" fill="#EFEAFE"/><circle cx="55" cy="45" r="45" fill="#6C4FF6" opacity=".15"/></svg>'
+      : '<svg viewBox="0 0 110 90" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="110" height="90" fill="#E7EBFE"/><circle cx="55" cy="45" r="45" fill="#2547F4" opacity=".12"/></svg>';
+    var playHtml = isVideo ? '<div class="story-play"><div class="story-play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>' : '';
+    return '<a class="story-card" href="'+item.link+'">' +
+      '<div class="story-thumb">'+thumb+playHtml+'</div>' +
+      '<div class="story-body">' +
+        '<div class="story-type-row"><span class="story-type-chip '+item.mediaType+'">'+item.mediaType.toUpperCase()+'</span><span class="story-meta">'+item.meta+'</span></div>' +
+        '<div class="story-title">'+item.title+'</div>' +
+      '</div>' +
+    '</a>';
+  }
+
+  function cardHtml(item){
+    var layout = TYPE_META[item.type].layout;
+    if(layout === 'image') return imageCardHtml(item);
+    if(layout === 'story') return storyCardHtml(item);
+    return richRowHtml(item);
+  }
+
+  function renderResults(query){
+    var results = filterData(query);
+    var area = document.getElementById('resultsArea');
+    var countEl = document.getElementById('resultCount');
+
+    renderTabs(results);
+
+    if(!query.trim()){
+      area.innerHTML = '';
+      countEl.textContent = '';
+      return;
+    }
+
+    countEl.innerHTML = results.length ? '<b>'+results.length+'</b> result'+(results.length===1?'':'s')+' for \u2018'+query+'\u2019' : '';
+
+    if(results.length === 0){
+      area.innerHTML =
+        '<div class="empty-state">' +
+          '<div class="empty-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>' +
+          '<div class="empty-title">No results for \u2018'+query+'\u2019</div>' +
+          '<div class="empty-sub">Try a broader term, or browse scholarships and universities directly using the links below.</div>' +
+        '</div>';
+      return;
+    }
+
+    if(activeTab === 'all'){
+      var html = '';
+      TYPE_ORDER.forEach(function(t){
+        var group = results.filter(function(r){ return r.type === t; });
+        if(!group.length) return;
+        var layout = TYPE_META[t].layout;
+        var shown = group.slice(0, layout === 'rich' ? 3 : 4);
+        var wrapOpen = layout === 'image' ? '<div class="image-grid">' : (layout === 'story' ? '<div class="story-grid">' : '');
+        var wrapClose = (layout === 'image' || layout === 'story') ? '</div>' : '';
+        html += '<div class="result-group">' +
+          '<div class="group-head"><span class="group-title">'+TYPE_META[t].label+'<span class="group-title-count">'+group.length+'</span></span>' +
+          (group.length > shown.length ? '<span class="group-see-all" style="cursor:pointer;" onclick="setTab(\''+t+'\')">See all '+group.length+' →</span>' : '') +
+          '</div>' +
+          wrapOpen + shown.map(cardHtml).join('') + wrapClose +
+          '</div>';
+      });
+      area.innerHTML = html;
+    } else {
+      var filtered = results.filter(function(r){ return r.type === activeTab; });
+      var layout = TYPE_META[activeTab].layout;
+      if(layout === 'image'){
+        area.innerHTML = '<div class="image-grid">' + filtered.map(cardHtml).join('') + '</div>';
+      } else if(layout === 'story'){
+        area.innerHTML = '<div class="story-grid">' + filtered.map(cardHtml).join('') + '</div>';
+      } else {
+        area.innerHTML = filtered.map(cardHtml).join('');
+      }
+    }
+  }
+
+  function toggleSave(e, id){
+    e.preventDefault();
+    e.stopPropagation();
+    savedIds[id] = !savedIds[id];
+    renderResults(document.getElementById('searchInput').value);
+  }
+
+  function setTab(t){
+    activeTab = t;
+    renderResults(document.getElementById('searchInput').value);
+  }
+
+  function runSearch(q){
+    document.getElementById('searchInput').value = q;
+    activeTab = 'all';
+    handleInput();
+  }
+
+  function clearSearch(){
+    document.getElementById('searchInput').value = '';
+    activeTab = 'all';
+    handleInput();
+    document.getElementById('searchInput').focus();
+  }
+
+  function handleInput(){
+    var val = document.getElementById('searchInput').value;
+    document.getElementById('clearBtn').classList.toggle('show', val.length > 0);
+    renderResults(val);
+  }
+
+  document.getElementById('searchInput').addEventListener('input', handleInput);
+  handleInput();
+</script>
+</body>
+</html>

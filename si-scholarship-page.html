@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SI Scholarship 2027/28 · Aspire World</title>
+<meta name="description" content="Your one-to-one guide and tracker for the Swedish Institute Scholarship for Global Professionals, 2027/28 intake.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* aspire.world design system tokens — Primary royal, Secondary soft blue, Accent violet; Foreground ink navy; Background paper; Destructive crimson */
+:root{
+  --ink:#0E1B3D; --ink-2:#152A5C; --ink-3:#1B2E63;
+  --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E6EAFF; --royal-line:#C9D3FF;
+  --violet:#6C4FF6; --violet-soft:#EFEBFF; --lav:#C9C0FF;
+  --teal:#00A389; --teal-soft:#DFF5F0; --teal-text:#007A66;
+  --paper:#F7F7FB; --muted:#EDF0F7; --slate:#5B6472; --border:#DDE3EF; --field:#C9D0E8; --white:#fff;
+  --destructive:#C8365A; --destructive-soft:#FBE9EE;
+  --r-card:28px; --r-md:20px; --r-sm:14px; --pill:999px;
+  --sh-sm:0 1px 2px rgba(14,27,61,.04),0 3px 10px rgba(14,27,61,.04);
+  --sh-md:0 2px 4px rgba(14,27,61,.05),0 10px 28px rgba(14,27,61,.08);
+  --sh-lg:0 16px 48px rgba(14,27,61,.18);
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --nav-h:64px; --bnav-h:68px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:15px}
+a{color:var(--royal)}
+button{font-family:inherit;cursor:pointer;color:inherit}
+input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+:focus-visible{outline:3px solid rgba(37,71,244,.4);outline-offset:2px}
+.mono{font-family:var(--mono)}
+.muted{color:var(--slate)}
+.small{font-size:13px}
+.hide{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{flex-shrink:0;vertical-align:middle}
+p{margin:0 0 12px}
+h1,h2,h3,h4{margin:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ---------- eyebrow / type ---------- */
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+.eyebrow.royal{color:var(--royal)}
+.eyebrow.mono{font-family:var(--mono);font-weight:500}
+.display{font-weight:300;letter-spacing:-.035em;line-height:1.02}
+.cap{font-size:12px;color:var(--slate)}
+
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--border)}
+.topbar .tin{max-width:1200px;margin:0 auto;padding:0 24px;height:var(--nav-h);display:flex;align-items:center;gap:20px}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);font-weight:700;font-size:17px;letter-spacing:-.02em}
+.logo i{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--royal);color:#fff;font-style:normal;font-size:15px;font-weight:700}
+.crumb{font-size:13px;color:var(--slate);display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap}
+.crumb b{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.crumb .ic{opacity:.5}
+.tabs{display:inline-flex;gap:2px;padding:4px;background:var(--muted);border-radius:var(--pill)}
+.tabs button{border:0;background:transparent;padding:8px 16px;border-radius:var(--pill);font-size:14px;font-weight:500;color:var(--slate);display:inline-flex;align-items:center;gap:7px;transition:background .15s,color .15s}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(14,27,61,.12)}
+.tabs .cnt{font-family:var(--mono);font-size:11px;background:var(--royal-soft);color:var(--royal);border-radius:var(--pill);padding:1px 7px}
+.top-c{flex:1;display:flex;justify-content:center}
+.top-r{display:flex;align-items:center;gap:10px;margin-left:auto}
+.iconbtn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:#fff;display:grid;place-items:center;color:var(--ink);transition:box-shadow .15s,border-color .15s}
+.iconbtn:hover{border-color:var(--field);box-shadow:var(--sh-sm)}
+.iconbtn .bdg{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:var(--pill);background:var(--royal);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;border:2px solid #fff;font-family:var(--mono)}
+.iconbtn .bdg.urgent{background:var(--destructive)}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--royal-soft);color:var(--royal);display:grid;place-items:center;font-size:14px;font-weight:700;border:1px solid var(--royal-line)}
+
+/* ---------- layout ---------- */
+.shell{max-width:1200px;margin:0 auto;padding:28px 24px 72px;display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:28px;align-items:start}
+.shell>*{min-width:0}
+.side{position:sticky;top:calc(var(--nav-h) + 20px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 36px);overflow:auto;scrollbar-width:thin;padding-bottom:2px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+
+/* ---------- cards ---------- */
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--r-card);padding:26px;box-shadow:var(--sh-sm)}
+.card.flat{box-shadow:none}
+.card h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.card .sub{color:var(--slate);font-size:14px;margin-top:2px}
+.card.lift{transition:transform .2s,box-shadow .2s}
+.card.lift:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+.tile{background:var(--muted);border-radius:18px;padding:16px 16px 14px;border:1px solid transparent}
+.tile .v{font-family:var(--mono);font-size:27px;font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.tile .l{font-size:12.5px;color:var(--slate);margin-top:4px;line-height:1.35}
+.tile .v small{font-size:14px;color:var(--slate);font-weight:400;letter-spacing:0}
+.tile.ok{background:var(--teal-soft)}
+.tile.ok .v{color:var(--teal-text)}
+.tile.tap{cursor:pointer;text-align:left;width:100%;border:1px solid transparent;transition:border-color .15s,transform .15s}
+.tile.tap:hover{border-color:var(--royal-line);transform:translateY(-1px)}
+
+/* ---------- buttons (pill) ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:var(--pill);border:1px solid transparent;font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .15s,border-color .15s,transform .1s,box-shadow .15s;line-height:1}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--royal);border-color:var(--royal-dark);color:#fff;box-shadow:0 1px 2px rgba(37,71,244,.35)}
+.btn-primary:hover{background:var(--royal-dark)}
+.btn-secondary{background:var(--royal-soft);border-color:var(--royal-line);color:var(--ink)}
+.btn-secondary:hover{background:#DCE2FF}
+.btn-outline{background:#fff;border-color:var(--border);color:var(--ink);box-shadow:var(--sh-sm)}
+.btn-outline:hover{border-color:var(--field)}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--muted)}
+.btn-link{background:none;color:var(--royal);padding:0;height:auto;font-weight:600}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-danger{background:var(--destructive);color:#fff}
+.btn-lg{height:52px;padding:0 26px;font-size:15.5px}
+.btn-sm{height:36px;padding:0 14px;font-size:13.5px}
+.btn-xs{height:30px;padding:0 12px;font-size:12.5px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.btn .ic{width:18px;height:18px}
+.btn-icon{width:36px;padding:0}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ---------- badges ---------- */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:var(--pill);font-size:11.5px;font-weight:600;line-height:1.4;white-space:nowrap;border:1px solid transparent}
+.badge .ic{width:12px;height:12px}
+.badge.royal{background:var(--royal);color:#fff}
+.badge.soft{background:var(--royal-soft);color:var(--ink)}
+.badge.outline{background:#fff;border-color:var(--border);color:var(--ink)}
+.badge.teal{background:var(--teal-soft);color:var(--teal-text)}
+.badge.violet{background:var(--violet-soft);color:#4B33C7}
+.badge.red{background:var(--destructive-soft);color:var(--destructive)}
+.badge.ink{background:var(--ink);color:#fff}
+.badge.mono{font-family:var(--mono);font-weight:500}
+.provs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+
+/* ---------- alerts ---------- */
+.alert{display:flex;gap:12px;align-items:flex-start;border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--border);background:var(--paper);font-size:14px;line-height:1.5}
+.alert .ai{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;margin-top:1px;background:var(--royal-soft);color:var(--royal)}
+.alert .ai .ic{width:15px;height:15px}
+.alert b{font-weight:600}
+.alert p{margin:0}
+.alert p+p{margin-top:6px}
+.alert.info{background:var(--royal-soft);border-color:var(--royal-line)}
+.alert.ok{background:var(--teal-soft);border-color:#BFE8DF}
+.alert.ok .ai{background:var(--teal);color:#fff}
+.alert.caution{background:var(--violet-soft);border-color:#DCD3FF}
+.alert.caution .ai{background:var(--violet);color:#fff}
+.alert.bad{background:#fff;border-color:var(--destructive)}
+.alert.bad .ai{background:var(--destructive);color:#fff}
+.alert.plain .ai{background:var(--muted);color:var(--ink)}
+.alert.vd{animation:settle .3s ease both}
+
+/* ---------- accordion ---------- */
+.accs{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.acc+.acc{border-top:1px solid var(--border)}
+.acc>button{width:100%;display:flex;align-items:center;gap:12px;padding:15px 18px;border:0;background:none;text-align:left;font-size:14.5px;font-weight:600}
+.acc>button:hover{background:var(--paper)}
+.acc>button .t{flex:1}
+.acc>button .ic{transition:transform .2s;color:var(--slate)}
+.acc.open>button .ic.chev{transform:rotate(180deg)}
+.acc .ab{padding:0 18px 18px;font-size:14px;color:#2A3553;animation:settle .25s ease both}
+.acc .ab ul{margin:0 0 10px;padding-left:20px}
+.acc .ab li{margin:4px 0}
+.acc .ab p:last-child{margin-bottom:0}
+
+/* ---------- forms ---------- */
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.lbl{font-size:13px;font-weight:600;color:var(--ink)}
+.field label em{font-style:normal;font-weight:400;color:var(--slate)}
+.in{width:100%;height:46px;padding:0 18px;border-radius:var(--pill);border:1px solid var(--field);background:#fff;box-shadow:0 1px 2px rgba(14,27,61,.07);transition:border-color .15s,box-shadow .15s;min-width:0}
+.in:focus{outline:none;border-color:var(--royal);box-shadow:0 0 0 4px rgba(37,71,244,.14)}
+textarea.in{height:auto;padding:12px 18px;border-radius:var(--r-md);line-height:1.5;resize:vertical}
+select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235B6472' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+.in.err{border-color:var(--destructive)}
+.ferr{font-size:12.5px;color:var(--destructive)}
+.fhelp{font-size:12.5px;color:var(--slate)}
+.row{display:grid;gap:14px}
+.row.c2{grid-template-columns:1fr 1fr}
+.row.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.row.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.mono-in{font-family:var(--mono);letter-spacing:.14em}
+
+/* choice rows (radio-like) */
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:14px 16px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);font-size:15px;font-weight:500;transition:border-color .15s,background .15s,box-shadow .15s}
+.choice:hover{border-color:var(--field);box-shadow:var(--sh-sm)}
+.choice .rd{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--royal);flex-shrink:0;display:grid;place-items:center;background:#fff}
+.choice.sel{border-color:var(--royal);background:var(--royal-soft)}
+.choice.sel .rd{background:var(--royal)}
+.choice.sel .rd:after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.choice small{display:block;font-weight:400;color:var(--slate);font-size:13px;margin-top:2px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{padding:9px 16px;border-radius:var(--pill);border:1px solid var(--border);background:#fff;font-size:14px;font-weight:500;transition:all .15s}
+.pill:hover{border-color:var(--field)}
+.pill.sel{background:var(--royal);border-color:var(--royal-dark);color:#fff}
+
+/* round checkbox */
+.cb{width:24px;height:24px;border-radius:50%;border:1.6px solid var(--royal);background:#fff;display:grid;place-items:center;flex-shrink:0;color:#fff;padding:0;transition:background .15s}
+.cb .ic{width:14px;height:14px;opacity:0}
+.cb.on{background:var(--royal)}
+.cb.on .ic{opacity:1}
+.cb.tk.on{background:var(--teal);border-color:var(--teal)}
+.cb[disabled]{border-color:#B9C2E6;background:var(--muted);cursor:not-allowed}
+
+/* switch */
+.sw{width:42px;height:24px;border-radius:var(--pill);background:#C9D0E8;border:0;position:relative;padding:0;flex-shrink:0;transition:background .15s}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(14,27,61,.3);transition:transform .15s}
+.sw.on{background:var(--royal)}
+.sw.on:after{transform:translateX(18px)}
+.swrow{display:flex;align-items:center;gap:14px;padding:12px 0}
+.swrow+.swrow{border-top:1px solid var(--border)}
+.swrow .t{flex:1;font-weight:500;font-size:14.5px}
+.swrow .t small{display:block;font-weight:400;color:var(--slate);font-size:12.5px}
+
+/* progress */
+.bar{height:6px;background:var(--royal-line);border-radius:var(--pill);overflow:hidden;opacity:1}
+.bar i{display:block;height:100%;background:var(--royal);border-radius:var(--pill);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.bar.tl i{background:var(--teal)}
+.bar.on-dark{background:rgba(255,255,255,.18)}
+.bar.on-dark i{background:#fff}
+
+/* ---------- hero: student itinerary ---------- */
+.hero{position:relative;overflow:hidden;border-radius:var(--r-card);padding:30px 32px 26px;color:#fff;background:radial-gradient(900px 420px at 88% -10%,rgba(108,79,246,.75),transparent 60%),linear-gradient(135deg,#0E1B3D 0%,#1A2F8F 55%,#2547F4 120%);box-shadow:var(--sh-md)}
+.hero .meta{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.hero .eyebrow{color:#B9C4EE}
+.hero .doc{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:#B9C4EE}
+.route{display:flex;align-items:center;gap:16px;margin:18px 0 6px}
+.route .code{font-size:clamp(44px,8vw,76px);font-weight:300;letter-spacing:-.045em;line-height:1}
+.route .dash{flex:1;min-width:40px;height:2px;border-top:2px dashed rgba(255,255,255,.45);position:relative}
+.route .dash .ic{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(45deg);background:#233C9E;padding:5px;border-radius:50%;width:36px;height:36px;color:#fff;border:1px solid rgba(255,255,255,.3)}
+.hero .cities{display:flex;justify-content:space-between;font-size:12.5px;color:#C9D2F5;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.hero .ttl{margin-top:18px;font-size:14.5px;color:#DCE3FF;max-width:520px}
+.hero .ttl b{color:#fff}
+.hero .greet{font-size:clamp(28px,4.4vw,40px);font-weight:300;letter-spacing:-.03em;line-height:1.08;margin:16px 0 4px}
+.hero .greet em{font-style:normal;color:var(--lav)}
+.hero .hrow{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.hring{position:relative;width:112px;height:112px;flex-shrink:0}
+.hring svg{width:112px;height:112px;transform:rotate(-90deg)}
+.hring .bg{stroke:rgba(255,255,255,.16)}
+.hring .fg{stroke:#9AA9FF;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
+.hring .n{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hring .n b{font-size:28px;font-weight:300;letter-spacing:-.03em;line-height:1}
+.hring .n small{font-size:9px;letter-spacing:.14em;color:#B9C4EE;margin-top:5px;text-transform:uppercase;font-family:var(--mono)}
+.hero .cur{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#B9C4EE;font-weight:600}
+.hero .curv{font-size:21px;font-weight:500;letter-spacing:-.02em;margin-top:3px}
+.hero .vtag{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 11px 4px 9px;border-radius:var(--pill);background:rgba(0,163,137,.2);border:1px solid rgba(0,200,165,.5);color:#7DF0D6;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.hero .vtag .ic{width:13px;height:13px}
+.nxt{margin-top:22px;display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-md);padding:14px 16px 14px 20px;backdrop-filter:blur(6px)}
+.nxt .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#B9C4EE;font-weight:600}
+.nxt .t{font-weight:500;font-size:15.5px;margin-top:2px;line-height:1.35}
+.nxt .by{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:#C9D2F5;white-space:nowrap;text-transform:uppercase}
+.nxt>div:first-child{flex:1;min-width:0}
+.hero .btn-primary{background:#fff;color:var(--ink);border-color:#fff;box-shadow:none}
+.hero .btn-primary:hover{background:#EEF1FF}
+.hero .name-in{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff;box-shadow:none;max-width:340px}
+.hero .name-in::placeholder{color:#B9C4EE}
+.hero .name-in:focus{background:rgba(255,255,255,.18);border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+
+/* ---------- journey stepper ---------- */
+.jr{display:flex;gap:0;position:relative;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;scroll-snap-type:x proximity}
+.jr::-webkit-scrollbar{display:none}
+.js{flex:1 0 76px;display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0 2px;position:relative;scroll-snap-align:center}
+.js:before{content:"";position:absolute;top:15px;left:-50%;right:50%;border-top:2px solid var(--border);z-index:0}
+.js:first-child:before{display:none}
+.js.done:before,.js.cur:before{border-top-color:var(--teal)}
+.js .d{position:relative;z-index:1;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1.6px solid var(--field);font-family:var(--mono);font-size:12px;font-weight:500;color:var(--slate);transition:all .2s}
+.js .d .ic{width:15px;height:15px}
+.js .l{font-size:11.5px;font-weight:500;color:var(--slate);text-align:center;line-height:1.25;max-width:80px}
+.js:hover .d{border-color:var(--royal);color:var(--royal)}
+.js.done .d{background:var(--teal);border-color:var(--teal);color:#fff}
+.js.part .d{border-color:var(--royal);color:var(--royal)}
+.js.cur .d{background:var(--royal);border-color:var(--royal);color:#fff;box-shadow:0 0 0 5px rgba(37,71,244,.16)}
+.js.cur .l{color:var(--ink);font-weight:700}
+.js.lock .d{opacity:.7}
+.hero .jr{margin-top:18px}
+.hero .js:before{border-top-color:rgba(255,255,255,.22)}
+.hero .js.done:before,.hero .js.cur:before{border-top-color:#2FD4B4}
+.hero .js .d{background:transparent;border-color:rgba(255,255,255,.35);color:#C9D2F5}
+.hero .js .l{color:#B9C4EE}
+.hero .js.done .d{background:var(--teal);border-color:var(--teal);color:#fff}
+.hero .js.cur .d{background:var(--royal);border-color:#fff;color:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.18)}
+.hero .js.cur .l{color:#fff}
+.hero .js:hover .d{border-color:#fff;color:#fff}
+
+/* ---------- lesson card (guide) ---------- */
+.stagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:2px 0 14px}
+.stagehead h1{font-size:clamp(28px,4vw,38px);font-weight:300;letter-spacing:-.035em;line-height:1.05;margin-top:6px}
+.stagehead .lead{color:var(--slate);margin:8px 0 0;font-size:15px;max-width:560px}
+.stagehead .win{font-family:var(--mono);font-size:12px;color:var(--slate);background:var(--muted);padding:6px 12px;border-radius:var(--pill);white-space:nowrap}
+.lesson{padding:0;overflow:hidden;animation:settle .35s cubic-bezier(.2,.8,.2,1) both}
+.lhead{padding:22px 26px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ldots{display:flex;gap:5px;align-items:center}
+.ldots i{width:22px;height:5px;border-radius:var(--pill);background:var(--royal-line);transition:all .2s}
+.ldots i.on{background:var(--royal)}
+.ldots i.cur{background:var(--royal);width:34px}
+.ltitle{font-size:clamp(24px,3.4vw,32px);font-weight:300;letter-spacing:-.03em;line-height:1.1;padding:10px 26px 0}
+.lbody{padding:14px 26px 6px;display:flex;flex-direction:column;gap:16px}
+.lnav{display:flex;justify-content:space-between;gap:12px;padding:18px 26px 24px;border-top:1px solid var(--border);margin-top:14px;background:linear-gradient(#fff,var(--paper))}
+.lnav .btn-primary{margin-left:auto}
+.lede{font-size:16.5px;color:#2A3553;line-height:1.55;margin:0}
+.quote{border-left:3px solid var(--violet);padding:4px 0 4px 16px;font-size:17px;font-weight:300;letter-spacing:-.01em;color:var(--ink);line-height:1.45}
+.quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--slate);letter-spacing:.02em}
+@keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mini visuals */
+.flow{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch}
+.fnode{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-md);padding:16px}
+.fnode .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--royal);font-weight:600}
+.fnode h4{font-size:16px;font-weight:600;margin:6px 0 8px}
+.fnode ul{margin:0;padding-left:18px;font-size:13.5px;color:#2A3553}
+.fnode .dt{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11.5px;background:#fff;border:1px solid var(--border);border-radius:var(--pill);padding:3px 10px}
+.fjoin{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--royal)}
+.fjoin .line{width:2px;flex:1;border-left:2px dashed var(--royal-line);min-height:12px}
+.fjoin .num{font-family:var(--mono);font-size:11px;font-weight:600;background:var(--royal-soft);border:1px solid var(--royal-line);border-radius:var(--pill);padding:6px 10px;text-align:center;line-height:1.3;color:var(--ink)}
+.after{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.after .a{background:var(--muted);border-radius:16px;padding:12px 14px;font-size:13px;color:#2A3553}
+.after .a b{display:block;font-family:var(--mono);font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.chain{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chain .c{display:flex;align-items:center;gap:8px;background:var(--muted);border-radius:var(--pill);padding:7px 13px 7px 8px;font-size:13px;font-weight:500}
+.chain .c i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--royal);font-weight:600}
+.chain .arrow{color:#9AA4C0}
+.steps{display:flex;flex-direction:column;gap:0}
+.stp{display:flex;gap:14px;position:relative;padding-bottom:16px}
+.stp:last-child{padding-bottom:0}
+.stp:not(:last-child):before{content:"";position:absolute;left:15px;top:32px;bottom:2px;border-left:2px dashed var(--royal-line)}
+.stp .nn{width:32px;height:32px;border-radius:50%;background:var(--royal-soft);color:var(--royal);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0;z-index:1}
+.stp.done .nn{background:var(--teal);color:#fff}
+.stp h4{font-size:15px;font-weight:600;margin:4px 0 2px}
+.stp p{font-size:13.5px;color:var(--slate);margin:0}
+.mtl{display:flex;flex-direction:column;gap:0}
+.mrow{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:13px 0;border-top:1px solid var(--border)}
+.mrow:first-child{border-top:0}
+.mrow .w{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--royal)}
+.mrow .x{font-size:14px}
+.mrow .x small{display:block;color:var(--slate);font-size:12.5px;margin-top:3px}
+.mrow.now .w{color:var(--ink)}
+
+/* chart */
+.chart{display:flex;align-items:flex-end;gap:14px;height:150px;padding:6px 4px 0}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%}
+.chart .bar-v{width:100%;max-width:64px;background:var(--royal);border-radius:12px 12px 4px 4px;position:relative;min-height:6px;transition:height .6s cubic-bezier(.2,.8,.2,1)}
+.chart .bar-v.last{background:var(--violet)}
+.chart .val{font-family:var(--mono);font-weight:600;font-size:15px}
+.chart .xl{font-size:11.5px;color:var(--slate);text-align:center;line-height:1.3}
+
+/* ---------- work / records ---------- */
+.rec{border:1px solid var(--border);border-radius:var(--r-md);padding:18px;background:#fff}
+.rec+.rec{margin-top:12px}
+.rec-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.rec-h b{font-size:15px;display:flex;align-items:center;gap:10px;min-width:0}
+.rec-h b span.o{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rec-h .nb{width:28px;height:28px;border-radius:50%;background:var(--royal-soft);color:var(--royal);display:grid;place-items:center;font-size:12px;font-family:var(--mono);flex-shrink:0}
+.calc{background:var(--paper);border:1px dashed var(--field);border-radius:var(--r-md);padding:14px 16px;margin-top:14px}
+.calc .big{font-family:var(--mono);font-size:26px;font-weight:500;letter-spacing:-.03em}
+.calc .big small{font-size:13px;color:var(--slate);font-weight:400;letter-spacing:0;font-family:var(--sans)}
+.calc .lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.calc .lines div{font-size:12px;color:var(--slate)}
+.calc .lines b{display:block;font-family:var(--mono);font-size:15px;color:var(--ink);font-weight:500}
+.gauge{height:12px;border-radius:var(--pill);background:var(--royal-line);position:relative;overflow:visible;margin:12px 0 22px}
+.gauge i{display:block;height:100%;border-radius:var(--pill);background:var(--royal);transition:width .6s}
+.gauge i.full{background:var(--teal)}
+.gauge .mk{position:absolute;top:-4px;width:2px;height:20px;background:var(--ink);border-radius:2px}
+.gauge .mk span{position:absolute;top:22px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--slate);white-space:nowrap}
+.gauge .mk.a span{transform:translateX(-90%)}
+.gauge .mk.b span{transform:translateX(-10%)}
+.tl-steps{display:flex;flex-wrap:wrap;gap:8px}
+.tstep{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);background:#fff;border-radius:var(--pill);padding:7px 14px 7px 8px;font-size:13px;font-weight:500;transition:all .15s}
+.tstep i{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--field);display:grid;place-items:center;font-style:normal;color:#fff}
+.tstep i .ic{width:12px;height:12px;opacity:0}
+.tstep.on{border-color:#BFE8DF;background:var(--teal-soft)}
+.tstep.on i{background:var(--teal);border-color:var(--teal)}
+.tstep.on i .ic{opacity:1}
+.tstep:hover{border-color:var(--field)}
+
+/* ---------- tasks ---------- */
+.task{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--border)}
+.task:first-child{border-top:0}
+.task .tl{flex:1;font-size:14.5px;font-weight:500;line-height:1.4;min-width:0}
+.task .tl small{display:block;font-weight:400;color:var(--slate);font-size:12.5px;margin-top:2px}
+.task.done .tl{color:var(--slate);text-decoration:line-through;text-decoration-color:#B9C2E0}
+.task.locked .tl{color:var(--slate)}
+.task .tm{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.task .cb{margin-top:1px}
+.ch-stage{margin-bottom:0}
+.ch-stage .accs{border-radius:var(--r-md)}
+
+/* ---------- deadlines panel ---------- */
+.dl{background:#fff;border:1px solid var(--border);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh-md)}
+.dl .dh{padding:20px 22px 0;display:flex;align-items:center;justify-content:space-between}
+.dl .dh .eyebrow{color:var(--royal)}
+.dl .hero2{margin:14px 16px 0;border-radius:var(--r-md);padding:18px 18px 16px;color:#fff;background:radial-gradient(260px 160px at 100% 0,rgba(108,79,246,.7),transparent 70%),linear-gradient(140deg,#0E1B3D,#1A2F8F)}
+.dl .hero2 .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#B9C4EE;font-weight:600}
+.dl .hero2 .cd{display:flex;align-items:baseline;gap:8px;margin:8px 0 2px}
+.dl .hero2 .cd b{font-family:var(--mono);font-size:56px;font-weight:300;letter-spacing:-.05em;line-height:1}
+.dl .hero2 .cd span{font-size:15px;color:#C9D2F5}
+.dl .hero2 .tt{font-weight:500;font-size:14.5px;line-height:1.35}
+.dl .hero2 .dd{font-family:var(--mono);font-size:11.5px;color:#B9C4EE;margin-top:6px;letter-spacing:.04em}
+.dl .hero2.red{background:linear-gradient(140deg,#6E1630,#C8365A)}
+.dl .crit{margin:10px 16px 0;border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;display:flex;align-items:center;gap:12px;background:var(--paper)}
+.dl .crit .cn{font-family:var(--mono);font-size:24px;font-weight:500;letter-spacing:-.04em;min-width:56px}
+.dl .crit .cn small{font-size:11px;color:var(--slate);font-weight:400;letter-spacing:0;display:block;margin-top:-2px}
+.dl .crit .ct{font-size:13px;font-weight:600;line-height:1.3}
+.dl .crit .ct small{display:block;font-weight:400;color:var(--slate);font-size:12px;margin-top:1px}
+.dl .crit.red{border-color:var(--destructive);background:var(--destructive-soft)}
+.dl .crit.red .cn{color:var(--destructive)}
+.dtl{list-style:none;margin:14px 0 0;padding:0 22px 6px;position:relative}
+.dtl li{display:flex;gap:14px;align-items:flex-start;padding:0 0 15px;position:relative}
+.dtl li:before{content:"";position:absolute;left:8px;top:20px;bottom:-2px;border-left:2px solid var(--border)}
+.dtl li:last-child:before{display:none}
+.dtl .pt{width:18px;height:18px;border-radius:50%;border:2px solid var(--field);background:#fff;flex-shrink:0;margin-top:2px;display:grid;place-items:center;z-index:1;color:#fff}
+.dtl .pt .ic{width:10px;height:10px}
+.dtl li.past .pt{background:var(--teal);border-color:var(--teal)}
+.dtl li.past:before{border-left-color:var(--teal)}
+.dtl li.nxt2 .pt{border-color:var(--royal);box-shadow:0 0 0 4px rgba(37,71,244,.15);background:var(--royal)}
+.dtl li.you .pt{border-color:var(--violet);background:var(--violet-soft)}
+.dtl .tx{flex:1;min-width:0}
+.dtl .tx b{display:block;font-size:13.5px;font-weight:600;line-height:1.3}
+.dtl li.past .tx b{color:var(--slate);font-weight:500}
+.dtl .tx small{display:block;font-family:var(--mono);font-size:11.5px;color:var(--slate);margin-top:2px}
+.dtl .when{font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 9px;border-radius:var(--pill);background:var(--muted);color:var(--ink);white-space:nowrap;margin-top:1px}
+.dtl li.nxt2 .when{background:var(--royal);color:#fff}
+.dtl .when.red{background:var(--destructive);color:#fff}
+.dtl .when.done{background:var(--teal-soft);color:var(--teal-text)}
+.dtl .sep{list-style:none;display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);font-weight:600;padding:2px 0 10px 32px}
+.dtl .sep:before{display:none}
+.dl .df{padding:14px 18px 18px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;background:var(--paper)}
+.dl .df .btn{flex:1;min-width:0}
+.sidecard{background:#fff;border:1px solid var(--border);border-radius:var(--r-card);padding:18px 20px;box-shadow:var(--sh-sm)}
+.sidecard h5{margin:0 0 10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.wlist{list-style:none;margin:0;padding:0}
+.wlist li{display:flex;gap:10px;font-size:13.5px;padding:8px 0;border-top:1px solid var(--border);line-height:1.4}
+.wlist li:first-child{border-top:0;padding-top:0}
+.wlist .ic{color:var(--violet);margin-top:2px;width:16px;height:16px}
+
+/* mobile deadline strip */
+.mstrip{display:none}
+.bnav{display:none}
+
+/* ---------- today ---------- */
+.coach{display:flex;flex-direction:column}
+.crow{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--border);text-align:left;width:100%;background:none;border-left:0;border-right:0;border-bottom:0}
+.crow:first-child{border-top:0;padding-top:4px}
+.crow .ci{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--royal-soft);color:var(--royal);flex-shrink:0}
+.crow .ci.red{background:var(--destructive-soft);color:var(--destructive)}
+.crow .ci.vio{background:var(--violet-soft);color:var(--violet)}
+.crow .ci.tl{background:var(--teal-soft);color:var(--teal-text)}
+.crow .ct{flex:1;min-width:0}
+.crow .ct b{display:block;font-size:14.5px;font-weight:600;line-height:1.35}
+.crow .ct small{display:block;font-size:13px;color:var(--slate);margin-top:2px;line-height:1.4}
+.crow .go{color:var(--slate)}
+.crow:hover .go{color:var(--royal)}
+.crow:hover{background:linear-gradient(90deg,transparent,var(--paper))}
+.empty{border:1.5px dashed var(--field);border-radius:var(--r-md);padding:26px 20px;text-align:center;background:#fff}
+.empty .ei{width:44px;height:44px;border-radius:50%;background:var(--muted);display:grid;place-items:center;margin:0 auto 10px}
+.empty b{display:block;font-size:15px;margin-bottom:3px}
+.empty p{color:var(--slate);font-size:13.5px;margin:0 0 12px}
+
+/* ---------- overlay: sheet / panel / toast ---------- */
+.ovl{position:fixed;inset:0;z-index:80;background:rgba(14,27,61,.45);backdrop-filter:blur(2px);animation:fade .2s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.panel{position:fixed;z-index:90;background:#fff;box-shadow:var(--sh-lg);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border)}
+.panel.pop{top:calc(var(--nav-h) + 8px);right:max(16px,calc((100vw - 1200px)/2 + 24px));width:432px;max-height:min(680px,calc(100vh - var(--nav-h) - 24px));border-radius:var(--r-card);animation:settle .25s ease both}
+.panel .ph{padding:18px 20px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.panel .ph h3{font-size:19px;font-weight:600;letter-spacing:-.02em}
+.panel .pb{overflow:auto;flex:1;padding:0 12px 12px}
+.panel .ptabs{padding:0 20px 10px}
+.panel .grab{display:none;width:44px;height:5px;border-radius:var(--pill);background:var(--field);margin:10px auto 0}
+.nrow{display:flex;gap:12px;padding:14px 10px 14px 10px;border-radius:var(--r-md);position:relative;transition:background .15s}
+.nrow+.nrow{margin-top:2px}
+.nrow:hover{background:var(--paper)}
+.nrow.unread{background:#F3F5FF}
+.nrow.unread:before{content:"";position:absolute;left:-2px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--royal)}
+.nrow .ni{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:var(--royal-soft);color:var(--royal)}
+.nrow .ni.red{background:var(--destructive-soft);color:var(--destructive)}
+.nrow .ni.vio{background:var(--violet-soft);color:var(--violet)}
+.nrow .ni.tl{background:var(--teal-soft);color:var(--teal-text)}
+.nrow .nt{flex:1;min-width:0}
+.nrow .nt b{display:block;font-size:14px;font-weight:600;line-height:1.35}
+.nrow .nt p{font-size:13px;color:var(--slate);margin:2px 0 0;line-height:1.45}
+.nrow .nt time{font-family:var(--mono);font-size:11px;color:var(--slate);display:block;margin-top:6px}
+.nrow .na{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.toasts{position:fixed;z-index:100;right:20px;bottom:20px;display:flex;flex-direction:column;gap:10px;width:min(380px,calc(100vw - 32px));pointer-events:none}
+.toast{pointer-events:auto;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:14px 14px 14px 16px;box-shadow:var(--sh-lg);display:flex;gap:12px;align-items:flex-start;animation:settle .3s cubic-bezier(.2,.8,.2,1) both}
+.toast .ni{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:var(--royal-soft);color:var(--royal)}
+.toast .ni.red{background:var(--destructive-soft);color:var(--destructive)}
+.toast .ni.tl{background:var(--teal-soft);color:var(--teal-text)}
+.toast .tt{flex:1;min-width:0}
+.toast .tt b{display:block;font-size:14px;font-weight:600}
+.toast .tt p{font-size:13px;color:var(--slate);margin:2px 0 0}
+.toast.out{opacity:0;transform:translateY(8px);transition:all .25s}
+.sheetc{padding:6px 18px 24px;overflow:auto}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--border);background:#fff;padding:22px 0 28px;font-size:12.5px;color:var(--slate)}
+.foot .fin{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot a{color:var(--slate)}
+.sim{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sim .in{height:34px;width:150px;font-size:13px;padding:0 12px}
+
+.fadein{animation:settle .35s ease both}
+
+/* ============ responsive ============ */
+@media (max-width:1060px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{display:none}
+  .mstrip{display:flex;position:sticky;top:var(--nav-h);z-index:35;align-items:center;gap:10px;padding:9px 16px;background:var(--ink);color:#fff;border:0;width:100%;text-align:left;font-size:13px}
+  .mstrip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:#9AA9E0;text-transform:uppercase}
+  .mstrip b{font-family:var(--mono);font-weight:600}
+  .mstrip .mt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mstrip .ic{opacity:.8}
+  .mstrip.red{background:var(--destructive)}
+  .bnav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);height:calc(var(--bnav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom)}
+  .bnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11.5px;font-weight:500;color:var(--slate);position:relative}
+  .bnav button.on{color:var(--royal)}
+  .bnav button.on:before{content:"";position:absolute;top:0;width:34px;height:3px;border-radius:0 0 4px 4px;background:var(--royal)}
+  .bnav .bdg{position:absolute;top:8px;left:calc(50% + 6px);min-width:17px;height:17px;border-radius:var(--pill);background:var(--destructive);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;padding:0 4px;font-family:var(--mono)}
+  body{padding-bottom:calc(var(--bnav-h) + env(safe-area-inset-bottom))}
+  .top-c{display:none}
+  .crumb{display:none}
+  .toasts{bottom:calc(var(--bnav-h) + 14px + env(safe-area-inset-bottom));right:16px;left:16px;width:auto}
+  .panel.pop{top:auto;bottom:0;left:0;right:0;width:auto;max-height:88vh;border-radius:28px 28px 0 0;animation:sheetup .3s cubic-bezier(.2,.8,.2,1) both}
+  .panel .grab{display:block}
+  @keyframes sheetup{from{transform:translateY(100%)}to{transform:none}}
+}
+@media (max-width:720px){
+  .topbar .tin{padding:0 16px;gap:12px}
+  .shell{padding:18px 16px 40px;gap:18px}
+  .card{padding:18px;border-radius:24px}
+  .hero{padding:22px 20px 20px;border-radius:24px}
+  .route{gap:10px}
+  .route .dash .ic{width:30px;height:30px;padding:4px}
+  .hring{width:92px;height:92px}.hring svg{width:92px;height:92px}.hring .n b{font-size:23px}
+  .nxt{flex-wrap:wrap;gap:10px;padding:14px 16px}
+  .nxt>div:first-child{flex-basis:100%}
+  .nxt .btn{flex:1}
+  .lhead{padding:18px 18px 0}
+  .ltitle{padding:8px 18px 0}
+  .lbody{padding:12px 18px 4px}
+  .lnav{padding:16px 18px 20px}
+  .grid2,.row.c2{grid-template-columns:1fr}
+  .row.c3{grid-template-columns:1fr 1fr}
+  .row.c4{grid-template-columns:1fr 1fr}
+  .grid3{grid-template-columns:1fr}
+  .grid3.keep{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid4{grid-template-columns:1fr 1fr}
+  .flow{grid-template-columns:1fr}
+  .fjoin{flex-direction:row}
+  .fjoin .line{width:auto;height:2px;border-left:0;border-top:2px dashed var(--royal-line);flex:1;min-height:0}
+  .after{grid-template-columns:1fr}
+  .mrow{grid-template-columns:1fr;gap:4px}
+  .calc .lines{grid-template-columns:1fr 1fr}
+  .stagehead .win{display:none}
+  .panel.pop .ph{padding:12px 18px 8px}
+  .foot .fin{padding:0 16px}
+  .tile .v{font-size:23px}
+  .rec{padding:14px}
+  .btn-lg{height:50px}
+  .btn-stack{width:100%}
+  .lnav .btn{flex:1}
+  .jr .js{flex-basis:70px}
+}
+@media (max-width:380px){
+  .row.c3,.row.c4{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr}
+}
+
+/* ---------- additions ---------- */
+.skip{position:absolute;left:-999px;top:8px;background:var(--royal);color:#fff;padding:10px 16px;border-radius:var(--pill);z-index:200;text-decoration:none}
+.skip:focus{left:12px}
+.ldots button{background:none;border:0;padding:8px 0;cursor:pointer;display:flex;align-items:center;border-radius:6px}
+.ldots button:focus-visible{outline:2px solid var(--royal);outline-offset:2px}
+.plist{list-style:none;margin:12px 0 0;padding:0;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:#fff}
+.plist li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:11px 16px;border-top:1px solid var(--border);font-size:14px}
+.plist li:first-child{border-top:0}
+.plist small{color:var(--slate);text-align:right}
+.cc{font-size:12px;color:var(--slate);font-family:var(--mono)}
+.card.lesson{padding:0}
+.tile .v{white-space:nowrap}
+@media(max-width:720px){.lnav{flex-wrap:wrap}.lnav .btn{min-width:0}}
+
+/* ---------- v2.1: hero, deadlines panel ---------- */
+.hero .htitle{font-size:clamp(30px,4.6vw,46px);font-weight:300;letter-spacing:-.035em;line-height:1.04;margin:20px 0 4px}
+.hero .htitle em{font-style:normal;color:var(--lav);display:block}
+.hero .ttl{margin-top:12px;margin-bottom:6px}
+.hero .hrow{margin-top:18px}
+.side{overflow:visible;max-height:none;gap:0}
+.side .dl{display:flex;flex-direction:column;max-height:calc(100vh - var(--nav-h) - 40px);min-height:420px}
+.dl .dh,.dl .hero2,.dl .crit,.dl .df{flex:none}
+.dl .dscroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;margin-top:14px;scrollbar-width:thin;scrollbar-color:#C5CCE6 transparent;position:relative;
+ background:
+  linear-gradient(#fff 30%,rgba(255,255,255,0)) top/100% 26px no-repeat local,
+  linear-gradient(rgba(255,255,255,0),#fff 70%) bottom/100% 26px no-repeat local,
+  linear-gradient(rgba(14,27,61,.10),rgba(14,27,61,0)) top/100% 8px no-repeat scroll,
+  linear-gradient(rgba(14,27,61,0),rgba(14,27,61,.10)) bottom/100% 8px no-repeat scroll}
+.dl .dscroll:focus-visible{outline:2px solid var(--royal);outline-offset:-2px}
+.dl .dscroll::-webkit-scrollbar{width:8px}
+.dl .dscroll::-webkit-scrollbar-thumb{background:#C5CCE6;border-radius:8px;border:2px solid #fff}
+.dtl{margin:0;padding:6px 22px 14px}
+.dtl li{padding-bottom:14px}
+.dtl li.nxt2{background:var(--royal-soft);margin:0 -12px 6px;padding:11px 12px 12px;border-radius:16px}
+.dtl li.nxt2:before{left:21px;top:30px}
+.dtl li:before{top:22px}
+.dtl .sep{position:sticky;top:0;background:#fff;z-index:2;padding:8px 0 8px 32px;margin:0}
+.dtl li.past .tx small{opacity:.8}
+.dl .hero2{padding:16px 18px 14px}
+.dl .df{padding:12px 16px 14px}
+@media (max-height:780px){.dl .hero2 .cd b{font-size:44px}.dl .hero2{padding:14px 16px 12px}.dl .crit{padding:9px 12px}}
+@media (max-height:640px){.side .dl{min-height:0}}
+.sheetc .dl{max-height:none;min-height:0;border:0;box-shadow:none}
+.sheetc .dl .dscroll{overflow:visible;background:none}
+.sheetc .dtl .sep{position:static}
+
+@media (max-height:720px){.dl .crit{display:none}}
+@media(max-width:720px){.hero .doc{display:none}}
+
+/* ---------- v2.2: public landing ---------- */
+body.pub .shell{grid-template-columns:minmax(0,1fr)}
+body.pub .side,body.pub .mstrip,body.pub .bnav{display:none!important}
+body.pub{padding-bottom:0}
+.hide-s{display:inline-flex}
+.pubhero{padding:38px 40px 34px}
+.pubhero .meta{gap:10px}
+.pubhero .vtag{margin:0}
+.hero .htitle.big{font-size:clamp(34px,6vw,60px);margin:26px 0 8px}
+.pubhero .ttl{font-size:clamp(15px,2vw,18px);max-width:560px;line-height:1.5}
+.pubhero .fine{margin:14px 0 0;font-size:12.5px;color:#B9C4EE}
+.kds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.kd{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:18px 20px;display:flex;flex-direction:column;gap:3px;box-shadow:var(--sh-sm)}
+.kd .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.kd .v{font-size:30px;font-weight:300;letter-spacing:-.035em;line-height:1.1;margin-top:4px}
+.kd .s{font-size:13px;color:var(--slate)}
+.kd .badge{align-self:flex-start;margin-top:10px}
+.sech{font-size:clamp(26px,3.6vw,36px);font-weight:300;letter-spacing:-.035em;line-height:1.08;margin:6px 0 18px}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.feat{display:flex;flex-direction:column;gap:8px}
+.feat .fi{width:46px;height:46px;border-radius:50%;background:var(--royal-soft);color:var(--royal);display:grid;place-items:center;margin-bottom:6px}
+.feat h3{margin:0;font-size:19px}
+.feat p{margin:0;color:var(--slate);font-size:14.5px;line-height:1.5}
+.feat .fv{margin-top:auto;padding-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.card.tint{background:var(--royal-soft);border-color:var(--royal-line);display:flex;flex-direction:column;gap:10px}
+.card.tint h3{font-size:22px;font-weight:400;letter-spacing:-.02em}
+.card.tint p{margin:0}
+.pubnum{align-items:stretch}
+@media (max-width:720px){
+  .hide-s{display:none}
+  .pubhero{padding:26px 20px 24px}
+  .kds{grid-template-columns:1fr}
+  .kd{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+  .kd .k{flex-basis:100%}
+  .kd .v{margin:0;font-size:26px}
+  .kd .s{flex:1}
+  .kd .badge{margin:0}
+  .feats{grid-template-columns:1fr}
+}
+
+.pubhero{min-height:380px;display:flex;flex-direction:column;justify-content:center}
+.pubhero .pring{position:absolute;right:56px;top:50%;transform:translateY(-46%);text-align:center}
+.pubhero .pring .hring{width:176px;height:176px;margin:0 auto}
+.pubhero .pring .hring svg{width:176px;height:176px}
+.pubhero .pring .n b{font-size:50px}
+.pubhero .pring .n small{font-size:10px}
+.pubhero .pring p{margin:10px 0 0;font-size:13px;color:#C9D2F5}
+.pubhero .htitle{max-width:640px}
+@media (min-width:1100px){.feats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:980px){.pubhero .pring{display:none}}
+.pubnum>.card:first-child{display:flex;flex-direction:column}
+.pubnum>.card:first-child .provs{margin-top:auto}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<header class="topbar"><div class="tin">
+  <a class="logo" href="#" aria-label="aspire.world"><i>a.</i><span class="lg">aspire.world</span></a>
+  <div class="top-c" id="topc"></div>
+  <div class="top-r" id="topr"></div>
+</div></header>
+<button class="mstrip" id="mstrip" data-act="dlsheet" aria-label="Open deadlines"></button>
+<div class="shell">
+  <main id="view" tabindex="-1"></main>
+  <aside class="side" id="side" aria-label="Deadlines"></aside>
+</div>
+<footer class="foot"><div class="fin">
+  <span>Powered by The Daily Star · Free for students, no commissions. Guidance, not legal advice. SI page checked 20 Oct 2026; other sources 26 Oct 2026. Next check 13 Nov.</span>
+  <span class="sim"><label for="simIn" class="small">Prototype date</label><input class="in" id="simIn" type="date" data-chg="sim" aria-label="Pretend today is"><button class="btn btn-ghost btn-sm" data-act="reset">Reset</button></span>
+</div></footer>
+<nav class="bnav" id="bnav" aria-label="Main"></nav>
+<div id="sheet"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* ================= in-place DOM patching (keeps focus and clicks alive across re-renders) ================= */
+const _ih=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
+function morphKids(a,b){
+  const ak=[...a.childNodes],bk=[...b.childNodes];
+  for(let i=0;i<bk.length;i++){
+    const x=ak[i],y=bk[i];
+    if(!x){a.appendChild(y.cloneNode(true));continue;}
+    if(x.nodeType!==y.nodeType||(x.nodeType===1&&x.tagName!==y.tagName)){a.replaceChild(y.cloneNode(true),x);continue;}
+    if(x.nodeType===3||x.nodeType===8){if(x.nodeValue!==y.nodeValue)x.nodeValue=y.nodeValue;continue;}
+    morphEl(x,y);
+  }
+  for(let i=ak.length-1;i>=bk.length;i--)a.removeChild(ak[i]);
+}
+function morphEl(a,b){
+  const tag=a.tagName,fld=(tag==='INPUT'||tag==='TEXTAREA');
+  const skip=n=>fld&&(n==='value'||n==='checked');
+  for(const at of [...a.attributes])if(!b.hasAttribute(at.name)&&!skip(at.name))a.removeAttribute(at.name);
+  for(const at of [...b.attributes])if(!skip(at.name)&&a.getAttribute(at.name)!==at.value)a.setAttribute(at.name,at.value);
+  if(tag==='INPUT'){
+    if(a.type==='checkbox'||a.type==='radio'){a.checked=b.hasAttribute('checked');}
+    else if(a!==document.activeElement){const v=b.getAttribute('value')||'';if(a.value!==v)a.value=v;}
+    return;
+  }
+  if(tag==='TEXTAREA'){if(a!==document.activeElement){const v=b.textContent;if(a.value!==v)a.value=v;}return;}
+  morphKids(a,b);
+  if(tag==='SELECT'){const v=b.value;if(a.value!==v)a.value=v;}
+}
+function patch(el,html){const t=el.cloneNode(false);_ih.set.call(t,html);morphKids(el,t);}
+function live(el){if(!el)return;Object.defineProperty(el,'innerHTML',{configurable:true,get(){return _ih.get.call(this);},set(v){patch(this,v);}});}
+
+/* ================= helpers ================= */
+const KEY='aw_si_2728_v2';
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const qs=new URLSearchParams(location.search);
+let SIM=null;
+const NOW=()=>{const t=SIM||qs.get('today');return t?new Date(t+'T09:00:00+06:00'):new Date();};
+const isoFromMs=ms=>{const d=new Date(ms);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');};
+const msOf=iso=>Date.parse(iso+'T00:00:00Z');
+function dkMid(){const d=new Date(NOW().getTime()+6*3600e3);return Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate());}
+const todayISO=()=>isoFromMs(dkMid());
+const dayDiff=iso=>Math.round((msOf(iso)-dkMid())/864e5);
+const dAdd=(iso,n)=>isoFromMs(msOf(iso)+n*864e5);
+const dBetween=(a,b)=>Math.round((msOf(b)-msOf(a))/864e5);
+const fmtD=iso=>{const[y,m,d]=iso.split('-').map(Number);return d+' '+MON[m-1]+' '+y;};
+const fmtS=iso=>{const[y,m,d]=iso.split('-').map(Number);return d+' '+MON[m-1];};
+const fmtW=iso=>DOW[new Date(msOf(iso)).getUTCDay()]+' '+fmtD(iso);
+const plural=(n,w)=>n+' '+w+(n===1?'':'s');
+const num=n=>Math.round(n).toLocaleString('en-US');
+const pad2=n=>String(n).padStart(2,'0');
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const valid=iso=>/^\d{4}-\d{2}-\d{2}$/.test(iso||'')&&!isNaN(msOf(iso));
+const rel=n=>n<0?plural(-n,'day')+' ago':n===0?'today':n===1?'tomorrow':'in '+plural(n,'day');
+
+/* ================= icons ================= */
+const IC={
+check:'<path d="M20 6 9 17l-5-5"/>',
+chev:'<path d="m6 9 6 6 6-6"/>',
+cr:'<path d="m9 18 6-6-6-6"/>',
+cl:'<path d="m15 18-6-6 6-6"/>',
+arrow:'<path d="M5 12h14M12 5l7 7-7 7"/>',
+back:'<path d="M19 12H5M12 19l-7-7 7-7"/>',
+bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+cal:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="3"/>',
+plane:'<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
+info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+x:'<path d="M18 6 6 18M6 6l12 12"/>',
+plus:'<path d="M5 12h14M12 5v14"/>',
+copy:'<rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+dl:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+sliders:'<path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
+spark:'<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>',
+flag:'<path d="M4 22V4M4 4h13l-2 4 2 4H4"/>',
+mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>',
+user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/>',
+trash:'<path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',
+pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10"/>',
+list:'<path d="M11 6h10M11 12h10M11 18h10M3 6l1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/>',
+compass:'<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
+folder:'<path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.6l-1.6 5.2A2 2 0 0 1 18.4 19H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/>',
+users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+pen:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>',
+globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
+upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
+award:'<circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/>',
+refresh:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>'};
+const ic=(n,s)=>'<svg class="ic" width="'+(s||20)+'" height="'+(s||20)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[n]||'')+'</svg>';
+
+/* ================= state ================= */
+let S={};
+const NPREF={dl:true,tk:true,wt:true,b:false};
+function load(){
+  try{S=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){S={};}
+  S.name=S.name||'';S.account=!!S.account;S.view=S.view||'today';S.cur=S.cur||0;S.cardAt=S.cardAt||{};
+  S.tasks=S.tasks||{};S.gate=S.gate||{};S.work=S.work||[];S.lead=S.lead||[];S.refs=S.refs||[];S.prog=S.prog||[];
+  S.uaDocs=S.uaDocs||{};S.pre=S.pre||{};S.uaLead=S.uaLead||'';S.uaNum=S.uaNum||'';S.passport=S.passport||'';
+  S.msgDate=S.msgDate||'2027-01-25';S.submitBy=S.submitBy||'2027-02-17';S.pastTab=S.pastTab||'2025';
+  S.notif=S.notif||{};S.notif.st=S.notif.st||{};S.notif.seen=S.notif.seen||{};S.notif.ev=S.notif.ev||{};S.notif.toasted=S.notif.toasted||{};
+  S.notif.prefs=Object.assign({},NPREF,S.notif.prefs||{});
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const UI={open:{},sheet:null,ntab:'inbox',pastOpen:false};
+
+/* ================= hours model (single source of truth) ================= */
+const HOURS_RULE=3000;
+const OPEN_ISO='2027-02-08', CLOSE_ISO='2027-02-24';
+function estWin(r,a,b,off){
+  if(!valid(a)||!valid(b)||b<a)return 0;
+  const days=dBetween(a,b)+1,dpw=+r.dpw||0,hpd=+r.hpd||0;
+  return Math.max(0,(days*dpw/7-(+off||0))*hpd);
+}
+function hoursNow(r){
+  if(+r.actual>0)return +r.actual;
+  const t=todayISO();if(!valid(r.start)||r.start>t)return 0;
+  const e=(valid(r.end)&&r.end<t)?r.end:t;
+  return Math.round(estWin(r,r.start,e,r.off));
+}
+function hoursAt(r,D){
+  const t=todayISO(),now=hoursNow(r);
+  if(D<=t){if(D===t)return now;const e=(valid(r.end)&&r.end<D)?r.end:D;return Math.round(estWin(r,r.start,e,r.off));}
+  const e=(valid(r.end)&&r.end<D)?r.end:D,from=dAdd(t,1);
+  if(!valid(r.start)||e<from)return now;
+  return Math.round(now+estWin(r,r.start>from?r.start:from,e,0));
+}
+function recErr(r){
+  const t=todayISO();
+  if(!valid(r.start))return r.start?'Enter the start date as day, month and year.':'';
+  if(r.start>t)return 'The start date is in the future. Only hours already worked count.';
+  if(r.end&&valid(r.end)&&r.end<r.start)return 'The end date is before the start date.';
+  if(r.dpw!==''&&r.dpw!=null&&(+r.dpw<1||+r.dpw>7))return 'Days per week must be between 1 and 7.';
+  if(r.hpd!==''&&r.hpd!=null&&(+r.hpd<=0||+r.hpd>16))return 'Hours per day must be between 1 and 16.';
+  if(+r.off<0)return 'Days not worked cannot be negative.';
+  return '';
+}
+const recReady=r=>!!r.org&&(+r.actual>0||(valid(r.start)&&+r.dpw>0&&+r.hpd>0))&&!recErr(r);
+const totalAt=(arr,D)=>arr.reduce((a,r)=>a+(recErr(r)?0:hoursAt(r,D)),0);
+const weeklyOf=r=>(valid(r.end)&&r.end<todayISO())?0:(+r.dpw||0)*(+r.hpd||0);
+function reachDate(arr,target){
+  const t=todayISO();
+  if(totalAt(arr,t)>=target)return t;
+  for(let d=1;d<=400;d++){const D=dAdd(t,d);if(totalAt(arr,D)>=target)return D;}
+  return null;
+}
+function hoursVerdict(){
+  const g=S.gate;
+  if(!S.work.length){return g.nowork?{r:'block',h:'No documented work yet',m:'SI asks for documented work experience and a signed form from an employer or client. Without hours you cannot apply this round. Keep working, and use this workspace to plan the next one.'}:null;}
+  const ready=S.work.filter(recReady);
+  if(!ready.length)return null;
+  const tNow=totalAt(S.work,todayISO()),tOpen=totalAt(S.work,OPEN_ISO),tClose=totalAt(S.work,CLOSE_ISO);
+  const wk=S.work.reduce((a,r)=>a+weeklyOf(r),0);
+  if(tNow>=HOURS_RULE)return{r:'clear',h:'You are over the line',m:'You have '+num(tNow)+' documented hours, '+num(tNow-HOURS_RULE)+' above 3,000. Make sure every hour can be shown on a signed form.'};
+  if(tOpen>=HOURS_RULE){const rd=reachDate(S.work,HOURS_RULE);return{r:'work',h:'You get there before the portal opens',m:'You reach 3,000 hours on about '+fmtD(rd)+', before the portal opens on 8 Feb. Your margin on 8 Feb is '+num(tOpen-HOURS_RULE)+' hours.'+(wk?' Every week off removes about '+num(wk)+' hours.':'')};}
+  if(tClose>=HOURS_RULE){const rd=reachDate(S.work,HOURS_RULE);return{r:'work',h:'Tight: only by the closing day',m:'You reach 3,000 hours on about '+fmtD(rd)+', after the portal opens on 8 Feb but before it closes on 24 Feb. Whether SI counts hours up to the closing day is unconfirmed. We check this on 13 Nov.'+(wk?' Every week off removes about '+num(wk)+' hours.':'')};}
+  const rd=reachDate(S.work,HOURS_RULE);
+  return{r:'block',h:'Short for this round',m:'On your schedule you will have about '+num(tClose)+' hours on 24 Feb, '+num(HOURS_RULE-tClose)+' short of 3,000.'+(rd?' You would reach 3,000 around '+fmtD(rd)+'.':' Add hours or a second employer to see a date.')+' If the rule holds, this round is unlikely. Plan for the next one.'};
+}
+
+/* ================= facts: dates ================= */
+const DATES=[
+ {d:'2026-10-16',t:'University Admissions opens',s:'Applications open',k:'ua',ms:[]},
+ {d:'2026-11-13',t:'SI publishes templates and programme list',s:'SI page update',k:'si',ms:[30,14,7,3,1],go:[3,'p-check'],post:{title:'SI should now have published its 2027/28 templates and programme list',body:'Open SI\'s page, download the templates and check your shortlist against the list. We recheck our own labels the same day.',go:[3,'p-check'],days:21}},
+ {d:'2027-01-15',t:'University Admissions deadline',s:'Apply to master\'s programmes',k:'ua',crit:true,ms:[60,30,14,7,3,1,0],go:[4,'a-start']},
+ {d:'2027-02-01',t:'Fee and documents due',s:'Confirm on University Admissions',k:'ua',conf:true,ms:[14,7,1,0],go:[4,'a-docs']},
+ {d:'2027-02-08',t:'SI portal opens',s:'Scholarship application',k:'si',ms:[14,7,1,0],go:[6,'s-clock'],post:{title:'The SI portal is open',body:'You can submit now. SI advises against waiting for the last days.',go:[6,'s-plan'],days:7}},
+ {d:'2027-02-24',t:'SI portal closes',s:'19:59 Dhaka · 14:59 CET',k:'si',crit:true,ms:[30,14,7,3,2,1,0],go:[6,'s-clock']},
+ {d:'2027-04-01',t:'Admissions results',s:'University Admissions',k:'ua',ms:[7,1,0],go:[7,'w-time'],post:{title:'Admissions results are out',body:'Check University Admissions. You need an offer, or a conditional offer, to stay in the running. Do not decline anything.',go:[7,'w-rules'],days:10}},
+ {d:'2027-04-22',t:'SI announces recipients',s:'On si.se',k:'si',ms:[7,1,0],go:[7,'w-time'],post:{title:'SI announces its recipients today',body:'Check si.se and your email. Only people who are offered a scholarship are notified.',go:[8,'o-offer'],days:10}}];
+const CRIT=DATES.filter(d=>d.crit);
+const nextDate=()=>DATES.find(d=>dayDiff(d.d)>=0);
+const nextCrit=()=>CRIT.find(d=>dayDiff(d.d)>=0);
+
+/* ================= stages & tasks ================= */
+const STAGES=[
+ {k:'Understand',t:'Understand the scholarship',lead:'Ten minutes to know what this is, what it asks of you, and what could end an application.',win:'Now',done:'You can explain the two applications in two sentences, and you are ready to check whether you qualify.'},
+ {k:'Qualify',t:'Do you qualify?',lead:'Six points decide whether you can apply this round. Find out before you invest months.',win:'Now',done:'You have a result for all six points and a plan for each one that is not clear.'},
+ {k:'Evidence',t:'Build your evidence',lead:'Your forms, your leadership and the people who vouch for you. Other people set the pace here, so start now.',win:'Now → Jan',done:'Each form has a named signer, and two referees have said yes.'},
+ {k:'Programmes',t:'Choose your programmes',lead:'Up to four, plus one at SSE or Konstfack. Chosen for what you will do back home.',win:'List opens 13 Nov',done:'Every programme is on SI\'s 2027/28 list, you meet its entry rules, and you can say in one line how it links to a development goal.'},
+ {k:'Admissions',t:'Apply to the university',lead:'Application one is run by University Admissions. It ends in an 8-digit number you cannot lose.',win:'By 15 Jan',done:'You have applied, paid the fee, saved your 8-digit number, and every document is uploaded or on its way.'},
+ {k:'SI file',t:'Build your SI file',lead:'CV, forms, letters, passport copy and motivation, exactly as SI asks.',win:'13 Nov → Feb',done:'All your files are ready, the pre-flight check is fully ticked, and your motivation is finished.'},
+ {k:'Submit',t:'Submit to SI',lead:'One application, two weeks, one deadline. Do it early.',win:'8 → 24 Feb',done:'You have submitted one application before the deadline and saved a confirmation.'},
+ {k:'Wait',t:'Wait, without touching anything',lead:'Screening, results and the offer. A few things you must not change.',win:'25 Feb → 22 Apr',done:'22 April has passed and you know whether you hold an offer.'},
+ {k:'Outcome',t:'Your outcome',lead:'Accept it properly, or carry your work into the next application.',win:'After 22 Apr',done:'You have replied to your offer, or you have chosen your next route.'}];
+const T=[
+ {id:'s0a',s:0,l:'Read how the two applications fit together',at:[0,'route']},
+ {id:'s0b',s:0,l:'Save the key dates to your calendar',h:'Ticks itself when you download the file.',at:[0,'how']},
+ {id:'s0c',s:0,l:'Choose how Aspire reminds you',at:[0,'how']},
+ {id:'s1a',s:1,l:'Finish the six-point check and save your result',h:'Ticks itself when you press save.',at:[1,'q-result']},
+ {id:'s1b',s:1,l:'Make a plan for each point that is not clear',at:[1,'q-result']},
+ {id:'s2a',s:2,l:'Add your work and hours',h:'Up to three employers or clients.',at:[1,'q-work']},
+ {id:'s2b',s:2,l:'Add your leadership roles',h:'Up to two.',at:[2,'e-lead']},
+ {id:'s2c',s:2,l:'Confirm who will sign and stamp each form',wait:1,at:[2,'e-forms']},
+ {id:'s2d',s:2,l:'Name your two referees',at:[2,'e-refs']},
+ {id:'s2e',s:2,l:'Get a yes from both referees',wait:1,at:[2,'e-refs']},
+ {id:'s3a',s:3,l:'Read how to choose programmes',at:[3,'p-how']},
+ {id:'s3b',s:3,l:'Draft your shortlist',h:'Up to four, plus one at SSE or Konstfack.',at:[3,'p-list']},
+ {id:'s3c',s:3,l:'Write one line linking each programme to a development goal',at:[3,'p-list']},
+ {id:'s3d',s:3,l:'Check every programme against SI\'s 2027/28 list',opens:'2026-11-13',at:[3,'p-check']},
+ {id:'s4a',s:4,l:'Create your single University Admissions account',due:'2027-01-15',at:[4,'a-start']},
+ {id:'s4b',s:4,l:'Get certified degree papers from your Registrar',h:'Ticks itself when both are received or uploaded.',wait:1,due:'2027-01-15',at:[4,'a-docs']},
+ {id:'s4c',s:4,l:'Book and take your English test, or confirm your studies count',wait:1,at:[4,'a-docs']},
+ {id:'s4d',s:4,l:'Apply to up to four programmes and pay the fee',due:'2027-01-15',at:[4,'a-start']},
+ {id:'s4e',s:4,l:'Save your 8-digit application number',at:[4,'a-number']},
+ {id:'s4f',s:4,l:'Upload your documents, and confirm their deadline on University Admissions',due:'2027-02-01',at:[4,'a-send']},
+ {id:'s5a',s:5,l:'Download SI\'s 2027/28 templates',opens:'2026-11-13',at:[5,'f-five']},
+ {id:'s5b',s:5,l:'CV on SI\'s template, three pages at most, as PDF',opens:'2026-11-13',at:[5,'f-five']},
+ {id:'s5c',s:5,l:'Work and leadership forms typed, signed, stamped and merged into one PDF',opens:'2026-11-13',wait:1,at:[5,'f-five']},
+ {id:'s5d',s:5,l:'Two letters of reference signed, stamped and merged into one PDF',opens:'2026-11-13',wait:1,at:[5,'f-five']},
+ {id:'s5e',s:5,l:'Passport or ID copy, valid on submission day',at:[5,'f-id']},
+ {id:'s5f',s:5,l:'Motivation finished',at:[5,'f-motiv']},
+ {id:'s5g',s:5,l:'Pass the pre-flight check',h:'Ticks itself when every item is checked.',at:[5,'f-pre']},
+ {id:'s6a',s:6,l:'Set your own submit-by date',at:[6,'s-plan']},
+ {id:'s6b',s:6,l:'Submit your one SI application',opens:'2027-02-08',due:'2027-02-24',at:[6,'s-day']},
+ {id:'s6c',s:6,l:'Save your confirmation',opens:'2027-02-08',at:[6,'s-day']},
+ {id:'s7a',s:7,l:'Leave your admission offer untouched',at:[7,'w-rules']},
+ {id:'s7b',s:7,l:'Check your University Admissions result',opens:'2027-04-01',at:[7,'w-rules']},
+ {id:'s7c',s:7,l:'Check si.se and your email',opens:'2027-04-22',at:[7,'w-time']},
+ {id:'s8a',s:8,l:'Accept or decline within the deadline in your offer',opens:'2027-04-22',at:[8,'o-offer']}];
+const tById=id=>T.find(t=>t.id===id);
+const tget=id=>(S.tasks[id]=S.tasks[id]||{});
+const isOpen=t=>!t.opens||dayDiff(t.opens)<=0;
+function stageProg(n){const ts=T.filter(t=>t.s===n);const d=ts.filter(t=>tget(t.id).done).length;return{d,n:ts.length,p:ts.length?d/ts.length:0};}
+function overall(){return T.filter(t=>tget(t.id).done).length/T.length;}
+function nextTask(){return T.find(t=>!tget(t.id).done&&isOpen(t))||T.find(t=>!tget(t.id).done);}
+const formsOf=()=>S.work.concat(S.lead);
+const passportOK=()=>S.passport?S.passport>=CLOSE_ISO:null;
+const PRE=[
+ 'CV is on SI\'s 2027/28 template, three pages or fewer, saved as PDF, instructions page removed',
+ 'Work forms: three or fewer, total hours stated for each organisation, typed, dated, signed by hand and stamped',
+ 'Leadership forms: two or fewer, counting only the hours spent leading',
+ 'Work and leadership forms are merged into one PDF, five pages or fewer',
+ 'Two letters from two different referees, at least one based on work experience',
+ 'Each letter is two pages or fewer, signed and stamped (on both pages if it has two)',
+ 'Both letters are merged into one PDF, work-based letter first',
+ 'My name and date of birth match my passport on every document',
+ 'My passport or ID copy is clear and shows my name, citizenship and photo',
+ 'Everything is in English, or has a notary\'s translation',
+ 'My 8-digit number is copied from my University Admissions account',
+ 'The email address in my SI application is one I check every day',
+ 'My motivation is finished and I have read it aloud once',
+ 'I am attaching only the documents SI asked for'];
+function syncAuto(){
+  const forms=formsOf(),refsOK=S.refs.length===2;
+  const rules={
+    s1a:!!S.gateSaved,
+    s2a:S.work.length>0&&S.work.every(recReady),
+    s2b:S.lead.length>0&&S.lead.every(recReady),
+    s2d:refsOK&&S.refs.every(r=>r.name),
+    s2e:refsOK&&S.refs.every(r=>(r.st||0)>=2),
+    s3b:S.prog.length>0&&S.prog.every(p=>p.name),
+    s3c:S.prog.length>0&&S.prog.every(p=>(p.link||'').trim().length>=10),
+    s3d:S.prog.length>0&&S.prog.every(p=>p.chk)&&dayDiff('2026-11-13')<=0,
+    s4b:['deg','trn'].every(k=>['received','uploaded'].includes((S.uaDocs[k]||{}).st)),
+    s4c:['received','uploaded'].includes((S.uaDocs.eng||{}).st),
+    s4e:!!S.uaNum,
+    s5c:forms.length>0&&forms.every(r=>(r.st||0)>=5),
+    s5d:refsOK&&S.refs.every(r=>(r.st||0)>=5),
+    s5e:passportOK()===true,
+    s5g:PRE.every((_,i)=>S.pre[i])&&passportOK()===true,
+    s6a:!!S.submitTouched};
+  for(const id in rules){const o=tget(id);if(o.m)continue;o.done=!!rules[id];if(o.done)o.wait=false;}
+}
+
+/* ================= UI builders ================= */
+const PROV={
+ o:['Official 2027/28','teal','shield'],
+ p:['Earlier round · confirm 13 Nov','violet',''],
+ t:['Third-party · confirm','outline',''],
+ u:['Confirm on University Admissions','outline',''],
+ a:['Aspire suggestion · not an SI rule','soft','spark'],
+ s:['SI recipient lists','teal','shield'],
+ y:['Yours','violet','']};
+const provB=k=>'<span class="badge '+PROV[k][1]+'">'+(PROV[k][2]?ic(PROV[k][2],12):'')+PROV[k][0]+'</span>';
+const prov=(...ks)=>'<div class="provs">'+ks.map(provB).join('')+'</div>';
+const ALERT_IC={info:'info',ok:'check',caution:'alert',bad:'alert',plain:'info'};
+const alertH=(kind,title,body,icon)=>'<div class="alert '+kind+'"><span class="ai">'+ic(icon||ALERT_IC[kind],15)+'</span><div>'+(title?'<b>'+title+'</b> ':'')+body+'</div></div>';
+const acc=(id,t,b)=>'<div class="acc'+(UI.open[id]?' open':'')+'"><button data-act="acc" data-id="'+id+'" aria-expanded="'+(!!UI.open[id])+'"><span class="t">'+t+'</span>'+ic('chev',18).replace('class="ic"','class="ic chev"')+'</button>'+(UI.open[id]?'<div class="ab">'+b+'</div>':'')+'</div>';
+const accs=(...items)=>'<div class="accs">'+items.join('')+'</div>';
+const choices=(act,q,opts,sel)=>'<div class="choices" role="radiogroup">'+opts.map(o=>'<button class="choice'+(sel===o[0]?' sel':'')+'" role="radio" aria-checked="'+(sel===o[0])+'" data-act="'+act+'" data-q="'+q+'" data-v="'+o[0]+'"><span class="rd"></span><span>'+esc(o[1])+'</span></button>').join('')+'</div>';
+const VLAB={clear:'Clear.',work:'Needs work.',block:'Blocker.'};
+const VKIND={clear:'ok',work:'caution',block:'bad'};
+const verdictBox=v=>v?alertH(VKIND[v.r]+' vd',v.h||VLAB[v.r],esc(v.m)):'';
+const stepper=(kind,i,st,labels)=>'<div class="tl-steps">'+labels.map((l,k)=>'<button class="tstep'+(k<st?' on':'')+'" data-act="step" data-k="'+kind+'" data-i="'+i+'" data-n="'+k+'"><i>'+ic('check',12)+'</i>'+l+'</button>').join('')+'</div>';
+const taskBtn=(id,label,done)=>{const o=tget(id);return o.done?'<span class="badge teal">'+ic('check',12)+(done||'Done')+'</span>':'<button class="btn btn-secondary btn-sm" data-act="tg" data-id="'+id+'">'+label+'</button>';};
+const tipRow=(i,t,b)=>'<div class="crow" style="cursor:default"><span class="ci">'+ic(i,18)+'</span><div class="ct"><b>'+t+'</b><small>'+b+'</small></div></div>';
+const empty=(icn,t,p,btn)=>'<div class="empty"><div class="ei">'+ic(icn,22)+'</div><b>'+t+'</b><p>'+p+'</p>'+(btn||'')+'</div>';
+const goBtn=(label,s,c,cls)=>'<button class="btn '+(cls||'btn-secondary')+' btn-sm" data-act="go" data-s="'+s+'" data-c="'+c+'">'+label+'</button>';
+const nm=()=>S.name?esc(S.name):'';
+
+/* ================= gate data ================= */
+const GATE=[
+ {id:'cit',c:'q-cit',t:'Citizenship',o:[
+  ['bd','Bangladeshi citizen','clear','Bangladesh is on the eligible-country lists in SI\'s recent calls. Check SI\'s 2027/28 list before you invest.'],
+  ['ot','Another citizenship','block','This workspace is for Bangladeshi applicants. SI limits the scholarship to citizens of listed countries, so check SI\'s list for yours.']],
+  why:'<p>SI looks at <b>citizenship</b>, not where you live. Recent calls list Bangladesh among the eligible countries. SI\'s 2027/28 country list was not in the page snapshot we hold, so open SI\'s page and find your country before you start.</p>'+prov('p','t')},
+ {id:'deg',c:'q-deg',t:'Degree',o:[
+  ['4y','4-year bachelor\'s (honours)','clear','Meets University Admissions\' minimum for Bangladesh.'],
+  ['b+m','Bachelor\'s plus a completed master\'s, 4 years or more in total','clear','University Admissions counts total years of study. Keep your certificates ready.'],
+  ['3h','3-year bachelor\'s with honours','work','May be considered only in certain social science and humanities majors. Ask University Admissions about your subject before you pay a fee.'],
+  ['fin','Final year of a 4-year bachelor\'s','work','You can apply, but you must document that you are in your final year. Plan how your final results reach them.'],
+  ['3p','3-year bachelor\'s without honours, nothing further','block','University Admissions says this "will not satisfy the entry requirements for a Master\'s programme." Paperwork cannot fix it. Ask whether a further qualification brings your total to 4 years.']],
+  why:'<p>For Bangladesh, University Admissions sets the minimum at a 4-year bachelor\'s, or a bachelor\'s followed by a master\'s totalling 4 years. A 3-year bachelor\'s with honours may be considered in certain social science and humanities majors.</p><p class="small muted">The page does not list which 3-year honours subjects count. Ask before you pay a fee.</p><div class="provs"><span class="badge teal">'+ic('shield',12)+'Official · University Admissions</span></div>'},
+ {id:'lead',c:'q-lead',t:'Leadership',o:[
+  ['team','I lead, or have led, a team or unit at work','clear','This is what SI\'s form describes: leading other employees, with a say in direction, tasks and decisions.'],
+  ['civil','I lead, or have led, a volunteer or civil-society group','clear','SI accepts leadership from civil-society engagement. Be ready to show who you led and what changed.'],
+  ['proj','I lead projects, but not other people','work','SI\'s form defines leadership as leading others in a team or unit. Describe exactly what you did. Do not stretch it.'],
+  ['none','Not yet','work','No minimum leadership hours appear in the guidance we found, but SI gives priority to relevant leadership. Look for a role you can take on before February.']],
+  why:'<p>SI\'s form defines leadership as leading other employees in a team or unit, including a say in direction, assigning tasks and taking part in decisions. Leadership from civil-society engagement is also accepted. Priority goes to relevant leadership from employment.</p>'+prov('p')},
+ {id:'sign',c:'q-sign',t:'Signer and stamp',o:[
+  ['ok','My employer has a stamp, and a supervisor or HR can sign','clear','This is the normal route. Ask early.'],
+  ['nost','My employer has no official stamp','work','SI may accept a notary stamp if it is your only experience. The notary also certifies in English that the signer can represent the organisation.'],
+  ['free','I am a freelancer','work','A staff member at a client company or organisation (not a private person) can sign for the hours you worked for it. Or someone at a professional association or agency where you are registered.'],
+  ['fam','I work in a family business','work','A non-family staff member must sign. Family members cannot.']],
+  why:'<p>Forms must be signed by hand and stamped with an official stamp. Co-workers, family, relatives, partners and friends cannot sign. A digital signature or stamp may be accepted, but SI prefers a traditional one.</p>'+prov('p')},
+ {id:'eng',c:'q-eng',t:'English',o:[
+  ['have','I have a valid approved test score','clear','Check that your score meets each programme\'s own requirement.'],
+  ['plan','I plan to take a test','work','Upper-secondary English does not count. Book early. The result must reach University Admissions with your documents.'],
+  ['uni','I think my English-medium degree counts','work','Only certain university studies count. Ask University Admissions before relying on it.']],
+  why:'<p>Upper-secondary English does not meet the English requirement for Swedish university studies. You prove English with an internationally approved test or certain university studies. Each programme sets its own score, so check the programme page.</p><div class="provs"><span class="badge teal">'+ic('shield',12)+'Official · University Admissions</span></div>'}];
+const GATE_ORDER=[['cit','Citizenship','q-cit'],['deg','Degree','q-deg'],['hours','Work experience','q-work'],['lead','Leadership','q-lead'],['sign','Signer and stamp','q-sign'],['eng','English','q-eng']];
+function gateRes(){return GATE_ORDER.map(([id])=>{if(id==='hours')return hoursVerdict();const q=GATE.find(x=>x.id===id),o=q.o.find(x=>x[0]===S.gate[id]);return o?{r:o[2],m:o[3]}:null;});}
+function gateCounts(){const res=gateRes(),c={clear:0,work:0,block:0};res.forEach(r=>{if(r)c[r.r]++;});return{res,c,ans:res.filter(Boolean).length};}
+function qCard(id,lede){const q=GATE.find(x=>x.id===id),sel=S.gate[id],o=q.o.find(x=>x[0]===sel);
+  return (lede?'<p class="lede">'+lede+'</p>':'')+choices('gate',id,q.o.map(x=>[x[0],x[1]]),sel)+(o?verdictBox({r:o[2],m:o[3]}):'')+accs(acc('why-'+id,'Where this rule comes from',q.why));}
+
+/* ================= hours editor ================= */
+const WTYPES=[['emp','Employee of an organisation'],['free','Freelance or self-employed'],['fam','Family business']];
+const LTYPES=[['team','Leading a team or unit at work'],['civil','Civil-society or volunteer group']];
+const SIGNERS=[['sup','Supervisor, manager or HR'],['head','Head of the organisation'],['client','Client company staff (freelance)'],['assoc','Professional association or agency'],['nonfam','Non-family staff (family business)'],['notary','Notary route (employer has no stamp)'],['bad','Co-worker, family member or friend']];
+const RELS=[['cur','Current supervisor'],['prev','Previous supervisor'],['hr','HR or head of organisation'],['client','Client (a company)'],['civil','Civil-society or network lead'],['peer','Co-worker (peer)'],['fam','Family, relative or friend']];
+const STEPS5=['Typed','Printed','Signed by hand','Stamped','Scanned'];
+const REFSTEPS=['Asked','Agreed','Typed','Signed and stamped','Scanned'];
+const fld=(label,inner,help)=>'<div class="field"><label>'+label+'</label>'+inner+(help?'<span class="fhelp">'+help+'</span>':'')+'</div>';
+const inp=(k,i,f,val,extra)=>'<input class="in" data-chg="rec" data-k="'+k+'" data-i="'+i+'" data-f="'+f+'" value="'+esc(val)+'" '+(extra||'')+'>';
+const sel=(k,i,f,val,opts)=>'<select class="in" data-chg="rec" data-k="'+k+'" data-i="'+i+'" data-f="'+f+'">'+opts.map(o=>'<option value="'+o[0]+'"'+(val===o[0]?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
+function recEditor(kind,r,i){
+  const w=kind==='w',err=recErr(r),ready=recReady(r),lbl=w?'hours':'hours leading';
+  const hNow=ready?hoursNow(r):0,hOpen=ready?hoursAt(r,OPEN_ISO):0,hClose=ready?hoursAt(r,CLOSE_ISO):0;
+  const ongoing=!valid(r.end)||r.end>=todayISO(),wk=weeklyOf(r);
+  let calc='';
+  if(ready){calc='<div class="calc"><div class="big">'+num(hNow)+' <small>'+lbl+' so far '+(+r.actual>0?'(from your records)':'(our estimate)')+'</small></div>'+
+    (ongoing?'<div class="lines"><div><b>'+num(hOpen)+'</b>on 8 Feb 2027</div><div><b>'+num(hClose)+'</b>on 24 Feb 2027</div><div><b>'+num(wk)+'</b>'+lbl+' a week</div></div><p class="small muted" style="margin:10px 0 0">Assumes you keep this schedule with no time off. Every week off removes about '+num(wk)+' hours.</p>':'<div class="lines"><div><b>'+fmtD(r.end)+'</b>ended</div><div><b>'+num(hNow)+'</b>final '+lbl+'</div><div><b>'+num(wk)+'</b>'+lbl+' a week then</div></div>')+'</div>';}
+  else if(!err)calc='<p class="small muted" style="margin:12px 0 0">Add the start date and your weekly schedule to see your '+lbl+'.</p>';
+  let warn='';
+  if(err)warn=alertH('bad','Check this entry.',esc(err));
+  else if(w&&(+r.dpw)*(+r.hpd)>70)warn=alertH('caution','Check this schedule.','That is '+num((+r.dpw)*(+r.hpd))+' hours a week. SI can run random checks, so only enter hours you can document.');
+  return '<div class="rec"><div class="rec-h"><b><span class="nb">'+(i+1)+'</span><span class="o">'+esc(r.org||(w?'Employer or client':'Leadership role'))+'</span></b><button class="btn btn-ghost btn-xs" data-act="delrec" data-k="'+kind+'" data-i="'+i+'">'+ic('trash',14)+' Remove</button></div>'+
+   '<div class="row c2">'+fld(w?'Organisation or client':'Organisation or group',inp(kind,i,'org',r.org))+fld('Your title',inp(kind,i,'role',r.role))+'</div>'+
+   '<div class="row c2" style="margin-top:12px">'+fld(w?'Type of work':'Kind of leadership',sel(kind,i,'type',r.type||(w?'emp':'team'),w?WTYPES:LTYPES))+'<div></div></div>'+
+   '<div class="row c2" style="margin-top:12px">'+fld('Start date',inp(kind,i,'start',r.start,'type="date"'))+fld('End date <em>(leave empty if you still do this)</em>',inp(kind,i,'end',r.end,'type="date"'))+'</div>'+
+   '<div class="row c3" style="margin-top:12px">'+fld(w?'Days a week':'Days a week you lead',inp(kind,i,'dpw',r.dpw,'type="number" min="1" max="7" inputmode="numeric"'))+fld(w?'Hours a day':'Hours leading a day',inp(kind,i,'hpd',r.hpd,'type="number" min="1" max="16" step="0.5" inputmode="decimal"'))+fld('Days not worked',inp(kind,i,'off',r.off,'type="number" min="0" inputmode="numeric"'),'Leave, holidays, breaks')+'</div>'+
+   '<div class="field" style="margin-top:12px;max-width:340px"><label>Total from your own records <em>(optional)</em></label>'+inp(kind,i,'actual',r.actual,'type="number" min="0" inputmode="numeric" placeholder="e.g. 2,150"')+'<span class="fhelp">If your employer\'s records give a total, enter it. It replaces our estimate for hours up to today.</span></div>'+
+   calc+(warn?'<div style="margin-top:12px">'+warn+'</div>':'')+'</div>';
+}
+function hoursSummary(){
+  if(!S.work.filter(recReady).length)return '';
+  const tN=totalAt(S.work,todayISO()),tO=totalAt(S.work,OPEN_ISO),tC=totalAt(S.work,CLOSE_ISO);
+  const tile=(l,v)=>'<div class="tile'+(v>=HOURS_RULE?' ok':'')+'"><div class="v">'+num(v)+(v>=HOURS_RULE?' '+ic('check',18):'')+'</div><div class="l">'+l+'</div></div>';
+  return '<div class="card flat" style="padding:20px"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><div class="eyebrow">Your documented hours</div><div class="mono" style="font-size:34px;letter-spacing:-.04em;line-height:1.1;margin-top:4px">'+num(tN)+'<span style="font-size:14px;color:var(--slate);font-family:var(--sans);letter-spacing:0"> of 3,000 so far</span></div></div>'+provB('p')+'</div>'+
+   '<div class="gauge" style="margin-bottom:14px"><i class="'+(tN>=HOURS_RULE?'full':'')+'" style="width:'+clamp(tN/HOURS_RULE*100,0,100)+'%"></i></div>'+
+   '<div class="grid3 keep">'+tile('today',tN)+tile('on 8 Feb · portal opens',tO)+tile('on 24 Feb · closes',tC)+'</div></div>';
+}
+function signerAdvice(){
+  const types=new Set(S.work.map(r=>r.type||'emp'));if(S.gate.sign==='free')types.add('free');if(S.gate.sign==='fam')types.add('fam');if(S.gate.sign==='nost')types.add('nost');
+  const out=[];
+  if(types.has('free'))out.push(alertH('info','Freelance work.','Ask a staff member at a client company or organisation, not a private person. They can certify only the hours you worked for them. A professional association or agency where you are registered also works.'));
+  if(types.has('fam'))out.push(alertH('caution','Family business.','A non-family staff member must sign. Family members cannot, even if they own the business.'));
+  if(types.has('nost'))out.push(alertH('caution','No official stamp.','If this is your only experience, a notary stamp may be accepted. The notary certifies in English that the information is accurate and that the signer can represent the organisation. Merge the notary\'s certificate into the same PDF.'));
+  if(!out.length||types.has('emp'))out.push(alertH('ok','Employee.','A current or previous supervisor, manager, HR representative or the head of the organisation can sign and stamp. The same person can sign both form types and write your letter.'));
+  return out.join('');
+}
+
+/* ================= referees, programmes, docs ================= */
+function renderRefsHTML(){
+  const warns=[];
+  if(S.refs.length===2){if(S.refs[0].name&&S.refs[0].name.trim().toLowerCase()===S.refs[1].name.trim().toLowerCase())warns.push('SI needs two different referees.');
+    if(!S.refs.some(r=>r.basis==='work'))warns.push('At least one letter must be based on work experience.');}
+  S.refs.forEach((r,i)=>{if(r.rel==='peer'||r.rel==='fam')warns.push('Referee '+(i+1)+': SI does not accept co-workers, family, relatives, partners or friends.');});
+  const rf=(i,f,v,extra)=>'<input class="in" data-chg="ref" data-i="'+i+'" data-f="'+f+'" value="'+esc(v)+'" '+(extra||'')+'>';
+  const rs=(i,f,v,opts)=>'<select class="in" data-chg="ref" data-i="'+i+'" data-f="'+f+'">'+opts.map(o=>'<option value="'+o[0]+'"'+(v===o[0]?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
+  return (S.refs.length?'':empty('users','No referees yet','SI needs two letters from two different people. One must be based on your work.','<button class="btn btn-primary btn-sm" data-act="addref">'+ic('plus',16)+' Add your first referee</button>'))+
+   S.refs.map((r,i)=>'<div class="rec"><div class="rec-h"><b><span class="nb">'+(i+1)+'</span><span class="o">'+esc(r.name||'Referee '+(i+1))+'</span></b><button class="btn btn-ghost btn-xs" data-act="delref" data-i="'+i+'">'+ic('trash',14)+' Remove</button></div>'+
+   '<div class="row c2">'+fld('Full name',rf(i,'name',r.name))+fld('Organisation and title',rf(i,'org',r.org))+'</div>'+
+   '<div class="row c2" style="margin-top:12px">'+fld('How they know you',rs(i,'rel',r.rel,RELS))+fld('Letter is based on',rs(i,'basis',r.basis,[['work','Work experience'],['out','Outside work']]))+'</div>'+
+   '<div class="field" style="margin-top:12px">'+'<label>Work email</label>'+rf(i,'email',r.email,'type="email"')+'</div>'+
+   '<div class="lbl" style="margin:16px 0 8px">Letter progress · needed back by '+fmtD(S.msgDate)+'</div>'+stepper('r',i,r.st||0,REFSTEPS)+'</div>').join('')+
+   warns.map(w=>'<div style="margin-top:12px">'+alertH('bad','Check.',esc(w))+'</div>').join('')+
+   (S.refs.length&&S.refs.length<2?'<div style="margin-top:12px"><button class="btn btn-outline btn-sm" data-act="addref">'+ic('plus',16)+' Add a second referee</button></div>':'');
+}
+const P25=[['European Intellectual Property Law','Stockholm University'],['Sustainable Energy Engineering','Lund University'],['Global Health','Uppsala University'],['Computer Science','Blekinge Institute of Technology'],['Energy and Management for Sustainable Development','Linnaeus University'],['Textile Chain Management','University of Borås'],['Entrepreneurship and Business Design','Chalmers University of Technology'],['Information Technology: Data Science, AI and Machine Learning','Halmstad University'],['Sustainable Energy Systems','Chalmers University of Technology'],['Digital Service Innovation','Halmstad University'],['Business Development and Internationalisation','Umeå University'],['Health Informatics','Karolinska Institutet'],['Global Health','Karolinska Institutet'],['Sustainable Development','University West']];
+const P24=[['Civil and Architectural Engineering','KTH Royal Institute of Technology'],['Health Informatics','Karolinska Institutet'],['Computer and Systems Sciences','Stockholm University'],['Entrepreneurship and Innovation (one year)','Lund University'],['International Marketing and Brand Management (one year)','Lund University'],['Computer Science: Applied Data Science','Malmö University'],['Infection Biology','Uppsala University'],['Translational Physiology and Pharmacology','Karolinska Institutet'],['Computer Science','Uppsala University'],['Public Health with a Specialization in Health Economics','Umeå University']];
+function progHTML(){
+  const reg=S.prog.filter(p=>p.kind==='reg').length,sse=S.prog.filter(p=>p.kind==='sse').length,opened=dayDiff('2026-11-13')<=0;
+  let n=0;
+  return (opened?'':alertH('info','Draft mode until 13 November.','Add programmes you are considering. Tick "checked" once you find each one on SI\'s list.'))+
+   (S.prog.length?'':empty('book','Your shortlist is empty','Add the programmes you would genuinely attend. You can add up to four, plus one at SSE or Konstfack.','<button class="btn btn-primary btn-sm" data-act="addprog" data-k="reg">'+ic('plus',16)+' Add a programme</button>'))+
+   S.prog.map((p,i)=>{if(p.kind==='reg')n++;const pf=(f,v,extra)=>'<input class="in" data-chg="prog" data-i="'+i+'" data-f="'+f+'" value="'+esc(v)+'" '+(extra||'')+'>';
+    return '<div class="rec"><div class="rec-h"><b><span class="nb">'+(p.kind==='sse'?'5':n)+'</span><span class="o">'+esc(p.name||(p.kind==='sse'?'Fifth · SSE or Konstfack':'Programme '+n))+'</span></b><button class="btn btn-ghost btn-xs" data-act="delprog" data-i="'+i+'">'+ic('trash',14)+' Remove</button></div>'+
+    '<div class="row c2">'+fld('Programme name',pf('name',p.name))+fld('University',pf('uni',p.uni))+'</div>'+
+    '<div class="field" style="margin-top:12px"><label>One line: how does this connect to a development goal in Bangladesh? <em>(max 160)</em></label><textarea class="in" rows="2" maxlength="160" data-chg="prog" data-i="'+i+'" data-f="link" data-cc="1">'+esc(p.link)+'</textarea><span class="fhelp cc">'+(p.link||'').length+' / 160</span></div>'+
+    '<label class="swrow" style="padding:12px 0 0;border:0;cursor:'+(opened?'pointer':'not-allowed')+'"><button type="button" class="cb tk'+(p.chk?' on':'')+'" data-act="progchk" data-i="'+i+'" '+(opened?'':'disabled')+' aria-label="Checked against SI list">'+ic('check',14)+'</button><span class="t small" style="font-weight:500;'+(opened?'':'color:var(--slate)')+'">I found this on SI\'s 2027/28 list and meet its entry requirements</span></label></div>';}).join('')+
+   (S.prog.length?'<div class="btnrow" style="margin-top:12px"><button class="btn btn-outline btn-sm" data-act="addprog" data-k="reg" '+(reg>=4?'disabled':'')+'>'+ic('plus',16)+' Programme ('+reg+'/4)</button><button class="btn btn-outline btn-sm" data-act="addprog" data-k="sse" '+(sse>=1?'disabled':'')+'>'+ic('plus',16)+' SSE or Konstfack ('+sse+'/1)</button></div>':'');
+}
+const DOCS=[{id:'deg',n:'Degree certificate',s:'Certified by your Registrar'},{id:'trn',n:'Semester transcripts',s:'Certified by your Registrar'},{id:'eng',n:'English test result',s:'Sent with your documents'},{id:'pas',n:'Passport data and photo page',s:'A copy is enough to start'}];
+const DST=[['none','Not asked yet'],['requested','Requested'],['received','Received'],['uploaded','Uploaded']];
+function docsHTML(){
+  const lead=+S.uaLead;let plan='';
+  const dl=dayDiff('2027-01-15');
+  if(lead>0){const iso=dAdd('2027-01-15',-(lead+14)),dd=dayDiff(iso);
+    plan='<div style="margin-top:14px">'+(dd<0?alertH('bad','Your safe date has passed.','Your own figure puts it at '+fmtD(iso)+'. Ask your Registrar\'s office now and tell them the deadline is 15 January.'):alertH('ok','Ask your Registrar by '+fmtD(iso)+'.','That is '+plural(dd,'day')+' from now: 15 Jan, minus your '+lead+' days, minus a 14-day buffer.'))+'</div>';}
+  return '<div class="card flat" style="padding:20px"><div class="field" style="max-width:420px"><label>How many days does your Registrar\'s office take? <em>(ask them, this is your own figure)</em></label><input class="in" type="number" min="0" inputmode="numeric" data-chg="uaLead" value="'+esc(S.uaLead)+'" placeholder="e.g. 21"></div>'+plan+'</div>'+
+   '<div class="stack" style="gap:10px">'+DOCS.map(d=>{const o=S.uaDocs[d.id]||{st:'none'},wait=o.st==='requested'&&valid(o.date)?-dayDiff(o.date):null;
+    return '<div class="rec" style="margin:0"><div class="row c3" style="align-items:end"><div class="field"><label>'+d.n+' <em>· '+d.s+'</em></label><select class="in" data-chg="doc" data-id="'+d.id+'" data-f="st">'+DST.map(s=>'<option value="'+s[0]+'"'+(o.st===s[0]?' selected':'')+'>'+s[1]+'</option>').join('')+'</select></div>'+
+     (o.st&&o.st!=='none'?'<div class="field"><label>Requested on</label><input class="in" type="date" data-chg="doc" data-id="'+d.id+'" data-f="date" value="'+esc(o.date||'')+'"></div>':'<div></div>')+
+     '<div class="small muted" style="padding-bottom:12px">'+(wait!==null?'Waiting '+plural(Math.max(0,wait),'day')+'.':o.st==='uploaded'?'Done.':o.st==='received'?'In your hands.':'')+'</div></div></div>';}).join('')+'</div>';
+}
+function numHTML(){
+  const raw=S.uaNum;
+  return raw?'<div class="card flat" style="padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap"><div><div class="eyebrow">Saved application number</div><div class="mono" style="font-size:34px;letter-spacing:.14em;margin-top:6px">'+raw.slice(0,4)+' '+raw.slice(4)+'</div><p class="small muted" style="margin:6px 0 0">Copy it into the SI portal. Never retype it from memory. Stored in this browser only.</p></div><div class="btnrow"><button class="btn btn-outline btn-sm" data-act="copynum" id="numCopy">'+ic('copy',15)+' Copy</button><button class="btn btn-ghost btn-sm" data-act="clearnum">Change</button></div></div>':
+   '<div class="card flat" style="padding:20px"><p class="small muted" style="margin:0 0 14px">After you submit on University Admissions you get an 8-digit number. Enter it twice to save it.</p><div class="row c2">'+fld('Application number','<input class="in mono-in" id="numA" inputmode="numeric" maxlength="8" placeholder="8 digits" autocomplete="off">')+fld('Type it again','<input class="in mono-in" id="numB" inputmode="numeric" maxlength="8" placeholder="8 digits" autocomplete="off">')+'</div><div class="btnrow" style="margin-top:14px"><button class="btn btn-primary" data-act="savenum">Save number</button></div><div id="numErr" class="hide" style="margin-top:12px">'+alertH('bad','Check.','<span id="numErrT"></span>')+'</div></div>';
+}
+function preHTML(){
+  const ok=passportOK(),n=PRE.filter((_,i)=>S.pre[i]).length;
+  return '<div class="stack" style="gap:0">'+PRE.map((t,i)=>'<div class="task"><button class="cb tk'+(S.pre[i]?' on':'')+'" data-act="pre" data-i="'+i+'" aria-label="Check item">'+ic('check',14)+'</button><div class="tl" style="font-weight:400">'+esc(t)+'</div></div>').join('')+'</div>'+
+   '<div style="margin-top:14px"><div class="bar tl"><i style="width:'+Math.round(n/PRE.length*100)+'%"></i></div><p class="small muted" style="margin:8px 0 0"><b>'+n+' of '+PRE.length+'</b> checked'+(n===PRE.length&&ok===true?'. You are ready to submit.':ok===true?'.':'. Add your passport expiry date in the previous step.')+'</p></div>';
+}
+function msgDefault(){const d=fmtD(S.msgDate);return 'Hello [Name],\n\nI am applying for the Swedish Institute (SI) Scholarship for Global Professionals, to do a master\'s in Sweden. SI asks for a letter of reference from someone who knows my work, signed and stamped by the organisation. The SI portal closes on 24 February 2027.\n\nWould you be willing to write one for me? SI provides a template, and I will send it to you as soon as it is published on 13 November. It is two pages at most, in English. You type it, print it, sign it, and stamp it with the organisation\'s stamp. Then it is scanned.\n\nI can send you a short note on what the letter should cover. If you agree, I would need it back by '+d+'.\n\nThank you,\n'+(S.name||'[Your name]');}
+
+/* ================= wrap card ================= */
+function taskRow(t){
+  const o=tget(t.id),open=isOpen(t);let meta='';
+  if(!open)meta+='<span class="badge outline">Opens '+fmtS(t.opens)+'</span>';
+  else if(t.due&&!o.done){const dd=dayDiff(t.due);meta+='<span class="badge '+(dd<=7?'red':'soft')+'">'+(dd<0?'Overdue':'By '+fmtS(t.due))+'</span>';}
+  if(o.wait&&!o.done)meta+='<span class="badge violet">Waiting on someone</span>';
+  if(t.wait&&open&&!o.done)meta+='<button class="btn btn-ghost btn-xs" data-act="wt" data-id="'+t.id+'">'+(o.wait?'Stop waiting':'Waiting on someone')+'</button>';
+  return '<div class="task'+(o.done?' done':'')+(open?'':' locked')+'"><button class="cb'+(o.done?' on':'')+'" data-act="tg" data-id="'+t.id+'" aria-label="'+(o.done?'Mark not done':'Mark done')+'" '+(open?'':'disabled')+'>'+(open?ic('check',14):ic('lock',12))+'</button><div class="tl">'+esc(t.l)+(t.h?'<small>'+esc(t.h)+'</small>':'')+'<div class="tm" style="justify-content:flex-start;margin-top:6px">'+meta+(t.at&&!o.done&&open?'<button class="btn btn-link btn-xs" style="height:auto" data-act="go" data-s="'+t.at[0]+'" data-c="'+t.at[1]+'">Open step '+ic('arrow',13)+'</button>':'')+'</div></div></div>';
+}
+function wrapHTML(s){
+  const sp=stageProg(s);
+  return '<div class="alert info"><span class="ai">'+ic('flag',15)+'</span><div><b>Done when.</b> '+esc(STAGES[s].done)+'</div></div>'+
+   '<div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><b>'+sp.d+' of '+sp.n+' tasks done</b><span class="cap mono">'+Math.round(sp.p*100)+'%</span></div><div class="bar tl"><i style="width:'+Math.round(sp.p*100)+'%"></i></div></div>'+
+   '<div>'+T.filter(t=>t.s===s).map(taskRow).join('')+'</div>';
+}
+
+/* ================= the guided cards ================= */
+function chartHTML(){
+  const rows=[['2023/24','9','299'],['2024/25','10','357'],['2025/26','14','351']],max=14;
+  return '<div class="chart" role="img" aria-label="Bangladeshi recipients: 9 in 2023/24, 10 in 2024/25, 14 in 2025/26">'+rows.map((r,i)=>'<div class="col"><span class="val">'+r[1]+'</span><div class="bar-v'+(i===2?' last':'')+'" style="height:'+Math.round(r[1]/max*100)+'px"></div><span class="xl"><b>'+r[0]+'</b><br>of '+r[2]+'</span></div>').join('')+'</div>';
+}
+const routeFlow=()=>'<div class="flow"><div class="fnode"><div class="n">APPLICATION A</div><h4>University Admissions</h4><ul><li>Up to 4 master\'s programmes on one portal</li><li>Pay the application fee on time</li><li>Send your degree documents</li></ul><span class="dt">16 Oct → 15 Jan</span></div>'+
+ '<div class="fjoin"><span class="line"></span><span class="num">8-digit<br>number</span><span class="line"></span></div>'+
+ '<div class="fnode"><div class="n">APPLICATION B</div><h4>SI portal</h4><ul><li>One application, up to 4 programmes</li><li>CV, forms, two letters, passport copy, motivation</li><li>You type in your 8-digit number</li></ul><span class="dt">8 → 24 Feb · 14:59 CET</span></div></div>'+
+ '<div class="after"><div class="a"><b>25 Feb – 31 Mar</b>SI screens every application. Mistakes are disqualified here.</div><div class="a"><b>1 Apr</b>University Admissions results. You need an offer.</div><div class="a"><b>22 Apr</b>SI announces recipients on si.se. Only winners are contacted.</div></div>';
+const docRow=(id,ic1,t,sub,status)=>{const o=tget(id),open=isOpen(tById(id));return '<div class="task'+(o.done?' done':'')+'"><button class="cb tk'+(o.done?' on':'')+'" data-act="tg" data-id="'+id+'" '+(open?'':'disabled')+' aria-label="Mark done">'+ic('check',14)+'</button><div class="tl">'+t+'<small>'+sub+'</small>'+(status?'<div class="tm" style="justify-content:flex-start;margin-top:6px">'+status+'</div>':'')+'</div></div>';};
+
+const CARDS=[
+/* ---------- 0 Understand ---------- */
+[
+ {id:'meet',t:'A funded master\'s in Sweden, if you qualify',r:()=>'<p class="lede">'+(S.name?nm()+', the':'The')+' Swedish Institute (SI) pays for a master\'s degree at a Swedish university. It is built for working professionals who will use the degree back home.</p>'+
+  '<div class="grid3"><div class="tile"><div class="v">Full</div><div class="l">tuition, paid by SI to your university</div></div><div class="tile"><div class="v">12,000<small> SEK</small></div><div class="l">every month for living costs</div></div><div class="tile"><div class="v">15,000<small> SEK</small></div><div class="l">one-time travel grant</div></div></div>'+prov('p','t')+
+  alertH('info','You can study','English-taught master\'s programmes in <b>Governance, Public Health, Entrepreneurship and Innovation</b> and <b>STEM</b>. SI publishes the exact 2027/28 list on 13 November.')+prov('o')},
+ {id:'who',t:'Who SI is really looking for',r:()=>'<blockquote class="quote">“talented professionals with capability, an existing platform and ambition to contribute to the further development of their home country and region.”<cite>Swedish Institute · 2027/28 call for applications</cite></blockquote>'+
+  '<p style="margin:0">In practice SI can check three things: <b>documented work</b>, <b>a record of leading people</b>, and <b>a clear plan for Bangladesh</b>. This is not a fresh-graduate scholarship.</p>'+
+  '<div class="card flat" style="padding:18px 18px 14px"><div class="eyebrow">Bangladeshi recipients each year</div>'+chartHTML()+'<p class="small muted" style="margin:10px 0 0">From SI\'s published recipient lists. The 2026/27 list is not added yet, and we show no applicant count until we have read SI\'s applications-by-country file.</p>'+prov('s')+'</div>'+
+  alertH('plain','No quotas.','SI says it has no quotas for countries, fields of study or Swedish universities, and that numbers change from year to year. What you control is the quality of your file.')+prov('o')},
+ {id:'route',t:'Two applications, joined by one number',r:()=>'<p class="lede">You apply twice. First to a Swedish university through University Admissions. Then to SI for the scholarship, using the number the first application gives you.</p>'+routeFlow()+prov('o')+'<div class="btnrow">'+taskBtn('s0a','I understand how the two fit','Understood')+'</div>'},
+ {id:'rules',t:'Three things that end applications',r:()=>'<p class="lede">Most failures are not about ideas. They are about these.</p>'+
+  alertH('bad','Be admitted on 1 April.','You must be admitted, or conditionally admitted, to an eligible master\'s programme on 1 April 2027. A reserve or waiting-list place does not count. If you change your admission result, for example by declining an offer, you are out.')+
+  alertH('bad','Type your 8-digit number exactly.','A wrong University Admissions application number disqualifies your SI application.')+
+  alertH('bad','Never miss University Admissions.','If you miss its deadline, skip its procedure or fail to pay the application fee on time, you are not eligible. There is no scholarship for late admissions. You must also be liable to pay tuition fees.')+prov('o')},
+ {id:'how',t:'How this workspace works',r:()=>'<div class="coach">'+tipRow('compass','One step at a time','Each stage is a short run of cards. Do the card, then press Continue.')+tipRow('check','Tasks tick themselves','When your entries prove a task is done, we tick it. You can always tick or untick it yourself.')+tipRow('bell','Reminders in your account','We watch the deadlines for you and remind you under the bell.')+'</div>'+
+  '<div class="btnrow"><button class="btn btn-primary" data-act="notif" data-t="settings">'+ic('bell',17)+' Choose reminders</button><button class="btn btn-outline" data-act="ics">'+ic('dl',17)+' Calendar file (.ics)</button></div>'+
+  accs(acc('leg','Read the label on every fact','<p>SI changes some rules every year. Each fact tells you where it came from.</p><div class="stack" style="gap:10px">'+['o','p','t','u','a'].map(k=>'<div>'+provB(k)+'</div>').join('')+'</div><p class="small muted" style="margin:12px 0 0"><b>Official</b> comes from SI\'s current call. <b>Earlier round</b> is from SI\'s pages for a previous year: probably still true, not yet checked. <b>Third-party</b> is a lead, not a rule. We recheck every non-official fact on 13 November.</p>'))+
+  '<div class="btnrow">'+taskBtn('s0c','Mark reminders chosen','Reminders chosen')+'</div>'}
+],
+/* ---------- 1 Qualify ---------- */
+[
+ {id:'q-cit',t:'Which passport will you apply with?',r:()=>qCard('cit')},
+ {id:'q-deg',t:'What is your degree?',r:()=>qCard('deg','Your highest completed degree, or the one you are finishing.')},
+ {id:'q-work',t:'Count your work hours',r:()=>{
+   const hv=hoursVerdict();
+   return '<p class="lede">SI asks for documented work. We count the hours you actually worked, from the start date to today, then project forward if you still work there.</p>'+
+   '<div class="provs" style="margin:-4px 0 0">'+provB('p')+provB('t')+'</div>'+
+   hoursSummary()+
+   (S.work.length?S.work.map((r,i)=>recEditor('w',r,i)).join(''):empty('folder','No work added yet','Add each employer or client you want to count. SI\'s form takes up to three.','<div class="btnrow" style="justify-content:center"><button class="btn btn-primary btn-sm" data-act="addrec" data-k="w">'+ic('plus',16)+' Add your first employer</button>'+(S.gate.nowork?'':'<button class="btn btn-ghost btn-sm" data-act="nowork">I have not worked yet</button>')+'</div>'))+
+   (S.work.length?'<div class="btnrow"><button class="btn btn-outline btn-sm" data-act="addrec" data-k="w" '+(S.work.length>=3?'disabled':'')+'>'+ic('plus',16)+' Add an employer ('+S.work.length+'/3)</button></div>':'')+
+   (S.work.length>=3?'<p class="small muted" style="margin:-4px 0 0">SI\'s form takes three organisations. If you have more, enter the three with the most hours.</p>':'')+
+   verdictBox(hv)+
+   accs(acc('why-hours','How we calculate this','<p><b>Hours so far</b> = (calendar days ÷ 7 × days a week − days not worked) × hours a day, from your start date to today (or your end date). If you enter a total from your own records, it replaces that estimate.</p><p><b>On 8 Feb and 24 Feb</b> adds your current schedule from tomorrow to that date, for jobs you still do. It assumes no time off.</p><p>The 3,000-hour minimum comes from earlier SI rounds and third-party guides. SI\'s 2027/28 wording publishes on 13 November, so treat this as a plan, not a promise.</p>'+prov('p','t')));}},
+ {id:'q-lead',t:'Have you led people?',r:()=>qCard('lead','Which describes you best?')},
+ {id:'q-sign',t:'Who would sign and stamp your forms?',r:()=>qCard('sign','Every work and leadership form needs a handwritten signature and an official stamp.')},
+ {id:'q-eng',t:'How will you prove your English?',r:()=>qCard('eng')},
+ {id:'q-result',t:'Your result',r:()=>{
+   const {res,c,ans}=gateCounts();
+   let head,sub;
+   if(ans<6){head='Answer all six to see your result';sub=ans+' of 6 answered.';}
+   else if(c.block){head='This round looks unlikely';sub='At least one point is a blocker. Read it and decide whether to prepare for next year.';}
+   else if(c.work){head='You can start, with work to do';sub='Nothing blocks you. Some points need a plan.';}
+   else{head='You are clear to start';sub='All six points are clear on the rules we have. We recheck on 13 November.';}
+   return '<p class="lede"><b>'+esc(head)+'.</b> '+esc(sub)+'</p>'+
+   '<div class="grid3 keep"><div class="tile ok"><div class="v">'+c.clear+'</div><div class="l">clear</div></div><div class="tile"><div class="v">'+c.work+'</div><div class="l">need work</div></div><div class="tile"><div class="v" style="'+(c.block?'color:var(--destructive)':'')+'">'+c.block+'</div><div class="l">blocker'+(c.block===1?'':'s')+'</div></div></div>'+
+   '<div class="coach">'+GATE_ORDER.map(([id,l,cid],i)=>{const r=res[i];const k=!r?'':r.r==='clear'?'tl':r.r==='work'?'vio':'red';
+     return '<button class="crow" data-act="go" data-s="1" data-c="'+cid+'"><span class="ci '+k+'">'+ic(!r?'info':r.r==='clear'?'check':'alert',18)+'</span><span class="ct"><b>'+l+'</b><small>'+(r?esc(r.h||VLAB[r.r])+' '+esc(r.m).slice(0,96)+(r.m.length>96?'…':''):'Not answered yet')+'</small></span><span class="go">'+ic('cr',18)+'</span></button>';}).join('')+'</div>'+
+   '<p class="small muted" style="margin:0">This measures your preparation against published rules. It is not a chance of winning.</p>'+
+   '<div class="btnrow"><button class="btn btn-primary" data-act="gatesave" '+(ans<6?'disabled':'')+'>'+(S.gateSaved?'Result saved · update it':'Save my result')+'</button>'+taskBtn('s1b','I have a plan for each','Plan made')+'</div>';}}
+],
+/* ---------- 2 Evidence ---------- */
+[
+ {id:'e-intro',t:'This is the slow part',r:()=>'<p class="lede">Your forms and letters need signatures and official stamps from other people. They do not move at your speed. Ask before SI\'s templates arrive on 13 November.</p>'+
+  '<div class="chain">'+STEPS5.map((s,i)=>'<span class="c"><i>'+(i+1)+'</i>'+s+'</span>'+(i<4?'<span class="arrow">'+ic('cr',16)+'</span>':'')).join('')+'</div><p class="cap" style="margin:-6px 0 0">Every form and every letter goes through these five steps.</p>'+
+  '<div class="stack" style="gap:10px"><div class="eyebrow">Who can sign for you</div>'+signerAdvice()+'</div>'+
+  accs(acc('who-bad','Who cannot sign','<p>SI does not accept co-workers, family members, relatives, partners, friends, or anyone who asks for money or favours in return.</p><p>The signer signs by hand, dates it and stamps it with the organisation\'s official stamp. The stamp can be in any language.</p>'+prov('p')))+prov('p')},
+ {id:'e-forms',t:'Your work forms',r:()=>{
+   if(!S.work.length)return empty('folder','Add your work first','Your forms follow the employers you counted in the hours step.','<button class="btn btn-primary btn-sm" data-act="go" data-s="1" data-c="q-work">Go to work hours</button>');
+   return '<p class="lede">One form per organisation, up to three. Name who will sign, then track each form through the five steps.</p>'+
+   S.work.map((r,i)=>{const bad=r.stype==='bad';
+    return '<div class="rec"><div class="rec-h"><b><span class="nb">'+(i+1)+'</span><span class="o">'+esc(r.org||'Employer')+'</span></b><span class="badge mono teal">'+num(recReady(r)?hoursNow(r):0)+' hours</span></div>'+
+    '<div class="row c2">'+fld('Who will sign',inp('w',i,'signer',r.signer,'placeholder="Name and position"'))+fld('Their role',sel('w',i,'stype',r.stype||'sup',SIGNERS))+'</div>'+
+    (bad?'<div style="margin-top:12px">'+alertH('bad','Not accepted.','SI does not accept co-workers, family members, relatives, partners or friends as signers.')+'</div>':'')+
+    (r.stype==='notary'?'<div style="margin-top:12px">'+alertH('caution','Check.','A notary stamp may be accepted when this is your only experience. The notary certifies in English that the information is accurate and that the signer can represent the organisation.')+'</div>':'')+
+    '<div class="lbl" style="margin:16px 0 8px">Form progress</div>'+stepper('w',i,r.st||0,STEPS5)+'</div>';}).join('')+
+   '<div class="btnrow">'+(tget('s2c').done?'<span class="badge teal">'+ic('check',12)+'Signers confirmed</span>':'<button class="btn btn-secondary btn-sm" data-act="tg" data-id="s2c">All signers confirmed</button>')+'<button class="btn btn-ghost btn-sm" data-act="wt" data-id="s2c">'+(tget('s2c').wait?'Stop waiting':'I am waiting on someone')+'</button></div>';}},
+ {id:'e-lead',t:'Your leadership forms',r:()=>{
+   const ws=S.work;
+   return '<p class="lede">Leadership hours count only the time you spent leading. If you worked 3,000 hours, 2,000 as an administrator and 1,000 as a unit head, your work form says 3,000 and your leadership form says 1,000.</p>'+prov('p')+
+   (S.lead.length?S.lead.map((r,i)=>{const same=ws.find(w=>w.org&&r.org&&w.org.trim().toLowerCase()===r.org.trim().toLowerCase());const over=same&&recReady(r)&&recReady(same)&&hoursNow(r)>hoursNow(same);
+     return recEditor('l',r,i).replace(/<\/div>$/,'')+
+     '<div class="field" style="margin-top:12px"><label>What you led <em>(SI\'s form allows 400 characters)</em></label><textarea class="in" rows="3" maxlength="400" data-chg="rec" data-k="l" data-i="'+i+'" data-f="what" data-cc="1">'+esc(r.what)+'</textarea><span class="fhelp cc">'+(r.what||'').length+' / 400</span></div>'+
+     (over?'<div style="margin-top:12px">'+alertH('bad','Check.','Your leading hours ('+num(hoursNow(r))+') are higher than your work hours at the same organisation ('+num(hoursNow(same))+'). Leading hours sit inside your work hours.')+'</div>':'')+
+     '<div class="row c2" style="margin-top:12px">'+fld('Who will sign',inp('l',i,'signer',r.signer,'placeholder="Name and position"'))+fld('Their role',sel('l',i,'stype',r.stype||'sup',SIGNERS))+'</div>'+
+     (r.stype==='bad'?'<div style="margin-top:12px">'+alertH('bad','Not accepted.','SI does not accept co-workers, family members, relatives, partners or friends as signers.')+'</div>':'')+
+     '<div class="lbl" style="margin:16px 0 8px">Form progress</div>'+stepper('l',i,r.st||0,STEPS5)+'</div>';}).join(''):empty('users','No leadership roles yet','Add a role where you led people, at work or in a civil-society group. SI\'s form takes up to two.','<button class="btn btn-primary btn-sm" data-act="addrec" data-k="l">'+ic('plus',16)+' Add a leadership role</button>'))+
+   (S.lead.length?'<div class="btnrow"><button class="btn btn-outline btn-sm" data-act="addrec" data-k="l" '+(S.lead.length>=2?'disabled':'')+'>'+ic('plus',16)+' Add a role ('+S.lead.length+'/2)</button></div>':'');}},
+ {id:'e-refs',t:'Your two referees',r:()=>'<p class="lede">Two letters, from two different people. One must be based on your work. SI counts it as a merit if the second is based on entrepreneurship, networks or civil-society involvement.</p>'+prov('o')+renderRefsHTML()},
+ {id:'e-ask',t:'Ask your referees well',r:()=>'<p class="lede">Ask now, before the template exists. A short early "would you be willing to sign a letter in January?" saves weeks.</p>'+
+  '<div class="field" style="max-width:300px"><label>Date you need it back by <em>(we suggest two weeks before the portal opens)</em></label><input class="in" type="date" data-chg="msgdate" value="'+esc(S.msgDate)+'"></div>'+
+  '<div class="field"><label>Message</label><textarea class="in" id="msgText" rows="10"></textarea></div>'+
+  '<div class="btnrow"><button class="btn btn-primary" data-act="copymsg" id="copyBtn">'+ic('copy',16)+' Copy message</button></div>'+
+  accs(acc('lc','What SI\'s letter asks your referee to cover','<ul><li>How an SI scholarship would help your professional and academic growth.</li><li>Your capacity to contribute to or drive social change where you work.</li><li>Your leadership potential and contribution to society, with a concrete example.</li></ul><p>Each letter is two pages at most, in English, signed and stamped. Put the work-based letter first.</p>'+prov('p')))}
+],
+/* ---------- 3 Programmes ---------- */
+[
+ {id:'p-how',t:'How to choose well',r:()=>'<blockquote class="quote">“a clear idea of how your education will contribute to the sustainable development of your home country and region.”<cite>Swedish Institute · 2027/28 · It is up to you to link your programmes to sustainability goals.</cite></blockquote>'+
+  '<div class="coach">'+tipRow('flag','Start from what you will do back home','Ask: what would this degree let me do in Bangladesh in five years?')+tipRow('book','Check each programme\'s own entry rules','Winning the scholarship still depends on admission. Check prerequisites and the English score on the programme page.')+tipRow('list','Up to four, plus one','University Admissions takes up to four. Your SI application can include up to four eligible programmes. Stockholm School of Economics or Konstfack can be added as a fifth.')+'</div>'+prov('o')+'<div class="btnrow">'+taskBtn('s3a','I know how to choose','Read')+'</div>'},
+ {id:'p-past',t:'Where Bangladeshis were selected',r:()=>{const t=S.pastTab,list=t==='2024'?P24:P25;
+   return '<p class="lede">A look at the past. It does not say what you should choose, and the 2027/28 list will differ.</p>'+
+   '<div class="tabs" role="tablist"><button class="'+(t==='2025'?'on':'')+'" data-act="pastTab" data-v="2025">2025/26 · 14</button><button class="'+(t==='2024'?'on':'')+'" data-act="pastTab" data-v="2024">2024/25 · 10</button></div>'+
+   '<ul class="plist">'+list.map(p=>'<li><span><b>'+esc(p[0])+'</b></span><small>'+esc(p[1])+'</small></li>').join('')+'</ul>'+
+   '<p class="small muted" style="margin:0">Universities are read from SI\'s programme codes in the recipient lists, so treat them as our reading.</p>'+prov('s')}},
+ {id:'p-list',t:'Your shortlist',r:()=>'<p class="lede">List only programmes you would really attend. You can only receive the scholarship for the programme you are admitted to on 1 April.</p>'+progHTML()},
+ {id:'p-check',t:'Check it against SI\'s list',r:()=>{const d=dayDiff('2026-11-13');
+   return (d>0?'<div class="tile"><div class="v">'+d+'<small> days to 13 Nov</small></div><div class="l">SI publishes the list of eligible programmes and its templates on 13 November 2026.</div></div>':alertH('info','SI\'s list should be out.','SI planned to publish the 2027/28 programme list and templates on 13 November. Open SI\'s page and check each programme.'))+
+   '<div class="steps"><div class="stp"><span class="nn">1</span><div><h4>Open SI\'s scholarship page</h4><p>Find the list of eligible master\'s programmes for 2027/28.</p></div></div><div class="stp"><span class="nn">2</span><div><h4>Find each programme on your shortlist</h4><p>A programme that is not on the list is not funded, even if you are admitted.</p></div></div><div class="stp"><span class="nn">3</span><div><h4>Tick it in your shortlist</h4><p>Only after you have found it and checked its entry requirements.</p></div></div></div>'+
+   '<div class="btnrow"><a class="btn btn-outline" href="https://si.se/en/apply/scholarships/swedish-institute-scholarships-for-global-professionals/" target="_blank" rel="noopener">SI\'s page '+ic('arrow',16)+'</a>'+goBtn('Open my shortlist',3,'p-list')+'</div>'+prov('o')}}
+],
+/* ---------- 4 Admissions ---------- */
+[
+ {id:'a-start',t:'Application one, and SI does not run it',r:()=>'<p class="lede">University Admissions handles every application to Swedish universities. SI only receives your results from them. Most of this stage follows their rules.</p>'+
+  alertH('bad','Miss the deadline or break the procedure, and you are not eligible.','No scholarships exist for late admissions.')+prov('o')+
+  '<div class="steps"><div class="stp'+(tget('s4a').done?' done':'')+'"><span class="nn">1</span><div><h4>Create one account only</h4><p>Go to universityadmissions.se. You are allowed one account. If you applied before, log in with the same email.</p></div></div>'+
+  '<div class="stp"><span class="nn">2</span><div><h4>Order certified papers early</h4><p>This is the slow step. See the next card.</p></div></div>'+
+  '<div class="stp'+(tget('s4d').done?' done':'')+'"><span class="nn">3</span><div><h4>Apply to up to four programmes</h4><p>Apply by 15 January 2027, and pay the application fee on time. It is an SI eligibility condition.</p></div></div>'+
+  '<div class="stp'+(tget('s4e').done?' done':'')+'"><span class="nn">4</span><div><h4>Save your 8-digit number</h4><p>You get it after you submit. A wrong number disqualifies your SI application.</p></div></div></div>'+
+  '<div class="grid3"><div class="tile"><div class="v">900<small> SEK</small></div><div class="l">application fee if you are not an EU/EEA or Swiss citizen. No waivers.</div></div><div class="tile"><div class="v">15 Jan</div><div class="l">last day to apply, 2027</div></div><div class="tile"><div class="v">1 Feb</div><div class="l">fee and documents due, 2027</div></div></div>'+prov('u')+
+  '<div class="btnrow">'+taskBtn('s4a','I created my account','Account created')+taskBtn('s4d','I applied and paid','Applied and paid')+'</div>'},
+ {id:'a-docs',t:'Get your papers from the Registrar',r:()=>'<p class="lede">University Admissions asks for your degree certificate and semester transcripts, certified by your university\'s Registrar or Examinations office. Offices take weeks, so we plan backwards from 15 January.</p>'+docsHTML()+
+  accs(acc('cert','Who must certify, and what to ask for','<p>Documents must come from your <i>university</i>, not a college. The Registrar\'s or Examinations office must stamp and sign them. Faculty or college staff, another university and a notary are not accepted. <b>An e-apostille from MyGov is not accepted.</b></p><p><b>What to ask for:</b> "Certified copies of my degree certificate and semester-wise transcripts, stamped and signed by the Registrar\'s office, for a Swedish university application." Ask how long it takes, then enter that number above.</p><p>If you are in your final year, you must document that. Transferred or credited courses need official transcripts too.</p><div class="provs"><span class="badge teal">'+ic('shield',12)+'Official · University Admissions</span></div>'))},
+ {id:'a-send',t:'Send your documents the right way',r:()=>'<div class="coach">'+tipRow('upload','Easiest: upload to your account','Upload your documents to your University Admissions account.')+tipRow('mail','Transcripts by post','Your university must send them itself, in a sealed envelope addressed to University Admissions. You or an agency cannot send them for it. Do not send University Admissions\' cover sheet to your previous university.')+tipRow('user','Names and birthdates must match','They must match across every document and your account. If they differ, you need official documentation such as a marriage certificate.')+tipRow('globe','English or Swedish','Documents must be in English or Swedish, or officially translated.')+tipRow('shield','They check','University Admissions checks documents with the issuing university. Fake documents can cost you the offer and lead to legal action.')+'</div>'+prov('o','u')+
+  '<div class="btnrow"><a class="btn btn-outline btn-sm" href="https://universityadmissions.se/en/apply-to-masters/provide-application-documents-masters/country-instructions/bangladesh/" target="_blank" rel="noopener">University Admissions: Bangladesh '+ic('arrow',15)+'</a>'+taskBtn('s4f','My documents are uploaded','Documents sent')+'</div>'},
+ {id:'a-number',t:'Your 8-digit number',r:()=>alertH('bad','This number can end your application.','After you submit on University Admissions you get a personal number of eight digits. You type it into the SI portal. If you type it wrong, your SI application is disqualified. Copy it, never retype it.')+prov('o')+numHTML()+'<p class="small muted" style="margin:0">Applying to Stockholm School of Economics or Konstfack? They run separate intakes and give no application number.</p>'}
+],
+/* ---------- 5 SI file ---------- */
+[
+ {id:'f-five',t:'Five things go to SI',r:()=>{
+   const fs=formsOf(),fd=fs.filter(r=>(r.st||0)>=5).length,ld=S.refs.filter(r=>(r.st||0)>=5).length;
+   return '<p class="lede">Everything in English. SI will not consider anything it did not ask for, and it disqualifies applications that do not follow the instructions.</p>'+
+   '<div class="stack" style="gap:0">'+docRow('s5b','file','CV','SI\'s 2027/28 template · three pages at most · PDF','')+
+   docRow('s5c','file','Proof of work and leadership','One single PDF · typed, printed, signed, stamped',fs.length?'<span class="badge '+(fd===fs.length?'teal':'soft')+'">'+fd+' of '+fs.length+' forms scanned</span>':'<span class="badge outline">Add your forms in Stage 3</span>')+
+   docRow('s5d','file','Two letters of reference','One single PDF · two different referees · work-based letter first',S.refs.length?'<span class="badge '+(ld===2?'teal':'soft')+'">'+ld+' of 2 scanned</span>':'<span class="badge outline">Name your referees first</span>')+
+   docRow('s5e','file','Passport or National ID','Valid when you apply · shows name, citizenship and photo',passportOK()===null?'<span class="badge outline">Add your expiry date</span>':passportOK()?'<span class="badge teal">Valid on 24 Feb</span>':'<span class="badge red">Expires too soon</span>')+
+   docRow('s5f','pen','Motivation','Written in the portal. You might be picked to record a short video.','')+'</div>'+
+   alertH('caution','Templates arrive on 13 November.','SI publishes its 2027/28 CV, form and letter templates then. Older templates are not accepted.')+prov('o')+
+   '<div class="btnrow">'+taskBtn('s5a','I downloaded the templates','Templates downloaded')+'</div>';}},
+ {id:'f-build',t:'How to build each document',r:()=>accs(
+  acc('b-cv','CV','<ul><li>Use this year\'s SI template. A template from a previous year is not accepted.</li><li>Three pages at most. Extra pages are not considered.</li><li>Newest entry first. Delete headings you do not use and remove the instructions page.</li><li>It must match the experience on your forms.</li></ul>'+prov('o','t'))+
+  acc('b-forms','Proof of work and leadership','<ul><li>One page per organisation: up to three work forms and two leadership forms, five pages at most, merged into one PDF.</li><li>Fields: your name exactly as in your passport, date of birth, organisation, position, dates, total hours, tasks, and the signer\'s name, position, email and phone with country code.</li><li>The signer signs by hand, dates and stamps. You scan and merge.</li><li>SI runs random checks. False information means disqualification and, if found later, a full refund.</li></ul>'+prov('p'))+
+  acc('b-let','Two letters of reference','<p>Use SI\'s template. Each letter is two pages at most, in English (or with a notary\'s translation placed directly after it), signed and stamped. If a letter runs to two pages, sign and stamp both. Put the work-based letter first. Merge both into one PDF.</p>'+prov('o','p'))+
+  acc('b-lang','English and format','<p>Complete your application in English. Include only one of each required document, however many programmes you apply to.</p>'+prov('o')))},
+ {id:'f-id',t:'Is your passport valid?',r:()=>{const ok=passportOK();
+   return '<p class="lede">SI asks for a clear copy of your valid passport or National ID, showing your name, citizenship and photograph. It must be valid at the time of applying.</p>'+
+   '<div class="field" style="max-width:300px"><label>Passport expiry date</label><input class="in" type="date" data-chg="passport" value="'+esc(S.passport)+'"></div>'+
+   (ok===true?alertH('ok','Clear.','Valid on the portal\'s last day, 24 Feb 2027. Keep the copy clear and readable.'):ok===false?alertH('bad','Blocker.','This passport expires before the portal closes on 24 Feb 2027. Renew it first, or use a valid National ID if its card shows your citizenship and photo. Renewals take time you may not have in February.'):'')+prov('o')}},
+ {id:'f-motiv',t:'Your motivation',r:()=>'<p class="lede">You write it in the portal, so draft it somewhere safe first. SI scores for “the aim and purpose of the SI Scholarship programme and the government strategy it reports to.”</p>'+prov('o')+
+  '<div class="eyebrow">A structure that fits</div>'+
+  '<div class="steps"><div class="stp"><span class="nn">1</span><div><h4>Who you are professionally</h4><p>Two lines.</p></div></div><div class="stp"><span class="nn">2</span><div><h4>What you have led or built</h4><p>With numbers. This is your "existing platform".</p></div></div><div class="stp"><span class="nn">3</span><div><h4>Why this programme</h4><p>What it adds that you cannot get at home.</p></div></div><div class="stp"><span class="nn">4</span><div><h4>What you will do in Bangladesh afterwards</h4><p>Tied to one sustainability goal.</p></div></div></div>'+prov('a')+
+  alertH('plain','If you are picked for a video.','The same four points work as a 60-second answer. Practise out loud once.')+
+  '<div class="btnrow">'+taskBtn('s5f','My motivation is finished','Motivation finished')+'</div>'},
+ {id:'f-pre',t:'Pre-flight check',r:()=>'<p class="lede">One last pass. SI disqualifies applications for small mistakes, so tick each line only when it is true.</p>'+preHTML()}
+],
+/* ---------- 6 Submit ---------- */
+[
+ {id:'s-clock',t:'Two weeks, one deadline',r:()=>{const ms=Date.UTC(2027,1,24,13,59,0)-NOW().getTime();
+   const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+   return alertH('info','The portal closes at 14:59 CET on 24 February 2027.','That is <b>7:59 pm in Dhaka</b>.')+
+   (ms>0?'<div class="grid3 keep"><div class="tile"><div class="v">'+d+'</div><div class="l">days</div></div><div class="tile"><div class="v">'+h+'</div><div class="l">hours</div></div><div class="tile"><div class="v">'+m+'</div><div class="l">minutes</div></div></div>':'<div class="tile"><div class="v">Closed</div><div class="l">The SI portal has closed.</div></div>')+
+   '<div class="coach">'+tipRow('file','One application only','Submit one application, however many programmes you applied for. Include up to four eligible programmes, plus SSE or Konstfack as a fifth.')+tipRow('copy','One of each document','Include only one of each required document.')+tipRow('clock','Not on the last day','SI warns the portal may be under heavy pressure at the end and strongly advises against waiting. No application is accepted after the deadline.')+'</div>'+prov('o')}},
+ {id:'s-plan',t:'Set your own deadline',r:()=>{
+   let note;
+   if(S.submitBy>CLOSE_ISO)note='That date is after the portal closes. Pick one on or before 24 February.';
+   else if(S.submitBy<OPEN_ISO)note='The portal opens on 8 February. Pick a date on or after it.';
+   else{const dd=dayDiff(S.submitBy);note=dd>=0?'That is '+plural(dd,'day')+' from now, and '+plural(dBetween(S.submitBy,CLOSE_ISO),'day')+' before the portal closes.':'That date has passed.';}
+   return '<p class="lede">Pick a submit-by date well before 24 February. We suggest 17 February, a week before. We count down to it and remind you.</p>'+
+   '<div class="field" style="max-width:300px"><label>Your submit-by date</label><input class="in" type="date" data-chg="submitby" min="'+OPEN_ISO+'" max="'+CLOSE_ISO+'" value="'+esc(S.submitBy)+'"></div><p class="small muted" style="margin:0">'+note+'</p>'+
+   '<div class="eyebrow">Before you log in</div><div class="coach">'+tipRow('check','Pre-flight is fully ticked','Stage 6, last card.')+tipRow('folder','Four files in one folder','Named clearly: CV, forms, letters, passport.')+tipRow('copy','Your 8-digit number is ready to copy','Open your vault. Never type it from memory.')+tipRow('pen','Your motivation is finished','Keep it in a separate document so you paste it in.')+'</div>'}},
+ {id:'s-day',t:'Submission day',r:()=>'<div class="steps"><div class="stp"><span class="nn">1</span><div><h4>Log in to SI\'s portal</h4><p>It opens on 8 February. We will add a walkthrough once SI publishes the screens.</p></div></div><div class="stp"><span class="nn">2</span><div><h4>Paste your number, upload, paste your motivation</h4><p>Copy the 8-digit number from your University Admissions account.</p></div></div><div class="stp"><span class="nn">3</span><div><h4>Submit once</h4><p>Check each file opens before you press submit.</p></div></div><div class="stp"><span class="nn">4</span><div><h4>Save your confirmation</h4><p>A screenshot and any email. Keep the email address you used active: everything from SI comes by email.</p></div></div></div>'+prov('o')+
+  '<div class="btnrow">'+(isOpen(tById('s6b'))?taskBtn('s6b','I submitted','Submitted')+taskBtn('s6c','I saved my confirmation','Confirmation saved'):'<span class="badge outline">'+ic('lock',12)+'Opens 8 Feb</span>')+'</div>'}
+],
+/* ---------- 7 Wait ---------- */
+[
+ {id:'w-time',t:'What happens while you wait',r:()=>{const rows=[['25 Feb – 31 Mar','SI screens every application and disqualifies those that break the rules, then evaluates the rest. Some applicants are randomly picked to record a short video.','Check your email. Leave your admission alone.','2027-02-25','2027-03-31'],['1 April','University Admissions announces results. SI receives them directly.','Check your result. Do not decline anything.','2027-04-01','2027-04-01'],['1 – 22 April','SI makes its final evaluation of those still eligible.','Wait.','2027-04-02','2027-04-21'],['22 April','Recipients are announced on si.se. Only people offered a scholarship are notified.','Check si.se and your email.','2027-04-22','2027-04-22'],['End of April','Winners get an official offer by email.','Reply by the deadline in the offer.','2027-04-23','2027-04-30']];
+   const t=todayISO();
+   return '<div class="mtl">'+rows.map(r=>'<div class="mrow'+(t>=r[3]&&t<=r[4]?' now':'')+'"><div class="w">'+r[0]+(t>=r[3]&&t<=r[4]?'<br>'+provB('y').replace('Yours','Now'):'')+'</div><div class="x">'+r[1]+'<small>You: '+r[2]+'</small></div></div>').join('')+'</div>'+prov('o')+'<div class="btnrow">'+taskBtn('s7c','I checked si.se and my email','Checked')+'</div>'}},
+ {id:'w-rules',t:'What your admission result means',r:()=>'<div class="grid2"><div class="card flat" style="padding:20px"><span class="badge teal">'+ic('check',12)+'In the running</span><ul style="margin:12px 0 0;padding-left:20px;font-size:14px"><li>You are <b>admitted or conditionally admitted</b> to an eligible programme on 1 April,</li><li><b>and</b> you have not changed your original admissions result.</li></ul></div><div class="card flat" style="padding:20px"><span class="badge red">Out</span><ul style="margin:12px 0 0;padding-left:20px;font-size:14px"><li>You are only a <b>reserve</b> or on the waiting list.</li><li>You decline or change your admissions offer. SI counts that as a change.</li></ul></div></div>'+
+  alertH('info','Conditionally admitted?','University Admissions will tell you what to do to finalise your place. Follow their instructions exactly, and read how to reply to your offer on their site.')+prov('o')+
+  alertH('plain','Pioneering Women in STEM.','If you also qualify, SI considers you under both scholarships. We have not confirmed whether Bangladesh is covered.')+
+  '<div class="btnrow">'+taskBtn('s7a','I have not touched my offer','Offer untouched')+(isOpen(tById('s7b'))?taskBtn('s7b','I checked my result','Result checked'):'<span class="badge outline">'+ic('lock',12)+'Result check opens 1 Apr</span>')+'</div>'}
+],
+/* ---------- 8 Outcome ---------- */
+[
+ {id:'o-offer',t:'If you are offered',r:()=>'<p class="lede">The official offer comes by email at the end of April. You must accept or decline within the deadline stated in the offer. Make sure the email address in your application is correct.</p>'+prov('o')+
+  alertH('plain','Coming next.','Residence permit, insurance, housing and arrival. We are checking these with Swedish authorities and will not publish them until they are verified.')+
+  '<div class="btnrow">'+(isOpen(tById('s8a'))?taskBtn('s8a','I replied to my offer','Replied'):'<span class="badge outline">'+ic('lock',12)+'Opens 22 Apr</span>')+'</div>'},
+ {id:'o-next',t:'If you are not',r:()=>'<p class="lede">SI notifies only people who are offered a scholarship, so silence after 22 April is your answer. Your work still carries over: your hours, referees and shortlist stay in your account.</p>'+
+  '<div class="coach">'+tipRow('book','Your admission may still stand','You may still hold an admission offer without funding. Compare the costs before you decide.')+tipRow('refresh','Use it for the next round','Your hours keep growing, and your referees already know the drill.')+tipRow('globe','Look at other scholarships','Erasmus Mundus and Chevening workspaces are on aspire.world. DAAD is coming.')+'</div>'}
+]];
+const wrapCard=s=>({id:'wrap',t:'Stage check-in',r:()=>wrapHTML(s)});
+const cardsOf=s=>CARDS[s].concat([wrapCard(s)]);
+const cardIdx=(s,id)=>Math.max(0,cardsOf(s).findIndex(c=>c.id===id));
+
+/* ================= notifications engine ================= */
+const NSTATE=id=>(S.notif.st[id]=S.notif.st[id]||{});
+function dlBody(d,n){
+  const open=T.filter(t=>t.due===d.d&&!tget(t.id).done).map(t=>t.l);
+  const more=open.length?' Still open: '+open.slice(0,2).map(x=>x.charAt(0).toLowerCase()+x.slice(1)).join('; ')+(open.length>2?' and '+(open.length-2)+' more':'')+'.':'';
+  switch(d.d){
+   case '2026-11-13':return 'Download the templates and check your shortlist against SI\'s list of eligible programmes.';
+   case '2027-01-15':return 'Your application, fee and 8-digit number must be done.'+(['deg','trn'].every(k=>['received','uploaded'].includes((S.uaDocs[k]||{}).st))?'':' Your certified degree papers are not in hand yet.')+more;
+   case '2027-02-01':return 'University Admissions needs your fee and documents around now. Confirm the exact date in your account.'+more;
+   case '2027-02-08':return 'The SI portal is open. You have '+PRE.filter((_,i)=>S.pre[i]).length+' of '+PRE.length+' pre-flight items checked.';
+   case '2027-02-24':return 'It closes at 19:59 Dhaka time. Submit early, because SI warns the portal slows near the end.'+more;
+   case '2027-04-01':return 'Check University Admissions. You need an offer, or a conditional offer, to stay in the running.';
+   default:return 'Check si.se and your email. Only people who are offered a scholarship are notified.';}
+}
+function suppressed(d){
+  if(d.d==='2027-01-15')return tget('s4d').done&&tget('s4f').done;
+  if(d.d==='2027-02-01')return tget('s4f').done;
+  if(d.d==='2027-02-24'||d.d==='2027-02-08')return tget('s6b').done;
+  return false;
+}
+function buildNotifs(){
+  const t=todayISO(),P=S.notif.prefs,out=[];
+  const push=(id,o)=>out.push(Object.assign({id},o));
+  if(!S.gateSaved)push('start',{sev:0,icon:'compass',title:'Start here: can you apply this round?',body:'Six quick questions, about two minutes. You see your result straight away.',go:[1,'q-cit'],at:S.notif.seen.start||t});
+  if(P.dl)DATES.forEach(d=>{
+    const n=dayDiff(d.d);
+    if(n>=0){
+      const m=d.ms.filter(x=>n<=x).sort((a,b)=>a-b)[0];
+      if(m!==undefined&&!suppressed(d))push('dl:'+d.d+':'+m,{sev:m<=3?2:m<=14?1:0,icon:'clock',tone:m<=3?'red':'',title:d.t+(d.conf?' (confirm)':'')+' '+rel(n),body:dlBody(d,n),go:d.go,at:t});
+    }else if(d.post&&-n<=d.post.days){
+      push('post:'+d.d,{sev:1,icon:'bell',title:d.post.title,body:d.post.body,go:d.post.go,at:d.d});
+    }});
+  if(P.tk){
+    const over=T.filter(x=>x.due&&dayDiff(x.due)<0&&!tget(x.id).done&&isOpen(x));
+    if(over.length)push('tk:over:'+over.map(x=>x.id).join(''),{sev:2,icon:'alert',tone:'red',title:plural(over.length,'task')+' past due',body:over.slice(0,2).map(x=>x.l).join('; ')+(over.length>2?' and '+(over.length-2)+' more.':'.'),go:over[0].at,at:t});
+  }
+  if(P.wt){
+    S.refs.forEach((r,i)=>{
+      if(!r.name)return;const nme=esc(r.name),st=r.st||0;
+      if(st===0&&valid(r.addedOn)){const w=-dayDiff(r.addedOn);if(w>=3)push('ref:'+i+':ask:'+Math.floor(w/7),{sev:1,icon:'mail',tone:'vio',title:'You have not asked '+nme+' yet',body:'Referees take the longest. Use the message in Stage 3 and send it today.',go:[2,'e-ask'],at:t});}
+      if(st===1&&valid(r.askedOn)){const w=-dayDiff(r.askedOn);if(w>=7)push('ref:'+i+':fu:'+Math.floor(w/7),{sev:1,icon:'mail',tone:'vio',title:'Follow up with '+nme,body:'You asked '+plural(w,'day')+' ago and they have not agreed yet. A short, friendly nudge helps.',go:[2,'e-refs'],at:t});}
+      if(st>=2&&st<5){const n=dayDiff(S.msgDate);if(n<=7){const m=n<0?-1:n<=1?1:7;push('ref:'+i+':due:'+m,{sev:n<=1?2:1,icon:'file',tone:n<=1?'red':'vio',title:nme+'\'s letter '+(n<0?'is overdue':'is due '+rel(n)),body:'Your date is '+fmtD(S.msgDate)+'. The letter must be typed, signed, stamped and scanned.',go:[2,'e-refs'],at:t});}}
+    });
+    DOCS.forEach(d=>{const o=S.uaDocs[d.id]||{};if(o.st==='requested'&&valid(o.date)){const w=-dayDiff(o.date),lim=+S.uaLead>0?+S.uaLead:14;if(w>=lim)push('doc:'+d.id+':'+Math.floor(w/7),{sev:1,icon:'folder',tone:'vio',title:'Chase your '+d.n.toLowerCase(),body:'You asked '+plural(w,'day')+' ago'+(+S.uaLead>0?' and your Registrar takes about '+S.uaLead+' days':'')+'. University Admissions needs it by 15 January.',go:[4,'a-docs'],at:t});}});
+    if(+S.uaLead>0&&!['deg','trn'].every(k=>['received','uploaded'].includes((S.uaDocs[k]||{}).st))){const iso=dAdd('2027-01-15',-(+S.uaLead+14)),n=dayDiff(iso);if(n<=14){const m=n<0?-1:n<=3?3:14;push('reg:'+m,{sev:n<=3?2:1,icon:'folder',tone:n<=3?'red':'vio',title:n<0?'Your safe date for certified papers has passed':'Ask your Registrar '+rel(n),body:'Your own figure puts the safe date at '+fmtD(iso)+'. Certified degree papers take time, and 15 January does not move.',go:[4,'a-docs'],at:t});}}
+    if(S.submitTouched&&!tget('s6b').done){const n=dayDiff(S.submitBy);if(n<=7&&n>=0){const m=n<=1?1:n<=3?3:7;push('sb:'+m,{sev:n<=3?2:1,icon:'flag',tone:n<=3?'red':'vio',title:'Your own submit-by date is '+rel(n),body:'You set '+fmtD(S.submitBy)+'. The portal closes on 24 Feb at 19:59 Dhaka time.',go:[6,'s-plan'],at:t});}}
+  }
+  if(passportOK()===false)push('pp',{sev:2,icon:'alert',tone:'red',title:'Your passport expires before 24 Feb 2027',body:'SI needs ID that is valid when you apply. Renew it, or use a valid National ID that shows your citizenship and photo.',go:[5,'f-id'],at:t});
+  Object.keys(S.notif.ev).forEach(id=>{const e=EVENTS[id];if(e)push('ev:'+id,{sev:0,icon:'award',tone:'tl',title:e.title(),body:e.body(),go:e.go,at:S.notif.ev[id]});});
+  out.forEach(o=>{if(!S.notif.seen[o.id])S.notif.seen[o.id]=o.at>t?t:o.at;});
+  return out.filter(o=>{const s=S.notif.st[o.id]||{};return !s.x&&!(s.z&&s.z>t);});
+}
+const EVENTS={
+  gate:{title:()=>'Your result is saved',body:()=>'Next: build your evidence. Referees and signers take the longest, so start there.',go:[2,'e-intro']},
+  refs:{title:()=>'Both referees have agreed',body:()=>'Now track each letter through typing, signing, stamping and scanning.',go:[2,'e-refs']},
+  num:{title:()=>'Your 8-digit number is saved',body:()=>'Copy it from the vault on submission day. Never retype it from memory.',go:[4,'a-number']},
+  pre:{title:()=>'Pre-flight passed',body:()=>'Your file is ready. The portal opens on 8 February. You can submit as soon as it does.',go:[6,'s-plan']},
+  'stage:0':{title:()=>'Understand: complete',body:()=>'You know what this is. Next, find out whether you qualify.',go:[1,'q-cit']},
+  'stage:1':{title:()=>'Qualify: complete',body:()=>'You have a plan for each point. Next, your evidence.',go:[2,'e-intro']},
+  'stage:2':{title:()=>'Evidence: complete',body:()=>'Your forms and referees are in hand. Next, choose your programmes.',go:[3,'p-how']},
+  'stage:3':{title:()=>'Programmes: complete',body:()=>'Your shortlist is checked against SI\'s list. Next, University Admissions.',go:[4,'a-start']},
+  'stage:4':{title:()=>'Admissions: complete',body:()=>'Application one is done. Next, your SI file.',go:[5,'f-five']},
+  'stage:5':{title:()=>'SI file: complete',body:()=>'Everything is ready to submit.',go:[6,'s-plan']},
+  'stage:6':{title:()=>'Submitted',body:()=>'Now wait, and leave your admission alone.',go:[7,'w-rules']}};
+function syncEvents(){
+  const t=todayISO(),ev=S.notif.ev,mark=(id,c)=>{if(c&&!ev[id])ev[id]=t;};
+  mark('gate',!!S.gateSaved);mark('refs',S.refs.length===2&&S.refs.every(r=>(r.st||0)>=2));mark('num',!!S.uaNum);mark('pre',PRE.every((_,i)=>S.pre[i])&&passportOK()===true);
+  for(let s=0;s<=6;s++){const sp=stageProg(s);mark('stage:'+s,sp.n>0&&sp.p===1);}
+}
+function upcoming(){
+  const t=todayISO(),out=[],P=S.notif.prefs;
+  if(P.dl)DATES.forEach(d=>{if(suppressed(d))return;d.ms.forEach(m=>{const when=dAdd(d.d,-m);if(when>t)out.push({when,text:d.t+' '+(m===0?'today':m===1?'tomorrow':'in '+m+' days')});});});
+  if(P.wt&&S.submitTouched&&!tget('s6b').done)[7,3,1,0].forEach(m=>{const when=dAdd(S.submitBy,-m);if(when>t)out.push({when,text:'Your submit-by date '+(m===0?'today':m===1?'tomorrow':'in '+m+' days'),you:1});});
+  if(P.wt&&+S.uaLead>0){const iso=dAdd('2027-01-15',-(+S.uaLead+14));[14,3].forEach(m=>{const when=dAdd(iso,-m);if(when>t)out.push({when,text:'Ask your Registrar '+(m===3?'in 3 days':'in 14 days'),you:1});});}
+  return out.sort((a,b)=>a.when<b.when?-1:a.when>b.when?1:0).slice(0,9);
+}
+let NLIST=[];
+const unreadCount=()=>NLIST.filter(o=>!(S.notif.st[o.id]||{}).r).length;
+function sortNotifs(l){return l.slice().sort((a,b)=>{const ua=!(S.notif.st[a.id]||{}).r,ub=!(S.notif.st[b.id]||{}).r;if(ua!==ub)return ua?-1:1;if(a.sev!==b.sev&&(a.sev===2||b.sev===2))return b.sev-a.sev;if(a.at!==b.at)return a.at<b.at?1:-1;return b.sev-a.sev;});}
+function syncNotifs(initial){
+  NLIST=sortNotifs(buildNotifs());
+  const fresh=NLIST.filter(o=>!S.notif.toasted[o.id]&&!(S.notif.st[o.id]||{}).r);
+  const show=fresh.filter(o=>o.sev>=1).slice(0,initial?1:2);
+  NLIST.forEach(o=>{S.notif.toasted[o.id]=1;});
+  show.forEach(o=>toast(o));
+}
+const NTONE=o=>o.tone||(o.sev===2?'red':o.sev===1?'':'');
+function toast(o){
+  const host=$('#toasts');if(!host)return;
+  const el=document.createElement('div');el.className='toast';el.setAttribute('role','status');
+  el.innerHTML='<span class="ni '+NTONE(o)+'">'+ic(o.icon||'bell',18)+'</span><div class="tt"><b>'+esc(o.title)+'</b><p>'+esc(o.body||'')+'</p></div><button class="btn btn-dark btn-xs" data-act="toastgo" '+(o.go?'data-s="'+o.go[0]+'" data-c="'+o.go[1]+'"':'')+'>'+(o.go?'View':'OK')+'</button><button class="iconbtn" style="width:28px;height:28px;border:0" data-act="toastx" aria-label="Dismiss">'+ic('x',14)+'</button>';
+  host.appendChild(el);
+  while(host.children.length>2)host.removeChild(host.firstChild);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),300);},o.sticky?12000:8000);
+  if(S.notif.prefs.b&&'Notification' in window&&Notification.permission==='granted'&&o.id){try{new Notification(o.title,{body:o.body||''});}catch(e){}}
+}
+
+/* ================= deadlines ================= */
+function yourDates(){
+  const out=[];
+  if(S.refs.length&&S.msgDate)out.push({d:S.msgDate,t:'Referee letters back',s:'Your date'});
+  if(+S.uaLead>0)out.push({d:dAdd('2027-01-15',-(+S.uaLead+14)),t:'Ask your Registrar by',s:'Your plan'});
+  if(S.submitTouched)out.push({d:S.submitBy,t:'Submit to SI by',s:'Your date'});
+  return out.sort((a,b)=>a.d<b.d?-1:1);
+}
+function whenChip(iso){const n=dayDiff(iso);return n<0?'<span class="when done">Done</span>':n===0?'<span class="when red">Today</span>':'<span class="when'+(n<=7?' red':'')+'">'+n+'d</span>';}
+function deadlinesHTML(){
+  const nd=nextDate(),nc=nextCrit();
+  let h='<div class="dl"><div class="dh"><span class="eyebrow">Deadlines · Dhaka time</span>'+provB('o')+'</div>';
+  if(nd){const n=dayDiff(nd.d),red=n<=7;
+    h+='<div class="hero2'+(red?' red':'')+'"><div class="k">Next date</div><div class="cd"><b>'+(n===0?'Today':n)+'</b>'+(n===0?'':'<span>'+(n===1?'day':'days')+'</span>')+'</div><div class="tt">'+esc(nd.t)+'</div><div class="dd">'+fmtW(nd.d)+' · '+esc(nd.s)+'</div></div>';
+    if(nc&&nc.d!==nd.d){const cn=dayDiff(nc.d);h+='<div class="crit'+(cn<=14?' red':'')+'"><div class="cn">'+cn+'<small>days</small></div><div class="ct">'+esc(nc.t)+'<small>'+fmtD(nc.d)+' · '+esc(nc.s)+'</small></div></div>';}
+  }else h+='<div class="hero2"><div class="k">All official dates have passed</div><div class="tt" style="margin-top:8px">Check your offer, or plan your next application.</div></div>';
+  const yd=yourDates();
+  h+='<div class="dscroll" tabindex="0" aria-label="All dates, scrollable"><ul class="dtl"><li class="sep">Official dates</li>'+DATES.map(d=>{const n=dayDiff(d.d),past=n<0,isN=nd&&nd.d===d.d;
+    return '<li class="'+(past?'past':isN?'nxt2':'')+'"><span class="pt">'+(past?ic('check',10):'')+'</span><div class="tx"><b>'+esc(d.t)+(d.conf?' <span class="badge outline" style="font-size:10px;padding:1px 7px">confirm</span>':'')+'</b><small>'+fmtS(d.d)+' · '+esc(d.s)+'</small></div>'+whenChip(d.d)+'</li>';}).join('')+
+   (yd.length?'<li class="sep" style="padding-top:8px">Your dates</li>'+yd.map(d=>'<li class="you"><span class="pt"></span><div class="tx"><b>'+esc(d.t)+'</b><small>'+fmtS(d.d)+' · '+esc(d.s)+'</small></div>'+whenChip(d.d)+'</li>').join(''):'')+'</ul></div>';
+  h+='<div class="df"><button class="btn btn-outline btn-sm" data-act="ics">'+ic('dl',15)+' Calendar</button><button class="btn btn-secondary btn-sm" data-act="notif" data-t="settings">'+ic('bell',15)+' Reminders</button></div></div>';
+  return h;
+}
+
+/* ================= views ================= */
+const jr=()=>'<nav class="jr" aria-label="Stages">'+STAGES.map((s,i)=>{const sp=stageProg(i);const cls=(sp.p===1?'done ':'')+(sp.p>0&&sp.p<1?'part ':'')+(i===S.cur?'cur':'');return '<button class="js '+cls+'" data-act="stage" data-s="'+i+'" '+(i===S.cur?'aria-current="step"':'')+'><span class="d">'+(sp.p===1?ic('check',15):i+1)+'</span><span class="l">'+esc(s.k)+'</span></button>';}).join('')+'</nav>';
+function heroHTML(){
+  const p=overall(),C=2*Math.PI*46,nt=nextTask(),cur=STAGES[S.cur],n=dayDiff(CLOSE_ISO);
+  return '<section class="hero"><div class="meta"><span class="eyebrow">Swedish Institute · Intake 2027/28</span><span class="doc">AW / SI-2728</span></div>'+
+   '<h1 class="htitle">SI Scholarship <em>for Global Professionals</em></h1>'+
+   '<p class="ttl">A funded master\'s degree in Sweden. Two applications, joined by one 8-digit number. <b>'+(n>=0?'The SI portal closes on 24 Feb 2027 at 19:59 Dhaka time.':'This round has closed.')+'</b></p>'+
+   '<div class="hrow"><div class="hring"><svg viewBox="0 0 112 112"><circle class="bg" cx="56" cy="56" r="46" fill="none" stroke-width="8"/><circle class="fg" cx="56" cy="56" r="46" fill="none" stroke-width="8" stroke-dasharray="'+C.toFixed(2)+'" stroke-dashoffset="'+(C*(1-p)).toFixed(2)+'"/></svg><div class="n"><b>'+Math.round(p*100)+'%</b><small>prepared</small></div></div>'+
+   '<div><div class="cur">Current step</div><div class="curv">'+pad2(S.cur+1)+' · '+esc(cur.k)+'</div><span class="vtag">'+ic('shield',13)+'Dates checked · SI page 20 Oct</span></div></div>'+
+   '<div class="nxt"><div><div class="k">Next action</div><div class="t">'+(nt?esc(nt.l):'Everything is done. Watch for 22 April.')+'</div></div>'+(nt?'<div class="by">'+(!isOpen(nt)?'Opens '+fmtS(nt.opens):nt.due?'By '+fmtS(nt.due):'Stage '+(nt.s+1))+'</div><button class="btn btn-primary" data-act="go" data-s="'+nt.at[0]+'" data-c="'+nt.at[1]+'">Continue '+ic('arrow',17)+'</button>':'')+'</div>'+'</section>';
+}
+function coachItems(){
+  const out=[],{res,ans}=gateCounts(),t=todayISO();
+  if(!S.gateSaved){const i=GATE_ORDER.findIndex(([id],k)=>!res[k]);out.push({ic:'compass',k:'',t:ans<6?'Take the six-point check':'Save your result',b:ans<6?ans+' of 6 answered. It takes about two minutes.':'You answered all six. Save it to unlock your plan.',s:1,c:ans<6?GATE_ORDER[i<0?0:i][2]:'q-result'});}
+  res.forEach((r,k)=>{if(r&&r.r==='block')out.push({ic:'alert',k:'red',t:'Fix first: '+GATE_ORDER[k][1],b:(r.h||'Blocker')+'. '+r.m.slice(0,90)+(r.m.length>90?'…':''),s:1,c:GATE_ORDER[k][2]});});
+  const hv=hoursVerdict();if(hv&&hv.r==='work')out.push({ic:'clock',k:'vio',t:hv.h,b:hv.m.slice(0,110)+(hv.m.length>110?'…':''),s:1,c:'q-work'});
+  if(S.refs.length<2||S.refs.some(r=>!r.name))out.push({ic:'users',k:'vio',t:'Name your two referees',b:'They take the longest. Ask before SI\'s templates arrive on 13 November.',s:2,c:'e-refs'});
+  else if(S.refs.some(r=>(r.st||0)<1))out.push({ic:'mail',k:'vio',t:'Ask your referees',b:'Use the ready-made message. It takes two minutes.',s:2,c:'e-ask'});
+  if(!+S.uaLead&&!['deg','trn'].every(k=>['received','uploaded'].includes((S.uaDocs[k]||{}).st)))out.push({ic:'folder',k:'vio',t:'Ask how long your Registrar takes',b:'Certified degree papers are the slowest part of University Admissions. We plan backwards from 15 January.',s:4,c:'a-docs'});
+  const nd=nextDate();if(nd&&dayDiff(nd.d)<=30&&dayDiff(nd.d)>=0)out.push({ic:'cal',k:'',t:nd.t+' '+rel(dayDiff(nd.d)),b:fmtW(nd.d)+' · '+nd.s,s:nd.go?nd.go[0]:S.cur,c:nd.go?nd.go[1]:undefined});
+  const nt=nextTask();if(nt&&!out.some(o=>o.s===nt.at[0]&&o.c===nt.at[1]))out.push({ic:'check',k:'tl',t:nt.l,b:isOpen(nt)?'Your next task':'Opens '+fmtS(nt.opens),s:nt.at[0],c:nt.at[1]});
+  return out.slice(0,4);
+}
+function viewToday(){
+  if(!S.account)return viewPublic();
+  const items=coachItems();
+  return '<div class="stack fadein">'+heroHTML()+
+   '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px"><h3>Your next steps</h3><span class="badge soft">Just for you</span></div><div class="coach">'+(items.length?items.map(o=>'<button class="crow" data-act="go" data-s="'+o.s+'"'+(o.c?' data-c="'+o.c+'"':'')+'><span class="ci '+o.k+'">'+ic(o.ic,18)+'</span><span class="ct"><b>'+esc(o.t)+'</b><small>'+esc(o.b)+'</small></span><span class="go">'+ic('cr',18)+'</span></button>').join(''):'<p class="muted" style="margin:6px 0 0">Nothing urgent. Keep going at your own pace.</p>')+'</div></div></div>';
+}
+function viewPublic(){
+  const dc=dayDiff(CLOSE_ISO),cta=(t)=>'<button class="btn btn-primary btn-lg" data-act="opensignup">'+t+' '+ic('arrow',18)+'</button>';
+  const kd=(l,iso,sub)=>{const n=dayDiff(iso);return '<div class="kd"><div class="k">'+l+'</div><div class="v">'+fmtS(iso)+'</div><div class="s">'+sub+'</div><span class="badge '+(n<0?'outline':n<=7?'red':'soft')+'">'+(n<0?'Passed':n===0?'Today':n+(n===1?' day':' days')+' left')+'</span></div>';};
+  const feat=(i,t,p,vis)=>'<div class="card feat"><span class="fi">'+ic(i,22)+'</span><h3>'+t+'</h3><p>'+p+'</p><div class="fv">'+vis+'</div></div>';
+  return '<div class="stack fadein pubpage">'+
+   '<section class="hero pubhero"><div class="meta"><span class="eyebrow">Swedish Institute · Intake 2027/28</span><span class="vtag">'+ic('shield',13)+'Dates checked · SI page 20 Oct</span></div>'+
+   (function(){const st='2026-10-16',tot=dBetween(st,CLOSE_ISO),el=clamp(dBetween(st,todayISO()),0,tot),C=2*Math.PI*46,left=dayDiff(CLOSE_ISO);
+     return left>=0?'<div class="pring" aria-label="'+left+' days until the SI portal closes"><div class="hring"><svg viewBox="0 0 112 112"><circle class="bg" cx="56" cy="56" r="46" fill="none" stroke-width="6"/><circle class="fg" cx="56" cy="56" r="46" fill="none" stroke-width="6" stroke-dasharray="'+C.toFixed(2)+'" stroke-dashoffset="'+(C*(1-el/tot)).toFixed(2)+'"/></svg><div class="n"><b>'+left+'</b><small>days left</small></div></div><p>until the SI portal closes</p></div>':'';})()+
+   '<h1 class="htitle big">SI Scholarship <em>for Global Professionals</em></h1>'+
+   '<p class="ttl">A funded master\'s degree in Sweden, for working professionals. We take you from &ldquo;can I apply?&rdquo; to &ldquo;submitted&rdquo;, one step at a time.</p>'+
+   '<div class="btnrow" style="margin-top:22px">'+cta('Start my guided application')+'</div><p class="fine">Free for students. No commissions. Powered by The Daily Star.</p></section>'+
+   '<div class="kds">'+kd('University Admissions closes','2027-01-15','Application one')+kd('SI portal opens','2027-02-08','Application two')+kd('SI portal closes','2027-02-24','19:59 Dhaka time')+'</div>'+
+   '<section><div class="eyebrow royal">How the guide helps</div><h2 class="sech">A guide that works one step at a time</h2><div class="feats">'+
+    feat('compass','One step at a time','Nine stages, each split into short cards. Every card tells you what to do and how to do it.','<span class="ldots"><i class="on"></i><i class="on"></i><i class="cur"></i><i></i><i></i></span>')+
+    feat('check','Know early if you can apply','A six-point check and a work-hours counter show where you stand before you spend months preparing.','<span class="badge teal">'+ic('check',12)+'Citizenship</span><span class="badge teal">'+ic('check',12)+'Degree</span><span class="badge violet">Work hours</span>')+
+    feat('bell','Never miss a date','Countdowns, reminders inside the app and a calendar file for every deadline.','<span class="badge '+(dc<=7?'red':'royal')+'">'+(dc>=0?dc+' days to the SI deadline':'Round closed')+'</span>')+
+    feat('users','Track what depends on others','Referees, Registrar papers and your 8-digit number, with a nudge when it is time to chase.','<span class="badge outline">Asked</span><span class="muted">→</span><span class="badge outline">Agreed</span><span class="muted">→</span><span class="badge teal">Signed</span>')+
+   '</div></section>'+
+   '<section class="grid2 pubnum"><div class="card"><div class="eyebrow">The honest picture</div><h3 style="margin-top:4px">Bangladeshi recipients each year</h3>'+chartHTML()+prov('s')+'</div>'+
+   '<div class="card tint"><div class="eyebrow">Why a guide matters</div><h3 style="margin-top:4px">It is competitive, and small mistakes end applications</h3><p>In the last three published rounds, 9, 10 and 14 Bangladeshi students received the scholarship, out of 299, 357 and 351 recipients in total.</p><p>SI disqualifies applications for small mistakes. Our checks are built to catch them before you submit.</p><p class="small muted">We add the 2026/27 list once we have read it.</p><div class="btnrow" style="margin-top:6px">'+cta('Start the six-point check')+'</div></div></section>'+
+   '</div>';
+}
+function viewGuide(){
+  const s=S.cur,st=STAGES[s],cards=cardsOf(s),ci=clamp(S.cardAt[s]||0,0,cards.length-1),c=cards[ci];
+  const last=ci===cards.length-1,first=ci===0;
+  const nextLabel=last?(s<8?'Next: '+STAGES[s+1].k:''):'Continue';
+  return '<div class="fadein" id="stagetop"><div class="stagehead"><div><div class="eyebrow royal">Stage '+pad2(s+1)+' of 09</div><h1>'+esc(st.t)+'</h1><p class="lead">'+esc(st.lead)+'</p></div><span class="win">'+esc(st.win)+'</span></div>'+
+   '<div class="card" style="padding:14px 8px 10px;margin-bottom:16px;box-shadow:none">'+jr()+'</div>'+
+   '<section class="card lesson" id="lesson" aria-live="polite"><div class="lhead"><span class="eyebrow">Step '+(ci+1)+' of '+cards.length+'</span><div class="ldots">'+cards.map((x,i)=>'<button data-act="card" data-i="'+i+'" aria-label="Go to step '+(i+1)+': '+esc(x.t)+'"><i class="'+(i<ci?'on':i===ci?'cur':'')+'"></i></button>').join('')+'</div></div>'+
+   '<h2 class="ltitle">'+esc(c.t)+'</h2><div class="lbody">'+c.r()+'</div>'+
+   '<div class="lnav">'+(first&&s===0?'<span></span>':'<button class="btn btn-outline" data-act="prev">'+ic('back',17)+' Back</button>')+(last&&s===8?'':'<button class="btn btn-primary btn-lg" data-act="next">'+nextLabel+' '+ic('arrow',18)+'</button>')+'</div></section></div>';
+}
+function viewCheck(){
+  const done=T.filter(t=>tget(t.id).done).length,wait=T.filter(t=>tget(t.id).wait&&!tget(t.id).done).length;
+  T.forEach(t=>{});
+  return '<div class="stack fadein"><div class="stagehead"><div><div class="eyebrow royal">Checklist</div><h1>Every task, in order</h1><p class="lead">Tasks tick themselves when your entries prove them done. Open any task to jump to the step.</p></div></div>'+
+   '<div class="grid3 keep"><div class="tile ok"><div class="v">'+done+'<small> / '+T.length+'</small></div><div class="l">tasks done</div></div><div class="tile"><div class="v">'+(T.length-done)+'</div><div class="l">to go</div></div><div class="tile"><div class="v">'+wait+'</div><div class="l">waiting on someone</div></div></div>'+
+   STAGES.map((s,i)=>{const sp=stageProg(i),id='ck'+i;if(UI.open[id]===undefined)UI.open[id]=(i===S.cur);
+    return '<div class="accs"><div class="acc'+(UI.open[id]?' open':'')+'"><button data-act="acc" data-id="'+id+'" aria-expanded="'+!!UI.open[id]+'"><span class="nb badge '+(sp.p===1?'teal':i===S.cur?'royal':'outline')+' mono">'+pad2(i+1)+'</span><span class="t">'+esc(s.t)+'<br><small class="muted" style="font-weight:400">'+sp.d+' of '+sp.n+' done · '+esc(s.win)+'</small></span>'+ic('chev',18).replace('class="ic"','class="ic chev"')+'</button>'+(UI.open[id]?'<div class="ab" style="padding-bottom:6px">'+T.filter(t=>t.s===i).map(taskRow).join('')+'</div>':'')+'</div></div>';}).join('')+'</div>';
+}
+function renderView(){
+  const v=S.view,el=$('#view');
+  el.innerHTML=!S.account?viewPublic():v==='today'?viewToday():v==='check'?viewCheck():viewGuide();
+}
+let DLKEY='';
+function renderChrome(){
+  document.body.classList.toggle('pub',!S.account);
+  if(!S.account){
+    $('#topc').innerHTML='';
+    $('#topr').innerHTML='<button class="btn btn-ghost btn-sm hide-s" data-act="opensignup">Log in</button><button class="btn btn-primary btn-sm" data-act="opensignup">Create free account</button>';
+    $('#mstrip').className='mstrip';$('#mstrip').innerHTML='';$('#bnav').innerHTML='';$('#side').innerHTML='';
+    const sim=$('#simIn');if(sim&&document.activeElement!==sim)sim.value=SIM||qs.get('today')||'';
+    return;
+  }
+  const un=unreadCount(),urg=NLIST.some(o=>o.sev===2&&!(S.notif.st[o.id]||{}).r),d=T.filter(t=>tget(t.id).done).length;
+  $('#topc').innerHTML='<div class="tabs" role="tablist">'+[['today','Today'],['guide','Guide'],['check','Checklist']].map(([k,l])=>'<button class="'+(S.view===k?'on':'')+'" role="tab" aria-selected="'+(S.view===k)+'" data-act="view" data-v="'+k+'">'+l+(k==='check'?' <span class="cnt">'+d+'/'+T.length+'</span>':'')+'</button>').join('')+'</div>';
+  $('#topr').innerHTML='<button class="iconbtn" data-act="notif" data-t="inbox" aria-label="Notifications'+(un?', '+un+' unread':'')+'" aria-haspopup="dialog">'+ic('bell',20)+(un?'<span class="bdg'+(urg?' urgent':'')+'">'+(un>9?'9+':un)+'</span>':'')+'</button><div class="avatar" title="Your account">'+ic('user',18)+'</div>';
+  const nd=nextDate(),n=nd?dayDiff(nd.d):0;
+  $('#mstrip').className='mstrip'+(nd&&n<=7?' red':'');
+  $('#mstrip').innerHTML=nd?'<span class="k">Next</span><span class="mt"><b>'+fmtS(nd.d)+'</b> · '+esc(nd.t)+' · '+(n===0?'today':n+(n===1?' day':' days'))+'</span>'+ic('chev',16):'<span class="mt">All official dates have passed</span>';
+  $('#bnav').innerHTML=[['today','Today','home'],['guide','Guide','compass'],['check','Checklist','list']].map(([k,l,i])=>'<button class="'+(S.view===k?'on':'')+'" data-act="view" data-v="'+k+'">'+ic(i,22)+l+'</button>').join('')+'<button data-act="dlsheet">'+ic('cal',22)+'Deadlines'+(nd&&n<=7?'<span class="bdg">'+n+'</span>':'')+'</button>';
+  $('#side').innerHTML=deadlinesHTML();
+  const sc=$('#side .dscroll'),cu=$('#side li.nxt2'),key=nd?nd.d:'';
+  if(sc&&cu&&DLKEY!==key){DLKEY=key;sc.scrollTop=Math.max(0,cu.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-64);}
+  const sim=$('#simIn');if(sim&&document.activeElement!==sim)sim.value=SIM||qs.get('today')||'';
+}
+function nrowHTML(o){
+  const s=S.notif.st[o.id]||{},un=!s.r;
+  return '<div class="nrow'+(un?' unread':'')+'"><span class="ni '+NTONE(o)+'">'+ic(o.icon||'bell',18)+'</span><div class="nt"><b>'+esc(o.title)+'</b><p>'+esc(o.body)+'</p><time>'+(o.at===todayISO()?'Today':fmtS(o.at))+(o.sev===2?' · Urgent':'')+'</time><div class="na">'+(o.go?'<button class="btn btn-secondary btn-xs" data-act="nopen" data-id="'+esc(o.id)+'">Open</button>':'')+(un?'<button class="btn btn-ghost btn-xs" data-act="nread" data-id="'+esc(o.id)+'">Mark read</button>':'')+'<button class="btn btn-ghost btn-xs" data-act="nsnooze" data-id="'+esc(o.id)+'">Snooze a day</button><button class="btn btn-ghost btn-xs" data-act="ndismiss" data-id="'+esc(o.id)+'">Dismiss</button></div></div></div>';
+}
+function sheetHTML(){
+  if(!UI.sheet)return '';
+  if(UI.sheet==='signup')return '<div class="ovl" data-act="closesheet"></div><div class="panel pop" role="dialog" aria-modal="true" aria-label="Create your free account"><span class="grab"></span><div class="ph"><h3>Create your free account</h3><button class="iconbtn" style="width:36px;height:36px" data-act="closesheet" aria-label="Close">'+ic('x',16)+'</button></div><div class="sheetc"><ul class="wlist"><li>'+ic('compass',16)+'<span>The full step-by-step guide, with the how for every step</span></li><li>'+ic('cal',16)+'<span>Deadline countdowns, in-app reminders and a calendar file</span></li><li>'+ic('users',16)+'<span>A tracker for referees, Registrar papers and your 8-digit number</span></li><li>'+ic('shield',16)+'<span>Free for students. No commissions.</span></li></ul><div style="margin-top:14px">'+alertH('plain','Prototype.','On the live site this step asks for your email or Google account. Nothing is collected here.')+'</div><div class="btnrow" style="margin-top:16px"><button class="btn btn-primary btn-lg" data-act="signup">Continue as a demo student '+ic('arrow',18)+'</button><button class="btn btn-ghost" data-act="closesheet">Not now</button></div></div></div>';
+  if(UI.sheet==='dl')return '<div class="ovl" data-act="closesheet"></div><div class="panel pop" role="dialog" aria-modal="true" aria-label="Deadlines"><span class="grab"></span><div class="ph"><h3>Deadlines</h3><button class="iconbtn" style="width:36px;height:36px" data-act="closesheet" aria-label="Close">'+ic('x',16)+'</button></div><div class="sheetc">'+deadlinesHTML()+'</div></div>';
+  const un=unreadCount(),t=UI.ntab,P=S.notif.prefs;
+  let body='';
+  if(t==='inbox')body=NLIST.length?NLIST.map(nrowHTML).join(''):'<div style="padding:8px"><div class="empty"><div class="ei">'+ic('check',22)+'</div><b>You are all caught up</b><p>New reminders appear here when a date gets close or something needs a nudge.</p></div></div>';
+  else if(t==='up'){const u=upcoming();body='<div style="padding:0 8px"><p class="small muted" style="margin:0 0 6px">What we will remind you about next.</p>'+(u.length?'<ul class="wlist">'+u.map(x=>'<li>'+ic(x.you?'pen':'bell',16)+'<span><b>'+fmtW(x.when)+'</b><br>'+esc(x.text)+(x.you?' <span class="badge violet" style="margin-left:4px">Yours</span>':'')+'</span></li>').join('')+'</ul>':'<p class="muted">Nothing scheduled with your current settings.</p>')+'</div>';}
+  else body='<div style="padding:0 10px 4px"><div class="swrow"><span class="t">Deadline countdowns<small>Official dates, as they get close</small></span><button class="sw'+(P.dl?' on':'')+'" data-act="npref" data-k="dl" role="switch" aria-checked="'+P.dl+'" aria-label="Deadline countdowns"></button></div>'+
+   '<div class="swrow"><span class="t">Overdue tasks<small>When a task passes its date</small></span><button class="sw'+(P.tk?' on':'')+'" data-act="npref" data-k="tk" role="switch" aria-checked="'+P.tk+'" aria-label="Overdue tasks"></button></div>'+
+   '<div class="swrow"><span class="t">Waiting on someone<small>Referees, Registrar, your own dates</small></span><button class="sw'+(P.wt?' on':'')+'" data-act="npref" data-k="wt" role="switch" aria-checked="'+P.wt+'" aria-label="Waiting on someone"></button></div>'+
+   '<div class="swrow"><span class="t">Browser alerts<small>'+('Notification' in window?(Notification.permission==='denied'?'Blocked in your browser settings':'Pop-ups while aspire.world is open'):'Not supported in this browser')+'</small></span><button class="sw'+(P.b?' on':'')+'" data-act="npref" data-k="b" role="switch" aria-checked="'+P.b+'" aria-label="Browser alerts"></button></div></div>'+
+   '<div style="padding:8px 8px 0">'+alertH('plain','How reminders work.','They appear here, and as a pop-up, when you open aspire.world. Email and WhatsApp reminders need your live account, so they are not part of this prototype. The calendar file works anywhere.')+'<div class="btnrow" style="margin-top:12px"><button class="btn btn-outline btn-sm" data-act="ics">'+ic('dl',15)+' Calendar file (.ics)</button>'+taskBtn('s0c','Mark reminders chosen','Reminders chosen')+'</div></div>';
+  return '<div class="ovl" data-act="closesheet"></div><div class="panel pop" role="dialog" aria-modal="true" aria-label="Notifications"><span class="grab"></span><div class="ph"><h3>Notifications</h3><div class="btnrow" style="gap:6px">'+(un&&t==='inbox'?'<button class="btn btn-ghost btn-xs" data-act="markall">Mark all read</button>':'')+'<button class="iconbtn" style="width:36px;height:36px" data-act="closesheet" aria-label="Close">'+ic('x',16)+'</button></div></div><div class="ptabs"><div class="tabs" role="tablist" style="display:flex"><button style="flex:1;justify-content:center" class="'+(t==='inbox'?'on':'')+'" data-act="ntab" data-t="inbox">Inbox'+(un?' <span class="cnt">'+un+'</span>':'')+'</button><button style="flex:1;justify-content:center" class="'+(t==='up'?'on':'')+'" data-act="ntab" data-t="up">Upcoming</button><button style="flex:1;justify-content:center" class="'+(t==='settings'?'on':'')+'" data-act="ntab" data-t="settings">Settings</button></div></div><div class="pb">'+body+'</div></div>';
+}
+let RENDERING=false,AGAIN=false;
+function renderAll(){
+  if(RENDERING){AGAIN=true;return;}
+  RENDERING=true;
+  try{
+    do{AGAIN=false;
+      syncAuto();syncEvents();if(S.account)syncNotifs(false);save();
+      renderChrome();renderView();$('#sheet').innerHTML=sheetHTML();
+    }while(AGAIN);
+  }finally{RENDERING=false;}
+}
+
+/* ================= actions ================= */
+const rerender=()=>renderAll();
+function scrollTop(){const el=$('#stagetop')||$('#view');if(!el)return;const off=(innerWidth<=1060?(64+44):64)+12;window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-off),behavior:'smooth'});}
+function restart(sel){const el=$(sel);if(!el)return;el.style.animation='none';void el.offsetWidth;el.style.animation='';}
+function goTo(s,cid,noScroll){
+  S.view='guide';S.cur=clamp(+s,0,8);
+  if(cid)S.cardAt[S.cur]=cardIdx(S.cur,cid);
+  UI.sheet=null;renderAll();
+  if(!noScroll){restart('#lesson');scrollTop();}
+  try{history.replaceState(null,'','#guide/'+S.cur+'/'+cardsOf(S.cur)[clamp(S.cardAt[S.cur]||0,0,cardsOf(S.cur).length-1)].id);}catch(e){}
+}
+function stepCard(dir){
+  const s=S.cur,n=cardsOf(s).length,ci=clamp(S.cardAt[s]||0,0,n-1),j=ci+dir;
+  if(j>=0&&j<n){S.cardAt[s]=j;}
+  else if(j>=n&&s<8){S.cur=s+1;S.cardAt[s+1]=0;}
+  else if(j<0&&s>0){S.cur=s-1;S.cardAt[s-1]=cardsOf(s-1).length-1;}
+  else return;
+  renderAll();restart('#lesson');scrollTop();
+  try{history.replaceState(null,'','#guide/'+S.cur+'/'+cardsOf(S.cur)[S.cardAt[S.cur]||0].id);}catch(e){}
+}
+function downloadICS(){
+  const pad=s=>s.replace(/-/g,''),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//aspire.world//SI 2027-28//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
+  const add=(uid,d,sum,desc,timed)=>{L.push('BEGIN:VEVENT','UID:'+uid+'@aspire.world','DTSTAMP:'+stamp,timed?'DTSTART:'+d.replace('Z','')+'Z':'DTSTART;VALUE=DATE:'+pad(d),'SUMMARY:'+sum,'DESCRIPTION:'+desc,'BEGIN:VALARM','TRIGGER:-P7D','ACTION:DISPLAY','DESCRIPTION:'+sum,'END:VALARM','BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:'+sum,'END:VALARM','END:VEVENT');};
+  DATES.filter(d=>dayDiff(d.d)>=-30&&d.d!=='2027-02-24').forEach(d=>add('si2728-'+d.d,d.d,'SI 2027/28: '+d.t+(d.conf?' (confirm)':''),d.s));
+  add('si2728-close','20270224T135900','SI 2027/28: portal closes (14:59 CET, 19:59 Dhaka)','Submit before this time.',true);
+  yourDates().forEach((d,i)=>add('si2728-you'+i,d.d,'Aspire: '+d.t,'Your own date from your aspire.world plan.'));
+  L.push('END:VCALENDAR');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar'}));a.download='si-scholarship-2027-28-dates.ics';document.body.appendChild(a);a.click();a.remove();
+  const o=tget('s0b');if(!o.m){o.done=true;}
+  toast({id:'ics',title:'Calendar file downloaded',body:'Open it to add every date, with reminders a week and a day before.',icon:'cal',tone:'tl'});renderAll();
+}
+const ACT={
+ opensignup(){UI.sheet='signup';renderAll();},
+ signup(){S.account=true;UI.sheet=null;S.view='guide';S.cur=0;S.cardAt[0]=0;renderAll();window.scrollTo(0,0);toast({id:'acct',title:'Account created (demo)',body:'Your guide starts here. Reminders appear under the bell.',icon:'check',tone:'tl'});},
+ view(d){S.view=d.v;UI.sheet=null;renderAll();window.scrollTo({top:0,behavior:'smooth'});},
+ go(d){goTo(d.s,d.c);},
+ stage(d){S.view='guide';S.cur=+d.s;UI.sheet=null;renderAll();restart('#lesson');scrollTop();},
+ card(d){S.cardAt[S.cur]=+d.i;renderAll();restart('#lesson');scrollTop();},
+ next(){stepCard(1);},prev(){stepCard(-1);},
+ acc(d){UI.open[d.id]=!UI.open[d.id];renderAll();},
+ gate(d){S.gate[d.q]=d.v;S.gateSaved=false;renderAll();},
+ nowork(){S.gate.nowork=true;renderAll();},
+ gatesave(){S.gateSaved=true;renderAll();toast({id:'gsave',title:'Result saved',body:'Your plan is ready. Next: build your evidence.',icon:'check',tone:'tl'});},
+ addrec(d){const arr=d.k==='w'?S.work:S.lead;if(arr.length>=(d.k==='w'?3:2))return;arr.push({org:'',role:'',type:d.k==='w'?'emp':'team',start:'',end:'',dpw:'',hpd:'',off:'',actual:'',signer:'',stype:'sup',what:'',st:0});if(d.k==='w')delete S.gate.nowork;renderAll();},
+ delrec(d){(d.k==='w'?S.work:S.lead).splice(+d.i,1);renderAll();},
+ step(d){const arr=d.k==='w'?S.work:d.k==='l'?S.lead:S.refs,r=arr[+d.i],n=+d.n;if(!r)return;r.st=((r.st||0)===n+1)?n:n+1;if(d.k==='r'&&r.st>=1&&!r.askedOn)r.askedOn=todayISO();renderAll();},
+ addref(){if(S.refs.length>=2)return;S.refs.push({name:'',org:'',rel:'cur',basis:S.refs.length?'out':'work',email:'',st:0,addedOn:todayISO()});renderAll();},
+ delref(d){S.refs.splice(+d.i,1);renderAll();},
+ addprog(d){const reg=S.prog.filter(p=>p.kind==='reg').length,sse=S.prog.filter(p=>p.kind==='sse').length;if(d.k==='reg'&&reg>=4)return;if(d.k==='sse'&&sse>=1)return;S.prog.push({name:'',uni:'',kind:d.k,link:'',chk:false});renderAll();},
+ delprog(d){S.prog.splice(+d.i,1);renderAll();},
+ progchk(d){const p=S.prog[+d.i];if(p&&dayDiff('2026-11-13')<=0)p.chk=!p.chk;renderAll();},
+ pastTab(d){S.pastTab=d.v;renderAll();},
+ tg(d){const t=tById(d.id);if(!t||!isOpen(t))return;const o=tget(d.id);o.done=!o.done;o.m=true;if(o.done)o.wait=false;renderAll();},
+ wt(d){const o=tget(d.id);o.wait=!o.wait;renderAll();},
+ pre(d){S.pre[+d.i]=!S.pre[+d.i];renderAll();},
+ savenum(){const a=($('#numA').value||'').trim(),b=($('#numB').value||'').trim();let e='';
+   if(!/^\d{8}$/.test(a))e='The number must be exactly 8 digits, with no spaces or letters.';else if(a!==b)e='The two entries do not match. Check your University Admissions account and try again.';
+   if(e){$('#numErrT').textContent=e;$('#numErr').classList.remove('hide');return;}S.uaNum=a;renderAll();},
+ clearnum(){S.uaNum='';renderAll();},
+ copynum(){try{navigator.clipboard.writeText(S.uaNum);}catch(e){}const b=$('#numCopy');if(b){b.lastChild.textContent=' Copied';setTimeout(()=>{if(b.lastChild)b.lastChild.textContent=' Copy';},1400);}},
+ copymsg(){const t=$('#msgText');try{navigator.clipboard.writeText(t.value);}catch(e){t.select();document.execCommand('copy');}const b=$('#copyBtn');b.lastChild.textContent=' Copied';setTimeout(()=>{if(b.lastChild)b.lastChild.textContent=' Copy message';},1400);},
+ ics(){downloadICS();},
+ notif(d){UI.sheet='notif';UI.ntab=d.t||'inbox';renderAll();setTimeout(()=>{const b=$('#sheet [data-act="closesheet"].iconbtn');if(b)b.focus();},30);},
+ dlsheet(){UI.sheet='dl';renderAll();},
+ closesheet(){UI.sheet=null;renderAll();},
+ ntab(d){UI.ntab=d.t;renderAll();},
+ nopen(d){NSTATE(d.id).r=1;const o=NLIST.find(x=>x.id===d.id);UI.sheet=null;if(o&&o.go)goTo(o.go[0],o.go[1]);else renderAll();},
+ nread(d){NSTATE(d.id).r=1;renderAll();},
+ nsnooze(d){NSTATE(d.id).z=dAdd(todayISO(),1);NSTATE(d.id).r=1;renderAll();},
+ ndismiss(d){NSTATE(d.id).x=1;renderAll();},
+ markall(){NLIST.forEach(o=>{NSTATE(o.id).r=1;});renderAll();},
+ npref(d){const P=S.notif.prefs,k=d.k;
+   if(k==='b'){
+     if(P.b){P.b=false;renderAll();return;}
+     if(!('Notification' in window)){toast({id:'bn0',title:'Not supported',body:'This browser cannot show alerts. Reminders still appear here.',icon:'info'});return;}
+     Notification.requestPermission().then(p=>{if(p==='granted'){P.b=true;toast({id:'bn1',title:'Browser alerts on',body:'You will see alerts while aspire.world is open.',icon:'bell',tone:'tl'});}else toast({id:'bn2',title:'Browser alerts are blocked',body:'Allow notifications for this site in your browser settings. Reminders still appear here.',icon:'info'});renderAll();}).catch(()=>renderAll());
+     return;}
+   P[k]=!P[k];renderAll();},
+ toastgo(d,el){const t=el.closest('.toast');if(t)t.remove();if(d.s!==undefined&&d.s!=='')goTo(d.s,d.c);},
+ toastx(d,el){const t=el.closest('.toast');if(t)t.remove();},
+ reset(){if(!confirm('Clear everything saved in this prototype?'))return;try{localStorage.removeItem(KEY);}catch(e){}SIM=null;load();UI.open={};UI.sheet=null;renderAll();window.scrollTo(0,0);}
+};
+const CHG={
+ rec(el){const d=el.dataset,arr=d.k==='w'?S.work:S.lead,r=arr[+d.i];if(!r)return;let v=el.value;if(['dpw','hpd','off','actual'].includes(d.f))v=v===''?'':+v;r[d.f]=v;renderAll();},
+ ref(el){const d=el.dataset,r=S.refs[+d.i];if(r){r[d.f]=el.value;renderAll();}},
+ prog(el){const d=el.dataset,p=S.prog[+d.i];if(p){p[d.f]=el.value;renderAll();}},
+ doc(el){const d=el.dataset,o=S.uaDocs[d.id]=S.uaDocs[d.id]||{st:'none'};o[d.f]=el.value;if(d.f==='st'&&el.value==='requested'&&!o.date)o.date=todayISO();renderAll();},
+ uaLead(el){S.uaLead=el.value===''?'':Math.max(0,+el.value);renderAll();},
+ msgdate(el){S.msgDate=valid(el.value)?el.value:'2027-01-25';renderAll();},
+ passport(el){S.passport=el.value;renderAll();},
+ submitby(el){S.submitBy=valid(el.value)?el.value:'2027-02-17';S.submitTouched=true;renderAll();},
+ sim(el){SIM=valid(el.value)?el.value:null;renderAll();}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;if(el.tagName==='A')return;const f=ACT[el.dataset.act];if(f){f(el.dataset,el,e);}});
+document.addEventListener('change',e=>{const el=e.target.closest('[data-chg]');if(el&&CHG[el.dataset.chg])CHG[el.dataset.chg](el);});
+document.addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.cc){const c=el.parentNode.querySelector('.cc');if(c)c.textContent=el.value.length+' / '+el.maxLength;}
+  if(el.id==='msgText'){S.msgEdited=true;S.msgText=el.value;save();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&UI.sheet){UI.sheet=null;renderAll();}});
+
+/* ================= init ================= */
+document.addEventListener('DOMContentLoaded',()=>{
+  load();
+  ['#view','#side','#topc','#topr','#mstrip','#bnav','#sheet'].forEach(s=>live($(s)));
+  const m=(location.hash.match(/#guide\/(\d)\/([\w-]+)/)||[]);if(m[1]!==undefined&&S.account){S.view='guide';S.cur=+m[1];S.cardAt[S.cur]=cardIdx(S.cur,m[2]);}
+  syncAuto();syncEvents();if(S.account)syncNotifs(true);save();
+  renderChrome();renderView();
+  setInterval(()=>{if(S.view==='guide'&&S.cur===6&&!UI.sheet)renderView();renderChrome();},30000);
+});
+
+</script>
+</body>
+</html>

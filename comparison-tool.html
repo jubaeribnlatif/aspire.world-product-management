@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compare universities — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:6px;}
+
+  .page-head{padding:32px 0 6px;}
+  .page-title{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;}
+  .page-sub{font-size:13.5px;color:var(--slate);}
+
+  .quicktake{
+    margin:18px 0 0;background:var(--ink);color:var(--white);border-radius:var(--r-lg);
+    padding:16px 22px;display:flex;align-items:center;gap:12px;
+  }
+  .quicktake svg{color:#9DB0FF;flex-shrink:0;}
+  .quicktake-text{font-size:13px;line-height:1.5;}
+  .quicktake-text b{color:#5FE0C7;}
+
+  .table-scroll{overflow-x:auto;padding:26px 0 64px;}
+  .table-min{min-width:760px;}
+
+  .col-head-grid{display:grid;}
+  .row-label-col{width:190px;flex-shrink:0;}
+
+  .uni-col-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg) var(--r-lg) 0 0;
+    border-bottom:none;padding:16px 18px 18px;position:relative;
+  }
+  .uni-col-remove{position:absolute;top:12px;right:12px;color:var(--slate);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .uni-col-remove:hover{background:var(--paper);color:var(--ink);}
+  .uni-col-logo{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--white);font-family:var(--mono);font-size:11px;font-weight:700;}
+  .uni-col-name{font-size:14px;font-weight:700;line-height:1.25;margin-bottom:3px;}
+  .uni-col-country{font-size:11.5px;color:var(--slate);}
+  .uni-col-actions{display:flex;gap:6px;margin-top:12px;}
+  .uni-col-action{font-size:10.5px;font-weight:600;color:var(--royal);}
+  .uni-col-action:hover{text-decoration:underline;}
+
+  .add-col-empty{
+    min-height:150px;border:1.5px dashed var(--border);border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom:none;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--slate);
+  }
+  .add-col-empty:hover{color:var(--royal);border-color:var(--royal);}
+  .add-col-empty svg{flex-shrink:0;}
+  .add-col-empty span{font-size:12.5px;font-weight:600;}
+
+  .picker-panel{
+    border:1.5px solid var(--royal);border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom:none;
+    background:var(--white);padding:10px;max-height:220px;display:flex;flex-direction:column;
+  }
+  .picker-search{display:flex;align-items:center;gap:8px;background:var(--paper);border-radius:999px;padding:8px 13px;margin-bottom:8px;flex-shrink:0;}
+  .picker-search input{border:none;background:none;font-size:12.5px;width:100%;outline:none;}
+  .picker-list{overflow-y:auto;}
+  .picker-row{width:100%;text-align:left;padding:9px 10px;border-radius:10px;font-size:12.5px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;}
+  .picker-row:hover{background:var(--paper);}
+  .picker-row-country{font-size:10.5px;color:var(--slate);}
+
+  .rows-card{background:var(--white);border:1px solid var(--border);border-radius:0 0 var(--r-lg) var(--r-lg);overflow:hidden;}
+  .cmp-row{display:grid;align-items:center;}
+  .cmp-row-label{font-size:12.5px;font-weight:600;color:var(--ink);padding:14px 18px;}
+  .cmp-cell{padding:14px 16px;display:flex;align-items:center;gap:6px;}
+  .cmp-val{font-family:var(--mono);font-size:13px;color:var(--ink);}
+  .cmp-val.winner{color:var(--teal-text);font-weight:700;}
+  .cmp-empty-cell{padding:14px 16px;}
+
+  .section-divider-row{padding:10px 18px;background:var(--paper);font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;}
+
+  .col-actions-footer{display:flex;gap:14px;padding:14px 16px;border-top:1px solid var(--border);}
+  .col-footer-link{font-size:11px;font-weight:600;color:var(--royal);display:flex;align-items:center;gap:4px;}
+  .col-footer-link:hover{text-decoration:underline;}
+
+  @media(max-width:760px){
+    .table-min{min-width:680px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a class="back-link" href="#"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to dashboard</a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <div class="wrap page-head">
+    <div class="eyebrow">Side by side</div>
+    <div class="page-title">Compare universities</div>
+    <div class="page-sub">Pick up to three, from any country — the best figure in each row is marked automatically.</div>
+    <div class="quicktake" id="quickTake"></div>
+  </div>
+
+  <div class="wrap table-scroll">
+    <div class="table-min">
+      <div class="col-head-grid" id="colHeadGrid"></div>
+      <div class="rows-card" id="rowsCard"></div>
+    </div>
+  </div>
+
+<script>
+  var UNIVERSITIES = [
+    { id:1, name:"University of Manchester", mono:"MAN", country:"United Kingdom", city:"Manchester", tuition:24500, living:12000, ielts:6.5, gpa:3.0, ranking:32, acceptance:56, scholarships:2, deadline:"15 Jul 2026", postStudyWork:"2 years (Graduate Route)" },
+    { id:2, name:"University of Leeds", mono:"LDS", country:"United Kingdom", city:"Leeds", tuition:21000, living:11200, ielts:6.0, gpa:2.8, ranking:75, acceptance:61, scholarships:1, deadline:"1 Aug 2026", postStudyWork:"2 years (Graduate Route)" },
+    { id:3, name:"Imperial College London", mono:"IC", country:"United Kingdom", city:"London", tuition:27800, living:16000, ielts:6.5, gpa:3.2, ranking:6, acceptance:14, scholarships:3, deadline:"14 Nov 2025", postStudyWork:"2 years (Graduate Route)" },
+    { id:4, name:"Arizona State University", mono:"ASU", country:"United States", city:"Tempe", tuition:29800, living:14500, ielts:6.5, gpa:3.0, ranking:121, acceptance:88, scholarships:3, deadline:"1 Jun 2026", postStudyWork:"Up to 3 years (STEM OPT)" },
+    { id:5, name:"University of Manitoba", mono:"UM", country:"Canada", city:"Winnipeg", tuition:19200, living:10500, ielts:6.5, gpa:3.0, ranking:601, acceptance:71, scholarships:1, deadline:"1 May 2026", postStudyWork:"Up to 3 years (PGWP)" },
+    { id:6, name:"Deakin University", mono:"DKN", country:"Australia", city:"Melbourne", tuition:26400, living:13200, ielts:6.5, gpa:2.9, ranking:233, acceptance:65, scholarships:2, deadline:"30 Jun 2026", postStudyWork:"2–3 years (Temporary Graduate)" },
+    { id:7, name:"University of Twente", mono:"UT", country:"Netherlands", city:"Enschede", tuition:13500, living:10800, ielts:6.5, gpa:3.1, ranking:189, acceptance:44, scholarships:2, deadline:"1 May 2026", postStudyWork:"1 year (Search Year)" }
+  ];
+
+  var ROWS = [
+    { section:"Cost" },
+    { key:"tuition", label:"Tuition / year", fmt:function(v){ return "$"+v.toLocaleString(); }, best:"min" },
+    { key:"living", label:"Living costs / year", fmt:function(v){ return "$"+v.toLocaleString(); }, best:"min" },
+    { key:"total", label:"Total / year", fmt:function(v){ return "$"+v.toLocaleString(); }, best:"min", derived:true },
+    { section:"Eligibility" },
+    { key:"ielts", label:"IELTS required", fmt:function(v){ return v.toFixed(1); }, best:"min" },
+    { key:"gpa", label:"CGPA required", fmt:function(v){ return v.toFixed(1); }, best:"min" },
+    { section:"Outcomes" },
+    { key:"ranking", label:"World ranking", fmt:function(v){ return "#"+v; }, best:"min" },
+    { key:"acceptance", label:"Acceptance rate", fmt:function(v){ return v+"%"; }, best:"max" },
+    { key:"postStudyWork", label:"Post-study work visa", fmt:function(v){ return v; } },
+    { section:"Timeline" },
+    { key:"scholarships", label:"Scholarships available", fmt:function(v){ return v; }, best:"max" },
+    { key:"deadline", label:"Next deadline", fmt:function(v){ return v; } }
+  ];
+
+  var logoColors = ['var(--royal)','var(--violet)','#1B36C4','#5333C9','#00806C'];
+  var selected = [1, 3, 2]; // Samira's real applications: Manchester (applied), Imperial (documents), Leeds (shortlisted)
+  var pickingSlot = null;
+
+  function getChosen(){
+    return selected.map(function(id){ return UNIVERSITIES.find(function(u){ return u.id===id; }); })
+      .map(function(u){ return Object.assign({}, u, { total: u.tuition + u.living }); });
+  }
+
+  function bestId(row){
+    var chosen = getChosen();
+    if(!row.best || chosen.length < 2) return null;
+    var vals = chosen.map(function(u){ return u[row.key]; });
+    var target = row.best === "min" ? Math.min.apply(null, vals) : Math.max.apply(null, vals);
+    var winners = chosen.filter(function(u){ return u[row.key] === target; });
+    return winners.length === 1 ? winners[0].id : null;
+  }
+
+  function renderQuickTake(){
+    var chosen = getChosen();
+    var box = document.getElementById('quickTake');
+    if(chosen.length < 2){
+      box.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg><div class="quicktake-text">Add at least two universities to see how they stack up.</div>';
+      return;
+    }
+    var cheapest = chosen.slice().sort(function(a,b){ return a.total-b.total; })[0];
+    var bestRanked = chosen.slice().sort(function(a,b){ return a.ranking-b.ranking; })[0];
+    var easiest = chosen.slice().sort(function(a,b){ return b.acceptance-a.acceptance; })[0];
+    var parts = [];
+    parts.push('<b>'+cheapest.name+'</b> is the cheapest overall');
+    if(bestRanked.id !== cheapest.id) parts.push('<b>'+bestRanked.name+'</b> ranks highest');
+    if(easiest.id !== cheapest.id && easiest.id !== bestRanked.id) parts.push('<b>'+easiest.name+'</b> has the highest acceptance rate');
+    box.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div class="quicktake-text">Quick take: ' + parts.join(' · ') + '.</div>';
+  }
+
+  function renderPicker(container){
+    var chosen = getChosen();
+    var available = UNIVERSITIES.filter(function(u){ return !selected.includes(u.id); });
+    container.innerHTML =
+      '<div class="picker-panel">' +
+        '<div class="picker-search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="pickerSearch" placeholder="Search any country or university..." /></div>' +
+        '<div class="picker-list" id="pickerList"></div>' +
+      '</div>';
+    function renderList(filter){
+      var list = document.getElementById('pickerList');
+      var f = (filter||'').toLowerCase();
+      var matches = available.filter(function(u){ return u.name.toLowerCase().includes(f) || u.country.toLowerCase().includes(f); });
+      list.innerHTML = matches.map(function(u){
+        return '<button class="picker-row" data-id="'+u.id+'"><span>'+u.name+'</span><span class="picker-row-country">'+u.country+'</span></button>';
+      }).join('') || '<div style="padding:10px;font-size:12px;color:var(--slate);">No matches.</div>';
+      list.querySelectorAll('.picker-row').forEach(function(row){
+        row.addEventListener('click', function(){
+          selected.push(parseInt(row.dataset.id));
+          pickingSlot = null;
+          renderAll();
+        });
+      });
+    }
+    renderList('');
+    document.getElementById('pickerSearch').addEventListener('input', function(e){ renderList(e.target.value); });
+  }
+
+  function renderHeads(){
+    var chosen = getChosen();
+    var grid = document.getElementById('colHeadGrid');
+    grid.style.gridTemplateColumns = '190px repeat(' + Math.max(chosen.length,1) + ', 1fr)' + (chosen.length < 3 ? ' 1fr' : '');
+    grid.style.display = 'grid';
+
+    var html = '<div></div>';
+    chosen.forEach(function(u, i){
+      html += '<div class="uni-col-card">' +
+        '<button class="uni-col-remove" data-remove="'+u.id+'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+        '<div class="uni-col-logo" style="background:'+logoColors[i%5]+';">'+u.mono+'</div>' +
+        '<div class="uni-col-name">'+u.name+'</div>' +
+        '<div class="uni-col-country">'+u.city+', '+u.country+'</div>' +
+        '<div class="uni-col-actions"><a class="uni-col-action" href="#" target="_blank">View profile →</a></div>' +
+      '</div>';
+    });
+    if(chosen.length < 3){
+      html += '<div id="addSlot"></div>';
+    }
+    grid.innerHTML = html;
+
+    grid.querySelectorAll('[data-remove]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        selected = selected.filter(function(id){ return id !== parseInt(btn.dataset.remove); });
+        renderAll();
+      });
+    });
+
+    if(chosen.length < 3){
+      var slot = document.getElementById('addSlot');
+      if(pickingSlot){
+        renderPicker(slot);
+      } else {
+        slot.innerHTML = '<button class="add-col-empty" style="width:100%;" id="addTrigger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span>Add university</span></button>';
+        document.getElementById('addTrigger').addEventListener('click', function(){ pickingSlot = true; renderHeads(); });
+      }
+    }
+  }
+
+  function renderRows(){
+    var chosen = getChosen();
+    var colTemplate = '190px repeat(' + Math.max(chosen.length,1) + ', 1fr)' + (chosen.length < 3 ? ' 1fr' : '');
+    var card = document.getElementById('rowsCard');
+    var html = '';
+    ROWS.forEach(function(row){
+      if(row.section){
+        html += '<div class="section-divider-row">' + row.section + '</div>';
+        return;
+      }
+      var winner = bestId(row);
+      html += '<div class="cmp-row" style="grid-template-columns:'+colTemplate+';border-top:1px solid var(--border);">';
+      html += '<div class="cmp-row-label">'+row.label+'</div>';
+      chosen.forEach(function(u){
+        var isWinner = winner === u.id;
+        html += '<div class="cmp-cell"><span class="cmp-val'+(isWinner?' winner':'')+'">'+row.fmt(u[row.key])+'</span>' + (isWinner ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="color:var(--teal-text);"><path d="M12 2l2.4 6.8L21 9l-5 4.9 1.2 7.1L12 17.8 6.8 21 8 13.9 3 9l6.6-.2z"/></svg>' : '') + '</div>';
+      });
+      if(chosen.length < 3) html += '<div class="cmp-empty-cell"></div>';
+      html += '</div>';
+    });
+    card.innerHTML = html;
+  }
+
+  function renderAll(){
+    renderQuickTake();
+    renderHeads();
+    renderRows();
+  }
+  renderAll();
+</script>
+</body>
+</html>

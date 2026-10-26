@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compare routes — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE; --violet-deep:#5333C9; --violet-deep-soft:#EEE9FC;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+
+  /* ============ SIMULATED BACKGROUND PAGE (blurred behind the modal) ============ */
+  .page-backdrop{position:fixed;inset:0;background:var(--paper);filter:blur(7px);transform:scale(1.02);z-index:1;overflow:hidden;padding:24px;}
+  .bg-topnav{background:var(--ink);height:52px;border-radius:10px;margin-bottom:20px;}
+  .bg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1180px;margin:0 auto;}
+  .bg-card{background:var(--ink);border-radius:16px;height:160px;opacity:.9;}
+
+  /* ============ SCRIM + MODAL ============ */
+  .scrim{position:fixed;inset:0;background:rgba(10,17,40,.55);z-index:2;}
+  .modal-shell{position:fixed;inset:0;z-index:3;display:flex;align-items:flex-end;justify-content:center;padding:0;}
+  @media (min-width:760px){ .modal-shell{align-items:center;padding:32px;} }
+
+  .modal-panel{background:var(--white);width:100%;max-width:1040px;max-height:94vh;border-radius:22px 22px 0 0;display:flex;flex-direction:column;box-shadow:0 30px 80px -20px rgba(10,17,40,.5);animation:slideUp .32s cubic-bezier(.2,.8,.3,1);}
+  @media (min-width:760px){ .modal-panel{border-radius:var(--r-xl);max-height:88vh;} }
+  @keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+  .modal-topbar{background:var(--ink);border-radius:22px 22px 0 0;padding:18px 22px;flex-shrink:0;position:relative;overflow:hidden;}
+  @media (min-width:760px){ .modal-topbar{border-radius:var(--r-xl) var(--r-xl) 0 0;} }
+  .modal-topbar::after{content:'';position:absolute;inset:0;background:radial-gradient(300px 160px at 90% 0%, rgba(108,79,246,.32), transparent 65%);pointer-events:none;}
+  .modal-topbar-inner{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;width:100%;}
+  .modal-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9DB0FF;margin-bottom:4px;}
+  .modal-title{color:var(--white);font-size:19px;font-weight:800;letter-spacing:-.01em;}
+  .modal-close{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .modal-close:hover{background:rgba(255,255,255,.18);}
+
+  .modal-body{padding:22px;overflow-y:auto;flex:1;}
+  .wrap-inner{max-width:1000px;margin:0 auto;}
+
+  .btn{border-radius:999px;border:none;font-weight:700;font-size:13.5px;padding:9px 16px;display:inline-flex;align-items:center;gap:7px;}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+
+  /* ============ boarding-pass header cards ============ */
+  .compare-heads{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:26px;}
+  .head-card{background:var(--ink);border-radius:var(--r-lg);padding:18px 20px;position:relative;overflow:hidden;color:var(--white);min-height:126px;display:flex;flex-direction:column;justify-content:space-between;}
+  .head-card::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);background-size:24px 24px;pointer-events:none;}
+  .head-card::after{content:'';position:absolute;inset:0;background:radial-gradient(180px 120px at 90% 0%, rgba(108,79,246,.3), transparent 65%);pointer-events:none;}
+  .head-inner{position:relative;z-index:1;display:flex;flex-direction:column;gap:12px;height:100%;}
+  .head-top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .head-name{font-size:19px;font-weight:800;letter-spacing:-.015em;line-height:1.1;}
+  .head-route{font-family:var(--mono);font-size:10px;font-weight:700;color:rgba(255,255,255,.5);white-space:nowrap;}
+  .head-remove{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;line-height:1;}
+  .head-remove:hover{background:rgba(255,255,255,.18);color:#fff;}
+  .head-route-row{display:flex;align-items:center;gap:7px;}
+  .head-dot{width:6px;height:6px;border-radius:50%;background:var(--royal);flex-shrink:0;}
+  .head-route-label{font-size:10.5px;font-weight:700;letter-spacing:.01em;color:rgba(255,255,255,.6);text-transform:uppercase;}
+  .head-foot-row{display:flex;gap:20px;align-items:flex-end;margin-top:auto;}
+  .head-stat-val{font-size:16px;font-weight:800;}
+  .head-stat-label{font-size:9.5px;color:rgba(255,255,255,.48);text-transform:uppercase;margin-top:2px;}
+
+  .add-route-card{border:1.5px dashed #C7CCD9;border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:126px;color:var(--slate);cursor:pointer;background:var(--paper);}
+  .add-route-card:hover{border-color:var(--royal);color:var(--royal);background:var(--royal-soft);}
+  .add-route-icon{width:32px;height:32px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;}
+  .add-route-text{font-size:12.5px;font-weight:700;}
+
+  /* ============ legend ============ */
+  .winner-legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--slate);margin-bottom:16px;flex-wrap:wrap;}
+  .winner-legend-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-soft);color:var(--teal-text);font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;}
+
+  /* ============ DESKTOP TABLE — colorful component column + winner highlighting ============ */
+  .compare-section{margin-bottom:22px;}
+  .section-head-bar{display:flex;align-items:center;gap:9px;padding:10px 4px;margin-bottom:10px;}
+  .section-head-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+  .section-head-title{font-size:14px;font-weight:800;letter-spacing:-.005em;}
+  .section-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;}
+  .table-row{display:grid;border-bottom:1px solid var(--border);}
+  .table-row:last-child{border-bottom:none;}
+  .row-label-cell{padding:15px 16px;display:flex;align-items:center;gap:11px;}
+  .row-icon-chip{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .row-label-text{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.3;}
+  .row-val-cell{padding:15px 16px;color:#2A3352;border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:5px;position:relative;}
+  .row-val-main{font-weight:800;font-size:15px;color:var(--ink);line-height:1.3;}
+  .row-val-sub{font-size:11.5px;color:var(--slate);line-height:1.4;}
+  .row-val-cell.winner{background:var(--teal-soft);}
+  .row-val-cell.winner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);}
+  .row-val-cell.winner .row-val-main{color:var(--teal-text);}
+  .winner-tag{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:800;letter-spacing:.03em;color:var(--teal-text);background:rgba(0,163,137,.13);padding:2px 7px;border-radius:999px;width:fit-content;margin-bottom:2px;}
+  .row-val-cell.flag{background:var(--violet-deep-soft);}
+  .row-val-cell.flag .row-val-main{color:var(--violet-deep);font-size:13.5px;font-weight:700;line-height:1.45;}
+
+  /* visual cost bar, used on Money rows */
+  .val-bar-track{height:6px;background:var(--slate-soft);border-radius:999px;overflow:hidden;margin-top:2px;}
+  .val-bar-fill{height:100%;border-radius:999px;background:var(--slate);}
+  .row-val-cell.winner .val-bar-fill{background:var(--teal);}
+  .not-comparable{color:var(--slate);font-style:italic;font-size:12.5px;font-weight:600;}
+
+  /* ============ MOBILE STACKED CARDS ============ */
+  .mobile-stack{display:none;}
+  .mobile-country-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);margin-bottom:14px;overflow:hidden;}
+  .mobile-country-head{background:var(--ink);color:var(--white);padding:13px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .mobile-country-name{font-size:15px;font-weight:800;}
+  .mobile-country-route{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.55);}
+  .mobile-section-tag{padding:8px 16px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--white);}
+  .mobile-attr-row{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;}
+  .mobile-attr-row:last-child{border-bottom:none;}
+  .mobile-attr-row.winner{background:var(--teal-soft);}
+  .mobile-attr-row.flag{background:var(--violet-deep-soft);}
+  .mobile-row-icon-chip{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mobile-attr-label{font-size:10.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.02em;margin-bottom:3px;}
+  .mobile-attr-val{font-weight:800;font-size:14px;color:var(--ink);line-height:1.35;}
+  .mobile-attr-row.winner .mobile-attr-val{color:var(--teal-text);}
+  .mobile-attr-row.flag .mobile-attr-val{color:var(--violet-deep);font-size:12.5px;font-weight:700;}
+  .mobile-attr-sub{font-size:11.5px;color:var(--slate);margin-top:2px;}
+
+  .verify-note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--slate);margin:14px 0 4px;line-height:1.5;}
+  .verify-note svg{color:var(--teal-text);flex-shrink:0;}
+
+  @media (max-width:720px){
+    .desktop-table{display:none;}
+    .mobile-stack{display:block;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- simulated background page, blurred, to sell the overlay effect -->
+  <div class="page-backdrop">
+    <div class="bg-topnav"></div>
+    <div class="bg-grid">
+      <div class="bg-card"></div><div class="bg-card"></div><div class="bg-card"></div><div class="bg-card"></div>
+    </div>
+  </div>
+
+  <div class="scrim" onclick="closeModal()"></div>
+
+  <div class="modal-shell">
+    <div class="modal-panel">
+      <div class="modal-topbar">
+        <div class="modal-topbar-inner">
+          <div>
+            <div class="modal-eyebrow">Comparing routes</div>
+            <div class="modal-title" id="modalTitle">United Kingdom vs. Canada</div>
+          </div>
+          <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="wrap-inner">
+          <div class="compare-heads" id="compareHeads"></div>
+
+          <div class="winner-legend">
+            <span class="winner-legend-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"/></svg>Best</span>
+            marks the strongest option among the routes you're comparing, criterion by criterion.
+          </div>
+
+          <div class="desktop-table" id="compareSections"></div>
+          <div class="mobile-stack" id="mobileStack"></div>
+
+          <div class="verify-note">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            Figures are illustrative estimates confirmed against official sources as of 2 Sep 2026 — open any route for the full breakdown.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ============ VERIFIED COUNTRY DATA — numeric fields added for genuine winner detection ============
+var COUNTRIES = {
+  uk: {
+    name:'United Kingdom', route:'DAC → LHR', flight:'~10h 15m', flightHours:10.25, city:'London',
+    unis:14, intake:'September (primary), January (secondary)',
+    tuition:'From £14,000/yr', tuitionBDT:'From ৳21.3L/yr', tuitionLowBDT:21.3,
+    living:'£1,171–1,529/month × 9', livingBDT:'৳16.1L–21.0L/yr', livingBDTnum:16.1,
+    visaFee:'£558', visaFeeBDT:'৳0.85L', visaFeeBDTnum:0.85, proofMechanism:'Bank statement, held 28 consecutive days',
+    processing:'~3 weeks', processingWeeksMax:3, postStudy:'Graduate Route — 2 years', postStudyMonthsMax:24,
+    flag:'Graduate Route shortens to 18 months for 2027 applicants'
+  },
+  canada: {
+    name:'Canada', route:'DAC → YYZ', flight:'~19h 30m', flightHours:19.5, city:'Toronto',
+    unis:17, intake:'September (primary), January/May (secondary)',
+    tuition:'From $19,000 CAD/yr', tuitionBDT:'From ৳16.8L/yr', tuitionLowBDT:16.8,
+    living:'$23,448 CAD/yr proof of funds', livingBDT:'৳20.8L/yr', livingBDTnum:20.8,
+    visaFee:'$235 CAD', visaFeeBDT:'৳0.21L', visaFeeBDTnum:0.21, proofMechanism:'GIC or bank statements, no fixed holding period',
+    processing:'~6 weeks', processingWeeksMax:6, postStudy:'PGWP — up to 3 years', postStudyMonthsMax:36,
+    flag:'Most applicants now need a Provincial Attestation Letter (PAL)'
+  },
+  usa: {
+    name:'United States', route:'DAC → JFK', flight:'~18h 20m', flightHours:18.33, city:'New York',
+    unis:22, intake:'August/September (primary), January (secondary)',
+    tuition:'From $25,000/yr', tuitionBDT:'From ৳30.6L/yr', tuitionLowBDT:30.6,
+    living:'Set by your school (I-20)', livingBDT:'No fixed national figure', livingBDTnum:null,
+    visaFee:'$535', visaFeeBDT:'৳0.66L', visaFeeBDTnum:0.66, proofMechanism:'Bank statement or affidavit matching your I-20',
+    processing:'Interview-based', processingWeeksMax:null, postStudy:'OPT + STEM ext. — up to 36 months', postStudyMonthsMax:36,
+    flag:'"Duration of Status" ends 15 Sep 2026 — fixed admission period now applies'
+  },
+  australia: {
+    name:'Australia', route:'DAC → SYD', flight:'~14h 45m', flightHours:14.75, city:'Sydney',
+    unis:18, intake:'February/March (primary), July (secondary)',
+    tuition:'From $27,000 AUD/yr', tuitionBDT:'From ৳23.6L/yr', tuitionLowBDT:23.6,
+    living:'$29,710 AUD/yr living costs', livingBDT:'৳26.0L/yr', livingBDTnum:26.0,
+    visaFee:'$2,500 AUD', visaFeeBDT:'৳2.19L', visaFeeBDTnum:2.19, proofMechanism:'Bank statements, cross-checked against financial history',
+    processing:'Up to 8 weeks', processingWeeksMax:8, postStudy:'485 visa — varies by qualification', postStudyMonthsMax:null,
+    flag:'Bangladesh moved to Evidence Level 3 (highest scrutiny) on 8 Jan 2026'
+  },
+  germany: {
+    name:'Germany', route:'DAC → FRA', flight:'~9h 50m', flightHours:9.83, city:'Frankfurt',
+    unis:17, intake:'October/Winter (primary), April/Summer (secondary)',
+    tuition:'€0–350/yr at most public unis', tuitionBDT:'৳0–0.5L/yr', tuitionLowBDT:0,
+    living:'€11,904/yr blocked account', livingBDT:'৳16.8L/yr', livingBDTnum:16.8,
+    visaFee:'€75', visaFeeBDT:'৳0.11L', visaFeeBDTnum:0.11, proofMechanism:'Blocked account, released at €992/month',
+    processing:'~6 weeks', processingWeeksMax:6, postStudy:'18-month job-seeker visa', postStudyMonthsMax:18,
+    flag:'Whether Bangladesh needs an APS certificate is genuinely unclear'
+  }
+};
+var COUNTRY_ORDER = ['uk','canada','usa','australia','germany'];
+var compareList = ['uk', 'canada'];
+
+var SECTIONS = [
+  {label:'The Basics', color:'var(--royal)', soft:'var(--royal-soft)', rows:[
+    {icon:'flight', label:'Flight time from Dhaka', field:'flight', compareField:'flightHours', direction:'lower'},
+    {icon:'uni', label:'Verified universities', field:'unis', compareField:'unis', direction:'higher'},
+    {icon:'cal', label:'Academic intake', field:'intake'}
+  ]},
+  {label:'Money', color:'var(--teal)', soft:'var(--teal-soft)', rows:[
+    {icon:'cash', label:'Typical tuition', field:'tuition', sub:'tuitionBDT', compareField:'tuitionLowBDT', direction:'lower', bar:true},
+    {icon:'cash', label:'Living cost / proof of funds', field:'living', sub:'livingBDT', compareField:'livingBDTnum', direction:'lower', bar:true}
+  ]},
+  {label:'Visa & Immigration', color:'var(--violet)', soft:'var(--violet-soft)', rows:[
+    {icon:'doc', label:'Visa application fee', field:'visaFee', sub:'visaFeeBDT', compareField:'visaFeeBDTnum', direction:'lower', bar:true},
+    {icon:'shield', label:'How funds are proven', field:'proofMechanism'},
+    {icon:'clock', label:'Typical processing time', field:'processing', compareField:'processingWeeksMax', direction:'lower'}
+  ]},
+  {label:'After You Graduate', color:'var(--violet-deep)', soft:'var(--violet-deep-soft)', rows:[
+    {icon:'work', label:'Post-study work options', field:'postStudy', compareField:'postStudyMonthsMax', direction:'higher'},
+    {icon:'alert', label:'Recent policy change to know', field:'flag', flag:true}
+  ]}
+];
+var ICONS = {
+  cal:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  flight:'<path d="M2 12h20M16 6l6 6-6 6"/>',
+  uni:'<path d="M3 9l9-6 9 6-9 6-9-6z"/><path d="M12 15v6M6 12v5c0 1 3 2 6 2s6-1 6-2v-5"/>',
+  cash:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>',
+  doc:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  work:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>',
+  alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.5 17a2 2 0 001.7 3h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/>'
+};
+
+function countryLabel(code){ return COUNTRIES[code].name; }
+function closeModal(){ document.body.style.opacity = '0'; setTimeout(function(){ history.back(); }, 150); }
+
+function renderPage(){
+  renderHeads();
+  renderSections();
+  renderMobileStack();
+  document.getElementById('modalTitle').textContent = compareList.map(countryLabel).join(' vs. ');
+}
+
+function renderHeads(){
+  var wrap = document.getElementById('compareHeads');
+  wrap.innerHTML = '';
+  compareList.forEach(function(code){
+    var c = COUNTRIES[code];
+    var card = document.createElement('div');
+    card.className = 'head-card';
+    card.innerHTML =
+      '<div class="head-inner">' +
+        '<div class="head-top-row"><div class="head-name">' + c.name + '</div><div style="display:flex;align-items:flex-start;gap:8px;"><div class="head-route">' + c.route + '</div>' + (compareList.length > 2 ? '<button class="head-remove" onclick="removeCountry(\'' + code + '\')" aria-label="Remove">×</button>' : '') + '</div></div>' +
+        '<div class="head-route-row"><span class="head-dot"></span><span class="head-route-label">' + c.city + ' / Student route</span></div>' +
+        '<div class="head-foot-row">' +
+          '<div><div class="head-stat-val">' + c.unis + '</div><div class="head-stat-label">Universities</div></div>' +
+          '<div><div class="head-stat-val">' + c.flight + '</div><div class="head-stat-label">Flight time</div></div>' +
+        '</div>' +
+      '</div>';
+    wrap.appendChild(card);
+  });
+  if(compareList.length < 4){
+    var addCard = document.createElement('div');
+    addCard.className = 'add-route-card';
+    addCard.innerHTML = '<div class="add-route-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div><div class="add-route-text">Add another route</div>';
+    addCard.onclick = addCountry;
+    wrap.appendChild(addCard);
+  }
+}
+
+// find winner(s) for a row among currently-compared countries
+function findWinners(row){
+  if(!row.direction) return [];
+  var vals = compareList.map(function(code){ return {code:code, val:COUNTRIES[code][row.compareField]}; }).filter(function(v){ return v.val !== null && v.val !== undefined; });
+  if(vals.length < 2) return [];
+  var best = row.direction === 'lower' ? Math.min.apply(null, vals.map(function(v){return v.val;})) : Math.max.apply(null, vals.map(function(v){return v.val;}));
+  return vals.filter(function(v){ return v.val === best; }).map(function(v){ return v.code; });
+}
+
+function renderSections(){
+  var wrap = document.getElementById('compareSections');
+  wrap.innerHTML = '';
+  SECTIONS.forEach(function(section){
+    var secDiv = document.createElement('div');
+    secDiv.className = 'compare-section';
+    secDiv.innerHTML = '<div class="section-head-bar"><span class="section-head-dot" style="background:' + section.color + ';"></span><span class="section-head-title">' + section.label + '</span></div>';
+
+    var card = document.createElement('div');
+    card.className = 'section-card';
+    section.rows.forEach(function(row){
+      var winners = findWinners(row);
+      var maxVal = row.bar ? Math.max.apply(null, compareList.map(function(code){ return COUNTRIES[code][row.compareField] || 0; })) : 0;
+
+      var rowDiv = document.createElement('div');
+      rowDiv.className = 'table-row';
+      rowDiv.style.gridTemplateColumns = '210px repeat(' + compareList.length + ', 1fr)';
+      var labelCell = '<div class="row-label-cell"><div class="row-icon-chip" style="background:' + section.soft + ';color:' + section.color + ';"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + ICONS[row.icon] + '</svg></div><span class="row-label-text">' + row.label + '</span></div>';
+
+      var valCells = compareList.map(function(code){
+        var c = COUNTRIES[code];
+        var isWinner = winners.indexOf(code) > -1;
+        var cellCls = 'row-val-cell' + (isWinner ? ' winner' : '') + (row.flag ? ' flag' : '');
+        var val = c[row.field];
+        var barHtml = '';
+        if(row.bar && c[row.compareField] !== null && c[row.compareField] !== undefined && maxVal > 0){
+          var pct = Math.max(8, Math.round((c[row.compareField] / maxVal) * 100));
+          barHtml = '<div class="val-bar-track"><div class="val-bar-fill" style="width:' + pct + '%;"></div></div>';
+        }
+        return '<div class="' + cellCls + '">' +
+          (isWinner ? '<span class="winner-tag"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"/></svg>BEST</span>' : '') +
+          '<div class="row-val-main">' + val + '</div>' +
+          (row.sub ? '<div class="row-val-sub">' + c[row.sub] + '</div>' : '') +
+          barHtml +
+        '</div>';
+      }).join('');
+      rowDiv.innerHTML = labelCell + valCells;
+      card.appendChild(rowDiv);
+    });
+    secDiv.appendChild(card);
+    wrap.appendChild(secDiv);
+  });
+}
+
+function renderMobileStack(){
+  var wrap = document.getElementById('mobileStack');
+  wrap.innerHTML = '';
+  compareList.forEach(function(code){
+    var c = COUNTRIES[code];
+    var card = document.createElement('div');
+    card.className = 'mobile-country-card';
+    var html = '<div class="mobile-country-head"><span class="mobile-country-name">' + c.name + '</span><span class="mobile-country-route">' + c.route + '</span></div>';
+    SECTIONS.forEach(function(section){
+      html += '<div class="mobile-section-tag" style="background:' + section.color + ';">' + section.label + '</div>';
+      section.rows.forEach(function(row){
+        var winners = findWinners(row);
+        var isWinner = winners.indexOf(code) > -1;
+        var rowCls = 'mobile-attr-row' + (isWinner ? ' winner' : '') + (row.flag ? ' flag' : '');
+        html += '<div class="' + rowCls + '">' +
+          '<div class="mobile-row-icon-chip" style="background:' + section.soft + ';color:' + section.color + ';"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + ICONS[row.icon] + '</svg></div>' +
+          '<div style="flex:1;">' +
+            '<div class="mobile-attr-label">' + row.label + (isWinner ? ' · BEST' : '') + '</div>' +
+            '<div class="mobile-attr-val">' + c[row.field] + '</div>' +
+            (row.sub ? '<div class="mobile-attr-sub">' + c[row.sub] + '</div>' : '') +
+          '</div>' +
+        '</div>';
+      });
+    });
+    card.innerHTML = html;
+    wrap.appendChild(card);
+  });
+}
+
+function removeCountry(code){
+  if(compareList.length <= 2) return;
+  compareList = compareList.filter(function(c){ return c !== code; });
+  renderPage();
+}
+function addCountry(){
+  if(compareList.length >= 4) return;
+  var remaining = COUNTRY_ORDER.filter(function(c){ return compareList.indexOf(c) === -1; });
+  if(remaining.length === 0) return;
+  compareList.push(remaining[0]);
+  renderPage();
+}
+
+renderPage();
+</script>
+</body>
+</html>

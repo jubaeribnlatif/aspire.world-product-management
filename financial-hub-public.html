@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Financial partners — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .topnav-links{display:flex;gap:22px;font-size:13px;color:rgba(255,255,255,.65);}
+  .topnav-links a:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-ghost-dark{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--white);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.14);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:8px;}
+  .eyebrow--light{color:#9DB0FF;}
+
+  /* hero */
+  .hero{background:radial-gradient(120% 140% at 100% 0%, #1B2E63 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.28), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:44px 0 36px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:26px;}
+  .hero-title{font-size:32px;font-weight:700;letter-spacing:-.015em;max-width:520px;line-height:1.15;margin-bottom:10px;}
+  .hero-sub{font-size:14px;color:rgba(255,255,255,.62);max-width:460px;line-height:1.6;}
+  .fx-chip{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 15px;font-family:var(--mono);font-size:12px;flex-shrink:0;}
+  .fx-chip .up{color:#5FE0C7;font-weight:600;}
+
+  .task-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .task-tile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-md);padding:16px;transition:background .15s ease,transform .12s ease;}
+  .task-tile:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+  .task-icon{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .task-name{font-size:13.5px;font-weight:700;margin-bottom:3px;}
+  .task-sub{font-size:11.5px;color:rgba(255,255,255,.5);line-height:1.4;}
+
+  section{padding:44px 0;}
+  .sec-head{margin-bottom:22px;max-width:600px;}
+  .sec-title{font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+  .sec-sub{font-size:13.5px;color:var(--slate);line-height:1.55;}
+
+  /* eligibility widget */
+  .elig-panel{padding:26px 28px;display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .elig-field{margin-bottom:20px;}
+  .elig-field:last-child{margin-bottom:0;}
+  .elig-label-row{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px;}
+  .elig-value{font-family:var(--mono);color:var(--royal);}
+  input[type=range]{width:100%;accent-color:var(--royal);height:4px;}
+  .elig-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate);margin-top:4px;}
+  .elig-check-btn{width:100%;justify-content:center;margin-top:6px;}
+  .elig-results{background:var(--paper);border-radius:var(--r-md);padding:18px;display:flex;flex-direction:column;gap:10px;}
+  .elig-results-title{font-size:12px;font-weight:700;color:var(--slate);margin-bottom:2px;}
+  .match-row{display:flex;align-items:center;justify-content:space-between;background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 14px;}
+  .match-bank{display:flex;align-items:center;gap:10px;}
+  .match-logo{width:30px;height:30px;border-radius:8px;background:var(--ink);color:var(--white);font-family:var(--mono);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .match-name{font-size:12.5px;font-weight:700;}
+  .match-note{font-size:10.5px;color:var(--slate);}
+  .match-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--teal-soft);color:var(--teal-text);}
+
+  /* comparison table */
+  .cmp-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .cmp-table th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--slate);padding:0 16px 12px;font-weight:600;}
+  .cmp-table td{padding:15px 16px;border-top:1px solid var(--border);vertical-align:middle;}
+  .cmp-table tr.muted td{color:var(--slate);}
+  .bank-cell{display:flex;align-items:center;gap:10px;}
+  .bank-logo{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--white);flex-shrink:0;}
+  .bank-name{font-weight:700;font-size:13px;}
+  .partner-tag{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--violet-soft);color:#5333C9;margin-top:2px;width:fit-content;}
+  .not-partner-tag{font-size:9.5px;color:var(--slate);margin-top:2px;}
+  .cmp-cta{font-size:12px;font-weight:600;color:var(--royal);}
+  .cmp-note{font-size:11.5px;color:var(--slate);margin-top:12px;}
+
+  /* partner grid */
+  .partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .partner-card{padding:20px;display:flex;flex-direction:column;gap:12px;}
+  .partner-card-top{display:flex;align-items:center;gap:12px;}
+  .partner-card-name{font-size:14.5px;font-weight:700;}
+  .partner-card-sub{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .partner-stats-row{display:flex;gap:16px;font-size:11.5px;color:var(--slate);}
+  .partner-stats-row b{color:var(--ink);font-family:var(--mono);}
+
+  .open-slot{border:1.5px dashed var(--border);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:10px;justify-content:center;align-items:flex-start;}
+  .open-slot-title{font-size:13.5px;font-weight:700;color:var(--slate);}
+  .open-slot-bullets{font-size:11.5px;color:var(--slate);line-height:1.7;}
+
+  /* why partner strip */
+  .why-strip{background:var(--ink);color:var(--white);border-radius:var(--r-xl);padding:34px 36px;display:grid;grid-template-columns:1fr 1.3fr;gap:30px;align-items:center;}
+  .why-title{font-size:21px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em;}
+  .why-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6;max-width:340px;}
+  .why-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .why-stat-val{font-size:23px;font-weight:700;}
+  .why-stat-label{font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;line-height:1.4;}
+
+  footer.trust{text-align:center;padding:30px 0 46px;font-size:11.5px;color:var(--slate);}
+
+  @media(max-width:940px){
+    .hero-top{flex-direction:column;}
+    .task-grid{grid-template-columns:repeat(2,1fr);}
+    .elig-panel{grid-template-columns:1fr;}
+    .partner-grid{grid-template-columns:1fr;}
+    .why-strip{grid-template-columns:1fr;}
+    .why-stats{grid-template-columns:1fr;}
+    .cmp-table{font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <div class="topnav-links">
+        <a href="#">Destinations</a><a href="#">Scholarships</a><a href="#">Partners</a><a href="#">Stories</a>
+      </div>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow eyebrow--light">Financial partners</div>
+          <div class="hero-title">Money for the move, without the guesswork.</div>
+          <div class="hero-sub">Organized around what you're actually trying to do — not a wall of bank logos. Compare real terms before you sign anything.</div>
+        </div>
+        <div class="fx-chip">
+          <span>GBP → BDT</span><span>152.40</span><span class="up">▲0.4%</span>
+        </div>
+      </div>
+
+      <div class="task-grid">
+        <div class="task-tile">
+          <div class="task-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+          <div class="task-name">Open a Student File</div>
+          <div class="task-sub">Keep offer letters, costs and documents in one place</div>
+        </div>
+        <div class="task-tile">
+          <div class="task-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 12h20M16 6l6 6-6 6"/></svg></div>
+          <div class="task-name">Send tuition abroad</div>
+          <div class="task-sub">See the real cost side by side before you commit</div>
+        </div>
+        <div class="task-tile">
+          <div class="task-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <div class="task-name">Check loan eligibility</div>
+          <div class="task-sub">Adjust the numbers, see who's likely to say yes</div>
+        </div>
+        <div class="task-tile">
+          <div class="task-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <div class="task-name">Get a card that works abroad</div>
+          <div class="task-sub">Set this up before you land, not after</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELIGIBILITY CHECKER -->
+  <div class="wrap">
+    <section>
+      <div class="sec-head">
+        <div class="eyebrow" style="color:var(--royal);">Interactive · no application required</div>
+        <div class="sec-title">See which banks you're likely to qualify with</div>
+        <div class="sec-sub">Move the sliders to match your situation. Nothing here is submitted anywhere — it's just a starting point before you talk to a bank.</div>
+      </div>
+
+      <div class="card elig-panel">
+        <div>
+          <div class="elig-field">
+            <div class="elig-label-row"><span>Loan amount needed</span><span class="elig-value" id="loanAmtLabel">৳ 18,00,000</span></div>
+            <input type="range" id="loanAmt" min="200000" max="4000000" step="100000" value="1800000" oninput="updateElig()">
+            <div class="elig-scale"><span>৳2L</span><span>৳40L</span></div>
+          </div>
+          <div class="elig-field">
+            <div class="elig-label-row"><span>Guardian's monthly income</span><span class="elig-value" id="incomeLabel">৳ 90,000</span></div>
+            <input type="range" id="income" min="20000" max="500000" step="10000" value="90000" oninput="updateElig()">
+            <div class="elig-scale"><span>৳20k</span><span>৳5L</span></div>
+          </div>
+          <div class="elig-field">
+            <div class="elig-label-row"><span>Collateral available</span></div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-outline btn-sm" onclick="setCollateral(true,this)" id="collYes" style="flex:1;justify-content:center;background:var(--royal-soft);border-color:var(--royal);">Yes — FDR or property</button>
+              <button class="btn btn-outline btn-sm" onclick="setCollateral(false,this)" id="collNo" style="flex:1;justify-content:center;">Not yet</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="elig-results">
+          <div class="elig-results-title">LIKELY MATCHES</div>
+          <div class="match-row">
+            <div class="match-bank"><div class="match-logo">PB</div><div><div class="match-name">Pubali Bank</div><div class="match-note">Collateral-backed · up to ৳25L</div></div></div>
+            <span class="match-badge" id="pbBadge">Likely eligible</span>
+          </div>
+          <div class="match-row">
+            <div class="match-bank"><div class="match-logo" style="background:#3D4A63;">EB</div><div><div class="match-name">Eastern Bank Limited</div><div class="match-note">Unsecured option · up to ৳40L</div></div></div>
+            <span class="match-badge" style="background:var(--slate-soft);color:var(--slate);" id="ebBadge">Worth asking</span>
+          </div>
+          <div style="font-size:10.5px;color:var(--slate);line-height:1.5;">
+            Estimate only, based on general published criteria. Final eligibility is always confirmed by the bank.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="wrap">
+    <section>
+      <div class="sec-head">
+        <div class="eyebrow">Total cost of borrowing</div>
+        <div class="sec-title">Compare terms before you sign anything</div>
+        <div class="sec-sub">Same categories, side by side. Only verified partners have confirmed, up-to-date figures — the rest is general market information.</div>
+      </div>
+
+      <div class="card" style="overflow-x:auto;">
+        <table class="cmp-table">
+          <thead>
+            <tr><th>Bank</th><th>Max loan</th><th>Rate</th><th>Processing fee</th><th>Collateral</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="bank-cell">
+                  <div class="bank-logo" style="background:var(--ink);">PB</div>
+                  <div><div class="bank-name">Pubali Bank</div><span class="partner-tag">★ Title partner</span></div>
+                </div>
+              </td>
+              <td class="mono">৳25L</td>
+              <td>Confirmed at application</td>
+              <td class="mono">0.50%</td>
+              <td>Required (FDR / property)</td>
+              <td><a class="cmp-cta" href="#">View page →</a></td>
+            </tr>
+            <tr class="muted">
+              <td>
+                <div class="bank-cell">
+                  <div class="bank-logo" style="background:#7A8598;">EB</div>
+                  <div><div class="bank-name">Eastern Bank Limited</div><span class="not-partner-tag">Not yet on aspire.world</span></div>
+                </div>
+              </td>
+              <td class="mono">~৳40L</td>
+              <td>Not published here</td>
+              <td>Not published here</td>
+              <td>Unsecured option available</td>
+              <td><span class="cmp-cta" style="color:var(--slate);">General info only</span></td>
+            </tr>
+            <tr class="muted">
+              <td>
+                <div class="bank-cell">
+                  <div class="bank-logo" style="background:#7A8598;">IB</div>
+                  <div><div class="bank-name">Islami Bank Bangladesh</div><span class="not-partner-tag">Not yet on aspire.world</span></div>
+                </div>
+              </td>
+              <td class="mono">Not published here</td>
+              <td>Shariah-compliant</td>
+              <td>Not published here</td>
+              <td>Varies</td>
+              <td><span class="cmp-cta" style="color:var(--slate);">General info only</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cmp-note">
+        Rows marked "not yet on aspire.world" reflect general, publicly available market information only — not a verified or confirmed listing. If you work at one of these banks, see below.
+      </div>
+    </section>
+  </div>
+
+  <!-- PARTNER GRID -->
+  <div class="wrap">
+    <section>
+      <div class="sec-head">
+        <div class="eyebrow">Verified partners</div>
+        <div class="sec-title">Banks confirmed on aspire.world</div>
+      </div>
+      <div class="partner-grid">
+        <div class="card partner-card">
+          <div class="partner-card-top">
+            <div class="bank-logo" style="background:var(--ink);width:44px;height:44px;border-radius:12px;font-size:14px;">PB</div>
+            <div>
+              <div class="partner-card-name">Pubali Bank</div>
+              <div class="partner-card-sub">Title partner · Foreign Education Loan, Student File</div>
+            </div>
+          </div>
+          <div class="partner-stats-row">
+            <span><b>500+</b> branches</span>
+            <span><b>0.50%</b> processing fee</span>
+          </div>
+          <button class="btn btn-primary btn-sm" style="justify-content:center;">View partner page</button>
+        </div>
+
+        <div class="open-slot">
+          <div class="open-slot-title">This slot is open</div>
+          <div class="open-slot-bullets">
+            · Reach students at the exact moment financing becomes relevant<br>
+            · Usage data — eligibility checks, calls, disbursement — shown back to you<br>
+            · Standardized page, built and maintained with your team
+          </div>
+          <button class="btn btn-outline btn-sm">Become a partner</button>
+        </div>
+
+        <div class="open-slot">
+          <div class="open-slot-title">This slot is open</div>
+          <div class="open-slot-bullets">
+            · A dedicated page, not a banner competing for attention<br>
+            · Your own loan calculator, using your real rate<br>
+            · Leads arrive pre-qualified, not cold
+          </div>
+          <button class="btn btn-outline btn-sm">Become a partner</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- WHY PARTNER -->
+  <div class="wrap">
+    <section>
+      <div class="why-strip">
+        <div>
+          <div class="eyebrow eyebrow--light">For banks</div>
+          <div class="why-title">A channel at the moment financing actually matters.</div>
+          <div class="why-sub">Not a banner competing for attention — a tool that surfaces inside a student's own journey, exactly when they're ready to talk.</div>
+        </div>
+        <div class="why-stats">
+          <div><div class="why-stat-val">100%</div><div class="why-stat-label">of students need a Student File</div></div>
+          <div><div class="why-stat-val">3–5 yrs</div><div class="why-stat-label">average banking relationship length</div></div>
+          <div><div class="why-stat-val">USD 800M</div><div class="why-stat-label">spent yearly by Bangladeshi families studying abroad</div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="trust">Backed by The Daily Star · Independent journalism, trusted by Bangladesh for more than three decades.</footer>
+
+<script>
+  function fmtBDT(n){ return '৳ ' + n.toLocaleString('en-IN'); }
+  function updateElig(){
+    var loan = parseInt(document.getElementById('loanAmt').value);
+    var income = parseInt(document.getElementById('income').value);
+    document.getElementById('loanAmtLabel').textContent = fmtBDT(loan);
+    document.getElementById('incomeLabel').textContent = fmtBDT(income);
+    var pbEligible = loan <= 2500000 && income*3 >= (loan/48);
+    var ebEligible = income*3 >= (loan/60);
+    document.getElementById('pbBadge').textContent = pbEligible ? 'Likely eligible' : 'Above typical range';
+    document.getElementById('pbBadge').style.background = pbEligible ? 'var(--teal-soft)' : 'var(--destructive-soft)';
+    document.getElementById('pbBadge').style.color = pbEligible ? 'var(--teal-text)' : 'var(--destructive)';
+    document.getElementById('ebBadge').textContent = ebEligible ? 'Worth asking' : 'Below typical range';
+  }
+  function setCollateral(has, el){
+    document.getElementById('collYes').style.background = has ? 'var(--royal-soft)' : 'var(--white)';
+    document.getElementById('collYes').style.borderColor = has ? 'var(--royal)' : 'var(--border)';
+    document.getElementById('collNo').style.background = !has ? 'var(--royal-soft)' : 'var(--white)';
+    document.getElementById('collNo').style.borderColor = !has ? 'var(--royal)' : 'var(--border)';
+  }
+  updateElig();
+</script>
+</body>
+</html>

@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Erasmus Mundus — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --amber:#B8860B; --amber-soft:#FBF3DF;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  textarea,input,select{font-family:inherit;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:11px 20px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-ghost-dark{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);color:var(--white);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.16);}
+  .btn-sm{padding:8px 15px;font-size:12.5px;}
+  .btn-xs{padding:6px 11px;font-size:11.5px;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+  .full-primary{width:100%;justify-content:center;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* ---- TOP-LEVEL TAB BAR (this IS the "multiple pages" navigation) ---- */
+  .tabbar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+  .tabbar{display:flex;gap:4px;padding:0 24px;max-width:920px;margin:0 auto;overflow-x:auto;}
+  .tab-btn{background:none;border:none;padding:15px 16px;font-size:13.5px;font-weight:700;color:var(--slate);border-bottom:2.5px solid transparent;white-space:nowrap;flex-shrink:0;}
+  .tab-btn.active{color:var(--ink);border-bottom-color:var(--royal);}
+  .working-strip{display:none;align-items:center;justify-content:space-between;gap:10px;background:var(--royal-soft);padding:9px 24px;font-size:12px;color:var(--royal-dark);font-weight:600;flex-wrap:wrap;}
+  .working-strip.show{display:flex;}
+  .working-strip a{text-decoration:underline;text-underline-offset:2px;cursor:pointer;font-weight:700;}
+
+  /* prog card "added" badge */
+  .prog-card{position:relative;}
+  .prog-added-badge{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--teal);color:var(--white);display:none;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+  .prog-card.added .prog-added-badge{display:flex;}
+  .add-track-btn{width:100%;justify-content:center;}
+  .add-track-btn.added{background:var(--teal-soft);color:var(--teal-text);}
+
+  /* multi-track selector inside My Tracker */
+  .track-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+  .track-tab{background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:9px 16px 9px 14px;font-size:12.5px;font-weight:700;color:var(--slate);display:flex;align-items:center;gap:8px;}
+  .track-tab.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .track-tab-ring{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:999px;background:var(--slate-soft);color:var(--slate);}
+  .track-tab.active .track-tab-ring{background:rgba(255,255,255,.15);color:#fff;}
+  .track-tab-add{background:none;border:1.5px dashed var(--border);color:var(--royal);border-radius:999px;padding:9px 16px;font-size:12.5px;font-weight:700;}
+  .track-remove-link{font-size:11px;color:var(--slate);text-decoration:underline;text-underline-offset:2px;margin-top:-10px;margin-bottom:16px;display:inline-block;}
+
+  .page-panel{display:none;padding:36px 0 64px;}
+  .page-panel.active{display:block;animation:fadeIn .25s ease;}
+
+  /* modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(14,27,61,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);}
+  .modal-backdrop.show{display:flex;}
+  .modal-card{background:var(--white);border-radius:var(--r-xl);max-width:480px;width:100%;padding:30px;animation:modalIn .3s cubic-bezier(.2,.7,.3,1);max-height:88vh;overflow-y:auto;}
+  @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .modal-icon{width:44px;height:44px;border-radius:13px;background:var(--royal-soft);color:var(--royal-dark);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .modal-title{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;}
+  .modal-sub{font-size:12.5px;color:var(--slate);margin-bottom:18px;line-height:1.5;}
+  .modal-point{display:flex;gap:11px;margin-bottom:13px;}
+  .modal-point svg{color:var(--teal-text);flex-shrink:0;margin-top:2px;}
+  .modal-point-title{font-size:13px;font-weight:700;margin-bottom:2px;}
+  .modal-point-text{font-size:12px;color:var(--slate);line-height:1.5;}
+  .modal-actions{margin-top:18px;display:flex;flex-direction:column;gap:8px;}
+  .modal-signup-note{font-size:11px;color:var(--slate);text-align:center;}
+
+  /* hero (Overview tab) */
+  .hero-mini{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);border-radius:var(--r-xl);padding:34px 30px;position:relative;overflow:hidden;margin-bottom:20px;}
+  .hero-mini::before{content:'';position:absolute;inset:0;background:radial-gradient(380px 240px at 90% -10%, rgba(108,79,246,.32), transparent 60%);pointer-events:none;}
+  .hero-inner-mini{position:relative;z-index:1;}
+  .hero-title-mini{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.08;margin-bottom:8px;}
+  .hero-title-mini span{color:#9DB0FF;}
+  .hero-sub-mini{font-size:14px;color:rgba(255,255,255,.68);max-width:520px;line-height:1.6;margin-bottom:20px;}
+  .hero-stats-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.14);border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(255,255,255,.14);margin-bottom:14px;}
+  .hero-stat-mini{background:rgba(255,255,255,.05);padding:13px 10px;}
+  .hero-stat-mini-val{font-family:var(--mono);font-size:16px;font-weight:700;}
+  .hero-stat-mini-label{font-size:9px;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.3;}
+  .hero-free-note{font-size:11.5px;color:rgba(255,255,255,.55);}
+
+  .sec-title{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;}
+  .sec-sub{font-size:13px;color:var(--slate);line-height:1.55;margin-bottom:16px;}
+  .benefit-list{display:flex;flex-direction:column;gap:11px;}
+  .benefit-row{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#2A3352;line-height:1.5;}
+  .benefit-row svg{color:var(--teal-text);flex-shrink:0;margin-top:2px;}
+  .about-lead{font-size:14px;line-height:1.7;color:#2A3352;margin-bottom:18px;}
+
+  /* programme grid */
+  .prog-filter-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+  .prog-pill{background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:8px 15px;font-size:12px;font-weight:700;color:var(--slate);}
+  .prog-pill.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .prog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
+  .prog-card{border:1.5px solid var(--border);border-radius:var(--r-lg);padding:17px;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease;background:var(--white);}
+  .prog-card:hover{border-color:var(--royal);box-shadow:0 10px 24px -16px rgba(37,71,244,.35);}
+  .prog-card.selected{border-color:var(--royal);background:var(--royal-soft);box-shadow:0 0 0 1px var(--royal);}
+  .prog-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:9px;}
+  .prog-card-cat{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--violet);background:var(--violet-soft);padding:4px 9px;border-radius:999px;}
+  .prog-card-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .prog-card.selected .prog-card-check{background:var(--royal);border-color:var(--royal);color:var(--white);}
+  .prog-card-name{font-size:14px;font-weight:800;line-height:1.3;margin-bottom:3px;}
+  .prog-card-acronym{font-family:var(--mono);font-size:10.5px;color:var(--slate);margin-bottom:9px;}
+  .prog-card-unis{font-size:11px;color:#2A3352;line-height:1.5;margin-bottom:9px;}
+  .prog-card-foot{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--slate);border-top:1px solid var(--border);padding-top:9px;}
+  .prog-card.selected .prog-card-foot{border-top-color:rgba(37,71,244,.25);}
+
+  /* programme profile card */
+  .profile-card{background:var(--ink);color:var(--white);border-radius:var(--r-xl);padding:24px 26px;position:relative;overflow:hidden;margin-bottom:16px;}
+  .profile-card::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -10%, rgba(108,79,246,.32), transparent 60%);pointer-events:none;}
+  .profile-inner{position:relative;z-index:1;}
+  .profile-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+  .profile-name{font-size:18px;font-weight:800;letter-spacing:-.01em;}
+  .profile-acronym{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;}
+  .mobility-path{display:flex;align-items:center;gap:0;overflow-x:auto;padding:10px 0;margin-bottom:14px;}
+  .mobility-node{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r-md);padding:10px 14px;flex-shrink:0;min-width:110px;}
+  .mobility-node-uni{font-size:11.5px;font-weight:700;line-height:1.3;}
+  .mobility-node-country{font-family:var(--mono);font-size:9.5px;color:#9DB0FF;margin-top:3px;}
+  .mobility-arrow{color:rgba(255,255,255,.35);flex-shrink:0;margin:0 6px;}
+  .profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.12);border-radius:var(--r-md);overflow:hidden;margin-bottom:14px;}
+  .profile-stat{background:rgba(255,255,255,.05);padding:11px 12px;}
+  .profile-stat-val{font-family:var(--mono);font-size:13px;font-weight:700;}
+  .profile-stat-label{font-size:9px;color:rgba(255,255,255,.5);margin-top:3px;}
+  .profile-foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .profile-verify-note{font-size:10.5px;color:rgba(255,255,255,.5);}
+
+  /* simplified fit card */
+  .fit-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:12.5px;line-height:1.5;}
+  .fit-row:first-child{border-top:none;}
+  .fit-row svg{color:var(--teal-text);flex-shrink:0;margin-top:2px;}
+
+  /* gate card */
+  .gate-card{background:var(--ink);color:var(--white);border-radius:var(--r-xl);padding:28px 30px;position:relative;overflow:hidden;}
+  .gate-card::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 220px at 90% 0%, rgba(108,79,246,.35), transparent 60%);pointer-events:none;}
+  .gate-inner{position:relative;z-index:1;}
+  .gate-icon{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;margin-bottom:15px;}
+  .gate-title{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;}
+  .gate-text{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;max-width:480px;margin-bottom:18px;}
+  .gate-points{display:flex;flex-direction:column;gap:9px;margin-bottom:20px;}
+  .gate-point{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,.7);}
+  .gate-point svg{color:#5FE0C7;flex-shrink:0;margin-top:2px;}
+  .empty-tracker{text-align:center;padding:50px 20px;}
+  .empty-tracker-icon{width:56px;height:56px;border-radius:16px;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+  .empty-tracker-title{font-size:17px;font-weight:800;margin-bottom:6px;}
+  .empty-tracker-sub{font-size:13px;color:var(--slate);max-width:340px;margin:0 auto 18px;line-height:1.5;}
+
+  /* sub-tab bar (inside My Tracker) */
+  .subtab-bar{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);overflow-x:auto;}
+  .subtab-btn{background:none;border:none;padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--slate);border-bottom:2.5px solid transparent;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:6px;}
+  .subtab-btn.active{color:var(--ink);border-bottom-color:var(--teal);}
+  .subtab-badge{font-family:var(--mono);font-size:9px;background:var(--slate-soft);color:var(--slate);padding:2px 6px;border-radius:999px;}
+  .subtab-btn.active .subtab-badge{background:var(--teal-soft);color:var(--teal-text);}
+  .subpanel{display:none;}
+  .subpanel.active{display:block;animation:fadeIn .2s ease;}
+
+  .active-strip{display:flex;align-items:center;gap:12px;background:var(--teal-soft);border-radius:var(--r-md);padding:12px 16px;margin-bottom:20px;}
+  .active-strip-icon{width:28px;height:28px;border-radius:50%;background:var(--teal);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .active-strip-text{font-size:12.5px;font-weight:700;color:var(--teal-text);}
+  .active-strip-sub{font-size:11px;color:#00806C;}
+
+  /* journey stages */
+  .stage-card{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--white);margin-bottom:10px;overflow:hidden;}
+  .stage-head{display:flex;align-items:center;gap:13px;padding:16px 18px;cursor:pointer;}
+  .stage-num{width:30px;height:30px;border-radius:50%;background:var(--slate-soft);color:var(--slate);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:11.5px;flex-shrink:0;}
+  .stage-card.done .stage-num{background:var(--teal-soft);color:var(--teal-text);}
+  .stage-card.official .stage-num{background:var(--ink);color:var(--white);}
+  .stage-title-row{flex:1;min-width:0;}
+  .stage-title{font-size:14px;font-weight:700;}
+  .stage-sub{font-size:11px;color:var(--slate);margin-top:1px;}
+  .stage-status{font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap;flex-shrink:0;}
+  .status-done{background:var(--teal-soft);color:var(--teal-text);}
+  .status-todo{background:var(--slate-soft);color:var(--slate);}
+  .status-official{background:var(--ink);color:var(--white);}
+  .stage-chev{color:var(--slate);flex-shrink:0;transition:transform .2s ease;}
+  .stage-card.open .stage-chev{transform:rotate(180deg);}
+  .stage-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border);}
+  .stage-card.open .stage-body{display:block;animation:fadeIn .25s ease;}
+  .stage-guide{background:var(--paper);border-radius:var(--r-sm);padding:11px 13px;font-size:12px;color:#2A3352;line-height:1.55;margin:14px 0;display:flex;gap:8px;}
+  .stage-guide svg{color:var(--royal);flex-shrink:0;margin-top:2px;}
+  .stage-official-note{font-size:11.5px;color:var(--white);background:var(--ink);border-radius:var(--r-sm);padding:11px 13px;margin-top:12px;display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+  .stage-official-note svg{flex-shrink:0;margin-top:2px;color:#9DB0FF;}
+
+  /* documents — simplified, bulletproof click */
+  .doc-progress-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .doc-ring{width:50px;height:50px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .doc-ring-inner{width:39px;height:39px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .doc-ring-num{font-family:var(--mono);font-weight:800;font-size:12px;}
+  .doc-cat-label{font-size:10px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px;}
+  .doc-cat:first-child .doc-cat-label{margin-top:0;}
+  .doc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;}
+  .doc-card{border:1.5px solid var(--border);border-radius:var(--r-md);padding:13px;position:relative;user-select:none;}
+  .doc-card.ready{border-color:var(--teal);background:var(--teal-soft);}
+  .doc-card.in-progress{border-color:var(--amber);background:var(--amber-soft);}
+  .doc-card-row{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .doc-checkbox{width:24px;height:24px;border-radius:7px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--white);}
+  .doc-card.ready .doc-checkbox{background:var(--teal);border-color:var(--teal);}
+  .doc-card.in-progress .doc-checkbox{background:var(--amber);border-color:var(--amber);}
+  .doc-card-name{font-size:12.5px;font-weight:700;line-height:1.3;}
+  .doc-card-status{font-size:10.5px;color:var(--slate);margin-top:2px;}
+  .doc-card.ready .doc-card-status{color:var(--teal-text);}
+  .doc-card.in-progress .doc-card-status{color:#8a6a08;}
+  .doc-req-badge{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:999px;letter-spacing:.03em;}
+  .doc-req-badge.required{background:var(--destructive-soft);color:var(--destructive);}
+  .doc-req-badge.optional{background:var(--slate-soft);color:var(--slate);}
+
+  /* materials / essay */
+  .essay-box{border:1px solid var(--border);border-radius:var(--r-md);padding:18px;}
+  .essay-limit{font-family:var(--mono);font-size:10.5px;color:var(--slate);}
+  .essay-prompt-label{font-size:10px;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 6px;}
+  .essay-prompt{font-size:12.5px;color:#2A3352;line-height:1.55;margin-bottom:12px;font-style:italic;background:var(--violet-soft);padding:10px 12px;border-radius:var(--r-sm);}
+  .essay-textarea{width:100%;min-height:130px;border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px;font-size:13px;resize:vertical;}
+  .essay-textarea:focus{outline:2px solid var(--royal);outline-offset:1px;border-color:var(--royal);}
+  .essay-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+  .essay-count{font-family:var(--mono);font-size:11px;color:var(--slate);}
+  .essay-count.over{color:var(--destructive);font-weight:700;}
+  .save-draft-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
+  .save-state{font-size:10.5px;color:var(--slate);display:flex;align-items:center;gap:4px;}
+  .save-state.saved{color:var(--teal-text);}
+  .helper-toggle{margin-top:16px;border-top:1px solid var(--border);padding-top:14px;}
+  .helper-toggle-btn{font-size:12.5px;font-weight:700;color:var(--royal);display:flex;align-items:center;gap:6px;}
+  .helper-body{display:none;margin-top:14px;}
+  .helper-body.open{display:block;animation:fadeIn .25s ease;}
+  .reflect-item{margin-bottom:12px;}
+  .reflect-label{font-size:11.5px;font-weight:800;color:var(--royal-dark);margin-bottom:6px;}
+  .reflect-textarea{width:100%;min-height:52px;border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 10px;font-size:12.5px;resize:vertical;}
+  .reflect-textarea:focus{outline:2px solid var(--royal);outline-offset:1px;border-color:var(--royal);}
+
+  /* referees */
+  .referee-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+  .referee-card{border:1px solid var(--border);border-radius:var(--r-md);padding:13px 15px;}
+  .referee-top{display:flex;align-items:flex-start;gap:11px;}
+  .referee-avatar{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:700;flex-shrink:0;}
+  .referee-name{font-size:12.5px;font-weight:700;}
+  .referee-role{font-size:10.5px;color:var(--slate);}
+  .referee-stepper{display:flex;align-items:center;margin-top:11px;}
+  .rs-step{flex:1;text-align:center;position:relative;cursor:pointer;}
+  .rs-line{position:absolute;top:7px;left:-50%;width:100%;height:2px;background:var(--border);z-index:0;}
+  .rs-step:first-child .rs-line{display:none;}
+  .rs-step.active .rs-line{background:var(--royal);}
+  .rs-dot{width:14px;height:14px;border-radius:50%;background:var(--white);border:2px solid var(--border);margin:0 auto 4px;position:relative;z-index:1;}
+  .rs-step.active .rs-dot{background:var(--royal);border-color:var(--royal);}
+  .rs-text{font-size:8.5px;font-weight:600;color:var(--slate);}
+  .rs-step.active .rs-text{color:var(--ink);}
+  .add-referee-form{border:1.5px dashed var(--border);border-radius:var(--r-md);padding:15px;margin-top:4px;display:none;}
+  .add-referee-form.show{display:block;animation:fadeIn .25s ease;}
+  .arf-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px;}
+  .arf-input{border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 11px;font-size:13px;width:100%;}
+  .referee-privacy-note{font-size:10.5px;color:var(--slate);background:var(--slate-soft);border-radius:var(--r-sm);padding:9px 11px;margin-top:12px;display:flex;gap:7px;align-items:flex-start;line-height:1.5;}
+  .referee-privacy-note svg{flex-shrink:0;margin-top:1px;}
+
+  /* finish tab: deadlines + readiness + review + export, one focused screen */
+  .deadline-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .deadline-item{border:1.5px solid var(--border);border-radius:var(--r-md);padding:15px;text-align:center;}
+  .deadline-item.official{border-color:var(--destructive);background:var(--destructive-soft);}
+  .deadline-label{font-size:10px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+  .deadline-item.official .deadline-label{color:var(--destructive);}
+  .deadline-val{font-family:var(--mono);font-size:15px;font-weight:800;}
+  .deadline-item.official .deadline-val{color:var(--destructive);}
+  .deadline-input{border:1px solid var(--border);border-radius:var(--r-sm);padding:7px 9px;font-size:13px;text-align:center;width:100%;margin-top:4px;}
+
+  .readiness-hero{display:flex;align-items:center;gap:18px;margin-bottom:18px;}
+  .readiness-ring{width:72px;height:72px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .readiness-ring-inner{width:56px;height:56px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .readiness-ring-num{font-family:var(--mono);font-weight:800;font-size:16px;}
+  .readiness-ring-label{font-size:6.5px;color:var(--slate);text-align:center;}
+  .readiness-hero-text{font-size:12.5px;color:var(--slate);line-height:1.5;}
+  .rb-item{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .rb-item-label{font-size:12px;font-weight:600;width:120px;flex-shrink:0;}
+  .rb-item-bar-track{flex:1;height:7px;background:var(--slate-soft);border-radius:999px;overflow:hidden;}
+  .rb-item-bar-fill{height:100%;background:var(--teal);border-radius:999px;transition:width .4s ease;}
+  .rb-item-pct{font-family:var(--mono);font-size:11px;font-weight:700;width:34px;text-align:right;flex-shrink:0;}
+
+  .review-row{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:12.5px;cursor:pointer;}
+  .review-check{width:18px;height:18px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--white);}
+  .review-row.checked .review-check{background:var(--teal);border-color:var(--teal);}
+  .review-row.checked .review-row-text{color:var(--slate);text-decoration:line-through;text-decoration-color:var(--border);}
+
+  .export-card{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);border-radius:var(--r-xl);padding:26px 28px;position:relative;overflow:hidden;margin-top:20px;}
+  .export-card::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 220px at 90% 0%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .export-inner{position:relative;z-index:1;}
+  .export-title{font-size:18px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;}
+  .export-sub{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:18px;}
+  .export-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .export-disclaimer{font-size:11px;color:rgba(255,255,255,.55);margin-top:14px;line-height:1.55;background:rgba(255,255,255,.05);border-radius:var(--r-sm);padding:11px 13px;}
+
+  /* faq */
+  .qa-item{margin-bottom:6px;overflow:hidden;}
+  .qa-q{width:100%;text-align:left;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:none;border:none;font-size:13px;font-weight:600;color:var(--ink);}
+  .qa-a{padding:0 16px 14px;font-size:12.5px;color:var(--slate);line-height:1.6;display:none;}
+  .qa-item.open .qa-a{display:block;}
+  .qa-item.open .qa-chev{transform:rotate(180deg);}
+  .qa-chev{transition:transform .15s ease;color:var(--slate);flex-shrink:0;}
+
+  .trust{padding:22px 0 36px;text-align:center;font-size:11px;color:var(--slate);}
+
+  @media (max-width:700px){
+    .prog-grid{grid-template-columns:1fr;}
+    .hero-stats-mini{grid-template-columns:repeat(2,1fr);}
+    .doc-grid{grid-template-columns:1fr;}
+    .profile-grid{grid-template-columns:repeat(2,1fr);}
+    .deadline-pair{grid-template-columns:1fr;}
+    .arf-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="modal-backdrop" id="startModal">
+    <div class="modal-card">
+      <div class="modal-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+      <div class="modal-title">Here's what this tracker actually does.</div>
+      <div class="modal-sub">Three things worth knowing before you start.</div>
+      <div class="modal-point">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><div class="modal-point-title">Guidance and tracking — not a submission system</div><div class="modal-point-text">Your real application is always completed on the programme's own website. Nothing here is sent to any consortium for you.</div></div>
+      </div>
+      <div class="modal-point">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><div class="modal-point-title">Your drafts stay private</div><div class="modal-point-text">Visible only to you — never shared with universities or other students.</div></div>
+      </div>
+      <div class="modal-point">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><div class="modal-point-title">A free account keeps your progress saved</div><div class="modal-point-text">Pick up where you left off, on any device.</div></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary full-primary" onclick="closeModal(); activateTracker();">Create my account & start tracker</button>
+        <div class="modal-signup-note">About 30 seconds — email or phone.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a href="#" class="back-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>All scholarships</a>
+    </div>
+  </div>
+
+  <div class="tabbar-wrap">
+    <div class="tabbar">
+      <button class="tab-btn active" data-tab="overview" onclick="showTab('overview')">Overview</button>
+      <button class="tab-btn" data-tab="programmes" onclick="showTab('programmes')">Find a Programme</button>
+      <button class="tab-btn" data-tab="tracker" onclick="showTab('tracker')">My Tracker</button>
+      <button class="tab-btn" data-tab="faq" onclick="showTab('faq')">FAQ</button>
+    </div>
+    <div class="working-strip" id="workingStrip">
+      <span>Preparing for: <b id="workingStripName">—</b></span>
+      <a onclick="showTab('programmes')">Change programme</a>
+    </div>
+  </div>
+
+  <!-- ============ PANEL: OVERVIEW ============ -->
+  <div class="page-panel active" id="panel-overview">
+    <div class="wrap">
+      <div class="hero-mini">
+        <div class="hero-inner-mini">
+          <div class="hero-title-mini">Erasmus Mundus.<br><span>Your application, prepared.</span></div>
+          <div class="hero-sub-mini">One scholarship family, dozens of independent master's programmes. Start by finding the right one — everything else follows from that.</div>
+          <div class="hero-stats-mini">
+            <div class="hero-stat-mini"><div class="hero-stat-mini-val">1–2 yrs</div><div class="hero-stat-mini-label">DURATION</div></div>
+            <div class="hero-stat-mini"><div class="hero-stat-mini-val">3+</div><div class="hero-stat-mini-label">COUNTRIES</div></div>
+            <div class="hero-stat-mini"><div class="hero-stat-mini-val">€1,400/mo*</div><div class="hero-stat-mini-label">SCHOLARSHIP</div></div>
+            <div class="hero-stat-mini"><div class="hero-stat-mini-val">Worldwide</div><div class="hero-stat-mini-label">WHO CAN APPLY</div></div>
+          </div>
+          <button class="btn btn-primary" onclick="showTab('programmes')">Find your programme →</button>
+          <div class="hero-free-note" style="margin-top:12px;">*Where offered, up to 24 months — varies by programme. Free to browse, no account needed yet.</div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:22px 24px;margin-bottom:16px;">
+        <div class="sec-title">What Erasmus Mundus actually is</div>
+        <div class="about-lead">A master's degree jointly run by at least three universities in three different countries — you genuinely study in more than one. It's EU-funded, open worldwide (including Bangladesh), and there's no single application: each programme runs its own admissions on its own site. This tool helps you navigate that, one programme at a time.</div>
+        <div class="benefit-list">
+          <div class="benefit-row"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Full scholarships for top-ranked students on eligible programmes</div>
+          <div class="benefit-row"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>A joint or multiple degree, recognised across every partner country</div>
+          <div class="benefit-row"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Real mobility — you live and study in more than one country</div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:22px 24px;text-align:center;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Ready to see which programmes fit you?</div>
+        <div style="font-size:12.5px;color:var(--slate);margin-bottom:14px;">Browse real programmes across data science, engineering, policy and the arts.</div>
+        <button class="btn btn-primary" onclick="showTab('programmes')">Find your programme →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL: FIND A PROGRAMME ============ -->
+  <div class="page-panel" id="panel-programmes">
+    <div class="wrap">
+      <div class="sec-title">There's no single Erasmus application.</div>
+      <div class="sec-sub">Every programme has its own consortium, requirements and deadline. Pick the one you're preparing for.</div>
+
+      <div class="prog-filter-pills" id="progFilters">
+        <button class="prog-pill active" data-cat="all" onclick="filterProgrammes('all', this)">All fields</button>
+        <button class="prog-pill" data-cat="data-science" onclick="filterProgrammes('data-science', this)">Data Science & AI</button>
+        <button class="prog-pill" data-cat="engineering" onclick="filterProgrammes('engineering', this)">Engineering</button>
+        <button class="prog-pill" data-cat="policy" onclick="filterProgrammes('policy', this)">Policy & Society</button>
+        <button class="prog-pill" data-cat="arts" onclick="filterProgrammes('arts', this)">Arts & Culture</button>
+      </div>
+
+      <div class="prog-grid" id="progGrid"></div>
+
+      <div id="profileCardSection" style="display:none;">
+        <div class="profile-card">
+          <div class="profile-inner">
+            <div class="profile-top">
+              <div>
+                <div class="profile-name" id="profName">—</div>
+                <div class="profile-acronym" id="profAcronym">—</div>
+              </div>
+            </div>
+            <div class="mobility-path" id="mobilityPath"></div>
+            <div class="profile-grid">
+              <div class="profile-stat"><div class="profile-stat-val" id="profDuration">—</div><div class="profile-stat-label">DURATION</div></div>
+              <div class="profile-stat"><div class="profile-stat-val" id="profEcts">—</div><div class="profile-stat-label">ECTS</div></div>
+              <div class="profile-stat"><div class="profile-stat-val" id="profDegree">—</div><div class="profile-stat-label">DEGREE</div></div>
+              <div class="profile-stat"><div class="profile-stat-val" id="profScholarship">—</div><div class="profile-stat-label">SCHOLARSHIP</div></div>
+            </div>
+            <div class="profile-foot-row">
+              <div class="profile-verify-note">Verified <span id="profVerified">—</span> · always confirm specifics on the official site.</div>
+              <a class="btn btn-outline btn-sm" id="profOfficialLink" href="#" target="_blank" style="background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2);color:#fff;">Official site ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:18px 20px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Quick fit check</div>
+          <div class="fit-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>Bachelor's degree (or final year, completing before start) — open worldwide, including Bangladesh</span></div>
+          <div class="fit-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>Academic background broadly matching this field, and English proficiency proof</span></div>
+          <div class="fit-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>Exact GPA, references and extra materials vary — the official page linked above is the source of truth</span></div>
+        </div>
+
+        <div class="card" style="padding:20px 22px;text-align:center;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;" id="addCtaTitle">Preparing for more than one programme?</div>
+          <div style="font-size:12.5px;color:var(--slate);margin-bottom:14px;">Add as many as you're actually applying to — each gets its own documents, drafts and references, fully separate.</div>
+          <button class="btn btn-primary add-track-btn" id="addTrackBtn" onclick="toggleProgrammeInTracker()">+ Add to my tracker</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL: MY TRACKER ============ -->
+  <div class="page-panel" id="panel-tracker">
+    <div class="wrap">
+
+      <!-- Track selector — shown whenever the user has added 1+ programmes -->
+      <div id="trackTabsRow" style="display:none;">
+        <div class="track-tabs" id="trackTabsList"></div>
+      </div>
+
+      <!-- STATE A: nothing added yet -->
+      <div id="trackerEmptyState">
+        <div class="card empty-tracker">
+          <div class="empty-tracker-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+          <div class="empty-tracker-title">Add a programme first.</div>
+          <div class="empty-tracker-sub">You can prepare for more than one at once — each programme you add gets its own documents, drafts and references, fully independent.</div>
+          <button class="btn btn-primary" onclick="showTab('programmes')">Find a programme →</button>
+        </div>
+      </div>
+
+      <!-- STATE B: at least one added, account not created yet -->
+      <div id="trackerGateState" style="display:none;">
+        <div class="gate-card">
+          <div class="gate-inner">
+            <div class="gate-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></div>
+            <div class="gate-title">Ready to prepare for <span id="gateProgName">this programme</span>?</div>
+            <div class="gate-text">Create your free account to start tracking — documents, motivation letter, references and deadlines, all in one place.</div>
+            <div class="gate-points">
+              <div class="gate-point"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Private, saved to your account as you go</div>
+              <div class="gate-point"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Work on stages in any order — nothing locked</div>
+              <div class="gate-point"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>One account covers every programme you add — switch freely</div>
+            </div>
+            <button class="btn btn-primary" onclick="openModal()">Create my application tracker</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE C: unlocked, active workspace for the currently selected track -->
+      <div id="trackerActiveState" style="display:none;">
+        <div class="active-strip">
+          <div class="active-strip-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div><div class="active-strip-text">Now tracking <span id="activeStripProgName">—</span></div><div class="active-strip-sub">Private to you — nothing shared unless you choose to.</div></div>
+        </div>
+
+        <div class="subtab-bar" id="subtabBar">
+          <button class="subtab-btn active" data-sub="journey" onclick="showSubTab('journey')">Journey <span class="subtab-badge" id="badgeJourney">0/7</span></button>
+          <button class="subtab-btn" data-sub="documents" onclick="showSubTab('documents')">Documents <span class="subtab-badge" id="badgeDocs">0%</span></button>
+          <button class="subtab-btn" data-sub="materials" onclick="showSubTab('materials')">Materials</button>
+          <button class="subtab-btn" data-sub="references" onclick="showSubTab('references')">References</button>
+          <button class="subtab-btn" data-sub="finish" onclick="showSubTab('finish')">Finish</button>
+        </div>
+
+        <div class="subpanel active" id="sub-journey"></div>
+        <div class="subpanel" id="sub-documents"></div>
+        <div class="subpanel" id="sub-materials"></div>
+        <div class="subpanel" id="sub-references"></div>
+        <div class="subpanel" id="sub-finish"></div>
+
+        <div style="text-align:center;margin-top:24px;">
+          <span class="track-remove-link" onclick="removeCurrentTrack()">Remove <b id="removeTrackName">this programme</b> from my tracker</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ PANEL: FAQ ============ -->
+  <div class="page-panel" id="panel-faq">
+    <div class="wrap">
+      <div class="sec-title">Common questions</div>
+      <div class="card" style="padding:4px 0;">
+        <div class="qa-item">
+          <button class="qa-q" onclick="toggleFaq(this)">Is Erasmus Mundus one scholarship or many programmes?<svg class="qa-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">Many. It's an umbrella name for a large family of independently-run Joint Masters. There's no single application that covers all of them.</div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" onclick="toggleFaq(this)">Do I apply through one central Erasmus portal?<svg class="qa-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">No. You apply directly on the website of the consortium running your chosen programme.</div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" onclick="toggleFaq(this)">Can students from Bangladesh apply?<svg class="qa-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">Yes — Erasmus Mundus Joint Masters are open worldwide, with no nationality restriction.</div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" onclick="toggleFaq(this)">Can final-year bachelor's students apply?<svg class="qa-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">Generally yes, provided your degree completes before the programme starts. Confirm timing directly with your chosen consortium.</div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" onclick="toggleFaq(this)">Do all programmes have the same requirements or scholarship?<svg class="qa-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">No — this is the single most important thing to understand. Requirements, documents and scholarship availability are all set independently, per programme.</div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" onclick="toggleFaq(this)">Does Aspire World submit the application for me?<svg class="qa-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="qa-a">No. This is a private preparation workspace only. You always complete and submit on the programme's own official website.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="trust">Backed by The Daily Star · A private preparation workspace — not an official Erasmus Mundus or European Commission service.</footer>
+
+
+<script>
+// ============ PROGRAMME DATA (trimmed to what's actually used) ============
+var PROGRAMMES = [
+  {
+    id:'neurodata', name:'Brain and Data Science', acronym:'NeuroData', category:'data-science',
+    universities:[
+      {name:'Bar-Ilan University', country:'Israel'},
+      {name:'University of Jyväskylä', country:'Finland'},
+      {name:'Vrije Universiteit Amsterdam', country:'Netherlands'},
+      {name:'Instituto Superior Técnico', country:'Portugal'},
+      {name:'University of Padua', country:'Italy'},
+      {name:'University of Zagreb', country:'Croatia'}
+    ],
+    duration:'2 years', ects:'120', degreeType:'Multiple', scholarship:'Check site',
+    deadline:null, officialUrl:'https://www.neurodata-master.org/', lastVerified:'2 Sep 2026', refereeCount:2
+  },
+  {
+    id:'emse', name:'Erasmus Mundus Software Engineering', acronym:'EMSE', category:'data-science',
+    universities:[
+      {name:'Free University of Bozen-Bolzano', country:'Italy'},
+      {name:'Universidad Carlos III de Madrid', country:'Spain'},
+      {name:'TU Kaiserslautern', country:'Germany'}
+    ],
+    duration:'2 years', ects:'120', degreeType:'Joint/Multiple', scholarship:'Check site',
+    deadline:null, officialUrl:'https://www.emse-master.eu/', lastVerified:'2 Sep 2026', refereeCount:2
+  },
+  {
+    id:'spacemaster', name:'Space Science and Technology', acronym:'SpaceMaster', category:'engineering',
+    universities:[
+      {name:'Luleå University of Technology', country:'Sweden'},
+      {name:'Toulouse University', country:'France'},
+      {name:'Cranfield University', country:'UK'}
+    ],
+    duration:'2 years', ects:'120', degreeType:'Multiple', scholarship:'Check site',
+    deadline:null, officialUrl:'https://spacemaster.ltu.se/', lastVerified:'2 Sep 2026', refereeCount:2
+  },
+  {
+    id:'ilgspd', name:'Global Security, Peace & Development', acronym:'ILGSPD', category:'policy',
+    universities:[
+      {name:'University of Glasgow', country:'UK'},
+      {name:'IBEI Barcelona', country:'Spain'},
+      {name:'University of Tartu', country:'Estonia'}
+    ],
+    duration:'2 years', ects:'120', degreeType:'Multiple', scholarship:'Check site',
+    deadline:null, officialUrl:'https://www.gla.ac.uk/postgraduate/taught/globalsecuritypeaceanddevelopment/', lastVerified:'2 Sep 2026', refereeCount:2
+  },
+  {
+    id:'ediss', name:'Engineering of Data-intensive Intelligent Software Systems', acronym:'EDISS', category:'data-science',
+    universities:[{name:'Multi-university European consortium', country:'See official site'}],
+    duration:'2 years', ects:'120', degreeType:'Check site', scholarship:'Check site',
+    deadline:null, officialUrl:'https://www.master-ediss.eu/', lastVerified:'2 Sep 2026', refereeCount:null
+  },
+  {
+    id:'docnomads', name:'Documentary Film Directing', acronym:'DocNomads+', category:'arts',
+    universities:[{name:'Multi-university European consortium', country:'See official site'}],
+    duration:'2 years', ects:'120', degreeType:'Check site', scholarship:'Check site',
+    deadline:null, officialUrl:'https://docnomadsplus.eu/', lastVerified:'2 Sep 2026', refereeCount:null
+  }
+];
+var CATEGORY_LABELS = {'data-science':'Data Science & AI','engineering':'Engineering','policy':'Policy & Society','arts':'Arts & Culture'};
+
+var STAGES = [
+  {n:1, label:'Choose programme', title:'Choose your programme', guide:"You've picked the programme this tracker follows. Change it any time from Find a Programme."},
+  {n:2, label:'Eligibility', title:'Check eligibility', guide:'Review the quick fit check on the programme page, then confirm anything specific on the official admissions page.'},
+  {n:3, label:'Documents', title:'Build your document set', guide:'Work through the Documents tab. Programme-specific extras are flagged there — don\'t assume every EMJM wants the same files.'},
+  {n:4, label:'Materials', title:'Prepare your materials', guide:'Draft your motivation letter in the Materials tab. Use the guided questions there if you\'re stuck.'},
+  {n:5, label:'Review', title:'Review & strengthen', guide:'Run the checklist in the Finish tab before you go — it catches what most rejected applications skipped.'},
+  {n:6, label:'Submit', title:'Submit officially', guide:null, official:true},
+  {n:7, label:'Track outcome', title:'Track outcome', guide:'Once the consortium responds, log it here — useful if you applied to more than one programme.'}
+];
+
+var DOC_CATEGORIES = [
+  {label:'IDENTITY', items:[
+    {id:'passport', name:'Passport', req:'required'}
+  ]},
+  {label:'ACADEMIC', items:[
+    {id:'bachelor', name:"Bachelor's certificate", req:'required'},
+    {id:'transcript', name:'Academic transcripts', req:'required'}
+  ]},
+  {label:'LANGUAGE', items:[
+    {id:'ielts', name:'IELTS / TOEFL proof', req:'required'}
+  ]},
+  {label:'APPLICATION', items:[
+    {id:'cv', name:'CV', req:'required'},
+    {id:'motivation', name:'Motivation letter', req:'required'},
+    {id:'recommendation', name:'Recommendation letters', req:'required'},
+    {id:'portfolio', name:'Portfolio (some fields)', req:'optional'}
+  ]}
+];
+
+function makeTrack(){
+  return {
+    docsReady: {}, essaysDrafted: {}, essayText: '',
+    referees: [{name:'Dr. Rahman', role:'Thesis supervisor', stage:1}],
+    reviewChecked: {}, completedStages: {}, targetDate: ''
+  };
+}
+
+var state = {
+  myProgrammes: [],        // ids of programmes the user has added to their tracker
+  viewProgId: null,        // programme currently shown on the Find a Programme page
+  activeProgId: null,      // which added programme's track is open in My Tracker
+  currentFilter: 'all',
+  trackerActivated: false, // one account unlock, applies to every track
+  tracks: {}               // keyed by programme id -> makeTrack()
+};
+
+function getViewedProg(){ return PROGRAMMES.find(function(p){ return p.id === state.viewProgId; }); }
+function getActiveProg(){ return PROGRAMMES.find(function(p){ return p.id === state.activeProgId; }); }
+function activeTrack(){ return state.tracks[state.activeProgId]; }
+
+// ============ TOP-LEVEL TAB SWITCHING ============
+function showTab(name){
+  document.querySelectorAll('.page-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab === name); });
+  window.scrollTo(0,0);
+  if(name === 'tracker') renderTrackerState();
+}
+function showSubTab(name){
+  document.querySelectorAll('.subpanel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('sub-' + name).classList.add('active');
+  document.querySelectorAll('.subtab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.sub === name); });
+}
+
+// ============ PROGRAMME GRID ============
+function filterProgrammes(cat, btn){
+  state.currentFilter = cat;
+  document.querySelectorAll('.prog-pill').forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+  renderProgrammeGrid();
+}
+function renderProgrammeGrid(){
+  var grid = document.getElementById('progGrid');
+  grid.innerHTML = '';
+  var list = PROGRAMMES.filter(function(p){ return state.currentFilter === 'all' || p.category === state.currentFilter; });
+  list.forEach(function(p){
+    var isAdded = state.myProgrammes.indexOf(p.id) > -1;
+    var isViewed = state.viewProgId === p.id;
+    var card = document.createElement('div');
+    card.className = 'prog-card' + (isViewed ? ' selected' : '') + (isAdded ? ' added' : '');
+    card.innerHTML =
+      '<div class="prog-added-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>' +
+      '<div class="prog-card-top"><span class="prog-card-cat">' + CATEGORY_LABELS[p.category] + '</span><div class="prog-card-check">' + (isViewed ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>' : '') + '</div></div>' +
+      '<div class="prog-card-name">' + p.name + '</div>' +
+      '<div class="prog-card-acronym">' + p.acronym + '</div>' +
+      '<div class="prog-card-unis">' + p.universities.length + ' institution' + (p.universities.length>1?'s':'') + ' · ' + p.universities.slice(0,2).map(function(u){return u.country;}).join(', ') + '</div>' +
+      '<div class="prog-card-foot"><span>' + p.duration + ' · ' + p.ects + ' ECTS</span><span>' + (isAdded ? '✓ In tracker' : 'View →') + '</span></div>';
+    card.onclick = function(){ viewProgramme(p.id); };
+    grid.appendChild(card);
+  });
+}
+
+// ============ VIEW A PROGRAMME (browsing — separate from adding it to your tracker) ============
+function viewProgramme(id){
+  state.viewProgId = id;
+  var p = getViewedProg();
+  renderProgrammeGrid();
+
+  document.getElementById('profName').textContent = p.name;
+  document.getElementById('profAcronym').textContent = p.acronym;
+  document.getElementById('profVerified').textContent = p.lastVerified;
+  document.getElementById('profDuration').textContent = p.duration;
+  document.getElementById('profEcts').textContent = p.ects;
+  document.getElementById('profDegree').textContent = p.degreeType;
+  document.getElementById('profScholarship').textContent = p.scholarship;
+  document.getElementById('profOfficialLink').href = p.officialUrl;
+
+  var path = document.getElementById('mobilityPath');
+  path.innerHTML = '';
+  p.universities.forEach(function(u, i){
+    if(i > 0){
+      var arrow = document.createElement('div');
+      arrow.className = 'mobility-arrow';
+      arrow.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+      path.appendChild(arrow);
+    }
+    var node = document.createElement('div');
+    node.className = 'mobility-node';
+    node.innerHTML = '<div class="mobility-node-uni">' + u.name + '</div><div class="mobility-node-country">' + u.country + '</div>';
+    path.appendChild(node);
+  });
+
+  document.getElementById('profileCardSection').style.display = 'block';
+  updateAddButton();
+}
+
+function updateAddButton(){
+  var p = getViewedProg(); if(!p) return;
+  var isAdded = state.myProgrammes.indexOf(p.id) > -1;
+  var btn = document.getElementById('addTrackBtn');
+  btn.textContent = isAdded ? '✓ In your tracker — tap to remove' : '+ Add to my tracker';
+  btn.classList.toggle('added', isAdded);
+  document.getElementById('addCtaTitle').textContent = isAdded
+    ? "It's in your tracker."
+    : (state.myProgrammes.length > 0 ? 'Preparing for more than one programme?' : 'Ready to start preparing?');
+}
+
+// ============ ADD / REMOVE A PROGRAMME FROM THE TRACKER ============
+function toggleProgrammeInTracker(){
+  var p = getViewedProg(); if(!p) return;
+  var idx = state.myProgrammes.indexOf(p.id);
+  if(idx > -1){
+    state.myProgrammes.splice(idx, 1);
+    delete state.tracks[p.id];
+    if(state.activeProgId === p.id){
+      state.activeProgId = state.myProgrammes.length ? state.myProgrammes[0] : null;
+    }
+  } else {
+    state.myProgrammes.push(p.id);
+    state.tracks[p.id] = makeTrack();
+    state.activeProgId = p.id; // newly added programme becomes the one you're actively working on
+  }
+  renderProgrammeGrid();
+  updateAddButton();
+  updateWorkingStrip();
+  renderTrackerState();
+}
+
+function updateWorkingStrip(){
+  var strip = document.getElementById('workingStrip');
+  var nameEl = document.getElementById('workingStripName');
+  if(state.myProgrammes.length === 0){
+    strip.classList.remove('show');
+    return;
+  }
+  strip.classList.add('show');
+  var names = state.myProgrammes.map(function(id){ return PROGRAMMES.find(function(p){return p.id===id;}).acronym; });
+  nameEl.textContent = names.join(', ') + (names.length > 1 ? ' (' + names.length + ' programmes)' : '');
+}
+
+// ============ TRACK TABS (switch which added programme you're working on) ============
+function renderTrackTabs(){
+  var row = document.getElementById('trackTabsRow');
+  var list = document.getElementById('trackTabsList');
+  if(state.myProgrammes.length === 0){ row.style.display = 'none'; return; }
+  row.style.display = 'block';
+  list.innerHTML = '';
+  state.myProgrammes.forEach(function(id){
+    var p = PROGRAMMES.find(function(x){ return x.id === id; });
+    var track = state.tracks[id];
+    var doneCount = track ? Object.keys(track.completedStages).filter(function(k){return track.completedStages[k];}).length : 0;
+    var btn = document.createElement('button');
+    btn.className = 'track-tab' + (state.activeProgId === id ? ' active' : '');
+    btn.innerHTML = p.acronym + ' <span class="track-tab-ring">' + doneCount + '/7</span>';
+    btn.onclick = function(){ switchActiveTrack(id); };
+    list.appendChild(btn);
+  });
+  var addBtn = document.createElement('button');
+  addBtn.className = 'track-tab-add';
+  addBtn.textContent = '+ Add another';
+  addBtn.onclick = function(){ showTab('programmes'); };
+  list.appendChild(addBtn);
+}
+function switchActiveTrack(id){
+  state.activeProgId = id;
+  renderTrackTabs();
+  renderTrackerState();
+}
+function removeCurrentTrack(){
+  var p = getActiveProg(); if(!p) return;
+  if(!confirm('Remove ' + p.name + ' from your tracker? This deletes its documents, drafts and progress.')) return;
+  var idx = state.myProgrammes.indexOf(p.id);
+  if(idx > -1) state.myProgrammes.splice(idx, 1);
+  delete state.tracks[p.id];
+  state.activeProgId = state.myProgrammes.length ? state.myProgrammes[0] : null;
+  renderProgrammeGrid();
+  updateWorkingStrip();
+  renderTrackTabs();
+  renderTrackerState();
+}
+
+function renderTrackerState(){
+  var empty = document.getElementById('trackerEmptyState');
+  var gate = document.getElementById('trackerGateState');
+  var active = document.getElementById('trackerActiveState');
+  renderTrackTabs();
+  if(state.myProgrammes.length === 0){
+    empty.style.display = 'block'; gate.style.display = 'none'; active.style.display = 'none';
+    return;
+  }
+  if(!state.activeProgId) state.activeProgId = state.myProgrammes[0];
+  if(!state.trackerActivated){
+    empty.style.display = 'none'; gate.style.display = 'block'; active.style.display = 'none';
+    document.getElementById('gateProgName').textContent = getActiveProg().name;
+    return;
+  }
+  empty.style.display = 'none'; gate.style.display = 'none'; active.style.display = 'block';
+  document.getElementById('activeStripProgName').textContent = getActiveProg().name;
+  document.getElementById('removeTrackName').textContent = getActiveProg().acronym;
+  renderJourney();
+  renderDocs();
+  renderMaterials();
+  renderReferees();
+  renderFinish();
+  updateBadges();
+}
+
+// ============ MODAL / GATE ============
+function openModal(){ document.getElementById('startModal').classList.add('show'); }
+function closeModal(){ document.getElementById('startModal').classList.remove('show'); }
+document.getElementById('startModal').addEventListener('click', function(e){ if(e.target === this) closeModal(); });
+function activateTracker(){
+  state.trackerActivated = true;
+  renderTrackerState();
+}
+
+// ============ JOURNEY ============
+function renderJourney(){
+  var wrap = document.getElementById('sub-journey');
+  var track = activeTrack(); if(!track) return;
+  var html = '<div class="sec-title" style="font-size:16px;">Your application journey</div><div class="sec-sub">Work through these in any order — mark each complete when it\'s done, no forced sequence.</div>';
+  STAGES.forEach(function(s){
+    var isDone = !!track.completedStages[s.n];
+    var cardCls = 'stage-card' + (isDone ? ' done' : '') + (s.official ? ' official' : '');
+    var statusLabel = s.official ? 'OFFICIAL SITE' : (isDone ? 'DONE' : 'NOT DONE');
+    var statusCls = s.official ? 'status-official' : (isDone ? 'status-done' : 'status-todo');
+    var bodyHtml;
+    if(s.official){
+      var p = getActiveProg();
+      bodyHtml = '<div class="stage-official-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg><span>We don\'t submit this for you. Go to <b>' + p.acronym + '</b>\'s official site to finish and submit.</span></div>' +
+        '<a class="btn btn-primary btn-sm" style="margin-top:12px;" href="' + p.officialUrl + '" target="_blank">Open official site ↗</a>';
+    } else {
+      bodyHtml = '<div class="stage-guide"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg><span>' + s.guide + '</span></div>' +
+        '<button class="btn btn-' + (isDone?'outline':'primary') + ' btn-sm" onclick="toggleStageDone(' + s.n + ')">' + (isDone ? '↺ Mark as not done' : 'Mark stage complete →') + '</button>';
+    }
+    html += '<div class="' + cardCls + '" id="stage-' + s.n + '">' +
+      '<div class="stage-head" onclick="toggleStageOpen(' + s.n + ')">' +
+        '<div class="stage-num">' + (isDone ? '✓' : s.n) + '</div>' +
+        '<div class="stage-title-row"><div class="stage-title">' + s.title + '</div></div>' +
+        '<div class="stage-status ' + statusCls + '">' + statusLabel + '</div>' +
+        '<svg class="stage-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>' +
+      '</div><div class="stage-body">' + bodyHtml + '</div></div>';
+  });
+  wrap.innerHTML = html;
+}
+function toggleStageOpen(n){ document.getElementById('stage-' + n).classList.toggle('open'); }
+function toggleStageDone(n){
+  var track = activeTrack(); if(!track) return;
+  track.completedStages[n] = !track.completedStages[n];
+  renderJourney();
+  document.getElementById('stage-' + n).classList.add('open');
+  updateBadges();
+  renderFinish();
+  renderTrackTabs();
+}
+
+// ============ DOCUMENTS — bulletproof inline onclick, no addEventListener ============
+function renderDocs(){
+  var wrap = document.getElementById('sub-documents');
+  var track = activeTrack(); if(!track) return;
+  var html = '<div class="sec-title" style="font-size:16px;">Document wallet</div><div class="sec-sub">Click any document to cycle it: Not started → In progress → Ready.</div>';
+  var total = 0, ready = 0;
+  DOC_CATEGORIES.forEach(function(cat){ cat.items.forEach(function(it){ total++; if((track.docsReady[it.id]||0)===2) ready++; }); });
+  var pct = total ? Math.round(ready/total*100) : 0;
+  html += '<div class="doc-progress-row"><div class="doc-ring" style="background:conic-gradient(var(--teal) ' + pct + '%, var(--slate-soft) ' + pct + '%);"><div class="doc-ring-inner"><div class="doc-ring-num">' + pct + '%</div></div></div><div style="font-size:12px;color:var(--slate);">documents ready</div></div>';
+
+  DOC_CATEGORIES.forEach(function(cat){
+    html += '<div class="doc-cat-label">' + cat.label + '</div><div class="doc-grid">';
+    cat.items.forEach(function(item){
+      var ds = track.docsReady[item.id] || 0;
+      var cls = ds === 2 ? 'ready' : ds === 1 ? 'in-progress' : '';
+      var icon = ds === 2
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'
+        : ds === 1
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+          : '';
+      var statusText = ds === 2 ? 'Ready — tap to reset' : ds === 1 ? 'In progress — tap when ready' : 'Not started — tap to begin';
+      var badge = item.req === 'required' ? '<span class="doc-req-badge required">REQUIRED</span>' : '<span class="doc-req-badge optional">OPTIONAL</span>';
+      html += '<div class="doc-card ' + cls + '">' + badge +
+        '<div class="doc-card-row" onclick="toggleDoc(\'' + item.id + '\')">' +
+          '<div class="doc-checkbox">' + icon + '</div>' +
+          '<div><div class="doc-card-name">' + item.name + '</div><div class="doc-card-status">' + statusText + '</div></div>' +
+        '</div></div>';
+    });
+    html += '</div>';
+  });
+  wrap.innerHTML = html;
+}
+function toggleDoc(id){
+  var track = activeTrack(); if(!track) return;
+  var current = track.docsReady[id] || 0;
+  track.docsReady[id] = (current + 1) % 3;
+  renderDocs();
+  updateBadges();
+  renderFinish();
+}
+
+// ============ MATERIALS ============
+function renderMaterials(){
+  var wrap = document.getElementById('sub-materials');
+  var track = activeTrack(); if(!track) return;
+  var drafted = !!track.essaysDrafted['motivation'];
+  wrap.innerHTML =
+    '<div class="sec-title" style="font-size:16px;">Motivation letter</div>' +
+    '<div class="sec-sub">No verified prompt for this exact programme yet — use the general guidance below and confirm the official wording on the programme\'s site.</div>' +
+    '<div class="essay-box">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;font-weight:700;">Motivation Letter</span><span class="essay-limit">~1,000 words (typical)</span></div>' +
+      '<div class="essay-prompt-label">General guidance</div>' +
+      '<div class="essay-prompt">Explain why this field, why this specific programme, why this consortium (name the universities), and how the mobility structure fits your goals.</div>' +
+      '<textarea class="essay-textarea" id="essayTextarea" placeholder="Start drafting…" oninput="updateEssayCount()">' + track.essayText + '</textarea>' +
+      '<div class="essay-footer"><span class="essay-count" id="essayCountLabel">0 words</span></div>' +
+      '<div class="save-draft-row"><button class="btn btn-outline btn-xs" onclick="saveEssayDraft()">Save draft</button><span class="save-state" id="essaySaveState">' + (drafted ? 'Saved' : 'Not saved yet') + '</span></div>' +
+      '<div class="helper-toggle">' +
+        '<div class="helper-toggle-btn" onclick="toggleHelper()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>Stuck? Answer 3 quick questions first</div>' +
+        '<div class="helper-body" id="helperBody">' +
+          '<div class="reflect-item"><div class="reflect-label">Why this programme?</div><textarea class="reflect-textarea" placeholder="A sentence or two…"></textarea></div>' +
+          '<div class="reflect-item"><div class="reflect-label">Why this consortium?</div><textarea class="reflect-textarea" placeholder="Name the universities that matter to you…"></textarea></div>' +
+          '<div class="reflect-item" style="margin-bottom:0;"><div class="reflect-label">Why you?</div><textarea class="reflect-textarea" placeholder="What shows you are ready to contribute?"></textarea></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  updateEssayCount();
+}
+function toggleHelper(){ document.getElementById('helperBody').classList.toggle('open'); }
+function updateEssayCount(){
+  var track = activeTrack(); if(!track) return;
+  var text = document.getElementById('essayTextarea').value;
+  track.essayText = text;
+  var words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  var label = document.getElementById('essayCountLabel');
+  label.textContent = words + ' words';
+  label.classList.toggle('over', words > 1000);
+}
+function saveEssayDraft(){
+  var track = activeTrack(); if(!track) return;
+  track.essaysDrafted['motivation'] = true;
+  document.getElementById('essaySaveState').textContent = 'Saved just now';
+  document.getElementById('essaySaveState').classList.add('saved');
+  renderFinish();
+}
+
+// ============ REFERENCES ============
+function renderReferees(){
+  var wrap = document.getElementById('sub-references');
+  var p = getActiveProg();
+  var track = activeTrack(); if(!track) return;
+  var stages = ['Not asked','Requested','Reminded','Received'];
+  var html = '<div class="sec-title" style="font-size:16px;">References</div><div class="sec-sub">' + (p && p.refereeCount ? 'This field typically expects ' + p.refereeCount + ' references.' : 'Reference count varies — check the official page.') + '</div><div class="referee-list">';
+  track.referees.forEach(function(r, idx){
+    var initials = r.name.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+    var steps = '';
+    stages.forEach(function(s, i){ steps += '<div class="rs-step' + (i<=r.stage?' active':'') + '" onclick="setRefStage(' + idx + ',' + i + ')"><div class="rs-line"></div><div class="rs-dot"></div><div class="rs-text">' + s + '</div></div>'; });
+    html += '<div class="referee-card"><div class="referee-top"><div class="referee-avatar">' + initials + '</div><div><div class="referee-name">' + r.name + '</div><div class="referee-role">' + r.role + '</div></div></div><div class="referee-stepper">' + steps + '</div></div>';
+  });
+  html += '</div><button class="btn btn-outline btn-sm" onclick="toggleAddReferee()">+ Add a referee</button>' +
+    '<div class="add-referee-form" id="addRefereeForm"><div class="arf-grid"><input class="arf-input" id="refName" placeholder="Full name"><input class="arf-input" id="refRole" placeholder="Role (e.g. Supervisor)"></div><button class="btn btn-primary btn-sm" onclick="addReferee()">Save referee</button></div>' +
+    '<div class="referee-privacy-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Stored privately. We never contact referees or submit references for you.</div>';
+  wrap.innerHTML = html;
+}
+function setRefStage(idx, stage){ activeTrack().referees[idx].stage = stage; renderReferees(); renderFinish(); }
+function toggleAddReferee(){ document.getElementById('addRefereeForm').classList.toggle('show'); }
+function addReferee(){
+  var name = document.getElementById('refName').value.trim();
+  if(!name) return;
+  activeTrack().referees.push({name:name, role:document.getElementById('refRole').value.trim() || 'Referee', stage:0});
+  renderReferees();
+  document.getElementById('addRefereeForm').classList.add('show');
+}
+
+// ============ FINISH: deadlines + readiness + review + export ============
+var REVIEW_ITEMS = [
+  'Deadline verified on the official programme site',
+  'Degree requirements satisfied and transcript ready',
+  'All required documents prepared',
+  'Motivation letter reviewed, word limit checked',
+  'This consortium named specifically — no generic copy-paste',
+  'Official portal reviewed end-to-end before starting'
+];
+function renderFinish(){
+  var wrap = document.getElementById('sub-finish');
+  if(!wrap) return;
+  var p = getActiveProg();
+  var track = activeTrack(); if(!track) return;
+  var docsTotal = 0, docsReady = 0;
+  DOC_CATEGORIES.forEach(function(cat){ cat.items.forEach(function(it){ docsTotal++; if((track.docsReady[it.id]||0)===2) docsReady++; }); });
+  var docsPct = docsTotal ? Math.round(docsReady/docsTotal*100) : 0;
+  var matPct = track.essaysDrafted['motivation'] ? 100 : 0;
+  var refDone = track.referees.filter(function(r){ return r.stage >= 3; }).length;
+  var refPct = track.referees.length ? Math.round(refDone/track.referees.length*100) : 0;
+  var reviewChecked = Object.keys(track.reviewChecked).filter(function(k){ return track.reviewChecked[k]; }).length;
+  var reviewPct = Math.round(reviewChecked/REVIEW_ITEMS.length*100);
+  var overall = Math.round((docsPct + matPct + refPct + reviewPct) / 4);
+
+  var html = '<div class="sec-title" style="font-size:16px;">Deadlines & readiness</div><div class="sec-sub">Two dates, one honest score, one last check — for ' + (p?p.acronym:'this programme') + '.</div>';
+  html += '<div class="deadline-pair"><div class="deadline-item official"><div class="deadline-label">Official deadline</div><div class="deadline-val">' + (p && p.deadline ? p.deadline : 'Check site') + '</div></div>' +
+    '<div class="deadline-item"><div class="deadline-label">Your target</div><input class="deadline-input" placeholder="e.g. 15 Dec" value="' + track.targetDate + '" oninput="activeTrack().targetDate=this.value"></div></div>';
+
+  html += '<div class="card" style="padding:20px 22px;margin-bottom:16px;"><div class="readiness-hero"><div class="readiness-ring" style="background:conic-gradient(var(--teal) ' + overall + '%, var(--slate-soft) ' + overall + '%);"><div class="readiness-ring-inner"><div class="readiness-ring-num">' + overall + '%</div></div></div><div class="readiness-hero-text">Preparation complete for this programme — not your odds of winning a place. Each programme you add tracks this separately.</div></div>' +
+    '<div class="rb-item"><div class="rb-item-label">Documents</div><div class="rb-item-bar-track"><div class="rb-item-bar-fill" style="width:' + docsPct + '%;"></div></div><div class="rb-item-pct">' + docsPct + '%</div></div>' +
+    '<div class="rb-item"><div class="rb-item-label">Materials</div><div class="rb-item-bar-track"><div class="rb-item-bar-fill" style="width:' + matPct + '%;"></div></div><div class="rb-item-pct">' + matPct + '%</div></div>' +
+    '<div class="rb-item"><div class="rb-item-label">References</div><div class="rb-item-bar-track"><div class="rb-item-bar-fill" style="width:' + refPct + '%;"></div></div><div class="rb-item-pct">' + refPct + '%</div></div>' +
+    '<div class="rb-item"><div class="rb-item-label">Final review</div><div class="rb-item-bar-track"><div class="rb-item-bar-fill" style="width:' + reviewPct + '%;"></div></div><div class="rb-item-pct">' + reviewPct + '%</div></div></div>';
+
+  html += '<div class="card" style="padding:20px 22px;"><div style="font-size:13px;font-weight:700;margin-bottom:10px;">Before you submit</div>';
+  REVIEW_ITEMS.forEach(function(text, i){
+    var checked = !!track.reviewChecked[i];
+    html += '<div class="review-row' + (checked?' checked':'') + '" onclick="toggleReview(' + i + ')"><div class="review-check">' + (checked ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>' : '') + '</div><div class="review-row-text">' + text + '</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="export-card"><div class="export-inner"><div class="export-title">Ready when you are.</div><div class="export-sub">Aspire World prepares. You submit — on ' + (p?p.acronym:'the programme') + '\'s own official website.</div>' +
+    '<div class="export-actions"><button class="btn btn-outline btn-sm" style="background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2);color:#fff;" onclick="alert(\'This would export a PDF summary in the full product.\')">Export my preparation</button><a class="btn btn-primary" href="' + (p?p.officialUrl:'#') + '" target="_blank">Go to official programme →</a></div>' +
+    '<div class="export-disclaimer">This workspace is for preparation only. Aspire World does not submit Erasmus Mundus applications on your behalf.</div></div></div>';
+
+  wrap.innerHTML = html;
+}
+function toggleReview(i){ activeTrack().reviewChecked[i] = !activeTrack().reviewChecked[i]; renderFinish(); }
+
+// ============ BADGES ============
+function updateBadges(){
+  var track = activeTrack(); if(!track) return;
+  var doneCount = Object.keys(track.completedStages).filter(function(k){ return track.completedStages[k]; }).length;
+  document.getElementById('badgeJourney').textContent = doneCount + '/7';
+  var total = 0, ready = 0;
+  DOC_CATEGORIES.forEach(function(cat){ cat.items.forEach(function(it){ total++; if((track.docsReady[it.id]||0)===2) ready++; }); });
+  document.getElementById('badgeDocs').textContent = (total?Math.round(ready/total*100):0) + '%';
+}
+
+// ============ FAQ ============
+function toggleFaq(btn){ btn.closest('.qa-item').classList.toggle('open'); }
+
+// ============ INIT ============
+renderProgrammeGrid();
+</script>
+</body>
+</html>

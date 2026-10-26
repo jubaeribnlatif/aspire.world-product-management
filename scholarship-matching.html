@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scholarships — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+
+  .shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh;}
+
+  /* sidebar (reused) */
+  .sidebar{background:var(--ink);color:var(--white);padding:24px 18px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh;}
+  .brand{display:flex;align-items:center;gap:9px;padding:0 4px;}
+  .brand-mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--royal),var(--violet));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:15px;letter-spacing:-.01em;}
+  .side-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:9px 14px;}
+  .side-search input{background:none;border:none;color:var(--white);font-size:13px;width:100%;}
+  .side-search input::placeholder{color:rgba(255,255,255,.4);}
+  .nav-group{display:flex;flex-direction:column;gap:2px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.72);}
+  .nav-item svg{opacity:.8;flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:var(--white);}
+  .nav-item.active{background:rgba(37,71,244,.28);color:var(--white);box-shadow:inset 0 0 0 1px rgba(88,116,255,.4);}
+  .nav-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.45);}
+  .sidebar-spacer{flex:1;}
+  .side-user{display:flex;align-items:center;gap:10px;padding:8px 4px;}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--royal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--white);flex-shrink:0;}
+  .side-user-name{font-size:13px;font-weight:600;}
+  .side-user-sub{font-size:11px;color:rgba(255,255,255,.45);}
+
+  /* main */
+  .main{padding:22px 36px 64px;max-width:1180px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+  .breadcrumb{font-size:13px;color:var(--slate);}
+  .breadcrumb strong{color:var(--ink);font-weight:600;}
+  .topbar-right{display:flex;align-items:center;gap:14px;}
+  .fx-chip{display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-family:var(--mono);font-size:12px;}
+  .fx-chip .up{color:var(--teal-text);font-weight:600;}
+  .icon-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;}
+  .icon-btn .dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--destructive);box-shadow:0 0 0 2px var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* header stat panel */
+  .header-panel{background:radial-gradient(130% 160% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);border-radius:var(--r-xl);padding:28px 30px;position:relative;overflow:hidden;margin-bottom:26px;}
+  .header-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(380px 240px at 90% -10%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .header-inner{position:relative;z-index:1;}
+  .header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:22px;}
+  .header-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9DB0FF;margin-bottom:8px;}
+  .header-title{font-size:26px;font-weight:800;letter-spacing:-.015em;}
+  .header-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;max-width:440px;line-height:1.55;}
+  .profile-snapshot{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);padding:14px 18px;min-width:230px;}
+  .profile-snapshot-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.06em;margin-bottom:8px;}
+  .profile-snapshot-row{font-size:11.5px;color:rgba(255,255,255,.75);display:flex;justify-content:space-between;margin-bottom:4px;}
+  .profile-snapshot-row b{color:var(--white);font-family:var(--mono);}
+  .profile-snapshot-edit{font-size:10.5px;color:#9DB0FF;margin-top:6px;display:inline-block;}
+
+  .header-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .stat-tile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:14px 16px;}
+  .stat-icon{color:rgba(255,255,255,.4);margin-bottom:10px;}
+  .stat-val{font-size:20px;font-weight:700;letter-spacing:-.01em;}
+  .stat-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.03em;margin-top:3px;}
+
+  /* deadline timeline */
+  .timeline-card{padding:22px 26px;margin-bottom:26px;}
+  .timeline-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+  .timeline-title{font-size:14.5px;font-weight:700;}
+  .timeline-legend{display:flex;gap:14px;font-size:11px;color:var(--slate);}
+  .timeline-legend span{display:flex;align-items:center;gap:5px;}
+  .legend-dot{width:8px;height:8px;border-radius:50%;}
+  .dl-track{position:relative;height:64px;}
+  .dl-baseline{position:absolute;top:28px;left:0;right:0;height:2px;background:var(--border);}
+  .dl-marker{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:90px;}
+  .dl-dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--white);box-shadow:0 0 0 1px var(--border);position:relative;z-index:1;margin-top:21px;}
+  .dl-name{font-size:10px;font-weight:700;text-align:center;line-height:1.3;}
+  .dl-days{font-family:var(--mono);font-size:9px;color:var(--slate);}
+  .dl-scale{display:flex;justify-content:space-between;font-size:9.5px;color:var(--slate);font-family:var(--mono);margin-top:8px;}
+
+  /* clickable timeline markers + tooltip */
+  .dl-marker{cursor:pointer;}
+  .dl-dot{transition:transform .15s ease;}
+  .dl-marker:hover .dl-dot{transform:scale(1.3);}
+  .dl-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%) translateY(-6px);background:var(--ink);color:var(--white);font-size:10.5px;padding:6px 10px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:5;}
+  .dl-marker:hover .dl-tooltip{opacity:1;}
+  .dl-today{position:absolute;left:0;top:21px;width:14px;height:14px;border-radius:50%;background:var(--royal);z-index:2;box-shadow:0 0 0 4px var(--royal-soft);}
+  .dl-today::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--royal);animation:todayPulse 2s ease-out infinite;}
+  @keyframes todayPulse{0%{transform:scale(.6);opacity:1;}100%{transform:scale(1.8);opacity:0;}}
+  .dl-today-label{position:absolute;left:0;top:0;transform:translateX(-50%);font-family:var(--mono);font-size:8.5px;color:var(--royal);font-weight:700;}
+
+  /* compare plot */
+  .compare-card{padding:24px 26px;margin-bottom:26px;}
+  .compare-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:8px;}
+  .compare-title{font-size:14.5px;font-weight:700;}
+  .compare-sub{font-size:12px;color:var(--slate);margin-bottom:18px;}
+  .compare-plot{position:relative;height:320px;border-radius:var(--r-lg);background:var(--paper);background-image:linear-gradient(var(--border) 1px, transparent 1px),linear-gradient(90deg, var(--border) 1px, transparent 1px);background-size:12.5% 12.5%;overflow:visible;}
+  .sweet-spot{position:absolute;left:2%;top:2%;width:32%;height:34%;background:rgba(0,163,137,.08);border:1.5px dashed rgba(0,163,137,.35);border-radius:var(--r-md);}
+  .sweet-spot-label{position:absolute;top:6px;left:8px;font-family:var(--mono);font-size:8.5px;color:var(--teal-text);font-weight:700;letter-spacing:.03em;}
+  .plot-axis-label{position:absolute;font-family:var(--mono);font-size:9.5px;color:var(--slate);letter-spacing:.04em;text-transform:uppercase;}
+  .plot-axis-label.bottom{bottom:-22px;left:50%;transform:translateX(-50%);}
+  .plot-axis-label.left{left:-10px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;}
+  .plot-dot{position:absolute;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--white);transform:translate(-50%,50%);cursor:pointer;border:3px solid var(--white);box-shadow:0 4px 12px rgba(14,27,61,.2);transition:transform .15s ease;z-index:2;}
+  .plot-dot:hover{transform:translate(-50%,50%) scale(1.15);z-index:3;}
+  .plot-dot.strong{background:var(--teal);}
+  .plot-dot.partial{background:var(--violet);}
+  .plot-dot.beyond{background:var(--slate);}
+  .plot-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%) translateY(-8px);background:var(--ink);color:var(--white);font-size:10.5px;padding:7px 11px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:6;}
+  .plot-dot:hover .plot-tooltip{opacity:1;}
+
+  /* match ring expand */
+  .match-ring{cursor:pointer;transition:transform .15s ease;}
+  .match-ring:hover{transform:scale(1.08);}
+  .ring-breakdown{display:none;background:var(--paper);border-radius:var(--r-sm);padding:4px 12px;margin-top:-4px;}
+  .ring-breakdown.open{display:block;animation:breakdownIn .25s ease;}
+  @keyframes breakdownIn{from{opacity:0;max-height:0;}to{opacity:1;max-height:200px;}}
+  .rb-row{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:11.5px;border-bottom:1px solid var(--border);}
+  .rb-row:last-child{border-bottom:none;}
+  .rb-check{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--teal-soft);color:var(--teal-text);}
+  .rb-check.no{background:var(--destructive-soft);color:var(--destructive);}
+
+  /* pulse highlight for scroll-to-card */
+  @keyframes cardPulse{0%{box-shadow:0 0 0 0 rgba(37,71,244,.5);}70%{box-shadow:0 0 0 14px rgba(37,71,244,0);}100%{box-shadow:0 0 0 0 rgba(37,71,244,0);}}
+  .schol-card.pulse{animation:cardPulse 1.2s ease;}
+
+  @media(max-width:900px){
+    .compare-plot{height:280px;}
+  }
+
+  /* filter bar */
+  .filter-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+  .filter-pills{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-pill{background:var(--white);border:1px solid var(--border);border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:600;color:var(--slate);}
+  .filter-pill.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .filter-chip{background:var(--white);border:1px solid var(--border);border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:6px;}
+  .sort-select{border:1px solid var(--border);border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:600;color:var(--ink);background:var(--white);}
+
+  /* section heads */
+  .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .sec-title-row{display:flex;align-items:center;gap:10px;}
+  .sec-title{font-size:17px;font-weight:700;}
+  .sec-count{font-family:var(--mono);font-size:11px;color:var(--slate);background:var(--slate-soft);padding:3px 10px;border-radius:999px;}
+  .sec-count.strong{background:var(--teal-soft);color:var(--teal-text);}
+  .sec-count.partial{background:var(--violet-soft);color:#5333C9;}
+  .sec-sub{font-size:12.5px;color:var(--slate);margin-bottom:16px;}
+
+  /* new this week rail */
+  .new-rail{display:flex;gap:14px;overflow-x:auto;margin-bottom:30px;padding-bottom:4px;}
+  .new-card{flex-shrink:0;width:250px;padding:16px;display:flex;flex-direction:column;gap:8px;}
+  .new-badge{font-size:9px;font-weight:700;letter-spacing:.03em;background:var(--violet-soft);color:#5333C9;padding:3px 8px;border-radius:999px;width:fit-content;}
+  .new-name{font-size:13px;font-weight:700;}
+  .new-org{font-size:11px;color:var(--slate);}
+  .new-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--teal-text);margin-top:auto;}
+
+  /* scholarship cards grid */
+  .schol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:34px;}
+  .schol-card{padding:20px 22px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;transition:box-shadow .15s ease,transform .15s ease;}
+  .schol-card:hover{box-shadow:0 16px 34px -20px rgba(14,27,61,.35);transform:translateY(-2px);}
+  .schol-card.strong{border-left:3px solid var(--teal);}
+  .schol-card.partial{border-left:3px solid var(--violet);}
+  .schol-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .schol-id{display:flex;gap:12px;align-items:center;}
+  .schol-mark{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:var(--mono);font-weight:700;font-size:12px;flex-shrink:0;}
+  .schol-name{font-size:14.5px;font-weight:700;line-height:1.25;}
+  .schol-org{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .schol-tags{display:flex;gap:6px;flex-shrink:0;}
+  .verified-tag{display:flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;color:var(--teal-text);background:var(--teal-soft);padding:3px 8px;border-radius:999px;white-space:nowrap;}
+  .new-tag-sm{font-size:9px;font-weight:700;color:#5333C9;background:var(--violet-soft);padding:3px 8px;border-radius:999px;white-space:nowrap;}
+
+  .match-ring{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .match-ring-inner{width:34px;height:34px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9.5px;font-weight:700;}
+
+  .schol-value-row{display:flex;align-items:baseline;gap:8px;}
+  .schol-value{font-family:var(--mono);font-size:19px;font-weight:800;color:var(--ink);}
+  .schol-value-note{font-size:11px;color:var(--slate);}
+
+  .schol-reason{font-size:12px;color:#2A3352;background:var(--paper);border-radius:var(--r-sm);padding:9px 12px;display:flex;gap:7px;align-items:flex-start;line-height:1.5;}
+  .schol-reason svg{color:var(--teal-text);flex-shrink:0;margin-top:2px;}
+  .schol-gap{font-size:12px;color:#4A3352;background:var(--violet-soft);border-radius:var(--r-sm);padding:9px 12px;display:flex;gap:7px;align-items:flex-start;line-height:1.5;}
+  .schol-gap svg{color:#5333C9;flex-shrink:0;margin-top:2px;}
+  .schol-gap b{color:#3D2A9C;}
+
+  .effort-row{display:flex;gap:16px;font-size:11px;color:var(--slate);}
+  .effort-row span{display:flex;align-items:center;gap:5px;}
+  .effort-row svg{color:var(--slate);flex-shrink:0;}
+  .effort-row.free{color:var(--teal-text);font-weight:600;}
+
+  .schol-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--border);padding-top:12px;margin-top:auto;}
+  .deadline-pill{font-family:var(--mono);font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;}
+  .deadline-soon{background:var(--destructive-soft);color:var(--destructive);}
+  .deadline-mid{background:var(--royal-soft);color:var(--royal-dark);}
+  .deadline-far{background:var(--slate-soft);color:var(--slate);}
+  .schol-actions{display:flex;gap:8px;align-items:center;}
+  .save-btn{width:32px;height:32px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--slate);flex-shrink:0;}
+  .save-btn.saved{background:var(--violet-soft);border-color:var(--violet);color:#5333C9;}
+  .view-link{font-size:11.5px;font-weight:600;color:var(--royal);}
+
+  /* beyond countries rail */
+  .beyond-rail{display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;}
+  .beyond-card{flex-shrink:0;width:270px;padding:18px;display:flex;flex-direction:column;gap:8px;opacity:.92;}
+  .beyond-tag{font-size:9.5px;font-weight:700;color:var(--slate);background:var(--slate-soft);padding:3px 8px;border-radius:999px;width:fit-content;}
+  .beyond-name{font-size:13px;font-weight:700;}
+  .beyond-org{font-size:11px;color:var(--slate);}
+  .beyond-note{font-size:11px;color:var(--slate);line-height:1.5;}
+  .beyond-val{font-family:var(--mono);font-size:12px;font-weight:600;margin-top:auto;}
+
+  @media(max-width:1040px){
+    .header-stats{grid-template-columns:repeat(2,1fr);}
+    .header-top{flex-direction:column;}
+    .schol-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:900px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M3 12l7-8 3 3-6 6 6 6-3 3-7-8v-2z" fill="white"/></svg></div><div class="brand-name">aspire.world</div></div>
+    <div class="side-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input placeholder="Search routes, docs, funds…" />
+    </div>
+    <nav class="nav-group">
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Dashboard</a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg>Applications</a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/></svg>Documents</a>
+      <a class="nav-item active" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l3 6 6 1-4.5 4.5L17.5 21 12 17.5 6.5 21l1-6.5L3 10l6-1z"/></svg>Scholarships<span class="nav-count">6</span></a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/></svg>Universities</a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/></svg>Finances</a>
+      <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>My agency</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="side-user"><div class="avatar">S</div><div><div class="side-user-name">Samira Rahman</div><div class="side-user-sub">AW / 024813</div></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb">Home &nbsp;›&nbsp; <strong>Scholarships</strong></div>
+      <div class="topbar-right">
+        <div class="fx-chip"><span>GBP → BDT</span><span>152.40</span><span class="up">▲0.4%</span></div>
+        <button class="icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg><span class="dot"></span></button>
+        <div class="avatar">S</div>
+      </div>
+    </div>
+
+    <!-- HEADER STAT PANEL -->
+    <div class="header-panel">
+      <div class="header-inner">
+        <div class="header-top">
+          <div>
+            <div class="header-eyebrow">Matched to your profile</div>
+            <div class="header-title">Funding worth your time.</div>
+            <div class="header-sub">Scored against your saved profile, not a generic list — and split plainly into what fits now and what's close.</div>
+          </div>
+          <div class="profile-snapshot">
+            <div class="profile-snapshot-label">MATCHING AGAINST</div>
+            <div class="profile-snapshot-row"><span>Degree</span><b>Master's</b></div>
+            <div class="profile-snapshot-row"><span>Field</span><b>Data Science</b></div>
+            <div class="profile-snapshot-row"><span>Target country</span><b>United Kingdom</b></div>
+            <div class="profile-snapshot-row"><span>CGPA</span><b>3.30</b></div>
+            <div class="profile-snapshot-row"><span>IELTS</span><b>6.5</b></div>
+            <a class="profile-snapshot-edit" href="#">Looks outdated? Update your profile →</a>
+          </div>
+        </div>
+        <div class="header-stats">
+          <div class="stat-tile"><div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><div class="stat-val">4</div><div class="stat-label">STRONG MATCHES</div></div>
+          <div class="stat-tile"><div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg></div><div class="stat-val">2</div><div class="stat-label">PARTIAL MATCHES</div></div>
+          <div class="stat-tile"><div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div class="stat-val">৳58L+</div><div class="stat-label">TOTAL FUNDING IN REACH</div></div>
+          <div class="stat-tile"><div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="stat-val">2</div><div class="stat-label">DEADLINES THIS MONTH</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEADLINE TIMELINE -->
+    <div class="card timeline-card">
+      <div class="timeline-head">
+        <div class="timeline-title">Deadlines, next 90 days</div>
+        <div class="timeline-legend">
+          <span><span class="legend-dot" style="background:var(--teal);"></span>Strong match</span>
+          <span><span class="legend-dot" style="background:var(--violet);"></span>Partial match</span>
+        </div>
+      </div>
+      <div class="dl-track">
+        <div class="dl-baseline"></div>
+        <div class="dl-today"></div>
+        <div class="dl-today-label">TODAY</div>
+        <div class="dl-marker" style="left:14%;" data-target="card-chevening"><div class="dl-tooltip">Full funding · 4 essays</div><div class="dl-dot" style="background:var(--teal);"></div><div class="dl-name">Chevening</div><div class="dl-days">4 weeks</div></div>
+        <div class="dl-marker" style="left:22%;" data-target="card-commonwealth"><div class="dl-tooltip">Full funding · 2 essays</div><div class="dl-dot" style="background:var(--teal);"></div><div class="dl-name">Commonwealth</div><div class="dl-days">6 weeks</div></div>
+        <div class="dl-marker" style="left:40%;" data-target="card-daad"><div class="dl-tooltip">€11,208 · needs IELTS 7.0</div><div class="dl-dot" style="background:var(--violet);"></div><div class="dl-name">DAAD Study Grant</div><div class="dl-days">9 weeks</div></div>
+        <div class="dl-marker" style="left:52%;" data-target="card-globalwales"><div class="dl-tooltip">£10,000 · 1 short form</div><div class="dl-dot" style="background:var(--teal);"></div><div class="dl-name">Global Wales</div><div class="dl-days">11 weeks</div></div>
+        <div class="dl-marker" style="left:78%;" data-target="card-vc"><div class="dl-tooltip">Varies · often automatic</div><div class="dl-dot" style="background:var(--violet);"></div><div class="dl-name">Vice-Chancellor's</div><div class="dl-days">Rolling</div></div>
+      </div>
+      <div class="dl-scale"><span>TODAY</span><span>30 DAYS</span><span>60 DAYS</span><span>90 DAYS</span></div>
+    </div>
+
+    <!-- COMPARE YOUR OPTIONS -->
+    <div class="card compare-card">
+      <div class="compare-head">
+        <div class="compare-title">Compare your options</div>
+        <div class="timeline-legend">
+          <span><span class="legend-dot" style="background:var(--teal);"></span>Strong</span>
+          <span><span class="legend-dot" style="background:var(--violet);"></span>Partial</span>
+          <span><span class="legend-dot" style="background:var(--slate);"></span>Outside your target</span>
+        </div>
+      </div>
+      <div class="compare-sub">Click any circle to jump to it below. The dashed zone is where a little effort buys a lot of funding.</div>
+      <div class="compare-plot" id="comparePlot">
+        <div class="sweet-spot"><span class="sweet-spot-label">BEST RETURN ON TIME</span></div>
+        <div class="plot-axis-label bottom">More effort required →</div>
+        <div class="plot-axis-label left">← Higher award value</div>
+
+        <button class="plot-dot strong" style="left:5%;bottom:8%;" data-target="card-great"><span>GS</span><div class="plot-tooltip">GREAT Scholarships · £10,000 · no extra application</div></button>
+        <button class="plot-dot strong" style="left:15%;bottom:35%;" data-target="card-globalwales"><span>GW</span><div class="plot-tooltip">Global Wales · £10,000 · 1 form, ~2 hrs</div></button>
+        <button class="plot-dot partial" style="left:8%;bottom:20%;" data-target="card-vc"><span>VC</span><div class="plot-tooltip">Vice-Chancellor's · varies · auto-considered</div></button>
+        <button class="plot-dot strong" style="left:55%;bottom:90%;" data-target="card-chevening"><span>CH</span><div class="plot-tooltip">Chevening · full funding · ~8 hrs + interview</div></button>
+        <button class="plot-dot strong" style="left:55%;bottom:85%;" data-target="card-commonwealth"><span>CW</span><div class="plot-tooltip">Commonwealth · full funding · ~5 hrs</div></button>
+        <button class="plot-dot partial" style="left:60%;bottom:38%;" data-target="card-daad"><span>DE</span><div class="plot-tooltip">DAAD · €11,208 · ~6 hrs, needs IELTS 7.0</div></button>
+        <button class="plot-dot beyond" style="left:95%;bottom:88%;" data-target="card-vanier"><span>VN</span><div class="plot-tooltip">Vanier Canada · CAD 50,000 · research proposal, ~10 hrs</div></button>
+        <button class="plot-dot beyond" style="left:90%;bottom:92%;" data-target="card-awards"><span>AA</span><div class="plot-tooltip">Australia Awards · full funding · extensive application</div></button>
+      </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <div class="filter-pills" id="fundingFilters">
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="full">Full funding</button>
+        <button class="filter-pill" data-filter="partial-fund">Partial funding</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="filter-chip">United Kingdom ✕</span>
+        <span class="filter-chip">Master's</span>
+        <select class="sort-select" id="sortSelect">
+          <option value="match">Sort: Best match</option>
+          <option value="deadline">Sort: Deadline soonest</option>
+          <option value="value">Sort: Award amount</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- NEW THIS WEEK -->
+    <div class="sec-head"><div class="sec-title-row"><span class="sec-title">New this week</span></div></div>
+    <div class="new-rail">
+      <div class="card new-card" data-target="card-great" style="cursor:pointer;">
+        <span class="new-badge">NEW</span>
+        <div class="new-name">GREAT Scholarships</div>
+        <div class="new-org">British Council · Manchester campus round opened</div>
+        <div class="new-val">£10,000 · jump to details →</div>
+      </div>
+      <div class="card new-card" data-target="card-vc" style="cursor:pointer;">
+        <span class="new-badge">NEW</span>
+        <div class="new-name">Vice-Chancellor's Award</div>
+        <div class="new-org">Merit-based · newly listed for your target universities</div>
+        <div class="new-val">Varies · jump to details →</div>
+      </div>
+    </div>
+
+    <!-- STRONG MATCHES -->
+    <div class="sec-head">
+      <div class="sec-title-row"><span class="sec-title">Strong matches</span><span class="sec-count strong" id="strongCount">4</span></div>
+    </div>
+    <div class="sec-sub">You meet every criterion aspire.world can check.</div>
+    <div class="schol-grid" id="strongGrid">
+
+      <div class="schol-card card strong" id="card-chevening" data-funding="full" data-deadline="28" data-value="999999">
+        <div class="schol-top">
+          <div class="schol-id">
+            <div class="schol-mark" style="background:var(--ink);">UK</div>
+            <div><div class="schol-name">Chevening Scholarship</div><div class="schol-org">UK Government · Full funding, all subjects</div></div>
+          </div>
+          <div class="match-ring" onclick="toggleRing('rb-chevening')" style="background:conic-gradient(var(--teal) 0deg 360deg);"><div class="match-ring-inner">6/6</div></div>
+        </div>
+        <div class="ring-breakdown" id="rb-chevening">
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Field of study — open to all subjects</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Target country — United Kingdom</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>CGPA — 3.30 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>IELTS — 6.5 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible</div>
+        </div>
+        <div class="schol-value-row"><span class="schol-value">Full funding</span><span class="schol-value-note">tuition + living + flights</span></div>
+        <div class="schol-reason"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Matches your degree level, field, CGPA, IELTS, and UK target — nothing missing.</div>
+        <div class="effort-row"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>4 essays</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>1 reference</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>~8 hrs + interview</span></div>
+        <div class="schol-foot">
+          <span class="deadline-pill deadline-soon">4 weeks left</span>
+          <div class="schol-actions"><button class="save-btn saved"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button><a class="view-link" href="#">View details →</a></div>
+        </div>
+      </div>
+
+      <div class="schol-card card strong" id="card-commonwealth" data-funding="full" data-deadline="42" data-value="999998">
+        <div class="schol-top">
+          <div class="schol-id">
+            <div class="schol-mark" style="background:var(--royal);">CW</div>
+            <div><div class="schol-name">Commonwealth Scholarship</div><div class="schol-org">UK Government · Master's &amp; PhD</div></div>
+          </div>
+          <div class="match-ring" onclick="toggleRing('rb-commonwealth')" style="background:conic-gradient(var(--teal) 0deg 360deg);"><div class="match-ring-inner">6/6</div></div>
+        </div>
+        <div class="ring-breakdown" id="rb-commonwealth">
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Field of study — Data Science eligible</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Target country — United Kingdom</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>CGPA — 3.30 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>IELTS — 6.5 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible (developing Commonwealth country)</div>
+        </div>
+        <div class="schol-value-row"><span class="schol-value">Full funding</span><span class="schol-value-note">tuition + living + flights</span></div>
+        <div class="schol-reason"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Matches your degree level, field, CGPA, IELTS, and UK target — nothing missing.</div>
+        <div class="effort-row"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>2 essays</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>2 references</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>~5 hrs</span></div>
+        <div class="schol-foot">
+          <span class="deadline-pill deadline-mid">6 weeks left</span>
+          <div class="schol-actions"><button class="save-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button><a class="view-link" href="#">View details →</a></div>
+        </div>
+      </div>
+
+      <div class="schol-card card strong" id="card-globalwales" data-funding="partial-fund" data-deadline="77" data-value="1300000">
+        <div class="schol-top">
+          <div class="schol-id">
+            <div class="schol-mark" style="background:var(--violet);">GW</div>
+            <div><div class="schol-name">Global Wales Masters</div><div class="schol-org">Welsh Government · Study in Wales</div></div>
+          </div>
+          <div class="match-ring" onclick="toggleRing('rb-globalwales')" style="background:conic-gradient(var(--teal) 0deg 360deg);"><div class="match-ring-inner">6/6</div></div>
+        </div>
+        <div class="ring-breakdown" id="rb-globalwales">
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Field of study — open to all subjects</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Target country — Wales counts toward UK</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>CGPA — 3.30 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>IELTS — 6.5 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible</div>
+        </div>
+        <div class="schol-value-row"><span class="schol-value">£10,000</span><span class="schol-value-note">≈ ৳15.2L</span></div>
+        <div class="schol-reason"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Matches your degree level, field, CGPA, and IELTS — Wales counts toward your UK target.</div>
+        <div class="effort-row free"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>1 short form only · ~2 hrs</div>
+        <div class="schol-foot">
+          <span class="deadline-pill deadline-far">11 weeks left</span>
+          <div class="schol-actions"><button class="save-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button><a class="view-link" href="#">View details →</a></div>
+        </div>
+      </div>
+
+      <div class="schol-card card strong" id="card-great" data-funding="partial-fund" data-deadline="60" data-value="1300000">
+        <div class="schol-top">
+          <div class="schol-id">
+            <div class="schol-mark" style="background:#5333C9;">GS</div>
+            <div><div class="schol-name">GREAT Scholarships</div><div class="schol-org">British Council · University of Manchester</div></div>
+          </div>
+          <div class="match-ring" onclick="toggleRing('rb-great')" style="background:conic-gradient(var(--teal) 0deg 360deg);"><div class="match-ring-inner">6/6</div></div>
+        </div>
+        <div class="ring-breakdown" id="rb-great">
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>University — tied to your Manchester shortlist</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Target country — United Kingdom</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>CGPA — 3.30 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>IELTS — 6.5 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible</div>
+        </div>
+        <div class="schol-value-row"><span class="schol-value">£10,000</span><span class="schol-value-note">≈ ৳15.2L</span></div>
+        <div class="schol-reason"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Tied to your shortlisted university — matches on every criterion.</div>
+        <div class="effort-row free"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>No extra application — auto-considered with your Manchester offer</div>
+        <div class="schol-foot">
+          <span class="deadline-pill deadline-far">Rolling, tied to offer</span>
+          <div class="schol-actions"><button class="save-btn saved"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button><a class="view-link" href="#">View details →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTIAL MATCHES -->
+    <div class="sec-head">
+      <div class="sec-title-row"><span class="sec-title">Partial matches</span><span class="sec-count partial" id="partialCount">2</span></div>
+    </div>
+    <div class="sec-sub">Close, with one specific gap — often still worth applying.</div>
+    <div class="schol-grid" id="partialGrid">
+
+      <div class="schol-card card partial" id="card-daad" data-funding="partial-fund" data-deadline="63" data-value="1700000">
+        <div class="schol-top">
+          <div class="schol-id">
+            <div class="schol-mark" style="background:#3D3D3D;">DE</div>
+            <div><div class="schol-name">DAAD Study Grant</div><div class="schol-org">Germany · Deutscher Akademischer Austauschdienst</div></div>
+          </div>
+          <div class="match-ring" onclick="toggleRing('rb-daad')" style="background:conic-gradient(var(--violet) 0deg 300deg, var(--slate-soft) 300deg 360deg);"><div class="match-ring-inner">5/6</div></div>
+        </div>
+        <div class="ring-breakdown" id="rb-daad">
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Field of study — Data Science eligible</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>CGPA — 3.30 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible</div>
+          <div class="rb-row"><div class="rb-check no"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M18 6L6 18M6 6l12 12"/></svg></div>IELTS — needs 7.0, you have 6.5</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Documents — CV and letter ready to prepare</div>
+        </div>
+        <div class="schol-value-row"><span class="schol-value">€11,208</span><span class="schol-value-note">≈ ৳17.1L</span></div>
+        <div class="schol-gap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Needs <b>IELTS 7.0</b> — you have <b>6.5</b>. A strong motivation letter can sometimes offset this for holistic-review programs.</div>
+        <div class="effort-row"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>CV + motivation letter</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>2 references</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>~6 hrs</span></div>
+        <div class="schol-foot">
+          <span class="deadline-pill deadline-mid">9 weeks left</span>
+          <div class="schol-actions"><button class="save-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button><a class="view-link" href="#">View details →</a></div>
+        </div>
+      </div>
+
+      <div class="schol-card card partial" id="card-vc" data-funding="partial-fund" data-deadline="90" data-value="500000">
+        <div class="schol-top">
+          <div class="schol-id">
+            <div class="schol-mark" style="background:var(--slate);">VC</div>
+            <div><div class="schol-name">Vice-Chancellor's Award</div><div class="schol-org">Merit-based · varies by university</div></div>
+          </div>
+          <div class="match-ring" onclick="toggleRing('rb-vc')" style="background:conic-gradient(var(--violet) 0deg 300deg, var(--slate-soft) 300deg 360deg);"><div class="match-ring-inner">5/6</div></div>
+        </div>
+        <div class="ring-breakdown" id="rb-vc">
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Degree level — Master's</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Target country — United Kingdom</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>IELTS — 6.5 meets minimum</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Nationality — Bangladesh eligible</div>
+          <div class="rb-row"><div class="rb-check no"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M18 6L6 18M6 6l12 12"/></svg></div>CGPA — typically needs 3.5+, you have 3.30</div>
+          <div class="rb-row"><div class="rb-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div>Application — no separate form needed</div>
+        </div>
+        <div class="schol-value-row"><span class="schol-value">Varies</span><span class="schol-value-note">typically £2,000–£6,000</span></div>
+        <div class="schol-gap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Usually needs <b>CGPA 3.5+</b> — you have <b>3.30</b>. Some universities weigh work samples alongside CGPA — worth checking per campus.</div>
+        <div class="effort-row free"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Often auto-considered on application — check per university</div>
+        <div class="schol-foot">
+          <span class="deadline-pill deadline-far">Rolling</span>
+          <div class="schol-actions"><button class="save-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button><a class="view-link" href="#">View details →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEYOND TARGET COUNTRIES -->
+    <div class="sec-head"><div class="sec-title-row"><span class="sec-title">Beyond your target countries</span></div></div>
+    <div class="sec-sub">You're focused on the UK — these are worth a look if you'd consider elsewhere.</div>
+    <div class="beyond-rail">
+      <div class="card beyond-card" id="card-vanier">
+        <span class="beyond-tag">CANADA · NOT IN YOUR TARGETS</span>
+        <div class="beyond-name">Vanier Canada Graduate Scholarship</div>
+        <div class="beyond-org">Government of Canada</div>
+        <div class="beyond-note">Matches your field and academic profile strongly — a research proposal is required, which is real extra work.</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+          <div class="beyond-val">CAD 50,000/yr</div>
+          <button class="save-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card beyond-card" id="card-awards">
+        <span class="beyond-tag">AUSTRALIA · NOT IN YOUR TARGETS</span>
+        <div class="beyond-name">Australia Awards</div>
+        <div class="beyond-org">Australian Government</div>
+        <div class="beyond-note">Full funding, competitive. Matches your degree level and field.</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+          <div class="beyond-val">Full funding</div>
+          <button class="save-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.save-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      btn.classList.toggle('saved');
+      btn.innerHTML = btn.classList.contains('saved')
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg>'
+        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg>';
+    });
+  });
+
+  function applyFundingFilter(filter){
+    document.querySelectorAll('.schol-card').forEach(function(card){
+      var show = filter === 'all' || card.dataset.funding === filter;
+      card.style.display = show ? 'flex' : 'none';
+    });
+    var strongVisible = Array.prototype.filter.call(document.querySelectorAll('#strongGrid .schol-card'), function(c){ return c.style.display !== 'none'; }).length;
+    var partialVisible = Array.prototype.filter.call(document.querySelectorAll('#partialGrid .schol-card'), function(c){ return c.style.display !== 'none'; }).length;
+    document.getElementById('strongCount').textContent = strongVisible;
+    document.getElementById('partialCount').textContent = partialVisible;
+  }
+  document.querySelectorAll('#fundingFilters .filter-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      document.querySelectorAll('#fundingFilters .filter-pill').forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      applyFundingFilter(pill.dataset.filter);
+    });
+  });
+
+  function sortGrid(gridId, mode){
+    var grid = document.getElementById(gridId);
+    var cards = Array.prototype.slice.call(grid.children);
+    cards.sort(function(a,b){
+      if(mode==='deadline') return parseInt(a.dataset.deadline) - parseInt(b.dataset.deadline);
+      if(mode==='value') return parseInt(b.dataset.value) - parseInt(a.dataset.value);
+      return 0; // 'match' = keep original (best-match) order
+    });
+    cards.forEach(function(c){ grid.appendChild(c); });
+  }
+  document.getElementById('sortSelect').addEventListener('change', function(e){
+    sortGrid('strongGrid', e.target.value);
+    sortGrid('partialGrid', e.target.value);
+  });
+
+  // ---- scroll-to-card + pulse, shared by timeline markers, plot dots, and "new this week" ----
+  function jumpToCard(targetId){
+    var target = document.getElementById(targetId);
+    if(!target) return;
+    target.scrollIntoView({behavior:'smooth', block:'center'});
+    target.classList.remove('pulse');
+    void target.offsetWidth;
+    target.classList.add('pulse');
+  }
+  document.querySelectorAll('.dl-marker[data-target]').forEach(function(m){
+    m.addEventListener('click', function(){ jumpToCard(m.dataset.target); });
+  });
+  document.querySelectorAll('.plot-dot[data-target]').forEach(function(d){
+    d.addEventListener('click', function(){ jumpToCard(d.dataset.target); });
+  });
+  document.querySelectorAll('.new-card[data-target]').forEach(function(c){
+    c.addEventListener('click', function(){ jumpToCard(c.dataset.target); });
+  });
+
+  // ---- expandable match-ring breakdown ----
+  function toggleRing(id){
+    document.querySelectorAll('.ring-breakdown').forEach(function(rb){
+      if(rb.id !== id) rb.classList.remove('open');
+    });
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  // ---- count-up animation for header stats ----
+  function countUp(el, target, isText){
+    var duration = 900, start = performance.now();
+    var prefix = isText ? (target.match(/^[^\d]*/) || [''])[0] : '';
+    var suffix = isText ? (target.match(/[^\d]*$/) || [''])[0] : '';
+    var numTarget = parseInt(target.replace(/[^\d]/g,'')) || 0;
+    function frame(now){
+      var p = Math.min((now-start)/duration, 1);
+      var val = Math.round(numTarget * p);
+      el.textContent = prefix + val + suffix;
+      if(p < 1) requestAnimationFrame(frame);
+    }
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = target; return; }
+    requestAnimationFrame(frame);
+  }
+  document.querySelectorAll('.stat-val').forEach(function(el){
+    var target = el.textContent.trim();
+    countUp(el, target, true);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Scores — Aspire.World</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --navy:#0E1B3D; --navy-2:#152A54; --paper:#FAF7F2;
+  --royal:#2547F4; --teal:#00A389; --violet:#6C4FF6; --slate:#64707D;
+  --hairline: rgba(14,27,61,0.14);
+  --hairline-strong: rgba(14,27,61,0.24);
+  --danger:#B3261E;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  font-family:'Inter',sans-serif;
+  color:var(--navy);
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:96px;
+}
+.aw-sans{font-family:'Inter',sans-serif;}
+.aw-mono{font-family:'IBM Plex Mono',monospace;}
+
+a{color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ---------- Header ---------- */
+.aw-topbar{
+  background:#fff;
+  border-bottom:1px solid var(--hairline);
+}
+.aw-shell{
+  max-width:860px;
+  margin:0 auto;
+  padding:0 24px;
+}
+.aw-topbar-inner{
+  max-width:860px;
+  margin:0 auto;
+  padding:22px 24px 24px;
+}
+.aw-top-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.aw-eyebrow{
+  font-size:11px;
+  letter-spacing:0.14em;
+  color:var(--royal);
+  font-weight:600;
+  text-transform:uppercase;
+}
+.aw-title{
+  font-size:26px;
+  font-weight:600;
+  color:var(--navy);
+  margin:6px 0 6px;
+  letter-spacing:-0.01em;
+}
+.aw-subtitle{
+  font-size:13.5px;
+  color:var(--slate);
+  max-width:520px;
+  line-height:1.5;
+  margin:0;
+}
+.aw-mode-toggle{
+  display:flex;
+  border:1px solid var(--hairline-strong);
+  border-radius:999px;
+  padding:3px;
+  background:var(--paper);
+  flex-shrink:0;
+}
+.aw-mode-btn{
+  border:none;
+  background:transparent;
+  padding:7px 13px;
+  border-radius:999px;
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:0.02em;
+  color:var(--slate);
+  white-space:nowrap;
+}
+.aw-mode-btn.active{
+  background:var(--navy);
+  color:#fff;
+}
+
+.aw-progress-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:18px;
+}
+.aw-progress-track{
+  flex:1;
+  height:6px;
+  border-radius:999px;
+  background:var(--hairline);
+  overflow:hidden;
+}
+.aw-progress-fill{
+  height:100%;
+  background:var(--teal);
+  border-radius:999px;
+  transition:width .35s ease;
+}
+.aw-progress-label{
+  font-size:11px;
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--slate);
+  white-space:nowrap;
+}
+
+/* ---------- Tab bar ---------- */
+.aw-tabbar-wrap{
+  background:#fff;
+  border-bottom:1px solid var(--hairline);
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.aw-tabbar{
+  max-width:860px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.aw-tabbar::-webkit-scrollbar{display:none;}
+.aw-tab{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid var(--hairline-strong);
+  background:#fff;
+  border-radius:10px;
+  padding:8px 13px;
+  font-size:12.5px;
+  font-weight:500;
+  color:var(--navy);
+  transition:all .15s ease;
+}
+.aw-tab:hover{border-color:var(--navy);}
+.aw-tab.active{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+}
+.aw-tab .code{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  opacity:0.7;
+}
+.aw-tab-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--hairline-strong);
+  flex-shrink:0;
+}
+.aw-tab-dot.done{background:var(--teal);}
+.aw-tab-dot.pending{background:var(--violet);}
+
+/* ---------- Panel ---------- */
+.aw-panel-outer{
+  max-width:860px;
+  margin:0 auto;
+  padding:28px 24px 40px;
+}
+.aw-panel{
+  background:#fff;
+  border:1px solid var(--hairline);
+  border-radius:16px;
+  padding:28px;
+}
+.aw-panel-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:16px;
+}
+.aw-panel-title{
+  font-size:20px;
+  font-weight:700;
+  color:var(--navy);
+  margin:0 0 4px;
+  letter-spacing:-0.01em;
+}
+.aw-panel-cat{
+  font-size:11px;
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--slate);
+  letter-spacing:0.03em;
+}
+.aw-note{
+  display:flex;
+  gap:10px;
+  background:rgba(20,125,100,0.06);
+  border-left:3px solid var(--teal);
+  border-radius:8px;
+  padding:12px 14px;
+  font-size:12.5px;
+  color:var(--navy-2);
+  line-height:1.55;
+  margin:14px 0 22px;
+}
+.aw-note .ic{color:var(--teal);flex-shrink:0;font-weight:700;}
+
+/* status toggle */
+.aw-status-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  padding:16px 0;
+  border-top:1px solid var(--hairline);
+  border-bottom:1px solid var(--hairline);
+  margin-bottom:20px;
+}
+.aw-status-q{
+  font-size:14px;
+  font-weight:600;
+  color:var(--navy);
+}
+.aw-toggle-group{display:flex;gap:8px;}
+.aw-toggle-btn{
+  border:1px solid var(--hairline-strong);
+  background:#fff;
+  border-radius:10px;
+  padding:9px 16px;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--navy);
+}
+.aw-toggle-btn.selected.yes{background:var(--teal);border-color:var(--teal);color:#fff;}
+.aw-toggle-btn.selected.no{background:var(--navy-2);border-color:var(--navy-2);color:#fff;}
+
+/* not-yet card */
+.aw-notyet-card{
+  border:1px dashed rgba(108,79,246,0.35);
+  border-radius:12px;
+  padding:18px 20px;
+  background:rgba(108,79,246,0.05);
+}
+.aw-notyet-card p{
+  font-size:13px;
+  color:var(--slate);
+  margin:0 0 14px;
+  line-height:1.55;
+}
+.aw-inline-field{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.aw-inline-field label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--navy);
+}
+.aw-inline-field input[type="date"]{
+  border:1px solid var(--hairline-strong);
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12.5px;
+  font-family:'Inter',sans-serif;
+  color:var(--navy);
+  background:#fff;
+}
+.aw-checkbox-row{
+  display:flex;align-items:center;gap:8px;
+  margin-top:12px;
+  font-size:12.5px;
+  color:var(--navy-2);
+}
+
+/* attempt cards */
+.aw-attempts{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.aw-attempt-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  padding:14px 16px;
+  background:var(--paper);
+}
+.aw-attempt-badge{
+  width:38px;height:38px;
+  border-radius:9px;
+  background:var(--navy);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  font-weight:600;
+  flex-shrink:0;
+}
+.aw-attempt-body{flex:1;min-width:0;}
+.aw-attempt-hero{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  font-weight:600;
+  color:var(--navy);
+}
+.aw-attempt-meta{
+  font-size:11.5px;
+  color:var(--slate);
+  margin-top:3px;
+}
+.aw-attempt-actions{display:flex;gap:6px;flex-shrink:0;}
+.aw-icon-btn{
+  border:1px solid var(--hairline-strong);
+  background:#fff;
+  border-radius:8px;
+  width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+  color:var(--slate);
+}
+.aw-icon-btn:hover{color:var(--navy);border-color:var(--navy);}
+.aw-icon-btn.danger:hover{color:var(--danger);border-color:var(--danger);}
+
+.aw-add-btn{
+  width:100%;
+  border:1px dashed var(--hairline-strong);
+  background:#fff;
+  border-radius:12px;
+  padding:13px;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--slate);
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.aw-add-btn:hover{color:var(--navy);border-color:var(--navy);}
+
+/* form */
+.aw-form{
+  margin-top:18px;
+  border-top:1px solid var(--hairline);
+  padding-top:20px;
+}
+.aw-dropzone{
+  border:1.5px dashed var(--hairline-strong);
+  border-radius:12px;
+  padding:24px;
+  text-align:center;
+  background:var(--paper);
+  margin-bottom:22px;
+  position:relative;
+}
+.aw-dropzone:hover{border-color:var(--royal);}
+.aw-dropzone .dz-ic{
+  font-size:22px;
+  color:var(--royal);
+  margin-bottom:8px;
+}
+.aw-dropzone .dz-title{
+  font-size:13px;
+  font-weight:600;
+  color:var(--navy);
+  margin-bottom:3px;
+}
+.aw-dropzone .dz-sub{
+  font-size:11.5px;
+  color:var(--slate);
+}
+.aw-dropzone input[type=file]{
+  position:absolute;inset:0;
+  opacity:0;
+  cursor:pointer;
+}
+.aw-dz-file{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#fff;
+  border:1px solid var(--hairline-strong);
+  border-radius:8px;
+  padding:7px 12px;
+  font-size:11.5px;
+  color:var(--navy);
+  margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;
+}
+.aw-dz-file .rm{color:var(--slate);font-weight:700;}
+
+.aw-field-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px 18px;
+  margin-bottom:6px;
+}
+.aw-field{display:flex;flex-direction:column;gap:6px;}
+.aw-field.span2{grid-column:1 / -1;}
+.aw-field label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--navy);
+}
+.aw-field .req{color:var(--royal);}
+.aw-field-input-wrap{position:relative;}
+.aw-field input[type=number],
+.aw-field input[type=date],
+.aw-field input[type=text]{
+  width:100%;
+  border:1px solid var(--hairline-strong);
+  border-radius:9px;
+  padding:10px 12px;
+  font-size:13px;
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--navy);
+  background:#fff;
+}
+.aw-field input[type=text]{font-family:'Inter',sans-serif;}
+.aw-field input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(14,27,61,0.08);}
+.aw-field .range-hint{
+  font-size:10.5px;
+  color:var(--slate);
+}
+.aw-field .err-msg{
+  font-size:11px;
+  color:var(--danger);
+  display:none;
+}
+.aw-field.invalid input{border-color:var(--danger);}
+.aw-field.invalid .err-msg{display:block;}
+.aw-pill-group{display:flex;flex-wrap:wrap;gap:7px;}
+.aw-pill-option{
+  border:1px solid var(--hairline-strong);
+  background:#fff;
+  border-radius:8px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:500;
+  color:var(--navy);
+}
+.aw-pill-option.selected{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+}
+
+.aw-form-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--hairline);
+}
+.aw-btn{
+  border-radius:10px;
+  padding:11px 20px;
+  font-size:12.5px;
+  font-weight:600;
+  border:1px solid transparent;
+}
+.aw-btn-ghost{
+  background:#fff;
+  border-color:var(--hairline-strong);
+  color:var(--navy);
+}
+.aw-btn-ghost:hover{border-color:var(--navy);}
+.aw-btn-primary{
+  background:var(--royal);
+  color:#fff;
+}
+.aw-btn-primary:hover{background:#1c37c9;}
+
+/* bottom nav */
+.aw-bottom-nav{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:#fff;
+  border-top:1px solid var(--hairline);
+  z-index:10;
+}
+.aw-bottom-inner{
+  max-width:860px;
+  margin:0 auto;
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.aw-skip-link{
+  font-size:12.5px;
+  color:var(--slate);
+  font-weight:500;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  background:none;
+  border:none;
+}
+.aw-skip-link:hover{color:var(--navy);}
+.aw-bottom-right{display:flex;gap:10px;}
+
+@media (max-width:640px){
+  .aw-field-grid{grid-template-columns:1fr;}
+  .aw-top-row{flex-direction:column;}
+  .aw-mode-toggle{align-self:flex-start;}
+  .aw-title{font-size:22px;}
+  .aw-status-row{flex-direction:column;align-items:flex-start;}
+  .aw-bottom-inner{flex-direction:column-reverse;align-items:stretch;}
+  .aw-bottom-right{width:100%;}
+  .aw-bottom-right .aw-btn{flex:1;}
+  .aw-skip-link{align-self:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="aw-topbar">
+  <div class="aw-topbar-inner">
+    <div class="aw-top-row">
+      <div>
+        <div class="aw-eyebrow">Test scores</div>
+        <h1 class="aw-title" id="pageTitle">Add your test results</h1>
+        <p class="aw-subtitle" id="pageSubtitle">Add any test you've already taken — IELTS, TOEFL, SAT, GMAT, GRE and more. Nothing here is required to continue; you can always come back and fill in the rest from your profile.</p>
+      </div>
+      <div class="aw-mode-toggle" role="group" aria-label="Preview context">
+        <button class="aw-mode-btn active" id="modeSignup" onclick="setMode('signup')">SIGNUP</button>
+        <button class="aw-mode-btn" id="modeProfile" onclick="setMode('profile')">PROFILE</button>
+      </div>
+    </div>
+    <div class="aw-progress-row">
+      <div class="aw-progress-track"><div class="aw-progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="aw-progress-label" id="progressLabel">0 of 8 tests added</div>
+    </div>
+  </div>
+</div>
+
+<div class="aw-tabbar-wrap">
+  <div class="aw-tabbar" id="tabBar"></div>
+</div>
+
+<div class="aw-panel-outer">
+  <div class="aw-panel" id="panel"></div>
+</div>
+
+<div class="aw-bottom-nav">
+  <div class="aw-bottom-inner">
+    <button class="aw-skip-link" id="backOrCancel" onclick="handleBack()">Back</button>
+    <div class="aw-bottom-right">
+      <button class="aw-skip-link" id="skipLink" onclick="handleSkip()">Skip for now</button>
+      <button class="aw-btn aw-btn-primary" id="continueBtn" onclick="handleContinue()">Continue</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- config ---------------- */
+const TESTS = [
+  { id:'ielts', label:'IELTS', code:'IELTS', category:'English proficiency',
+    note:'Academic and General Training are scored identically on a 0–9 band scale. Most UK, Ireland and Australia programs ask for the Academic version specifically.',
+    fields:[
+      {key:'testType', label:'Test type', type:'select', options:['Academic','General Training'], required:true},
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'overall', label:'Overall band', type:'number', min:0, max:9, step:0.5, required:true},
+      {key:'listening', label:'Listening', type:'number', min:0, max:9, step:0.5, required:true},
+      {key:'reading', label:'Reading', type:'number', min:0, max:9, step:0.5, required:true},
+      {key:'writing', label:'Writing', type:'number', min:0, max:9, step:0.5, required:true},
+      {key:'speaking', label:'Speaking', type:'number', min:0, max:9, step:0.5, required:true},
+      {key:'delivery', label:'Delivery mode', type:'select', options:['Computer-delivered','Paper-based'], required:false},
+      {key:'trf', label:'TRF / candidate number', type:'text', required:false, span2:true}
+    ],
+    hero:a=>`Overall ${fmt(a.overall)} · L ${fmt(a.listening)} R ${fmt(a.reading)} W ${fmt(a.writing)} S ${fmt(a.speaking)}`
+  },
+  { id:'toefl', label:'TOEFL iBT', code:'TOEFL', category:'English proficiency',
+    note:'Scores here are for TOEFL iBT (Test Center or Home Edition). TOEFL ITP/PBT scores aren\'t accepted by most institutions for admission — check with your target university first.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'total', label:'Total score', type:'number', min:0, max:120, step:1, required:true},
+      {key:'reading', label:'Reading', type:'number', min:0, max:30, step:1, required:true},
+      {key:'listening', label:'Listening', type:'number', min:0, max:30, step:1, required:true},
+      {key:'speaking', label:'Speaking', type:'number', min:0, max:30, step:1, required:true},
+      {key:'writing', label:'Writing', type:'number', min:0, max:30, step:1, required:true},
+      {key:'format', label:'Format', type:'select', options:['Test Center','Home Edition'], required:false},
+      {key:'regNum', label:'Registration number', type:'text', required:false}
+    ],
+    hero:a=>`${fmt(a.total)}/120 · R ${fmt(a.reading)} L ${fmt(a.listening)} S ${fmt(a.speaking)} W ${fmt(a.writing)}`
+  },
+  { id:'duolingo', label:'Duolingo English Test', code:'DET', category:'English proficiency',
+    note:'Scored 10–160 in steps of 5. Accepted by a fast-growing list of universities alongside IELTS/TOEFL — always confirm your target program accepts it before relying on it alone.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'overall', label:'Overall score', type:'number', min:10, max:160, step:5, required:true},
+      {key:'literacy', label:'Literacy', type:'number', min:10, max:160, step:5, required:false},
+      {key:'conversation', label:'Conversation', type:'number', min:10, max:160, step:5, required:false},
+      {key:'comprehension', label:'Comprehension', type:'number', min:10, max:160, step:5, required:false},
+      {key:'production', label:'Production', type:'number', min:10, max:160, step:5, required:false},
+      {key:'link', label:'Verification link', type:'text', required:false, span2:true}
+    ],
+    hero:a=>`${fmt(a.overall)}/160`
+  },
+  { id:'pte', label:'PTE Academic', code:'PTE', category:'English proficiency',
+    note:'Pearson PTE Academic is scored 10–90 overall and per skill, and is accepted for UK, Australian and Canadian study visas.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'overall', label:'Overall score', type:'number', min:10, max:90, step:1, required:true},
+      {key:'listening', label:'Listening', type:'number', min:10, max:90, step:1, required:true},
+      {key:'reading', label:'Reading', type:'number', min:10, max:90, step:1, required:true},
+      {key:'speaking', label:'Speaking', type:'number', min:10, max:90, step:1, required:true},
+      {key:'writing', label:'Writing', type:'number', min:10, max:90, step:1, required:true},
+      {key:'reportId', label:'Score report ID', type:'text', required:false, span2:true}
+    ],
+    hero:a=>`${fmt(a.overall)}/90`
+  },
+  { id:'sat', label:'SAT', code:'SAT', category:'Undergraduate admissions test',
+    note:'The SAT has been fully digital internationally since 2024. The optional Essay was discontinued in 2021, so it isn\'t collected here.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'composite', label:'Total composite', type:'number', min:400, max:1600, step:10, required:true},
+      {key:'ebrw', label:'Evidence-Based Reading & Writing', type:'number', min:200, max:800, step:10, required:true},
+      {key:'math', label:'Math', type:'number', min:200, max:800, step:10, required:true}
+    ],
+    hero:a=>`${fmt(a.composite)}/1600 · EBRW ${fmt(a.ebrw)} + Math ${fmt(a.math)}`
+  },
+  { id:'act', label:'ACT', code:'ACT', category:'Undergraduate admissions test',
+    note:'Composite is the average of the four required section scores. Writing is optional and not required by most international programs.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'composite', label:'Composite', type:'number', min:1, max:36, step:1, required:true},
+      {key:'english', label:'English', type:'number', min:1, max:36, step:1, required:true},
+      {key:'math', label:'Math', type:'number', min:1, max:36, step:1, required:true},
+      {key:'reading', label:'Reading', type:'number', min:1, max:36, step:1, required:true},
+      {key:'science', label:'Science', type:'number', min:1, max:36, step:1, required:true},
+      {key:'writing', label:'Writing (optional)', type:'number', min:2, max:12, step:1, required:false}
+    ],
+    hero:a=>`${fmt(a.composite)}/36`
+  },
+  { id:'gre', label:'GRE General Test', code:'GRE', category:'Graduate admissions test',
+    note:'The GRE has been a shortened, ~1h58m test since September 2023 — section structure is unchanged, only length and question count dropped.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'verbal', label:'Verbal Reasoning', type:'number', min:130, max:170, step:1, required:true},
+      {key:'quant', label:'Quantitative Reasoning', type:'number', min:130, max:170, step:1, required:true},
+      {key:'awa', label:'Analytical Writing', type:'number', min:0, max:6, step:0.5, required:true}
+    ],
+    hero:a=>`V ${fmt(a.verbal)} · Q ${fmt(a.quant)} · AWA ${fmt(a.awa)}`
+  },
+  { id:'gmat', label:'GMAT Focus Edition', code:'GMAT', category:'Graduate admissions test',
+    note:'GMAT Focus Edition replaced the previous GMAT format in 2024. It has no separate Analytical Writing (AWA) section — Data Insights is the third scored section instead.',
+    fields:[
+      {key:'testDate', label:'Test date', type:'date', required:true},
+      {key:'total', label:'Total score', type:'number', min:205, max:805, step:10, required:true},
+      {key:'quant', label:'Quantitative Reasoning', type:'number', min:60, max:90, step:1, required:true},
+      {key:'verbal', label:'Verbal Reasoning', type:'number', min:60, max:90, step:1, required:true},
+      {key:'dataInsights', label:'Data Insights', type:'number', min:60, max:90, step:1, required:true}
+    ],
+    hero:a=>`${fmt(a.total)} · Q ${fmt(a.quant)} V ${fmt(a.verbal)} DI ${fmt(a.dataInsights)}`
+  }
+];
+
+function fmt(v){ return (v===undefined||v===null||v==='') ? '—' : v; }
+function byId(id){ return TESTS.find(t=>t.id===id); }
+
+/* ---------------- state ---------------- */
+let state = {
+  mode:'signup',
+  activeTab: TESTS[0].id,
+  attempts: {},   // { testId: [ {id, ...fieldValues, fileName} ] }
+  notYet: {},     // { testId: { checked:bool, plannedDate:'', remind:bool } }
+  formOpen: {},   // { testId: 'new' | attemptId | null }
+};
+TESTS.forEach(t=>{ state.attempts[t.id] = []; state.notYet[t.id] = {checked:false, plannedDate:'', remind:false}; state.formOpen[t.id] = null; });
+
+/* ---------------- rendering ---------------- */
+function renderAll(){
+  renderTabBar();
+  renderPanel();
+  renderProgress();
+  renderBottomNav();
+}
+
+function renderTabBar(){
+  const bar = document.getElementById('tabBar');
+  bar.innerHTML = TESTS.map(t=>{
+    const has = state.attempts[t.id].length > 0;
+    const pending = !has && state.notYet[t.id].checked;
+    const dotClass = has ? 'done' : (pending ? 'pending' : '');
+    const active = t.id === state.activeTab ? 'active' : '';
+    return `<button class="aw-tab ${active}" onclick="selectTab('${t.id}')">
+      <span class="aw-tab-dot ${dotClass}"></span>
+      ${t.label} <span class="code">${t.code}</span>
+    </button>`;
+  }).join('');
+}
+
+function selectTab(id){
+  state.activeTab = id;
+  renderAll();
+}
+
+function renderProgress(){
+  const done = TESTS.filter(t=>state.attempts[t.id].length>0).length;
+  document.getElementById('progressFill').style.width = Math.round(done/TESTS.length*100)+'%';
+  document.getElementById('progressLabel').textContent = `${done} of ${TESTS.length} tests added`;
+}
+
+function renderPanel(){
+  const test = byId(state.activeTab);
+  const attempts = state.attempts[test.id];
+  const ny = state.notYet[test.id];
+  const openForm = state.formOpen[test.id];
+
+  let html = `
+    <div class="aw-panel-head">
+      <div>
+        <div class="aw-panel-cat">${test.category.toUpperCase()}</div>
+        <h2 class="aw-panel-title">${test.label}</h2>
+      </div>
+    </div>
+    <div class="aw-note"><span class="ic">i</span><span>${test.note}</span></div>
+
+    <div class="aw-status-row">
+      <div class="aw-status-q">Have you taken the ${test.label}?</div>
+      <div class="aw-toggle-group">
+        <button class="aw-toggle-btn yes ${(!ny.checked) ? 'selected' : ''}" onclick="setTaken('${test.id}', true)">Yes, add my score</button>
+        <button class="aw-toggle-btn no ${(ny.checked) ? 'selected' : ''}" onclick="setTaken('${test.id}', false)">Not yet</button>
+      </div>
+    </div>
+  `;
+
+  if(ny.checked && attempts.length===0){
+    html += `
+      <div class="aw-notyet-card">
+        <p>No problem — you can add this once you've taken it. If you're planning to sit the ${test.label}, tell us roughly when and we'll remind you closer to the date.</p>
+        <div class="aw-inline-field">
+          <label>Planning to take it around</label>
+          <input type="date" value="${ny.plannedDate||''}" onchange="updateNotYetDate('${test.id}', this.value)">
+        </div>
+        <div class="aw-checkbox-row">
+          <input type="checkbox" id="remind-${test.id}" ${ny.remind?'checked':''} onchange="updateNotYetRemind('${test.id}', this.checked)">
+          <label for="remind-${test.id}">Remind me two weeks before this date</label>
+        </div>
+      </div>
+    `;
+  } else {
+    if(attempts.length){
+      html += `<div class="aw-attempts">` + attempts.map((a,i)=>`
+        <div class="aw-attempt-card">
+          <div class="aw-attempt-badge">${test.code}</div>
+          <div class="aw-attempt-body">
+            <div class="aw-attempt-hero">${test.hero(a)}</div>
+            <div class="aw-attempt-meta">Taken ${a.testDate ? new Date(a.testDate).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—'}${a.fileName ? ' · '+a.fileName : ''}${attempts.length>1 ? ' · Attempt '+(i+1) : ''}</div>
+          </div>
+          <div class="aw-attempt-actions">
+            <button class="aw-icon-btn" title="Edit" onclick="openForm('${test.id}','${a.id}')">✎</button>
+            <button class="aw-icon-btn danger" title="Remove" onclick="removeAttempt('${test.id}','${a.id}')">✕</button>
+          </div>
+        </div>
+      `).join('') + `</div>`;
+    }
+
+    if(openForm){
+      const editing = openForm !== 'new' ? attempts.find(a=>a.id===openForm) : null;
+      html += renderForm(test, editing);
+    } else {
+      html += `<button class="aw-add-btn" onclick="openForm('${test.id}','new')">+ ${attempts.length ? 'Add another attempt' : 'Add your score'}</button>`;
+    }
+  }
+
+  document.getElementById('panel').innerHTML = html;
+}
+
+function renderForm(test, editing){
+  const vals = editing || {};
+  const fileName = editing ? editing.fileName : null;
+  let fieldsHtml = test.fields.map(f=>{
+    const val = vals[f.key] !== undefined ? vals[f.key] : '';
+    const spanClass = f.span2 ? 'span2' : '';
+    let inputHtml = '';
+    if(f.type === 'select'){
+      inputHtml = `<div class="aw-pill-group" data-key="${f.key}">` + f.options.map(o=>
+        `<button type="button" class="aw-pill-option ${val===o?'selected':''}" onclick="selectPill('${test.id}','${f.key}','${o}')">${o}</button>`
+      ).join('') + `</div>`;
+    } else if(f.type === 'date'){
+      inputHtml = `<input type="date" data-key="${f.key}" value="${val}">`;
+    } else if(f.type === 'number'){
+      inputHtml = `<input type="number" data-key="${f.key}" min="${f.min}" max="${f.max}" step="${f.step}" value="${val}" placeholder="${f.min}–${f.max}">
+        <div class="range-hint">Range ${f.min}–${f.max}${f.step && f.step<1 ? ', half-point steps' : ''}</div>`;
+    } else {
+      inputHtml = `<input type="text" data-key="${f.key}" value="${val}">`;
+    }
+    return `<div class="aw-field ${spanClass}" data-field="${f.key}">
+      <label>${f.label}${f.required ? ' <span class="req">*</span>' : ''}</label>
+      ${inputHtml}
+      <div class="err-msg">Required, and must be within range.</div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="aw-form" id="formArea">
+      <div class="aw-dropzone" id="dropzone-${test.id}">
+        <div class="dz-ic">⇧</div>
+        <div class="dz-title">Upload your score report</div>
+        <div class="dz-sub">PDF, JPG or PNG · we'll try to auto-fill the fields below, but always double-check them</div>
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="onFileSelect('${test.id}', this.files)">
+        ${fileName ? `<div class="aw-dz-file">📄 ${fileName} <span class="rm" onclick="event.stopPropagation(); clearFile('${test.id}')">✕</span></div>` : ''}
+      </div>
+      <div class="aw-field-grid" id="fieldGrid-${test.id}">
+        ${fieldsHtml}
+      </div>
+      <div class="aw-form-actions">
+        <button class="aw-btn aw-btn-ghost" onclick="closeForm('${test.id}')">Cancel</button>
+        <button class="aw-btn aw-btn-primary" onclick="saveForm('${test.id}')">Save score</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderBottomNav(){
+  const backBtn = document.getElementById('backOrCancel');
+  const continueBtn = document.getElementById('continueBtn');
+  const skipLink = document.getElementById('skipLink');
+  if(state.mode === 'profile'){
+    backBtn.textContent = 'Cancel';
+    continueBtn.textContent = 'Save changes';
+    skipLink.style.display = 'none';
+  } else {
+    backBtn.textContent = 'Back';
+    continueBtn.textContent = 'Continue';
+    skipLink.style.display = 'inline-block';
+  }
+}
+
+/* ---------------- interactions ---------------- */
+function setTaken(testId, taken){
+  if(taken){
+    state.notYet[testId].checked = false;
+    if(state.attempts[testId].length === 0 && !state.formOpen[testId]){
+      state.formOpen[testId] = 'new';
+    }
+  } else {
+    state.notYet[testId].checked = true;
+    state.formOpen[testId] = null;
+  }
+  renderAll();
+}
+
+function updateNotYetDate(testId, val){
+  state.notYet[testId].plannedDate = val;
+  renderTabBar();
+}
+function updateNotYetRemind(testId, val){
+  state.notYet[testId].remind = val;
+}
+
+function openForm(testId, which){
+  state.formOpen[testId] = which;
+  renderPanel();
+}
+function closeForm(testId){
+  state.formOpen[testId] = null;
+  renderPanel();
+}
+
+function selectPill(testId, key, value){
+  const test = byId(testId);
+  const editingId = state.formOpen[testId];
+  // update DOM immediately for responsiveness
+  const group = document.querySelector(`#fieldGrid-${testId} .aw-pill-group[data-key="${key}"]`);
+  if(group){
+    [...group.children].forEach(btn=>{
+      btn.classList.toggle('selected', btn.textContent === value);
+    });
+  }
+}
+
+function onFileSelect(testId, files){
+  if(!files || !files[0]) return;
+  const name = files[0].name;
+  const dz = document.getElementById(`dropzone-${testId}`);
+  let chip = dz.querySelector('.aw-dz-file');
+  if(!chip){
+    chip = document.createElement('div');
+    chip.className = 'aw-dz-file';
+    dz.appendChild(chip);
+  }
+  chip.innerHTML = `📄 ${name} <span class="rm" onclick="event.stopPropagation(); clearFile('${testId}')">✕</span>`;
+  dz.dataset.fileName = name;
+}
+function clearFile(testId){
+  const dz = document.getElementById(`dropzone-${testId}`);
+  const chip = dz.querySelector('.aw-dz-file');
+  if(chip) chip.remove();
+  delete dz.dataset.fileName;
+}
+
+function saveForm(testId){
+  const test = byId(testId);
+  const grid = document.getElementById(`fieldGrid-${testId}`);
+  const dz = document.getElementById(`dropzone-${testId}`);
+  const data = {};
+  let valid = true;
+
+  test.fields.forEach(f=>{
+    const fieldEl = grid.querySelector(`[data-field="${f.key}"]`);
+    let raw;
+    if(f.type === 'select'){
+      const selected = fieldEl.querySelector('.aw-pill-option.selected');
+      raw = selected ? selected.textContent : '';
+    } else {
+      const input = fieldEl.querySelector('input');
+      raw = input.value;
+    }
+    let ok = true;
+    if(f.required && (raw === '' || raw === undefined)) ok = false;
+    if(f.type === 'number' && raw !== ''){
+      const num = parseFloat(raw);
+      if(isNaN(num) || num < f.min || num > f.max) ok = false;
+      raw = isNaN(num) ? '' : num;
+    }
+    fieldEl.classList.toggle('invalid', !ok);
+    if(!ok) valid = false;
+    data[f.key] = raw;
+  });
+
+  if(!valid) return;
+
+  const editingId = state.formOpen[testId];
+  const fileName = dz.dataset.fileName || (editingId !== 'new' ? (state.attempts[testId].find(a=>a.id===editingId)||{}).fileName : null) || null;
+
+  if(editingId === 'new'){
+    data.id = 'att_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+    data.fileName = fileName;
+    state.attempts[testId].push(data);
+  } else {
+    const idx = state.attempts[testId].findIndex(a=>a.id===editingId);
+    data.id = editingId;
+    data.fileName = fileName;
+    state.attempts[testId][idx] = data;
+  }
+
+  state.formOpen[testId] = null;
+  renderAll();
+}
+
+function removeAttempt(testId, attemptId){
+  state.attempts[testId] = state.attempts[testId].filter(a=>a.id!==attemptId);
+  renderAll();
+}
+
+function setMode(mode){
+  state.mode = mode;
+  document.getElementById('modeSignup').classList.toggle('active', mode==='signup');
+  document.getElementById('modeProfile').classList.toggle('active', mode==='profile');
+  document.getElementById('pageTitle').textContent = mode==='signup' ? 'Add your test results' : 'Test scores';
+  document.getElementById('pageSubtitle').textContent = mode==='signup'
+    ? "Add any test you've already taken — IELTS, TOEFL, SAT, GMAT, GRE and more. Nothing here is required to continue; you can always come back and fill in the rest from your profile."
+    : "Update or add test results at any time. Changes here are reflected on your profile and in program matches immediately.";
+  renderBottomNav();
+}
+
+function handleBack(){
+  alert(state.mode==='profile' ? 'Would discard unsaved changes and return to profile.' : 'Would return to the previous signup step.');
+}
+function handleSkip(){
+  alert('Would continue signup without adding any test scores — students can add these later from their profile.');
+}
+function handleContinue(){
+  const done = TESTS.filter(t=>state.attempts[t.id].length>0).length;
+  alert(state.mode==='profile'
+    ? `Would save changes. ${done} test${done===1?'':'s'} on file.`
+    : `Would continue to the next signup step with ${done} test${done===1?'':'s'} saved.`);
+}
+
+renderAll();
+</script>
+</body>
+</html>

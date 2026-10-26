@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>University of Manchester — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C; --ink-3:#1B2E63;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,background .12s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-primary:disabled{background:rgba(255,255,255,.12);color:rgba(255,255,255,.5);cursor:default;transform:none;}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-ghost-dark{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);color:var(--white);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.16);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:6px;}
+
+  /* hero */
+  .hero{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:30px 0 28px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+  .hero-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .verified-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,163,137,.16);border:1px solid rgba(0,163,137,.4);color:#5FE0C7;font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;}
+  .status-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(37,71,244,.22);border:1px solid rgba(88,116,255,.45);color:#C3CDFF;font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;}
+  .hero-meta-line{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.55);}
+  .hero-id-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:18px;}
+  .hero-name{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-.015em;line-height:1.05;}
+  .hero-program{font-size:14.5px;color:rgba(255,255,255,.65);margin-top:6px;}
+  .hero-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+  .program-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .program-label{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-right:4px;}
+  .program-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.7);border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:600;}
+  .program-pill.active{background:var(--white);color:var(--ink);}
+
+  .ticket-strip{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);overflow-x:auto;max-width:fit-content;margin-bottom:18px;}
+  .ticket-seg{padding:12px 20px;border-left:1px dashed rgba(255,255,255,.2);flex-shrink:0;}
+  .ticket-seg:first-child{border-left:none;}
+  .ticket-seg-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.42);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;}
+  .ticket-seg-val{font-family:var(--mono);font-size:12.5px;font-weight:600;white-space:nowrap;}
+
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .stat-tile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:14px 15px;}
+  .stat-icon{color:rgba(255,255,255,.4);margin-bottom:10px;}
+  .stat-val{font-size:18px;font-weight:700;letter-spacing:-.01em;transition:opacity .15s ease;}
+  .stat-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.03em;margin-top:3px;}
+
+  /* fit module */
+  .fit-wrap{padding:26px 0 6px;}
+  .fit-card{padding:26px 28px;display:grid;grid-template-columns:.85fr 1.3fr;gap:30px;}
+  .fit-ring-col{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;border-right:1px dashed var(--border);padding-right:20px;}
+  .fit-ring{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 1s ease;}
+  .fit-ring-inner{width:96px;height:96px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .fit-ring-num{font-family:var(--mono);font-size:26px;font-weight:800;color:var(--ink);}
+  .fit-ring-label{font-size:9px;color:var(--slate);letter-spacing:.04em;}
+  .fit-title{font-size:13.5px;font-weight:700;}
+  .fit-sub{font-size:11.5px;color:var(--slate);line-height:1.5;}
+  .fit-list{display:flex;flex-direction:column;gap:2px;}
+  .fit-row{display:flex;align-items:center;gap:11px;padding:9px 4px;border-bottom:1px solid var(--border);}
+  .fit-row:last-child{border-bottom:none;}
+  .fit-check{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--teal-soft);color:var(--teal-text);}
+  .fit-check.pending{background:var(--slate-soft);color:transparent;}
+  .fit-row-name{font-size:13px;font-weight:600;flex:1;}
+  .fit-row-val{font-size:11.5px;color:var(--slate);}
+  .fit-note{font-size:11px;color:var(--slate);margin-top:14px;grid-column:1/-1;border-top:1px solid var(--border);padding-top:14px;}
+
+  /* subnav */
+  .subnav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .subnav-inner{display:flex;gap:4px;overflow-x:auto;}
+  .subnav a{font-size:13px;font-weight:500;color:var(--slate);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;display:block;}
+  .subnav a.active{color:var(--ink);font-weight:600;border-bottom-color:var(--royal);}
+  .subnav a:hover{color:var(--ink);}
+
+  .layout{display:grid;grid-template-columns:1fr 260px;gap:40px;padding:36px 0 64px;}
+  section{scroll-margin-top:64px;margin-bottom:44px;}
+  .sec-title{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+  .sec-sub{font-size:13px;color:var(--slate);max-width:520px;line-height:1.5;margin-bottom:18px;}
+  .sec-nosub{margin-bottom:18px;}
+
+  /* overview */
+  .overview-text{font-size:14.5px;line-height:1.7;color:#2A3352;max-width:600px;margin-bottom:18px;}
+  .fact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  .fact-tile{padding:14px 16px;}
+  .fact-icon{color:var(--royal);margin-bottom:8px;}
+  .fact-val{font-size:15px;font-weight:700;}
+  .fact-label{font-size:10.5px;color:var(--slate);margin-top:2px;}
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--slate-soft);color:var(--ink);}
+  .chip.muted{background:none;border:1px dashed var(--border);color:var(--slate);}
+
+  /* costs */
+  .cost-fresh{font-size:11.5px;color:var(--slate);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .cost-bar{display:flex;height:36px;border-radius:10px;overflow:hidden;width:100%;margin-bottom:16px;}
+  .cost-seg{height:100%;transition:width .5s cubic-bezier(.4,.1,.2,1);min-width:10px;}
+  .cost-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+  .cost-legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;}
+  .cost-legend-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
+  .cost-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);}
+  .cost-row:last-child{border-bottom:none;}
+  .cost-item-name{font-size:13.5px;font-weight:600;}
+  .cost-item-note{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .cost-item-val{font-family:var(--mono);font-size:13.5px;font-weight:600;}
+  .cost-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--paper);}
+  .cost-total-label{font-size:13.5px;font-weight:700;}
+  .cost-total-val{font-family:var(--mono);font-size:19px;font-weight:800;}
+  .cost-total-bdt{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .budget-check{display:flex;align-items:center;gap:10px;background:var(--teal-soft);border-radius:var(--r-sm);padding:12px 16px;margin-top:14px;font-size:12.5px;color:var(--teal-text);}
+
+  /* requirements full */
+  .req-full-row{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);}
+  .req-full-row:last-child{border-bottom:none;}
+  .req-icon{width:34px;height:34px;border-radius:10px;background:var(--slate-soft);color:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .req-full-row.met .req-icon{background:var(--teal-soft);color:var(--teal-text);}
+  .req-name{font-size:13.5px;font-weight:700;}
+  .req-detail{font-size:12px;color:var(--slate);margin-top:2px;}
+  .req-status{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+  .req-status.met{background:var(--teal-soft);color:var(--teal-text);}
+  .req-status.pending{background:var(--slate-soft);color:var(--slate);}
+
+  /* journey */
+  .step-detail-row{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border);}
+  .step-detail-row:last-child{border-bottom:none;}
+  .check{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--teal-soft);color:var(--teal-text);}
+  .check.pending{background:var(--slate-soft);color:transparent;}
+  .step-detail-text{font-size:13.5px;flex:1;}
+  .step-phase-tag{font-family:var(--mono);font-size:9px;color:var(--royal-dark);background:var(--royal-soft);padding:2px 8px;border-radius:999px;margin-right:8px;letter-spacing:.03em;}
+  .step-detail-date{font-family:var(--mono);font-size:11.5px;color:var(--slate);white-space:nowrap;}
+
+  /* scholarships */
+  .match-card{padding:16px 18px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+  .match-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .match-name{font-size:13.5px;font-weight:700;}
+  .match-org{font-size:11.5px;color:var(--slate);margin-top:1px;}
+  .match-pill{font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap;}
+  .pill-strong{background:var(--teal-soft);color:#00806C;}
+  .pill-partial{background:var(--violet-soft);color:#5333C9;}
+  .match-value{font-family:var(--mono);font-size:12.5px;font-weight:600;}
+
+  /* campus life */
+  .campus-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .mix-card{padding:20px;}
+  .mix-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .mix-row:last-child{margin-bottom:0;}
+  .mix-ring{width:52px;height:52px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .mix-ring-inner{width:40px;height:40px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:700;}
+  .mix-label{font-size:12.5px;font-weight:600;}
+  .mix-sub{font-size:11px;color:var(--slate);}
+  .city-vibe-card{padding:20px;}
+  .city-vibe-title{font-size:13.5px;font-weight:700;margin-bottom:6px;}
+  .city-vibe-text{font-size:12.5px;color:var(--slate);line-height:1.6;}
+  .voice-card{padding:20px;grid-column:1/-1;display:flex;gap:16px;align-items:flex-start;}
+  .voice-avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;}
+  .voice-quote{font-size:13.5px;font-style:italic;color:#2A3352;line-height:1.6;margin-bottom:8px;}
+  .voice-who{font-size:11.5px;color:var(--slate);}
+
+  /* connect */
+  .connect-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;}
+  .agency-mini{padding:20px;}
+  .agency-mini-top{display:flex;gap:12px;align-items:center;margin-bottom:12px;}
+  .agency-logo{width:40px;height:40px;border-radius:10px;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+  .agency-name{font-size:14px;font-weight:700;}
+  .agency-verified{display:flex;align-items:center;gap:4px;font-size:11px;color:#00806C;font-weight:600;margin-top:2px;}
+  .agency-stat-row{display:flex;gap:20px;margin-bottom:14px;font-size:11.5px;color:var(--slate);}
+  .agency-stat-row b{color:var(--ink);font-family:var(--mono);}
+  .agency-actions{display:flex;gap:8px;}
+  .website-card{padding:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;}
+  .website-card-title{font-size:14px;font-weight:700;}
+  .website-card-sub{font-size:12px;color:var(--slate);line-height:1.5;}
+
+  /* sidebar */
+  .side-card{padding:20px;position:sticky;top:70px;display:flex;flex-direction:column;gap:18px;}
+  .side-label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;}
+  .intake-row{font-size:13px;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+  .intake-dot{width:6px;height:6px;border-radius:50%;background:var(--royal);flex-shrink:0;}
+  .jump-list{display:flex;flex-direction:column;gap:2px;}
+  .jump-list a{font-size:12.5px;color:var(--slate);padding:5px 0;}
+  .jump-list a:hover{color:var(--ink);}
+  .full-outline{width:100%;justify-content:center;}
+  .full-primary{width:100%;justify-content:center;}
+
+  @media(max-width:960px){
+    .hero-stats{grid-template-columns:repeat(2,1fr);}
+    .fit-card{grid-template-columns:1fr;}
+    .fit-ring-col{border-right:none;border-bottom:1px dashed var(--border);padding-right:0;padding-bottom:20px;}
+    .layout{grid-template-columns:1fr;}
+    .fact-grid{grid-template-columns:repeat(2,1fr);}
+    .campus-grid{grid-template-columns:1fr;}
+    .connect-grid{grid-template-columns:1fr;}
+    .side-card{position:static;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a class="back-link" href="#"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to United Kingdom</a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-top">
+        <div class="hero-badges">
+          <span class="verified-chip">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            Verified by aspire.world
+          </span>
+          <span class="hero-meta-line">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Manchester, United Kingdom
+          </span>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-outline btn-sm" id="saveBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg> Add to compare</button>
+          <a class="btn btn-outline btn-sm" href="#" target="_blank" rel="noopener">Visit official website
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-id-row">
+        <div>
+          <div class="hero-name">University of Manchester</div>
+          <div class="hero-program" id="heroProgram">MSc Data Science &amp; AI</div>
+        </div>
+        <div id="heroCta">
+          <span class="status-chip" style="margin-right:8px;">Applied · decision 18 Dec</span>
+          <button class="btn btn-primary" id="applyBtn">View application status
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="program-row">
+        <span class="program-label">Viewing program</span>
+        <button class="program-pill active" data-program="datascience">MSc Data Science &amp; AI</button>
+        <button class="program-pill" data-program="compsci">MSc Computer Science</button>
+        <button class="program-pill" data-program="bizanalytics">MSc Business Analytics</button>
+      </div>
+
+      <div class="ticket-strip">
+        <div class="ticket-seg"><div class="ticket-seg-label">Route</div><div class="ticket-seg-val">DAC → MAN</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Founded</div><div class="ticket-seg-val">1824</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Campus type</div><div class="ticket-seg-val">Public research</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Setting</div><div class="ticket-seg-val">City campus</div></div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 6l4 14M8 6L4 20M12 2v4M6 10h12"/></svg></div><div class="stat-val">#32</div><div class="stat-label">WORLD RANKING (QS 2026)</div></div>
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="stat-val">44,000</div><div class="stat-label">TOTAL STUDENTS</div></div>
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><div class="stat-val">56%</div><div class="stat-label">ACCEPTANCE RATE</div></div>
+        <div class="stat-tile"><div class="stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div><div class="stat-val" id="statDeadline">15 Jul 2026</div><div class="stat-label">NEXT DEADLINE, SELECTED PROGRAM</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIT MODULE -->
+  <div class="wrap fit-wrap">
+    <div class="card fit-card">
+      <div class="fit-ring-col">
+        <div class="fit-ring" id="fitRing">
+          <div class="fit-ring-inner"><div class="fit-ring-num" id="fitRingNum">5/6</div><div class="fit-ring-label">REQUIREMENTS MET</div></div>
+        </div>
+        <div class="fit-title">Personalized to your profile</div>
+        <div class="fit-sub">Matched against your saved IELTS, CGPA and application progress.</div>
+      </div>
+      <div>
+        <div class="fit-list" id="fitList"></div>
+      </div>
+      <div class="fit-note">Update your scores anytime in your dashboard — this and every requirements checklist on aspire.world updates automatically.</div>
+    </div>
+  </div>
+
+  <!-- SUBNAV -->
+  <div class="subnav">
+    <div class="wrap subnav-inner">
+      <a href="#overview" class="active">Overview</a>
+      <a href="#costs">Costs</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#journey">Your journey</a>
+      <a href="#scholarships">Scholarships</a>
+      <a href="#campus">Campus life</a>
+      <a href="#connect">Connect</a>
+    </div>
+  </div>
+
+  <div class="wrap layout">
+    <div>
+      <section id="overview">
+        <div class="eyebrow">About</div>
+        <div class="sec-title">University of Manchester</div>
+        <div class="overview-text">
+          One of the UK's largest research universities and a founding member of the Russell Group, Manchester combines a genuine city-campus energy with deep pipelines into the region's finance and tech employers. The Data Science &amp; AI programs sit within the School of Computer Science, ranked among the strongest in the UK for research output.
+        </div>
+        <div class="fact-grid">
+          <div class="card fact-tile"><div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div><div class="fact-val">1824</div><div class="fact-label">FOUNDED</div></div>
+          <div class="card fact-tile"><div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4 8 4v14"/></svg></div><div class="fact-val">City campus</div><div class="fact-label">SETTING</div></div>
+          <div class="card fact-tile"><div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="fact-val">1:12</div><div class="fact-label">STUDENT–STAFF RATIO</div></div>
+          <div class="card fact-tile"><div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div><div class="fact-val">Russell Group</div><div class="fact-label">MEMBERSHIP</div></div>
+        </div>
+        <div class="chip-row">
+          <span class="chip">Computer Science</span>
+          <span class="chip">Data &amp; AI</span>
+          <span class="chip">Business Analytics</span>
+          <span class="chip muted">+ 6 more programs</span>
+        </div>
+      </section>
+
+      <section id="costs">
+        <div class="eyebrow">First-year cost breakdown</div>
+        <div class="sec-title">What it actually costs</div>
+        <div class="sec-sub">Every item below, not a "starting from" number — updates when you switch program above.</div>
+        <div class="cost-fresh">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          Figures confirmed 3 Aug 2026 · flight cost is an estimate
+        </div>
+        <div class="cost-bar" id="costBar">
+          <div class="cost-seg" id="segTuition" style="background:var(--royal);width:50%;"></div>
+          <div class="cost-seg" id="segAccom" style="background:var(--violet);width:20%;"></div>
+          <div class="cost-seg" id="segLiving" style="background:var(--teal);width:25%;"></div>
+          <div class="cost-seg" id="segOther" style="background:var(--slate);width:5%;"></div>
+        </div>
+        <div class="cost-legend">
+          <div class="cost-legend-item"><span class="cost-legend-dot" style="background:var(--royal);"></span>Tuition</div>
+          <div class="cost-legend-item"><span class="cost-legend-dot" style="background:var(--violet);"></span>Accommodation</div>
+          <div class="cost-legend-item"><span class="cost-legend-dot" style="background:var(--teal);"></span>Living costs</div>
+          <div class="cost-legend-item"><span class="cost-legend-dot" style="background:var(--slate);"></span>Insurance, visa &amp; flight</div>
+        </div>
+        <div class="card">
+          <div class="cost-row"><div><div class="cost-item-name">Tuition</div><div class="cost-item-note">Per year, international rate — selected program</div></div><div class="cost-item-val" id="costTuitionVal">£24,500</div></div>
+          <div class="cost-row"><div><div class="cost-item-name">Accommodation</div><div class="cost-item-note">On-campus, standard room</div></div><div class="cost-item-val">£9,800</div></div>
+          <div class="cost-row"><div><div class="cost-item-name">Living expenses</div><div class="cost-item-note">Food, transport, personal — UKVI estimate</div></div><div class="cost-item-val">£12,000</div></div>
+          <div class="cost-row"><div><div class="cost-item-name">Health surcharge (IHS)</div><div class="cost-item-note">Per year, paid with visa</div></div><div class="cost-item-val">£776</div></div>
+          <div class="cost-row"><div><div class="cost-item-name">Visa fee</div><div class="cost-item-note">One-time, Student Route</div></div><div class="cost-item-val">£558</div></div>
+          <div class="cost-row"><div><div class="cost-item-name">Flight (DAC–MAN)</div><div class="cost-item-note">One-time, estimated return</div></div><div class="cost-item-val">£850</div></div>
+          <div class="cost-total-row">
+            <div><div class="cost-total-label">Estimated first-year total</div><div class="cost-total-bdt" id="costTotalBdt">≈ ৳73.9L at today's rate</div></div>
+            <div class="cost-total-val" id="costTotalVal">£48,484</div>
+          </div>
+        </div>
+        <div class="budget-check" id="budgetCheck">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>This fits within your stated budget of ৳80L, with ৳6.1L to spare.</span>
+        </div>
+      </section>
+
+      <section id="requirements">
+        <div class="eyebrow">What you'll need</div>
+        <div class="sec-title">Entry requirements</div>
+        <div class="sec-sub">Full detail behind the summary above — updates with the selected program.</div>
+        <div class="card" id="reqFullList"></div>
+      </section>
+
+      <section id="journey">
+        <div class="eyebrow">Mapped to your journey</div>
+        <div class="sec-title">Your steps for this university</div>
+        <div class="sec-sub">Not a generic checklist — backward-planned from Manchester's actual deadline.</div>
+        <div class="card">
+          <div class="step-detail-row"><div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="step-detail-text"><span class="step-phase-tag">SHORTLIST</span>Shortlisted Manchester within budget</div><div class="step-detail-date">Done · 2 Nov</div></div>
+          <div class="step-detail-row"><div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="step-detail-text"><span class="step-phase-tag">APPLY</span>Requested reference letters from two faculty</div><div class="step-detail-date">Done · 6 Nov</div></div>
+          <div class="step-detail-row"><div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="step-detail-text"><span class="step-phase-tag">APPLY</span>Submitted personal statement and application</div><div class="step-detail-date">Done · 14 Nov</div></div>
+          <div class="step-detail-row"><div class="check pending"></div><div class="step-detail-text"><span class="step-phase-tag">APPLY</span>Official transcript still requested from your institution</div><div class="step-detail-date">Pending</div></div>
+          <div class="step-detail-row"><div class="check pending"></div><div class="step-detail-text"><span class="step-phase-tag">VISA</span>Open Student File once offer is confirmed</div><div class="step-detail-date">After decision</div></div>
+          <div class="step-detail-row"><div class="check pending"></div><div class="step-detail-text"><span class="step-phase-tag">VISA</span>Book visa appointment, Student Route</div><div class="step-detail-date">After offer</div></div>
+        </div>
+      </section>
+
+      <section id="scholarships">
+        <div class="eyebrow">Funding options</div>
+        <div class="sec-title sec-nosub">Scholarships you may qualify for</div>
+        <div class="match-card card">
+          <div class="match-top"><div><div class="match-name">Manchester Global Futures Scholarship</div><div class="match-org">Merit-based · automatic consideration on offer</div></div><span class="match-pill pill-strong">Strong match</span></div>
+          <div class="match-value">£5,000</div>
+        </div>
+        <div class="match-card card">
+          <div class="match-top"><div><div class="match-name">Chevening Scholarship</div><div class="match-org">UK Government · separate application, opens August</div></div><span class="match-pill pill-partial">Worth applying</span></div>
+          <div class="match-value">Full funding</div>
+        </div>
+      </section>
+
+      <section id="campus">
+        <div class="eyebrow">What it's actually like</div>
+        <div class="sec-title sec-nosub">Campus life</div>
+        <div class="campus-grid">
+          <div class="card mix-card">
+            <div class="side-label" style="margin-bottom:14px;">STUDENT MIX</div>
+            <div class="mix-row">
+              <div class="mix-ring" style="background:conic-gradient(var(--royal) 0deg 137deg, var(--slate-soft) 137deg 360deg);"><div class="mix-ring-inner">38%</div></div>
+              <div><div class="mix-label">International students</div><div class="mix-sub">From over 160 countries</div></div>
+            </div>
+            <div class="mix-row">
+              <div class="mix-ring" style="background:conic-gradient(var(--violet) 0deg 288deg, var(--slate-soft) 288deg 360deg);"><div class="mix-ring-inner">80%</div></div>
+              <div><div class="mix-label">Postgraduate satisfaction</div><div class="mix-sub">National Student Survey, most recent</div></div>
+            </div>
+          </div>
+          <div class="card city-vibe-card">
+            <div class="side-label" style="margin-bottom:8px;">MANCHESTER, THE CITY</div>
+            <div class="city-vibe-title">The northern powerhouse</div>
+            <div class="city-vibe-text">Real second-city energy, a big student population, and a genuine tech and media job market — see the full city breakdown on the United Kingdom destination page.</div>
+          </div>
+          <div class="card voice-card">
+            <div class="voice-avatar">SR</div>
+            <div>
+              <div class="voice-quote">"Nobody tells you how dark it gets by 4pm in December. I wish I'd known to plan my study schedule around daylight, not against it."</div>
+              <div class="voice-who">Sumaiya Rahman · MSc Data Science, Manchester</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="connect">
+        <div class="eyebrow">Next step</div>
+        <div class="sec-title sec-nosub">Explore further, or get help applying</div>
+        <div class="connect-grid">
+          <div class="card agency-mini">
+            <div class="side-label" style="margin-bottom:10px;">VERIFIED AGENCY FOR THIS UNIVERSITY</div>
+            <div class="agency-mini-top">
+              <div class="agency-logo">ED</div>
+              <div><div class="agency-name">EduBridge Bangladesh</div><div class="agency-verified"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Verified partner</div></div>
+            </div>
+            <div class="agency-stat-row"><span><b>94%</b> UK visa success</span><span><b>120</b> filed this year</span></div>
+            <div class="agency-actions">
+              <button class="btn btn-primary btn-sm">Message agency</button>
+              <button class="btn btn-outline btn-sm">View agency profile</button>
+            </div>
+          </div>
+          <div class="card website-card">
+            <div class="website-card-title">Prefer to go straight to the source?</div>
+            <div class="website-card-sub">The university's own admissions pages have the final word on any detail here.</div>
+            <a class="btn btn-outline full-outline" href="#" target="_blank" rel="noopener">Visit official website
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <div class="card side-card">
+        <div>
+          <div class="side-label" style="margin-bottom:10px;">Intakes open</div>
+          <div class="intake-row"><span class="intake-dot"></span>September 2026</div>
+          <div class="intake-row"><span class="intake-dot"></span>January 2027</div>
+        </div>
+        <div>
+          <div class="side-label" style="margin-bottom:8px;">Jump to</div>
+          <div class="jump-list">
+            <a href="#overview">Overview</a>
+            <a href="#costs">Costs</a>
+            <a href="#requirements">Requirements</a>
+            <a href="#journey">Your journey</a>
+            <a href="#scholarships">Scholarships</a>
+            <a href="#campus">Campus life</a>
+            <a href="#connect">Connect</a>
+          </div>
+        </div>
+        <button class="btn btn-outline full-outline">Add to compare</button>
+        <a class="btn btn-primary full-primary" href="#" target="_blank" rel="noopener">Visit official website</a>
+      </div>
+    </aside>
+  </div>
+
+<script>
+  var PROGRAMS = {
+    datascience:{ label:'MSc Data Science & AI', tuition:24500, ielts:6.5, cgpa:3.0, deadline:'15 Jul 2026',
+      applied:true, appliedDate:'2 Nov 2025', decisionDate:'18 Dec 2025',
+      soft:{transcripts:false, sop:true, recs:true} },
+    compsci:{ label:'MSc Computer Science', tuition:25200, ielts:6.5, cgpa:3.0, deadline:'1 Aug 2026',
+      applied:false, soft:{transcripts:false, sop:false, recs:false} },
+    bizanalytics:{ label:'MSc Business Analytics', tuition:23800, ielts:6.0, cgpa:2.8, deadline:'1 Sep 2026',
+      applied:false, soft:{transcripts:false, sop:false, recs:false} }
+  };
+  var PROFILE = { ielts:6.5, cgpa:3.3, coursework:true };
+  var FX = 152.40;
+  var FIXED_COSTS = { accom:9800, living:12000, ihs:776, visa:558, flight:850 };
+
+  function fmtGBP(v){ return '£' + Math.round(v).toLocaleString('en-GB'); }
+
+  function buildFitList(p){
+    return [
+      {name:'IELTS Academic', val:p.ielts.toFixed(1)+' required — you have '+PROFILE.ielts.toFixed(1), met: PROFILE.ielts >= p.ielts},
+      {name:'CGPA', val:p.cgpa.toFixed(1)+' required — you have '+PROFILE.cgpa.toFixed(1), met: PROFILE.cgpa >= p.cgpa},
+      {name:'Relevant coursework', val:'Stats & programming background preferred', met: PROFILE.coursework},
+      {name:'Academic transcripts', val:'Official copy, both HSC & Bachelor\'s', met: p.soft.transcripts},
+      {name:'Statement of Purpose', val:'1,000–1,500 words', met: p.soft.sop},
+      {name:'Letters of recommendation', val:'2, at least 1 academic', met: p.soft.recs}
+    ];
+  }
+
+  function renderProgram(key){
+    var p = PROGRAMS[key];
+    document.getElementById('heroProgram').textContent = p.label;
+    document.getElementById('statDeadline').textContent = p.deadline;
+    document.getElementById('costTuitionVal').textContent = fmtGBP(p.tuition);
+
+    var total = p.tuition + FIXED_COSTS.accom + FIXED_COSTS.living + FIXED_COSTS.ihs + FIXED_COSTS.visa + FIXED_COSTS.flight;
+    document.getElementById('costTotalVal').textContent = fmtGBP(total);
+    document.getElementById('costTotalBdt').textContent = '≈ ৳' + ((total*FX)/100000).toFixed(1) + 'L at today\'s rate';
+    var budgetBDT = 80;
+    var totalBDTL = (total*FX)/100000;
+    var diff = (budgetBDT - totalBDTL).toFixed(1);
+    var budgetEl = document.getElementById('budgetCheck');
+    if(diff >= 0){
+      budgetEl.style.background = 'var(--teal-soft)'; budgetEl.style.color = 'var(--teal-text)';
+      budgetEl.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>This fits within your stated budget of ৳'+budgetBDT+'L, with ৳'+diff+'L to spare.</span>';
+    } else {
+      budgetEl.style.background = 'var(--destructive-soft)'; budgetEl.style.color = 'var(--destructive)';
+      budgetEl.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 9v4M12 17h.01"/></svg><span>This runs ৳'+Math.abs(diff)+'L over your stated budget of ৳'+budgetBDT+'L.</span>';
+    }
+
+    var segs = [
+      {tuition:p.tuition}, {accom:FIXED_COSTS.accom}, {living:FIXED_COSTS.living}, {other:FIXED_COSTS.ihs+FIXED_COSTS.visa+FIXED_COSTS.flight}
+    ];
+    document.getElementById('segTuition').style.width = (p.tuition/total*100)+'%';
+    document.getElementById('segAccom').style.width = (FIXED_COSTS.accom/total*100)+'%';
+    document.getElementById('segLiving').style.width = (FIXED_COSTS.living/total*100)+'%';
+    document.getElementById('segOther').style.width = ((FIXED_COSTS.ihs+FIXED_COSTS.visa+FIXED_COSTS.flight)/total*100)+'%';
+
+    var items = buildFitList(p);
+    var metCount = items.filter(function(i){ return i.met; }).length;
+    document.getElementById('fitRingNum').textContent = metCount + '/' + items.length;
+    document.getElementById('fitRing').style.background = 'conic-gradient(var(--teal) 0deg ' + (metCount/items.length*360) + 'deg, var(--slate-soft) ' + (metCount/items.length*360) + 'deg 360deg)';
+
+    var fitHtml = '';
+    items.forEach(function(i){
+      fitHtml += '<div class="fit-row"><div class="fit-check'+(i.met?'':' pending')+'">'+(i.met?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>':'')+'</div><div class="fit-row-name">'+i.name+'</div><div class="fit-row-val">'+i.val+'</div></div>';
+    });
+    document.getElementById('fitList').innerHTML = fitHtml;
+
+    var reqHtml = '';
+    items.forEach(function(i){
+      reqHtml += '<div class="req-full-row'+(i.met?' met':'')+'"><div class="req-icon">'+(i.met?'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>':'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>')+'</div><div><div class="req-name">'+i.name+'</div><div class="req-detail">'+i.val+'</div></div><div class="req-status '+(i.met?'met':'pending')+'">'+(i.met?'Met':'Not yet')+'</div></div>';
+    });
+    document.getElementById('reqFullList').innerHTML = reqHtml;
+
+    var heroCta = document.getElementById('heroCta');
+    if(p.applied){
+      heroCta.innerHTML = '<span class="status-chip" style="margin-right:8px;">Applied · decision '+p.decisionDate.split(' ').slice(0,2).join(' ')+'</span><button class="btn btn-primary">View application status<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>';
+    } else {
+      heroCta.innerHTML = '<button class="btn btn-primary">Start application<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>';
+    }
+
+    document.querySelectorAll('.program-pill').forEach(function(pill){ pill.classList.toggle('active', pill.dataset.program===key); });
+  }
+
+  document.querySelectorAll('.program-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){ renderProgram(pill.dataset.program); });
+  });
+  renderProgram('datascience');
+
+  document.querySelectorAll('.subnav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      document.querySelectorAll('.subnav a').forEach(function(l){ l.classList.remove('active'); });
+      link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

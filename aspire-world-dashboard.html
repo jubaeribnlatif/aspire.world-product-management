@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>aspire.world — Your journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D;
+    --ink-2:#152A5C;
+    --ink-3:#1C3373;
+    --royal:#2547F4;
+    --royal-dark:#1B36C4;
+    --royal-soft:#E7EBFE;
+    --teal:#00A389;
+    --teal-soft:#DFF5F1;
+    --violet:#6C4FF6;
+    --violet-soft:#EFEAFE;
+    --paper:#F7F7FB;
+    --slate:#5B6472;
+    --slate-soft:#EDEFF3;
+    --border:#E3E6EE;
+    --white:#FFFFFF;
+    --destructive:#D63A62;
+    --destructive-soft:#FBE8ED;
+    --r-sm:10px;
+    --r-md:14px;
+    --r-lg:20px;
+    --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;}
+  button{font-family:inherit;cursor:pointer;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+  }
+  .eyebrow--light{color:rgba(255,255,255,.62);}
+  .eyebrow--teal{color:var(--teal);}
+  .eyebrow--violet{color:var(--violet);}
+
+  .mono{font-family:var(--mono);}
+
+  /* ---------- layout shell ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:264px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    background:var(--ink);
+    color:var(--white);
+    padding:24px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:0 4px;
+  }
+  .brand-mark{
+    width:26px;height:26px;border-radius:8px;
+    background:linear-gradient(135deg,var(--royal),var(--violet));
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .brand-mark svg{width:14px;height:14px;}
+  .brand-name{font-weight:700;font-size:15px;letter-spacing:-.01em;}
+
+  .side-search{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:999px;
+    padding:9px 14px;
+  }
+  .side-search input{
+    background:none;border:none;color:var(--white);font-size:13px;width:100%;
+  }
+  .side-search input::placeholder{color:rgba(255,255,255,.4);}
+  .side-search svg{flex-shrink:0;opacity:.5;}
+
+  .nav-group{display:flex;flex-direction:column;gap:2px;}
+  .nav-label{
+    font-family:var(--mono);
+    font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+    color:rgba(255,255,255,.35);
+    padding:10px 12px 6px;
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 12px;border-radius:10px;
+    font-size:13.5px;font-weight:500;
+    color:rgba(255,255,255,.72);
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-item svg{opacity:.8;flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:var(--white);}
+  .nav-item.active{
+    background:rgba(37,71,244,.28);
+    color:var(--white);
+    box-shadow:inset 0 0 0 1px rgba(88,116,255,.4);
+  }
+  .nav-count{
+    margin-left:auto;
+    font-family:var(--mono);
+    font-size:11px;
+    color:rgba(255,255,255,.45);
+  }
+  .nav-count.alert{color:#FF8FA8;}
+
+  .sidebar-spacer{flex:1;}
+
+  .parent-toggle{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:var(--r-md);
+    padding:12px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .parent-toggle-row{display:flex;align-items:center;justify-content:space-between;}
+  .parent-toggle-title{font-size:12.5px;font-weight:600;}
+  .parent-toggle-sub{font-size:11px;color:rgba(255,255,255,.45);line-height:1.4;}
+  .switch{
+    width:34px;height:20px;border-radius:999px;
+    background:rgba(255,255,255,.18);
+    position:relative;flex-shrink:0;border:none;
+    transition:background .15s ease;
+  }
+  .switch::after{
+    content:'';position:absolute;top:2px;left:2px;
+    width:16px;height:16px;border-radius:50%;background:var(--white);
+    transition:transform .15s ease;
+  }
+  .switch.on{background:var(--royal);}
+  .switch.on::after{transform:translateX(14px);}
+
+  .side-user{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 4px;
+  }
+  .avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(135deg,var(--violet),var(--royal));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:13px;color:var(--white);flex-shrink:0;
+  }
+  .side-user-name{font-size:13px;font-weight:600;}
+  .side-user-sub{font-size:11px;color:rgba(255,255,255,.45);}
+
+  /* ---------- main ---------- */
+  .main{padding:22px 36px 64px;max-width:1180px;}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:22px;
+  }
+  .breadcrumb{font-size:13px;color:var(--slate);}
+  .breadcrumb strong{color:var(--ink);font-weight:600;}
+  .topbar-right{display:flex;align-items:center;gap:14px;}
+  .fx-chip{
+    display:flex;align-items:center;gap:7px;
+    background:var(--white);border:1px solid var(--border);
+    border-radius:999px;padding:7px 13px;
+    font-family:var(--mono);font-size:12px;color:var(--ink);
+  }
+  .fx-chip .up{color:var(--teal);font-weight:600;}
+  .icon-btn{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--white);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .icon-btn .dot{
+    position:absolute;top:8px;right:8px;width:7px;height:7px;
+    border-radius:50%;background:var(--destructive);
+    box-shadow:0 0 0 2px var(--white);
+  }
+
+  section{margin-bottom:28px;}
+  .section-head{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    margin-bottom:14px;gap:16px;
+  }
+  .section-title{font-size:19px;font-weight:700;letter-spacing:-.01em;}
+  .section-sub{font-size:13px;color:var(--slate);margin-top:3px;}
+  .section-link{font-size:13px;font-weight:600;color:var(--royal);white-space:nowrap;}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    border-radius:999px;border:none;font-weight:600;font-size:13.5px;
+    padding:10px 18px;display:inline-flex;align-items:center;gap:7px;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-ghost{background:var(--royal-soft);color:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .btn svg{flex-shrink:0;}
+
+  /* ---------- hero itinerary card ---------- */
+  .hero-card{
+    background:radial-gradient(120% 140% at 100% 0%, #1B2E63 0%, var(--ink) 55%);
+    border-radius:var(--r-xl);
+    color:var(--white);
+    padding:30px 32px 26px;
+    position:relative;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:28px;
+  }
+  .hero-card::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.35), transparent 60%),
+      radial-gradient(360px 240px at 10% 120%, rgba(37,71,244,.28), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-left, .hero-right{position:relative;z-index:1;}
+
+  .hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .hero-badges{display:flex;gap:8px;align-items:center;}
+  .verified-chip{
+    display:flex;align-items:center;gap:6px;
+    background:rgba(0,163,137,.16);border:1px solid rgba(0,163,137,.4);
+    color:#5FE0C7;font-size:11px;font-weight:600;
+    padding:5px 11px;border-radius:999px;
+  }
+  .phase-chip{
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+    font-size:11px;font-weight:600;letter-spacing:.03em;
+    padding:5px 11px;border-radius:999px;color:rgba(255,255,255,.85);
+  }
+
+  .greeting{font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px;}
+  .greeting-sub{font-size:13.5px;color:rgba(255,255,255,.6);margin-bottom:22px;line-height:1.5;}
+
+  .route-row{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+  .route-code{font-family:var(--mono);font-size:44px;font-weight:600;letter-spacing:-.01em;}
+  .route-plane{color:rgba(255,255,255,.4);}
+  .route-cities{
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    color:rgba(255,255,255,.45);text-transform:uppercase;
+    border-top:1px dashed rgba(255,255,255,.2);
+    padding-top:10px;margin-top:10px;
+  }
+
+  .hero-actions{display:flex;gap:10px;margin-top:22px;}
+  .btn-hero-outline{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--white);
+  }
+  .btn-hero-outline:hover{background:rgba(255,255,255,.14);}
+
+  .ticket-perf{
+    border-left:1.5px dashed rgba(255,255,255,.25);
+    padding-left:26px;
+    display:flex;flex-direction:column;
+    justify-content:space-between;
+  }
+  .ring-wrap{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+  .ring{
+    width:74px;height:74px;border-radius:50%;flex-shrink:0;
+    background:conic-gradient(var(--teal) 0deg 245deg, rgba(255,255,255,.12) 245deg 360deg);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ring-inner{
+    width:58px;height:58px;border-radius:50%;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    flex-direction:column;
+  }
+  .ring-num{font-family:var(--mono);font-weight:700;font-size:16px;}
+  .ring-label{font-size:8.5px;color:rgba(255,255,255,.4);letter-spacing:.05em;}
+  .ring-caption-title{font-size:13.5px;font-weight:600;}
+  .ring-caption-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;}
+
+  .stub-rows{display:flex;flex-direction:column;gap:10px;}
+  .stub-row{display:flex;justify-content:space-between;font-size:12.5px;}
+  .stub-k{color:rgba(255,255,255,.45);}
+  .stub-v{font-family:var(--mono);font-weight:600;}
+
+  /* ---------- today card ---------- */
+  .today-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-left:4px solid var(--royal);
+    border-radius:var(--r-lg);
+    padding:20px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;
+  }
+  .today-left{display:flex;align-items:center;gap:16px;}
+  .today-icon{
+    width:42px;height:42px;border-radius:12px;background:var(--royal-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--royal);flex-shrink:0;
+  }
+  .today-title{font-size:15.5px;font-weight:700;margin-bottom:3px;}
+  .today-sub{font-size:12.5px;color:var(--slate);}
+  .today-sub .mono{color:var(--ink);font-weight:600;}
+
+  /* ---------- journey tracker ---------- */
+  .tracker-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:24px 26px 20px;
+  }
+  .stepper{display:flex;align-items:flex-start;position:relative;margin-bottom:6px;}
+  .step{flex:1;text-align:center;position:relative;}
+  .step-line{
+    position:absolute;top:14px;left:50%;width:100%;height:2px;background:var(--border);z-index:0;
+  }
+  .step:first-child .step-line{display:none;}
+  .step.done .step-line, .step.current .step-line{background:var(--teal);}
+  .step-dot{
+    width:28px;height:28px;border-radius:50%;background:var(--white);
+    border:2px solid var(--border);margin:0 auto 8px;position:relative;z-index:1;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step.done .step-dot{background:var(--teal);border-color:var(--teal);color:var(--white);}
+  .step.current .step-dot{border-color:var(--royal);box-shadow:0 0 0 4px var(--royal-soft);}
+  .step.current .step-dot::after{content:'';width:9px;height:9px;border-radius:50%;background:var(--royal);}
+  .step-name{font-size:11.5px;font-weight:600;color:var(--slate);letter-spacing:.02em;text-transform:uppercase;}
+  .step.done .step-name, .step.current .step-name{color:var(--ink);}
+
+  .step-detail{
+    margin-top:20px;border-top:1px solid var(--border);padding-top:16px;
+  }
+  .step-detail-row{
+    display:flex;align-items:center;gap:12px;padding:9px 6px;border-radius:10px;
+  }
+  .step-detail-row:hover{background:var(--paper);}
+  .check{
+    width:20px;height:20px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--teal-soft);color:var(--teal);
+  }
+  .check.pending{background:var(--slate-soft);color:transparent;}
+  .step-detail-text{font-size:13.5px;flex:1;}
+  .step-detail-text.faint{color:var(--slate);}
+  .step-detail-date{font-family:var(--mono);font-size:11.5px;color:var(--slate);}
+
+  .peer-line{
+    display:flex;align-items:center;gap:8px;margin-top:16px;
+    font-size:12.5px;color:var(--slate);background:var(--teal-soft);
+    padding:9px 13px;border-radius:10px;width:fit-content;
+  }
+  .peer-line strong{color:#00806C;}
+
+  /* ---------- grid cards generic ---------- */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+
+  .app-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:18px;display:flex;flex-direction:column;gap:12px;
+  }
+  .app-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .app-uni{font-size:14.5px;font-weight:700;line-height:1.25;}
+  .app-course{font-size:12px;color:var(--slate);margin-top:2px;}
+  .mini-ring{
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:10px;font-weight:700;
+  }
+  .app-badge{
+    display:inline-flex;align-self:flex-start;
+    font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:999px;
+  }
+  .badge-applied{background:var(--teal-soft);color:#00806C;}
+  .badge-docs{background:var(--royal-soft);color:var(--royal-dark);}
+  .badge-shortlisted{background:var(--violet-soft);color:#5333C9;}
+  .app-deadline{
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:1px dashed var(--border);padding-top:10px;font-size:12px;
+  }
+  .app-deadline-k{color:var(--slate);}
+  .app-deadline-v{font-family:var(--mono);font-weight:600;}
+
+  .add-app-card{
+    border:1.5px dashed var(--border);border-radius:var(--r-lg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;color:var(--slate);font-size:13px;font-weight:600;
+    min-height:150px;
+  }
+  .add-app-card svg{color:var(--royal);}
+
+  /* ---------- document wallet ---------- */
+  .doc-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);
+    overflow:hidden;
+  }
+  .doc-top{padding:16px 16px 14px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .doc-icon{
+    width:36px;height:36px;border-radius:10px;background:var(--slate-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink);flex-shrink:0;
+  }
+  .doc-name{font-size:13.5px;font-weight:700;}
+  .doc-status{font-size:11.5px;margin-top:2px;}
+  .doc-status.ok{color:#00806C;}
+  .doc-status.warn{color:var(--ink);}
+  .doc-status.bad{color:var(--destructive);}
+  .doc-perf{border-top:1px dashed var(--border);}
+  .doc-bottom{
+    padding:11px 16px;display:flex;align-items:center;justify-content:space-between;
+    background:var(--paper);
+  }
+  .doc-share{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--slate);}
+  .switch-sm{width:26px;height:16px;}
+  .switch-sm::after{width:12px;height:12px;}
+  .switch-sm.on::after{transform:translateX(10px);}
+
+  /* ---------- match cards ---------- */
+  .match-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);
+    padding:15px 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;
+  }
+  .match-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .match-name{font-size:13.5px;font-weight:700;}
+  .match-org{font-size:11.5px;color:var(--slate);margin-top:1px;}
+  .match-pill{font-size:10px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap;}
+  .pill-strong{background:var(--teal-soft);color:#00806C;}
+  .pill-partial{background:var(--slate-soft);color:var(--slate);}
+  .match-value{font-family:var(--mono);font-size:13px;font-weight:600;}
+  .match-gap{font-size:11.5px;color:var(--destructive);}
+
+  .uni-card{
+    display:flex;gap:12px;align-items:center;
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);
+    padding:12px 14px;margin-bottom:10px;
+  }
+  .uni-thumb{
+    width:44px;height:44px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--ink-2),var(--ink));
+  }
+  .uni-name{font-size:13.5px;font-weight:700;}
+  .uni-sub{font-size:11.5px;color:var(--slate);margin-top:1px;}
+  .new-badge{
+    margin-left:auto;font-size:10px;font-weight:700;color:var(--violet);
+    background:var(--violet-soft);padding:3px 8px;border-radius:999px;white-space:nowrap;
+  }
+
+  /* ---------- finance panel ---------- */
+  .finance-panel{
+    background:linear-gradient(120deg,var(--royal) 0%, #4C3FE0 100%);
+    border-radius:var(--r-xl);color:var(--white);
+    padding:26px 28px;display:grid;grid-template-columns:1.1fr 1fr;gap:24px;
+  }
+  .finance-title{font-size:19px;font-weight:700;margin-bottom:6px;}
+  .finance-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.5;max-width:380px;}
+  .finance-unlock{
+    margin-top:14px;font-size:11.5px;color:rgba(255,255,255,.65);
+    display:flex;align-items:center;gap:6px;
+  }
+  .finance-tools{display:flex;flex-direction:column;gap:10px;}
+  .finance-tool{
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    border-radius:var(--r-md);padding:13px 15px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .finance-tool-name{font-size:13px;font-weight:600;}
+  .finance-tool-sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
+
+  /* ---------- agency + community row ---------- */
+  .agency-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:20px;
+  }
+  .agency-top{display:flex;gap:12px;align-items:center;margin-bottom:14px;}
+  .agency-logo{
+    width:40px;height:40px;border-radius:10px;background:var(--ink);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;
+  }
+  .agency-name{font-size:14px;font-weight:700;}
+  .agency-verified{
+    display:flex;align-items:center;gap:4px;font-size:11px;color:#00806C;font-weight:600;margin-top:2px;
+  }
+  .agency-sync{
+    background:var(--paper);border-radius:var(--r-sm);padding:12px 14px;
+    font-size:12.5px;color:var(--slate);margin-bottom:14px;
+  }
+  .agency-sync strong{color:var(--ink);}
+  .agency-actions{display:flex;gap:8px;}
+
+  .feed-card{
+    background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:20px;
+  }
+  .feed-item{
+    display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);
+  }
+  .feed-item:last-child{border-bottom:none;padding-bottom:0;}
+  .feed-tag{
+    font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;padding:3px 7px;border-radius:5px;height:fit-content;flex-shrink:0;
+  }
+  .tag-visa{background:var(--royal-soft);color:var(--royal-dark);}
+  .tag-policy{background:var(--violet-soft);color:#5333C9;}
+  .tag-deadline{background:var(--destructive-soft);color:var(--destructive);}
+  .feed-text{font-size:12.5px;line-height:1.5;}
+  .feed-byline{font-size:10.5px;color:var(--slate);margin-top:3px;}
+
+  .community-card{
+    background:var(--ink);color:var(--white);border-radius:var(--r-lg);padding:20px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .community-quote{font-size:13px;line-height:1.55;color:rgba(255,255,255,.85);}
+  .community-who{font-size:11.5px;color:rgba(255,255,255,.5);}
+
+  footer.trust{
+    text-align:center;padding:28px 0 4px;font-size:11.5px;color:var(--slate);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+
+  @media (max-width: 980px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .main{padding:18px 18px 48px;}
+    .hero-card{grid-template-columns:1fr;}
+    .ticket-perf{border-left:none;padding-left:0;border-top:1px dashed rgba(255,255,255,.2);padding-top:20px;}
+    .grid-3{grid-template-columns:1fr 1fr;}
+    .grid-2{grid-template-columns:1fr;}
+    .finance-panel{grid-template-columns:1fr;}
+  }
+  @media (max-width: 620px){
+    .grid-3{grid-template-columns:1fr;}
+    .today-card{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 12l7-8 3 3-6 6 6 6-3 3-7-8v-2z" fill="white"/><path d="M13 12l7-8 3 3-6 6 6 6-3 3-7-8v-2z" fill="white" opacity=".5"/></svg>
+      </div>
+      <div class="brand-name">aspire.world</div>
+    </div>
+
+    <div class="side-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input placeholder="Search routes, docs, funds…" />
+    </div>
+
+    <nav class="nav-group">
+      <a class="nav-item active" href="#top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="#applications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg>
+        Applications
+        <span class="nav-count">3</span>
+      </a>
+      <a class="nav-item" href="#documents">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        Documents
+        <span class="nav-count alert">1</span>
+      </a>
+      <a class="nav-item" href="#scholarships">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l3 6 6 1-4.5 4.5L17.5 21 12 17.5 6.5 21l1-6.5L3 10l6-1z"/></svg>
+        Scholarships
+      </a>
+      <a class="nav-item" href="#universities">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M5 10.5V16c0 1.5 3 3 7 3s7-1.5 7-3v-5.5"/></svg>
+        Universities
+      </a>
+      <a class="nav-item" href="#finances">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="14.5" r="1"/></svg>
+        Finances
+      </a>
+      <a class="nav-item" href="#agency">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        My agency
+      </a>
+      <a class="nav-item" href="#community">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-9 8.5A8.5 8.5 0 013 12a8.38 8.38 0 018.5-8.5 8.5 8.5 0 019.5 8z"/></svg>
+        Community
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="parent-toggle">
+      <div class="parent-toggle-row">
+        <div class="parent-toggle-title">Parent view</div>
+        <button class="switch"></button>
+      </div>
+      <div class="parent-toggle-sub">Let a parent see costs and deadlines, read-only.</div>
+    </div>
+
+    <div class="side-user">
+      <div class="avatar">S</div>
+      <div>
+        <div class="side-user-name">Samira Rahman</div>
+        <div class="side-user-sub">AW / 024813</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main" id="top">
+
+    <div class="topbar">
+      <div class="breadcrumb">Home &nbsp;›&nbsp; <strong>Dashboard</strong></div>
+      <div class="topbar-right">
+        <div class="fx-chip">
+          <span>GBP → BDT</span>
+          <span class="mono">152.40</span>
+          <span class="up">▲0.4%</span>
+        </div>
+        <button class="icon-btn" aria-label="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+          <span class="dot"></span>
+        </button>
+        <div class="avatar">S</div>
+      </div>
+    </div>
+
+    <!-- ================= HERO ITINERARY ================= -->
+    <section>
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="hero-top">
+            <div class="hero-badges">
+              <span class="verified-chip">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                Route verified
+              </span>
+              <span class="phase-chip">Phase · Apply</span>
+            </div>
+          </div>
+          <div class="greeting">Good to see you, Samira.</div>
+          <div class="greeting-sub">Four sensible moves down. One useful move next — your route to Manchester is on schedule.</div>
+
+          <div class="route-row">
+            <span class="route-code">DAC</span>
+            <span class="route-plane">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2.5 2v1.5l4-1 4 1V21l-2.5-2v-5.5z"/></svg>
+            </span>
+            <span class="route-code">MAN</span>
+          </div>
+          <div class="route-cities">
+            <span>Dhaka</span>
+            <span>Manchester · Student route</span>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary">Continue to shortlist
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+            <button class="btn btn-hero-outline">Share progress</button>
+          </div>
+        </div>
+
+        <div class="hero-right ticket-perf">
+          <div class="ring-wrap">
+            <div class="ring">
+              <div class="ring-inner">
+                <div class="ring-num">68%</div>
+                <div class="ring-label">JOURNEY</div>
+              </div>
+            </div>
+            <div>
+              <div class="ring-caption-title">On pace for Sept intake</div>
+              <div class="ring-caption-sub">Next check-in in 6 days</div>
+            </div>
+          </div>
+          <div class="stub-rows">
+            <div class="stub-row"><span class="stub-k">Ticket no.</span><span class="stub-v">AW / 024813</span></div>
+            <div class="stub-row"><span class="stub-k">Current step</span><span class="stub-v">Shortlist courses</span></div>
+            <div class="stub-row"><span class="stub-k">Next check-in</span><span class="stub-v">14 Nov 2025</span></div>
+            <div class="stub-row"><span class="stub-k">Agency</span><span class="stub-v">EduBridge BD</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TODAY CARD ================= -->
+    <section>
+      <div class="today-card">
+        <div class="today-left">
+          <div class="today-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div>
+            <div class="today-title">Today's move: save three courses to your shortlist</div>
+            <div class="today-sub">Manchester, Leeds and Sheffield still fit your budget and IELTS score. Due by <span class="mono">14 Nov 2025</span>.</div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Continue</button>
+      </div>
+    </section>
+
+    <!-- ================= JOURNEY TRACKER ================= -->
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Your journey, mapped backward from deadline</div>
+          <div class="section-sub">Built for your UK · September intake route — not a generic checklist.</div>
+        </div>
+      </div>
+
+      <div class="tracker-card">
+        <div class="stepper">
+          <div class="step done"><div class="step-line"></div><div class="step-dot">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div><div class="step-name">Discover</div></div>
+          <div class="step done"><div class="step-line"></div><div class="step-dot">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div><div class="step-name">Shortlist</div></div>
+          <div class="step current"><div class="step-line"></div><div class="step-dot"></div><div class="step-name">Apply</div></div>
+          <div class="step"><div class="step-line"></div><div class="step-dot"></div><div class="step-name">Visa</div></div>
+          <div class="step"><div class="step-line"></div><div class="step-dot"></div><div class="step-name">Fly</div></div>
+        </div>
+
+        <div class="step-detail">
+          <div class="step-detail-row">
+            <div class="check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="step-detail-text">Shortlisted three universities within budget</div>
+            <div class="step-detail-date">Done · 2 Nov</div>
+          </div>
+          <div class="step-detail-row">
+            <div class="check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="step-detail-text">Requested reference letters from two faculty</div>
+            <div class="step-detail-date">Done · 6 Nov</div>
+          </div>
+          <div class="step-detail-row">
+            <div class="check pending"></div>
+            <div class="step-detail-text">Submit personal statement for Manchester</div>
+            <div class="step-detail-date">Start by 14 Nov</div>
+          </div>
+          <div class="step-detail-row">
+            <div class="check pending"></div>
+            <div class="step-detail-text">Pay application fee and confirm submission</div>
+            <div class="step-detail-date">Start by 21 Nov</div>
+          </div>
+        </div>
+
+        <div class="peer-line">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          <span>You're <strong>3 days ahead</strong> of others on the UK · September intake route.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= APPLICATION PORTFOLIO ================= -->
+    <section id="applications">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Your applications</div>
+          <div class="section-sub">Three routes in parallel — each tracked on its own.</div>
+        </div>
+        <span class="section-link">View all</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="app-card">
+          <div class="app-top">
+            <div>
+              <div class="app-uni">University of Manchester</div>
+              <div class="app-course">MSc Data Science</div>
+            </div>
+            <div class="mini-ring" style="background:conic-gradient(var(--teal) 0deg 295deg, var(--slate-soft) 295deg 360deg); color:#00806C;">82%</div>
+          </div>
+          <span class="app-badge badge-applied">Applied</span>
+          <div class="app-deadline">
+            <span class="app-deadline-k">Decision expected</span>
+            <span class="app-deadline-v">18 Dec</span>
+          </div>
+        </div>
+
+        <div class="app-card">
+          <div class="app-top">
+            <div>
+              <div class="app-uni">Imperial College London</div>
+              <div class="app-course">MSc Statistics</div>
+            </div>
+            <div class="mini-ring" style="background:conic-gradient(var(--royal) 0deg 162deg, var(--slate-soft) 162deg 360deg); color:var(--royal-dark);">45%</div>
+          </div>
+          <span class="app-badge badge-docs">Documents</span>
+          <div class="app-deadline">
+            <span class="app-deadline-k">Personal statement due</span>
+            <span class="app-deadline-v">14 Nov</span>
+          </div>
+        </div>
+
+        <div class="app-card">
+          <div class="app-top">
+            <div>
+              <div class="app-uni">University of Leeds</div>
+              <div class="app-course">MSc Data Science</div>
+            </div>
+            <div class="mini-ring" style="background:conic-gradient(var(--violet) 0deg 72deg, var(--slate-soft) 72deg 360deg); color:#5333C9;">20%</div>
+          </div>
+          <span class="app-badge badge-shortlisted">Shortlisted</span>
+          <div class="app-deadline">
+            <span class="app-deadline-k">Start application by</span>
+            <span class="app-deadline-v">28 Nov</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DOCUMENT WALLET ================= -->
+    <section id="documents">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Document wallet</div>
+          <div class="section-sub">Everything you'll be asked for, with expiry tracked for you.</div>
+        </div>
+        <button class="btn btn-outline btn-sm">Upload document</button>
+      </div>
+
+      <div class="grid-4">
+        <div class="doc-card">
+          <div class="doc-top">
+            <div class="doc-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c0-2 1.8-3 4-3s4 1 4 3"/></svg>
+            </div>
+            <div>
+              <div class="doc-name">Passport</div>
+              <div class="doc-status ok">Valid to 2031</div>
+            </div>
+          </div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom">
+            <span class="doc-share">Shared with agency</span>
+            <button class="switch switch-sm on"></button>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top">
+            <div class="doc-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            </div>
+            <div>
+              <div class="doc-name">IELTS certificate</div>
+              <div class="doc-status warn">Expires in 42 days</div>
+            </div>
+          </div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom">
+            <span class="doc-share">Shared with agency</span>
+            <button class="switch switch-sm on"></button>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top">
+            <div class="doc-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+            </div>
+            <div>
+              <div class="doc-name">Bank statement</div>
+              <div class="doc-status bad">Needs refresh</div>
+            </div>
+          </div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom">
+            <span class="doc-share">Shared with agency</span>
+            <button class="switch switch-sm"></button>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top">
+            <div class="doc-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg>
+            </div>
+            <div>
+              <div class="doc-name">Offer letter</div>
+              <div class="doc-status ok">Verified copy on file</div>
+            </div>
+          </div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom">
+            <span class="doc-share">Shared with agency</span>
+            <button class="switch switch-sm on"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCHOLARSHIPS + UNIVERSITIES ================= -->
+    <div class="grid-2">
+      <section id="scholarships">
+        <div class="section-head">
+          <div>
+            <div class="section-title">Scholarships matched to you</div>
+            <div class="section-sub">Scored against your saved profile.</div>
+          </div>
+        </div>
+
+        <div class="match-card">
+          <div class="match-top">
+            <div><div class="match-name">Chevening Scholarship</div><div class="match-org">UK Government · Full funding</div></div>
+            <span class="match-pill pill-strong">Strong match</span>
+          </div>
+          <div class="match-value">Deadline · 4 weeks left</div>
+        </div>
+
+        <div class="match-card">
+          <div class="match-top">
+            <div><div class="match-name">DAAD Study Grant</div><div class="match-org">Germany · €11,208</div></div>
+            <span class="match-pill pill-partial">Partial match</span>
+          </div>
+          <div class="match-gap">Needs IELTS 7.0 — you have 6.5</div>
+        </div>
+
+        <div class="match-card">
+          <div class="match-top">
+            <div><div class="match-name">Global Wales Masters</div><div class="match-org">Wales · £10,000</div></div>
+            <span class="match-pill pill-strong">Strong match</span>
+          </div>
+          <div class="match-value">Deadline · 11 weeks left</div>
+        </div>
+      </section>
+
+      <section id="universities">
+        <div class="section-head">
+          <div>
+            <div class="section-title">Universities worth a look</div>
+            <div class="section-sub">Filtered to your budget and course.</div>
+          </div>
+        </div>
+
+        <div class="uni-card">
+          <div class="uni-thumb"></div>
+          <div>
+            <div class="uni-name">University of Sheffield</div>
+            <div class="uni-sub">MSc Data Science · ৳ 17.2L first year</div>
+          </div>
+          <span class="new-badge">New</span>
+        </div>
+
+        <div class="uni-card">
+          <div class="uni-thumb"></div>
+          <div>
+            <div class="uni-name">University of Glasgow</div>
+            <div class="uni-sub">MSc Statistics · ৳ 19.8L first year</div>
+          </div>
+        </div>
+
+        <div class="uni-card">
+          <div class="uni-thumb"></div>
+          <div>
+            <div class="uni-name">Newcastle University</div>
+            <div class="uni-sub">MSc Data Science · ৳ 16.9L first year</div>
+          </div>
+          <span class="new-badge">New</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= FINANCE PANEL ================= -->
+    <section id="finances">
+      <div class="finance-panel">
+        <div>
+          <div class="eyebrow eyebrow--light">Money · unlocks fully at Visa phase</div>
+          <div class="finance-title">The serious bit, made clearer.</div>
+          <div class="finance-sub">Your Student File isn't open yet. Start early and the paperwork won't ambush you later.</div>
+          <div class="finance-unlock">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+            Full tools unlock once you reach the Visa step
+          </div>
+        </div>
+        <div class="finance-tools">
+          <div class="finance-tool">
+            <div><div class="finance-tool-name">Open a Student File</div><div class="finance-tool-sub">Not started</div></div>
+            <button class="btn btn-hero-outline btn-sm">Start</button>
+          </div>
+          <div class="finance-tool">
+            <div><div class="finance-tool-name">Check loan eligibility</div><div class="finance-tool-sub">3 partner banks match your profile</div></div>
+            <button class="btn btn-hero-outline btn-sm">Check</button>
+          </div>
+          <div class="finance-tool">
+            <div><div class="finance-tool-name">Track GBP rate</div><div class="finance-tool-sub">Alert set at ৳ 150.00</div></div>
+            <button class="btn btn-hero-outline btn-sm">Edit</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AGENCY + FEED + COMMUNITY ================= -->
+    <div class="grid-3" style="grid-template-columns:1fr 1.3fr 1fr;">
+      <section id="agency" style="margin-bottom:0;">
+        <div class="agency-card">
+          <div class="agency-top">
+            <div class="agency-logo">ED</div>
+            <div>
+              <div class="agency-name">EduBridge Bangladesh</div>
+              <div class="agency-verified">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                Verified partner
+              </div>
+            </div>
+          </div>
+          <div class="agency-sync">
+            Synced <strong>2 hours ago</strong> — they marked "Reference letters requested" complete.
+          </div>
+          <div class="agency-actions">
+            <button class="btn btn-primary btn-sm">Message</button>
+            <button class="btn btn-outline btn-sm">View profile</button>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:0;">
+        <div class="feed-card">
+          <div class="section-title" style="font-size:15.5px;margin-bottom:10px;">For your route: UK</div>
+          <div class="feed-item">
+            <span class="feed-tag tag-visa">Visa</span>
+            <div>
+              <div class="feed-text">UK Student Route financial evidence window shortened to 28 days — check your bank statement date before applying.</div>
+              <div class="feed-byline">The Daily Star · 2 days ago</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <span class="feed-tag tag-deadline">Deadline</span>
+            <div>
+              <div class="feed-text">Chevening applications close in four weeks — most applicants submit in the final ten days.</div>
+              <div class="feed-byline">The Daily Star · 5 days ago</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <span class="feed-tag tag-policy">Policy</span>
+            <div>
+              <div class="feed-text">Graduate visa route rules under review — no change confirmed yet, being tracked.</div>
+              <div class="feed-byline">The Daily Star · 1 week ago</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="community" style="margin-bottom:0;">
+        <div class="community-card">
+          <div class="eyebrow eyebrow--light">From students who've been there</div>
+          <div class="community-quote">"The visa checklist alone saved me a week of panic. Ask specifically about the bank letter format — mine got rejected once."</div>
+          <div class="community-who">Sumaiya Rahman · MSc Data Science, Manchester</div>
+          <button class="btn btn-hero-outline btn-sm" style="align-self:flex-start;margin-top:4px;">Ask a verified alum</button>
+        </div>
+      </section>
+    </div>
+
+    <footer class="trust">
+      Backed by The Daily Star · Independent journalism, trusted by Bangladesh for more than three decades.
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.switch').forEach(function(sw){
+    sw.addEventListener('click', function(){ sw.classList.toggle('on'); });
+  });
+</script>
+</body>
+</html>

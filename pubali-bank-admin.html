@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Partner console — Pubali Bank · aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+
+  .shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh;}
+  .sidebar{background:var(--ink);color:var(--white);padding:22px 16px;display:flex;flex-direction:column;gap:20px;position:sticky;top:0;height:100vh;}
+  .brand{display:flex;align-items:center;gap:9px;padding:0 4px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .partner-tag{font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.4);letter-spacing:.06em;padding:0 4px;text-transform:uppercase;}
+
+  .nav-group{display:flex;flex-direction:column;gap:2px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.72);}
+  .nav-item svg{opacity:.8;flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:var(--white);}
+  .nav-item.active{background:rgba(37,71,244,.28);color:var(--white);box-shadow:inset 0 0 0 1px rgba(88,116,255,.4);}
+  .nav-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.45);}
+  .nav-count.alert{color:#FF8FA8;}
+  .sidebar-spacer{flex:1;}
+
+  .side-user{display:flex;align-items:center;gap:10px;padding:8px 4px;}
+  .avatar{width:32px;height:32px;border-radius:10px;background:var(--white);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+  .side-user-name{font-size:12.5px;font-weight:600;}
+  .side-user-sub{font-size:10.5px;color:rgba(255,255,255,.45);}
+
+  .main{padding:22px 34px 60px;max-width:1180px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .breadcrumb{font-size:13px;color:var(--slate);}
+  .breadcrumb strong{color:var(--ink);font-weight:600;}
+  .topbar-right{display:flex;align-items:center;gap:12px;}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .icon-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;}
+  .icon-btn .dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--destructive);box-shadow:0 0 0 2px var(--white);}
+
+  section{margin-bottom:30px;}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px;gap:16px;}
+  .section-title{font-size:19px;font-weight:700;letter-spacing:-.01em;}
+  .section-sub{font-size:13px;color:var(--slate);margin-top:3px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  .banner{background:var(--ink);color:var(--white);border-radius:var(--r-lg);padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:26px;}
+  .banner-icon{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .banner-title{font-size:14px;font-weight:700;margin-bottom:3px;}
+  .banner-sub{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.5;max-width:660px;}
+  .banner-sub b{color:#9DB0FF;}
+  .banner-sub b.teal{color:#5FE0C7;}
+
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .stat-card{padding:17px 18px;}
+  .stat-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+  .stat-icon{color:var(--royal);}
+  .icon-chip{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .icon-chip.royal{background:var(--royal-soft);color:var(--royal-dark);}
+  .icon-chip.violet{background:var(--violet-soft);color:#5333C9;}
+  .icon-chip.teal{background:var(--teal-soft);color:var(--teal-text);}
+  .metric-group{margin-bottom:22px;}
+  .metric-group:last-child{margin-bottom:0;}
+  .metric-group-label{font-family:var(--mono);font-size:10px;letter-spacing:.07em;color:var(--slate);text-transform:uppercase;margin-bottom:10px;}
+  .grid-3-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .trend{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:999px;}
+  .trend.up{background:var(--teal-soft);color:var(--teal-text);}
+  .stat-val{font-size:23px;font-weight:700;letter-spacing:-.01em;}
+  .stat-label{font-size:12px;color:var(--slate);margin-top:3px;}
+
+  .editor-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+  .editor-row:last-child{border-bottom:none;}
+  .editor-name{font-size:14px;font-weight:700;display:flex;align-items:center;gap:9px;}
+  .editor-sub{font-size:12px;color:var(--slate);margin-top:3px;}
+  .self-tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--royal-soft);color:var(--royal-dark);}
+  .verified-tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--slate-soft);color:var(--slate);}
+
+  .lead-head{font-family:var(--mono);font-size:10px;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;padding:0 20px 10px;display:grid;grid-template-columns:1.3fr 1fr 1fr .9fr .9fr;}
+  .lead-row{display:grid;grid-template-columns:1.3fr 1fr 1fr .9fr .9fr;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);font-size:13px;}
+  .lead-row:last-child{border-bottom:none;}
+  .lead-name{font-weight:700;}
+  .lead-sub{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .status-pill{font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:999px;width:fit-content;}
+  .status-new{background:var(--royal-soft);color:var(--royal-dark);}
+  .status-contacted{background:var(--violet-soft);color:#5333C9;}
+  .status-app{background:var(--teal-soft);color:var(--teal-text);}
+  .status-disbursed{background:var(--slate-soft);color:var(--slate);}
+
+  .funnel{display:flex;gap:10px;}
+  .funnel-step{flex:1;background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;text-align:center;position:relative;}
+  .funnel-val{font-size:19px;font-weight:700;}
+  .funnel-label{font-size:10.5px;color:var(--slate);margin-top:3px;}
+  .funnel-arrow{align-self:center;color:var(--border);flex-shrink:0;}
+
+  .elig-config{padding:20px 22px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .cfg-field{margin-bottom:16px;}
+  .cfg-label{font-size:12px;font-weight:600;margin-bottom:6px;}
+  .cfg-input{width:100%;border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-size:13px;font-family:var(--mono);}
+  .cfg-note{font-size:11px;color:var(--slate);margin-top:12px;line-height:1.5;}
+
+  .verify-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;}
+  .verify-card{padding:22px;}
+  .verify-status-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .verify-badge-icon{width:44px;height:44px;border-radius:12px;background:var(--violet-soft);color:#5333C9;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .verify-status-title{font-size:15px;font-weight:700;}
+  .verify-status-sub{font-size:12px;color:var(--slate);margin-top:2px;}
+  .doc-check{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:13px;border-bottom:1px solid var(--border);}
+  .doc-check:last-child{border-bottom:none;}
+  .doc-check .ok{color:var(--teal-text);flex-shrink:0;}
+
+  @media(max-width:1000px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+    .grid-3-stat{grid-template-columns:repeat(2,1fr);}
+    .verify-grid{grid-template-columns:1fr;}
+    .elig-config{grid-template-columns:1fr;}
+    .lead-row,.lead-head{grid-template-columns:1fr;gap:4px;}
+    .funnel{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div>
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <div class="partner-tag">Partner console</div>
+    </div>
+
+    <nav class="nav-group">
+      <a class="nav-item active" href="#overview">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        Overview
+      </a>
+      <a class="nav-item" href="#editor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+        Products & rates
+      </a>
+      <a class="nav-item" href="#leads">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.68 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0122 16.92z"/></svg>
+        Leads & calls
+        <span class="nav-count alert">12</span>
+      </a>
+      <a class="nav-item" href="#eligtool">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Eligibility tool
+      </a>
+      <a class="nav-item" href="#verification">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+        Verification
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87M4.6 9a1.7 1.7 0 00-.34-1.87"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="side-user">
+      <div class="avatar">PB</div>
+      <div>
+        <div class="side-user-name">Pubali Bank PLC</div>
+        <div class="side-user-sub">Rezaul Haque · Loan desk</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="overview">
+    <div class="topbar">
+      <div class="breadcrumb">Partner console &nbsp;›&nbsp; <strong>Overview</strong></div>
+      <div class="topbar-right">
+        <button class="btn btn-outline btn-sm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          View public page
+        </button>
+        <button class="icon-btn" aria-label="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+          <span class="dot"></span>
+        </button>
+        <div class="avatar" style="border-radius:50%;">PB</div>
+      </div>
+    </div>
+
+    <div class="banner">
+      <div class="banner-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
+      <div>
+        <div class="banner-title">How your listing stays accurate</div>
+        <div class="banner-sub">
+          <b>Product terms</b> — loan amount, fees, eligibility — are provided by Pubali and shown with the date they were last confirmed. You can update these any time; aspire.world spot-checks major changes.
+          <b class="teal">Usage numbers</b> — profile views, eligibility checks, calls — are computed from real platform activity, not self-reported.
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Last 30 days</div>
+          <div class="section-sub">How students are finding and using your page.</div>
+        </div>
+      </div>
+      <div class="metric-group">
+        <div class="metric-group-label">Discovery</div>
+        <div class="grid-3-stat">
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip royal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="trend up">▲ 9%</span></div>
+            <div class="stat-val">6,120</div>
+            <div class="stat-label">Profile views</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip royal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></span><span class="trend up">▲ 18%</span></div>
+            <div class="stat-val">312</div>
+            <div class="stat-label">Profile saves</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip royal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></span><span class="trend up">▲ 5%</span></div>
+            <div class="stat-val">2,040</div>
+            <div class="stat-label">Comparison table appearances</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-group">
+        <div class="metric-group-label">Engagement</div>
+        <div class="grid-3-stat">
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip violet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h3M13 10h3M8 14h3M13 14h3M8 18h3"/></svg></span><span class="trend up">▲ 22%</span></div>
+            <div class="stat-val">1,180</div>
+            <div class="stat-label">Loan calculator uses</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip violet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-9 8.5A8.5 8.5 0 013 12a8.38 8.38 0 018.5-8.5 8.5 8.5 0 019.5 8z"/></svg></span><span class="trend up">▲ 11%</span></div>
+            <div class="stat-val">96</div>
+            <div class="stat-label">Chats started</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip violet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5v14l11-7z"/></svg></span><span class="trend up">▲ 30%</span></div>
+            <div class="stat-val">410</div>
+            <div class="stat-label">Feature video views</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-group">
+        <div class="metric-group-label">Conversion</div>
+        <div class="grid-3-stat">
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip teal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="trend up">▲ 15%</span></div>
+            <div class="stat-val">840</div>
+            <div class="stat-label">Eligibility checks run</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip teal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.68 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0122 16.92z"/></svg></span><span class="trend up">▲ 6</span></div>
+            <div class="stat-val">42</div>
+            <div class="stat-label">Call-back requests</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="icon-chip teal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span><span class="trend up">▲ 3</span></div>
+            <div class="stat-val">14</div>
+            <div class="stat-label">Loan applications started</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Where leads go after they land</div>
+        </div>
+      </div>
+      <div class="funnel">
+        <div class="funnel-step"><div class="funnel-val">42</div><div class="funnel-label">CALL-BACK REQUESTED</div></div>
+        <div class="funnel-arrow">→</div>
+        <div class="funnel-step"><div class="funnel-val">31</div><div class="funnel-label">CONTACTED</div></div>
+        <div class="funnel-arrow">→</div>
+        <div class="funnel-step"><div class="funnel-val">14</div><div class="funnel-label">APPLICATION STARTED</div></div>
+        <div class="funnel-arrow">→</div>
+        <div class="funnel-step"><div class="funnel-val">6</div><div class="funnel-label">DISBURSED</div></div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS & RATES -->
+    <section id="editor">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Products & rates</div>
+          <div class="section-sub">What you publish, and how it's labeled to students.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Foreign Education Loan terms <span class="self-tag">Bank-provided · confirmed 3 Aug 2026</span></div>
+            <div class="editor-sub">Loan amount, EMI tenure, processing fee, moratorium, collateral rules</div>
+          </div>
+          <button class="btn btn-outline btn-sm">Edit</button>
+        </div>
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Eligibility criteria <span class="self-tag">Bank-provided · confirmed 3 Aug 2026</span></div>
+            <div class="editor-sub">Income multiple, taxpayer threshold, age limit</div>
+          </div>
+          <button class="btn btn-outline btn-sm">Edit</button>
+        </div>
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Required documents list <span class="self-tag">Bank-provided</span></div>
+            <div class="editor-sub">Shown as an icon grid — matched live against each student's document wallet</div>
+          </div>
+          <button class="btn btn-outline btn-sm">Edit</button>
+        </div>
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Student File & other products <span class="self-tag">Bank-provided</span></div>
+            <div class="editor-sub">Short descriptions of services beyond the flagship loan</div>
+          </div>
+          <button class="btn btn-outline btn-sm">Edit</button>
+        </div>
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Promotional banners <span class="self-tag">Bank-provided · 3 active</span></div>
+            <div class="editor-sub">Your own offers slider on your page — not third-party ads</div>
+          </div>
+          <button class="btn btn-outline btn-sm">Manage</button>
+        </div>
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Feature video & articles <span class="self-tag">Bank-provided · 1 video, 2 articles</span></div>
+            <div class="editor-sub">Shown in the Content section of your page</div>
+          </div>
+          <button class="btn btn-outline btn-sm">Manage</button>
+        </div>
+        <div class="editor-row">
+          <div>
+            <div class="editor-name">Profile views, eligibility checks, calls received <span class="verified-tag">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+              Platform computed</span></div>
+            <div class="editor-sub">Not editable — drawn from real usage</div>
+          </div>
+          <button class="btn btn-outline btn-sm">How it's counted</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEADS -->
+    <section id="leads">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Leads & call-back requests</div>
+          <div class="section-sub">Arrive with a real profile — destination, amount, income bracket already known.</div>
+        </div>
+        <span style="font-size:13px;font-weight:600;color:var(--royal);">View all 42</span>
+      </div>
+      <div class="card">
+        <div class="lead-head"><span>Student</span><span>Wants</span><span>Situation</span><span>Received</span><span>Status</span></div>
+        <div class="lead-row">
+          <div><div class="lead-name">Samira Rahman</div><div class="lead-sub">Ref: aspire.world dashboard</div></div>
+          <div>৳12L over 36 mo</div>
+          <div>Income ৳90k/mo · has FDR</div>
+          <div class="mono">3 hrs ago</div>
+          <span class="status-pill status-new">New</span>
+        </div>
+        <div class="lead-row">
+          <div><div class="lead-name">Arif Chowdhury</div><div class="lead-sub">Ref: eligibility checker</div></div>
+          <div>৳18L over 48 mo</div>
+          <div>Income ৳70k/mo · no collateral yet</div>
+          <div class="mono">1 day ago</div>
+          <span class="status-pill status-contacted">Contacted</span>
+        </div>
+        <div class="lead-row">
+          <div><div class="lead-name">Farzana K.</div><div class="lead-sub">Ref: EduBridge Bangladesh</div></div>
+          <div>৳9L over 24 mo</div>
+          <div>Income ৳1.1L/mo · has FDR</div>
+          <div class="mono">2 days ago</div>
+          <span class="status-pill status-app">Application started</span>
+        </div>
+        <div class="lead-row">
+          <div><div class="lead-name">Tanvir Islam</div><div class="lead-sub">Ref: aspire.world dashboard</div></div>
+          <div>৳15L over 42 mo</div>
+          <div>Income ৳95k/mo · property collateral</div>
+          <div class="mono">6 days ago</div>
+          <span class="status-pill status-disbursed">Disbursed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ELIGIBILITY TOOL CONFIG -->
+    <section id="eligtool">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Eligibility tool settings</div>
+          <div class="section-sub">Controls how Pubali appears in the platform-wide eligibility checker.</div>
+        </div>
+      </div>
+      <div class="card elig-config">
+        <div>
+          <div class="cfg-field"><div class="cfg-label">Maximum loan amount</div><input class="cfg-input" value="2,500,000" /></div>
+          <div class="cfg-field"><div class="cfg-label">Minimum income multiple required</div><input class="cfg-input" value="3.0×" /></div>
+        </div>
+        <div>
+          <div class="cfg-field"><div class="cfg-label">Collateral requirement</div><input class="cfg-input" value="Required" /></div>
+          <div class="cfg-field"><div class="cfg-label">Taxpayer threshold</div><input class="cfg-input" value="৳500,000" /></div>
+        </div>
+        <div class="cfg-note" style="grid-column:1/-1;">
+          These values drive whether Pubali shows as "Likely eligible" on the Financial Partners Hub's eligibility checker. Keep them current — mismatches here are the most common source of student complaints.
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFICATION -->
+    <section id="verification">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Verification & partnership status</div>
+          <div class="section-sub">Your standing as aspire.world's title financial partner.</div>
+        </div>
+      </div>
+      <div class="verify-grid">
+        <div class="card verify-card">
+          <div class="verify-status-row">
+            <div class="verify-badge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l4 7 8 1-6 6 1.5 8-7.5-4-7.5 4L6 16l-6-6 8-1z"/></svg></div>
+            <div>
+              <div class="verify-status-title">Title partner</div>
+              <div class="verify-status-sub">Since launch · Next terms review Feb 2027</div>
+            </div>
+          </div>
+          <p style="font-size:12.5px;color:var(--slate);line-height:1.6;">
+            As title partner, Pubali's Foreign Education Loan appears first in comparison views and gets a dedicated slot in the homepage financial section. Terms changes are spot-checked by aspire.world before they go live.
+          </p>
+        </div>
+        <div class="card verify-card">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Documents on file</div>
+          <div class="doc-check"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></span>Banking license, Bangladesh Bank</div>
+          <div class="doc-check"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></span>Partnership agreement, signed</div>
+          <div class="doc-check"><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></span>Product sheet, Foreign Education Loan</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

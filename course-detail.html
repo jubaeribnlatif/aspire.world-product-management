@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MSc Data Science & AI — University of Manchester — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  .topnav{background:var(--ink);color:var(--white);}
+  .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--royal),var(--violet));flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:14px;}
+  .back-link{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.6);}
+  .back-link:hover{color:var(--white);}
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-primary:hover{background:var(--royal-dark);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-ghost-dark{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);color:var(--white);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .btn-xs{padding:6px 11px;font-size:11.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--royal);margin-bottom:6px;}
+
+  .hero{background:radial-gradient(120% 150% at 100% 0%, #2A3E8F 0%, var(--ink) 55%);color:var(--white);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 260px at 88% -10%, rgba(108,79,246,.3), transparent 60%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;padding:28px 0 24px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
+  .hero-crumb{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:10px;}
+  .hero-crumb a:hover{color:var(--white);}
+  .hero-name{font-size:clamp(22px,2.8vw,30px);font-weight:800;letter-spacing:-.015em;line-height:1.15;}
+  .hero-uni-row{display:flex;align-items:center;gap:8px;margin-top:6px;}
+  .hero-uni{font-size:13.5px;color:rgba(255,255,255,.65);}
+  .verified-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,163,137,.16);border:1px solid rgba(0,163,137,.4);color:#5FE0C7;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:999px;}
+  .hero-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .ticket-strip{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);overflow-x:auto;}
+  .ticket-seg{padding:12px 20px;border-left:1px dashed rgba(255,255,255,.2);flex-shrink:0;}
+  .ticket-seg:first-child{border-left:none;}
+  .ticket-seg-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.42);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;}
+  .ticket-seg-val{font-family:var(--mono);font-size:12.5px;font-weight:600;white-space:nowrap;}
+
+  .layout{display:grid;grid-template-columns:1fr 270px;gap:36px;padding:30px 0 60px;}
+  section{scroll-margin-top:24px;margin-bottom:36px;}
+  .sec-title{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+  .sec-sub{font-size:12.5px;color:var(--slate);max-width:540px;line-height:1.55;margin-bottom:16px;}
+
+  .fit-card{padding:18px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .fit-ring{width:58px;height:58px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .fit-ring-inner{width:46px;height:46px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .fit-ring-num{font-family:var(--mono);font-weight:800;font-size:13px;}
+  .fit-text-title{font-size:13px;font-weight:700;}
+  .fit-text-sub{font-size:11.5px;color:var(--slate);}
+
+  .module-list{display:flex;flex-direction:column;gap:10px;}
+  .module-item{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;}
+  .module-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;cursor:pointer;gap:12px;}
+  .module-title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .module-name{font-size:13.5px;font-weight:700;}
+  .module-credit{font-family:var(--mono);font-size:10px;color:var(--slate);background:var(--slate-soft);padding:2px 8px;border-radius:999px;}
+  .module-core-tag{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--royal-soft);color:var(--royal-dark);}
+  .module-optional-tag{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--slate-soft);color:var(--slate);}
+  .module-chev{color:var(--slate);flex-shrink:0;transition:transform .15s ease;}
+  .module-item.open .module-chev{transform:rotate(180deg);}
+  .module-body{display:none;padding:0 18px 16px;font-size:12.5px;color:var(--slate);line-height:1.6;border-top:1px solid var(--border);}
+  .module-item.open .module-body{display:block;padding-top:14px;}
+  .module-narrative-note{background:var(--violet-soft);border-radius:var(--r-sm);padding:9px 12px;margin-top:10px;font-size:11.5px;color:#4A3A7A;display:flex;gap:7px;}
+  .module-narrative-note svg{color:#5333C9;flex-shrink:0;margin-top:1px;}
+
+  .shortlist-compare{padding:18px 20px;}
+  .sc-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);}
+  .sc-row:last-child{border-bottom:none;}
+  .sc-row.head{padding-bottom:8px;}
+  .sc-label{font-family:var(--mono);font-size:9.5px;color:var(--slate);text-transform:uppercase;}
+  .sc-col-title{font-size:11.5px;font-weight:700;text-align:center;}
+  .sc-col-title.this-course{color:var(--royal-dark);}
+  .sc-val{font-size:12.5px;font-weight:700;text-align:center;}
+  .sc-val.winner{color:var(--teal-text);}
+
+  .outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  .outcome-tile{padding:14px 16px;text-align:center;}
+  .outcome-pct{font-family:var(--mono);font-size:20px;font-weight:800;color:var(--royal);}
+  .outcome-label{font-size:10.5px;color:var(--slate);margin-top:4px;}
+  .alum-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--border);}
+  .alum-row:first-of-type{border-top:none;}
+  .alum-avatar{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:700;flex-shrink:0;}
+  .alum-name{font-size:12.5px;font-weight:700;}
+  .alum-role{font-size:11.5px;color:var(--slate);}
+  .alum-bd-tag{font-size:9px;font-weight:700;background:var(--teal-soft);color:var(--teal-text);padding:2px 7px;border-radius:999px;margin-left:6px;}
+
+  .cost-line{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);}
+  .cost-line:last-child{border-bottom:none;}
+  .cost-line-name{font-size:12.5px;font-weight:600;}
+  .cost-line-note{font-size:11px;color:var(--slate);margin-top:2px;}
+  .cost-line-val{font-family:var(--mono);font-size:13px;font-weight:700;}
+  .cost-hidden-flag{font-size:9px;font-weight:700;background:var(--destructive-soft);color:var(--destructive);padding:2px 7px;border-radius:999px;margin-left:7px;}
+
+  .readiness-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+  .readiness-item:last-child{border-bottom:none;}
+  .readiness-check{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--teal-soft);color:var(--teal-text);}
+  .readiness-check.pending{background:var(--slate-soft);color:transparent;}
+  .readiness-text{font-size:12.5px;flex:1;}
+  .readiness-source{font-size:10.5px;color:var(--slate);}
+
+  .ask-card{display:flex;align-items:center;gap:12px;padding:16px 18px;}
+  .ask-avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;}
+  .ask-name{font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px;}
+  .ask-sub{font-size:11px;color:var(--slate);}
+
+  .pathway-row{display:flex;align-items:center;gap:10px;overflow-x:auto;padding:6px 2px;}
+  .pathway-node{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 16px;text-align:center;flex-shrink:0;min-width:120px;}
+  .pathway-node-title{font-size:12px;font-weight:700;}
+  .pathway-node-sub{font-size:10px;color:var(--slate);margin-top:2px;}
+  .pathway-arrow{color:var(--slate);flex-shrink:0;}
+
+  /* HIGHLIGHTED FIT MODULE — connected to profile */
+  .fit-hero{background:linear-gradient(135deg, var(--teal-soft) 0%, var(--white) 55%);border:1.5px solid rgba(0,163,137,.3);border-radius:var(--r-xl);padding:26px 28px;position:relative;overflow:hidden;}
+  .fit-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle, rgba(0,163,137,.15), transparent 70%);}
+  .fit-connected-badge{display:inline-flex;align-items:center;gap:7px;background:var(--white);border:1px solid rgba(0,163,137,.35);color:var(--teal-text);font-size:11px;font-weight:700;padding:6px 13px;border-radius:999px;margin-bottom:18px;position:relative;z-index:1;}
+  .fit-hero-top{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:22px;position:relative;z-index:1;}
+  .fit-ring-huge{width:92px;height:92px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .fit-ring-huge-inner{width:74px;height:74px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .fit-ring-huge-num{font-family:var(--mono);font-weight:800;font-size:22px;}
+  .fit-ring-huge-label{font-size:8px;color:var(--slate);}
+  .fit-hero-title{font-size:17px;font-weight:800;letter-spacing:-.01em;}
+  .fit-hero-sub{font-size:12.5px;color:var(--slate);margin-top:4px;}
+
+  .fit-criteria{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative;z-index:1;}
+  .fit-criterion{background:rgba(255,255,255,.7);border-radius:var(--r-md);padding:14px 16px;}
+  .fit-criterion-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+  .fit-criterion-name{font-size:12px;font-weight:700;}
+  .fit-criterion-vals{font-family:var(--mono);font-size:11px;color:var(--slate);}
+  .fit-criterion-vals b{color:var(--teal-text);}
+  .fit-bar-track{position:relative;height:8px;background:var(--slate-soft);border-radius:999px;margin-top:16px;}
+  .fit-bar-fill{position:absolute;top:0;left:0;height:100%;background:var(--teal);border-radius:999px;transition:width .6s ease;}
+  .fit-bar-threshold{position:absolute;top:-5px;width:2px;height:18px;background:var(--ink);}
+  .fit-bar-threshold-label{position:absolute;top:-20px;transform:translateX(-50%);font-family:var(--mono);font-size:8.5px;color:var(--slate);white-space:nowrap;}
+
+  /* MODERN COMPARISON */
+  .compare-modern{padding:20px 22px;}
+  .compare-modern-headers{display:grid;grid-template-columns:110px 1fr 1fr;gap:14px;margin-bottom:16px;}
+  .compare-course-tag{font-size:11.5px;font-weight:800;text-align:center;padding:8px;border-radius:var(--r-sm);}
+  .compare-course-tag.this{background:var(--royal-soft);color:var(--royal-dark);}
+  .compare-course-tag.other{background:var(--slate-soft);color:var(--ink);}
+  .compare-metric-row{display:grid;grid-template-columns:110px 1fr 1fr;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--border);}
+  .compare-metric-label{font-family:var(--mono);font-size:10px;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px;}
+  .compare-bar-cell{display:flex;align-items:center;gap:8px;}
+  .compare-bar-track-h{flex:1;height:20px;background:var(--paper);border-radius:6px;overflow:hidden;position:relative;}
+  .compare-bar-fill-h{height:100%;border-radius:6px;background:var(--slate-soft);}
+  .compare-bar-fill-h.winner{background:var(--teal);}
+  .compare-bar-val{font-family:var(--mono);font-size:11.5px;font-weight:700;white-space:nowrap;min-width:58px;}
+  .compare-chip-cell{font-size:11.5px;font-weight:700;text-align:center;padding:6px 10px;border-radius:999px;background:var(--paper);}
+  .compare-chip-cell.winner{background:var(--teal-soft);color:var(--teal-text);}
+  .compare-chip-cell.warn{background:var(--destructive-soft);color:var(--destructive);}
+  .winner-badge{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:var(--teal);color:var(--white);flex-shrink:0;}
+
+  /* SOPHISTICATED CURRICULUM */
+  .credit-summary{display:flex;align-items:center;gap:16px;background:var(--paper);border-radius:var(--r-md);padding:14px 18px;margin-bottom:18px;}
+  .credit-summary-bar{flex:1;height:14px;border-radius:999px;overflow:hidden;display:flex;background:var(--slate-soft);}
+  .credit-seg-core{background:var(--royal);height:100%;}
+  .credit-seg-optional{background:var(--violet);height:100%;}
+  .credit-seg-planned{background:var(--slate-soft);height:100%;}
+  .credit-summary-text{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap;}
+  .credit-legend{display:flex;gap:14px;font-size:10.5px;color:var(--slate);}
+  .credit-legend span{display:flex;align-items:center;gap:5px;}
+  .credit-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+
+  .term-tabs{display:flex;gap:8px;margin-bottom:18px;}
+  .term-tab{background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:9px 17px;font-size:12.5px;font-weight:700;color:var(--slate);}
+  .term-tab.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  .term-panel{display:none;}
+  .term-panel.active{display:block;animation:fadeInTerm .3s ease;}
+  @keyframes fadeInTerm{from{opacity:0;}to{opacity:1;}}
+
+  .module-skill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .skill-chip{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--slate-soft);color:var(--slate);}
+
+  .optional-picker{margin-top:10px;}
+  .optional-picker-label{font-size:10.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;font-family:var(--mono);}
+  .optional-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .optional-choice{border:1.5px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;cursor:pointer;transition:border-color .15s ease,background .15s ease;}
+  .optional-choice.selected{border-color:var(--violet);background:var(--violet-soft);}
+  .optional-choice-name{font-size:12px;font-weight:700;}
+  .optional-choice-tag{font-size:9px;color:var(--slate);margin-top:2px;}
+  .optional-choice.selected .optional-choice-tag{color:#5333C9;}
+
+
+  .side-card{padding:20px;position:sticky;top:70px;display:flex;flex-direction:column;gap:16px;}
+  .side-label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;}
+  .jump-list{display:flex;flex-direction:column;gap:2px;}
+  .jump-list a{font-size:12px;color:var(--slate);padding:5px 0;}
+  .jump-list a:hover{color:var(--ink);}
+  .full-outline{width:100%;justify-content:center;}
+  .full-primary{width:100%;justify-content:center;}
+
+  @media(max-width:960px){
+    .layout{grid-template-columns:1fr;}
+    .side-card{position:static;}
+    .outcome-grid{grid-template-columns:1fr;}
+    .sc-row{grid-template-columns:1fr;text-align:left;}
+    .sc-col-title, .sc-val{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topnav">
+    <div class="wrap topnav-inner">
+      <div class="brand"><div class="brand-mark"></div><span class="brand-name">aspire.world</span></div>
+      <a class="back-link" href="course-finder.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to course finder</a>
+      <button class="btn btn-primary btn-sm">Start my journey</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-crumb"><a href="course-finder.html">Find your course</a> &nbsp;›&nbsp; Data Science &amp; AI &nbsp;›&nbsp; Manchester</div>
+      <div class="hero-top">
+        <div>
+          <div class="hero-name">MSc Data Science &amp; AI</div>
+          <div class="hero-uni-row"><span class="hero-uni">University of Manchester, United Kingdom</span><span class="verified-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg>Verified</span></div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-ghost-dark btn-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 00-2 2v16l7-4 7 4V5a2 2 0 00-2-2z"/></svg> Saved</button>
+          <a class="btn btn-outline btn-sm" href="university-detail.html">University profile →</a>
+        </div>
+      </div>
+      <div class="ticket-strip">
+        <div class="ticket-seg"><div class="ticket-seg-label">Tuition</div><div class="ticket-seg-val">£24,500 /yr</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Duration</div><div class="ticket-seg-val">1 year, full-time</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Next intake</div><div class="ticket-seg-val">Sept 2026</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Deadline</div><div class="ticket-seg-val">15 Jul 2026</div></div>
+        <div class="ticket-seg"><div class="ticket-seg-label">Class size</div><div class="ticket-seg-val">~120 students</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap layout">
+    <div>
+
+      <section id="fit">
+        <div class="fit-hero">
+          <div class="fit-connected-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M13.5 6.5l4 4L21 7l-4-4z"/><path d="M3 21l6-1.5L18.5 10 15 6.5 4.5 15.5z"/></svg>Connected to Samira's saved profile — updates automatically</div>
+          <div class="fit-hero-top">
+            <div class="fit-ring-huge" style="background:conic-gradient(var(--teal) 0deg 360deg);"><div class="fit-ring-huge-inner"><div class="fit-ring-huge-num">6/6</div><div class="fit-ring-huge-label">MATCHED</div></div></div>
+            <div><div class="fit-hero-title">You meet every requirement for this course</div><div class="fit-hero-sub">Statistics background matches directly — a rare exact-subject match.</div></div>
+          </div>
+          <div class="fit-criteria">
+            <div class="fit-criterion">
+              <div class="fit-criterion-top"><span class="fit-criterion-name">CGPA</span><span class="fit-criterion-vals">Needs 3.0 · You have <b>3.30</b></span></div>
+              <div class="fit-bar-track">
+                <div class="fit-bar-fill" style="width:82.5%;"></div>
+                <div class="fit-bar-threshold" style="left:75%;"></div>
+                <div class="fit-bar-threshold-label" style="left:75%;">MIN</div>
+              </div>
+            </div>
+            <div class="fit-criterion">
+              <div class="fit-criterion-top"><span class="fit-criterion-name">IELTS</span><span class="fit-criterion-vals">Needs 6.5 · You have <b>6.5</b></span></div>
+              <div class="fit-bar-track">
+                <div class="fit-bar-fill" style="width:72%;"></div>
+                <div class="fit-bar-threshold" style="left:72%;"></div>
+                <div class="fit-bar-threshold-label" style="left:72%;">MIN</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="curriculum">
+        <div class="eyebrow">What you'll actually study</div>
+        <div class="sec-title">Curriculum, term by term</div>
+        <div class="sec-sub">Structured the way the actual degree is — pick your optional modules and watch your credit plan build in real time. We also flag which modules give you real material for scholarship essays like Chevening's.</div>
+
+        <div class="credit-summary">
+          <div class="credit-summary-text" id="creditText">135 / 180 credits planned</div>
+          <div class="credit-summary-bar">
+            <div class="credit-seg-core" style="width:75%;"></div>
+            <div class="credit-seg-optional" id="creditSegOptional" style="width:0%;"></div>
+          </div>
+          <div class="credit-legend"><span><span class="credit-dot" style="background:var(--royal);"></span>Core</span><span><span class="credit-dot" style="background:var(--violet);"></span>Optional, chosen</span></div>
+        </div>
+
+        <div class="term-tabs">
+          <button class="term-tab active" onclick="setTerm('t1', this)">Semester 1</button>
+          <button class="term-tab" onclick="setTerm('t2', this)">Semester 2</button>
+          <button class="term-tab" onclick="setTerm('t3', this)">Summer — Dissertation</button>
+        </div>
+
+        <!-- SEMESTER 1 -->
+        <div class="term-panel active" id="term-t1">
+          <div class="module-list">
+            <div class="module-item open">
+              <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
+                <div class="module-title-row"><span class="module-name">Machine Learning Fundamentals</span><span class="module-credit">15 credits</span><span class="module-core-tag">CORE</span></div>
+                <svg class="module-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="module-body">Supervised and unsupervised learning, model evaluation, and practical implementation in Python — the technical backbone of the degree.
+                <div class="module-skill-row"><span class="skill-chip">Python</span><span class="skill-chip">Statistics</span><span class="skill-chip">Modeling</span></div>
+                <div class="module-narrative-note"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Good material for: your scholarship's "Why this course" essay — cite a specific technique you're looking forward to applying.</div>
+              </div>
+            </div>
+            <div class="module-item">
+              <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
+                <div class="module-title-row"><span class="module-name">Statistical Inference</span><span class="module-credit">15 credits</span><span class="module-core-tag">CORE</span></div>
+                <svg class="module-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="module-body">Builds directly on undergraduate statistics — hypothesis testing, regression, and Bayesian methods at a graduate level.
+                <div class="module-skill-row"><span class="skill-chip">Statistics</span><span class="skill-chip">Bayesian methods</span></div>
+              </div>
+            </div>
+            <div class="module-item">
+              <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
+                <div class="module-title-row"><span class="module-name">Programming for Data Science</span><span class="module-credit">15 credits</span><span class="module-core-tag">CORE</span></div>
+                <svg class="module-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="module-body">Python and SQL from a data-engineering angle — pipelines, version control, and reproducible analysis.
+                <div class="module-skill-row"><span class="skill-chip">Python</span><span class="skill-chip">SQL</span><span class="skill-chip">Git</span></div>
+              </div>
+            </div>
+            <div class="module-item">
+              <div class="module-head" style="cursor:default;">
+                <div class="module-title-row"><span class="module-name">Choose one optional module</span><span class="module-credit">15 credits</span></div>
+              </div>
+              <div class="module-body" style="display:block;padding-top:14px;">
+                <div class="optional-picker">
+                  <div class="optional-choice-grid" id="optionalT1">
+                    <div class="optional-choice" onclick="selectOptional(this,'optionalT1')"><div class="optional-choice-name">Natural Language Processing</div><div class="optional-choice-tag">Text, sentiment, intro to LLMs</div></div>
+                    <div class="optional-choice" onclick="selectOptional(this,'optionalT1')"><div class="optional-choice-name">Computer Vision</div><div class="optional-choice-tag">Image classification &amp; detection</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEMESTER 2 -->
+        <div class="term-panel" id="term-t2">
+          <div class="module-list">
+            <div class="module-item">
+              <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
+                <div class="module-title-row"><span class="module-name">Group Consultancy Project</span><span class="module-credit">30 credits</span><span class="module-core-tag">CORE</span></div>
+                <svg class="module-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="module-body">Teams of 4–5 solve a real data problem for an external partner organization over one term, presenting findings directly to the client.
+                <div class="module-skill-row"><span class="skill-chip">Teamwork</span><span class="skill-chip">Client comms</span><span class="skill-chip">Applied ML</span></div>
+                <div class="module-narrative-note"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Good material for: your Leadership essay, if you end up coordinating the group's work.</div>
+              </div>
+            </div>
+            <div class="module-item">
+              <div class="module-head" style="cursor:default;">
+                <div class="module-title-row"><span class="module-name">Choose one optional module</span><span class="module-credit">15 credits</span></div>
+              </div>
+              <div class="module-body" style="display:block;padding-top:14px;">
+                <div class="optional-picker">
+                  <div class="optional-choice-grid" id="optionalT2a">
+                    <div class="optional-choice" onclick="selectOptional(this,'optionalT2a')"><div class="optional-choice-name">Deep Learning</div><div class="optional-choice-tag">Neural networks, GPUs</div></div>
+                    <div class="optional-choice" onclick="selectOptional(this,'optionalT2a')"><div class="optional-choice-name">Big Data Systems</div><div class="optional-choice-tag">Distributed computing</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="module-item">
+              <div class="module-head" style="cursor:default;">
+                <div class="module-title-row"><span class="module-name">Choose one optional module</span><span class="module-credit">15 credits</span></div>
+              </div>
+              <div class="module-body" style="display:block;padding-top:14px;">
+                <div class="optional-picker">
+                  <div class="optional-choice-grid" id="optionalT2b">
+                    <div class="optional-choice" onclick="selectOptional(this,'optionalT2b')"><div class="optional-choice-name">Time Series Analysis</div><div class="optional-choice-tag">Forecasting methods</div></div>
+                    <div class="optional-choice" onclick="selectOptional(this,'optionalT2b')"><div class="optional-choice-name">Ethics in AI</div><div class="optional-choice-tag">Fairness, bias, regulation</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUMMER -->
+        <div class="term-panel" id="term-t3">
+          <div class="module-list">
+            <div class="module-item open">
+              <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
+                <div class="module-title-row"><span class="module-name">MSc Dissertation</span><span class="module-credit">60 credits</span><span class="module-core-tag">CORE</span></div>
+                <svg class="module-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="module-body">An independent research project over the summer term, often in partnership with an industry sponsor.
+                <div class="module-skill-row"><span class="skill-chip">Research</span><span class="skill-chip">Independent work</span><span class="skill-chip">Writing</span></div>
+                <div class="module-narrative-note"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Good material for: your Career plan essay — a real research outcome to point to.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="shortlist-compare">
+        <div class="eyebrow">Against what you've already shortlisted</div>
+        <div class="sec-title">How this stacks up</div>
+        <div class="sec-sub">Not available on any generic course page — this is checked live against your own shortlist.</div>
+        <div class="card compare-modern">
+          <div class="compare-modern-headers">
+            <div></div>
+            <div class="compare-course-tag this">Manchester · This course</div>
+            <div class="compare-course-tag other">Imperial · MSc Statistics</div>
+          </div>
+
+          <div class="compare-metric-row">
+            <div class="compare-metric-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/></svg>Tuition</div>
+            <div class="compare-bar-cell"><span class="winner-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4"><path d="M20 6L9 17l-5-5"/></svg></span><div class="compare-bar-track-h"><div class="compare-bar-fill-h winner" style="width:76%;"></div></div><span class="compare-bar-val">£24,500</span></div>
+            <div class="compare-bar-cell"><div class="compare-bar-track-h"><div class="compare-bar-fill-h" style="width:87%;"></div></div><span class="compare-bar-val">£27,800</span></div>
+          </div>
+
+          <div class="compare-metric-row">
+            <div class="compare-metric-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 6l4 14M8 6L4 20M12 2v4M6 10h12"/></svg>Ranking</div>
+            <div class="compare-bar-cell"><div class="compare-bar-track-h"><div class="compare-bar-fill-h" style="width:19%;"></div></div><span class="compare-bar-val">#32</span></div>
+            <div class="compare-bar-cell"><span class="winner-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4"><path d="M20 6L9 17l-5-5"/></svg></span><div class="compare-bar-track-h"><div class="compare-bar-fill-h winner" style="width:94%;"></div></div><span class="compare-bar-val">#6</span></div>
+          </div>
+
+          <div class="compare-metric-row">
+            <div class="compare-metric-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>Your fit</div>
+            <div class="compare-chip-cell winner">6/6 matched</div>
+            <div class="compare-chip-cell winner">6/6 matched</div>
+          </div>
+
+          <div class="compare-metric-row">
+            <div class="compare-metric-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Deadline</div>
+            <div class="compare-chip-cell">15 Jul 2026</div>
+            <div class="compare-chip-cell warn">14 Nov 2025 — sooner</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="outcomes">
+        <div class="eyebrow">Where graduates actually go</div>
+        <div class="sec-title">Alumni outcomes for this exact course</div>
+        <div class="sec-sub">Not "our graduates succeed" — real destinations from this specific program's recent cohorts.</div>
+        <div class="outcome-grid">
+          <div class="card outcome-tile"><div class="outcome-pct">71%</div><div class="outcome-label">Employed in data roles within 6 months</div></div>
+          <div class="card outcome-tile"><div class="outcome-pct">18%</div><div class="outcome-label">Continued to PhD study</div></div>
+          <div class="card outcome-tile"><div class="outcome-pct">£38,500</div><div class="outcome-label">Median starting salary, UK-based roles</div></div>
+        </div>
+        <div class="card" style="padding:6px 20px;">
+          <div class="alum-row"><div class="alum-avatar">RH</div><div><div class="alum-name">Rafid H. <span class="alum-bd-tag">🇧🇩 Bangladeshi alum</span></div><div class="alum-role">Data Analyst, Ocado Technology — graduated 2024</div></div></div>
+          <div class="alum-row"><div class="alum-avatar">MK</div><div><div class="alum-name">Maria K.</div><div class="alum-role">ML Engineer, Sky — graduated 2024</div></div></div>
+          <div class="alum-row"><div class="alum-avatar">NS</div><div><div class="alum-name">Nadia S. <span class="alum-bd-tag">🇧🇩 Bangladeshi alum</span></div><div class="alum-role">PhD candidate, University of Edinburgh — graduated 2023</div></div></div>
+        </div>
+      </section>
+
+      <section id="costs">
+        <div class="eyebrow">Beyond the headline tuition</div>
+        <div class="sec-title">What this actually costs</div>
+        <div class="sec-sub">Course-specific extras most pages don't mention.</div>
+        <div class="card" style="padding:6px 20px;">
+          <div class="cost-line"><div><div class="cost-line-name">Tuition</div><div class="cost-line-note">Per year, international rate</div></div><div class="cost-line-val">£24,500</div></div>
+          <div class="cost-line"><div><div class="cost-line-name">Software &amp; compute credits<span class="cost-hidden-flag">OFTEN HIDDEN</span></div><div class="cost-line-note">Cloud compute for the ML modules, not covered by tuition</div></div><div class="cost-line-val">~£180</div></div>
+          <div class="cost-line"><div><div class="cost-line-name">Consultancy project materials</div><div class="cost-line-note">Occasional client-site travel within Manchester</div></div><div class="cost-line-val">~£60</div></div>
+          <div class="cost-line"><div><div class="cost-line-name">Dissertation printing &amp; binding</div><div class="cost-line-note">One-time, end of program</div></div><div class="cost-line-val">~£40</div></div>
+        </div>
+      </section>
+
+      <section id="readiness">
+        <div class="eyebrow">Where you actually stand</div>
+        <div class="sec-title">Application readiness for this course</div>
+        <div class="sec-sub">Computed from your real profile and document wallet — not a generic checklist.</div>
+        <div class="card" style="padding:6px 20px;">
+          <div class="readiness-item"><div class="readiness-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><div class="readiness-text">CGPA meets requirement</div><div class="readiness-source">From your profile</div></div>
+          <div class="readiness-item"><div class="readiness-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><div class="readiness-text">IELTS meets requirement</div><div class="readiness-source">Expires in 42 days — worth a retake before visa stage</div></div>
+          <div class="readiness-item"><div class="readiness-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><div class="readiness-text">Academic transcripts ready</div><div class="readiness-source">From your document wallet</div></div>
+          <div class="readiness-item"><div class="readiness-check pending"></div><div class="readiness-text">Personal statement</div><div class="readiness-source">Not yet started for this course specifically</div></div>
+          <div class="readiness-item"><div class="readiness-check pending"></div><div class="readiness-text">Two references</div><div class="readiness-source">Dr. Rahman assigned via your Chevening tracker — needs one more</div></div>
+        </div>
+      </section>
+
+      <section id="pathways">
+        <div class="eyebrow">Looking further ahead</div>
+        <div class="sec-title">Common paths after this course</div>
+        <div class="pathway-row">
+          <div class="pathway-node"><div class="pathway-node-title">Data Analyst</div><div class="pathway-node-sub">Most common first role</div></div>
+          <svg class="pathway-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          <div class="pathway-node"><div class="pathway-node-title">ML Engineer</div><div class="pathway-node-sub">2–3 years in</div></div>
+          <svg class="pathway-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          <div class="pathway-node"><div class="pathway-node-title">Lead Data Scientist</div><div class="pathway-node-sub">5+ years, or PhD route</div></div>
+        </div>
+      </section>
+
+    </div>
+
+    <aside>
+      <div class="card side-card">
+        <div>
+          <div class="side-label" style="margin-bottom:8px;">Jump to</div>
+          <div class="jump-list">
+            <a href="#fit">Your fit</a>
+            <a href="#curriculum">Curriculum</a>
+            <a href="#shortlist-compare">Vs. your shortlist</a>
+            <a href="#outcomes">Alumni outcomes</a>
+            <a href="#costs">Real costs</a>
+            <a href="#readiness">Application readiness</a>
+          </div>
+        </div>
+        <button class="btn btn-outline full-outline">Add to compare</button>
+        <button class="btn btn-primary full-primary">Start application</button>
+      </div>
+    </aside>
+  </div>
+
+<script>
+  function setTerm(id, btn){
+    document.querySelectorAll('.term-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('.term-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('term-'+id).classList.add('active');
+  }
+
+  var CORE_CREDITS = 135;
+  var TOTAL_CREDITS = 180;
+  var OPTIONAL_GROUPS = ['optionalT1', 'optionalT2a', 'optionalT2b'];
+
+  function selectOptional(el, groupId){
+    document.querySelectorAll('#'+groupId+' .optional-choice').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+    updateCreditSummary();
+  }
+
+  function updateCreditSummary(){
+    var chosenGroups = OPTIONAL_GROUPS.filter(function(g){
+      return document.querySelector('#'+g+' .optional-choice.selected') !== null;
+    }).length;
+    var optionalCredits = chosenGroups * 15;
+    var total = CORE_CREDITS + optionalCredits;
+    document.getElementById('creditText').textContent = total + ' / ' + TOTAL_CREDITS + ' credits planned';
+    document.getElementById('creditSegOptional').style.width = ((optionalCredits / TOTAL_CREDITS) * 100) + '%';
+  }
+</script>
+</body>
+</html>

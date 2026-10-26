@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Profile — aspire.world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1B3D; --ink-2:#152A5C;
+    --royal:#2547F4; --royal-dark:#1B36C4; --royal-soft:#E7EBFE;
+    --teal:#00A389; --teal-soft:#DFF5F1; --teal-text:#00806C;
+    --violet:#6C4FF6; --violet-soft:#EFEAFE;
+    --paper:#F7F7FB; --slate:#5B6472; --slate-soft:#EDEFF3;
+    --border:#E3E6EE; --white:#FFFFFF;
+    --destructive:#D63A62; --destructive-soft:#FBE8ED;
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit;}
+  ul{list-style:none;}
+  :focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:6px;}
+  .mono{font-family:var(--mono);}
+
+  .shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh;}
+
+  /* sidebar (reused from dashboard) */
+  .sidebar{background:var(--ink);color:var(--white);padding:24px 18px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh;}
+  .brand{display:flex;align-items:center;gap:9px;padding:0 4px;}
+  .brand-mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--royal),var(--violet));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand-name{font-weight:700;font-size:15px;letter-spacing:-.01em;}
+  .side-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:9px 14px;}
+  .side-search input{background:none;border:none;color:var(--white);font-size:13px;width:100%;}
+  .side-search input::placeholder{color:rgba(255,255,255,.4);}
+  .nav-group{display:flex;flex-direction:column;gap:2px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.72);}
+  .nav-item svg{opacity:.8;flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:var(--white);}
+  .nav-item.active{background:rgba(37,71,244,.28);color:var(--white);box-shadow:inset 0 0 0 1px rgba(88,116,255,.4);}
+  .nav-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.45);}
+  .sidebar-spacer{flex:1;}
+  .side-user{display:flex;align-items:center;gap:10px;padding:8px 4px;}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--royal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--white);flex-shrink:0;}
+  .side-user-name{font-size:13px;font-weight:600;}
+  .side-user-sub{font-size:11px;color:rgba(255,255,255,.45);}
+
+  /* main */
+  .main{padding:22px 36px 64px;max-width:1000px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .breadcrumb{font-size:13px;color:var(--slate);}
+  .breadcrumb strong{color:var(--ink);font-weight:600;}
+  .topbar-right{display:flex;align-items:center;gap:14px;}
+  .icon-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+
+  .btn{border-radius:999px;border:none;font-weight:600;font-size:13.5px;padding:10px 18px;display:inline-flex;align-items:center;gap:7px;}
+  .btn-primary{background:var(--royal);color:var(--white);}
+  .btn-outline{background:var(--white);border:1px solid var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--royal);}
+  .btn-sm{padding:7px 13px;font-size:12.5px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);}
+
+  /* completeness header */
+  .complete-header{padding:24px 26px;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;margin-bottom:22px;}
+  .complete-ring{width:70px;height:70px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .complete-ring-inner{width:56px;height:56px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:15px;}
+  .complete-title{font-size:16px;font-weight:700;margin-bottom:3px;}
+  .complete-sub{font-size:12.5px;color:var(--slate);line-height:1.5;}
+  .complete-flags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .complete-flag{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--destructive-soft);color:var(--destructive);}
+
+  /* sticky subnav */
+  .subnav{background:var(--white);border:1px solid var(--border);border-radius:999px;padding:5px;display:flex;gap:2px;position:sticky;top:16px;z-index:10;margin-bottom:26px;overflow-x:auto;}
+  .subnav a{font-size:12.5px;font-weight:600;color:var(--slate);padding:9px 16px;border-radius:999px;white-space:nowrap;}
+  .subnav a.active{background:var(--ink);color:var(--white);}
+  .subnav a:hover:not(.active){color:var(--ink);}
+
+  section{margin-bottom:30px;scroll-margin-top:80px;}
+  .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+  .section-title{font-size:17px;font-weight:700;}
+  .section-tag{font-family:var(--mono);font-size:9.5px;font-weight:600;padding:3px 9px;border-radius:999px;letter-spacing:.03em;}
+  .tag-required{background:var(--royal-soft);color:var(--royal-dark);}
+  .tag-optional{background:var(--slate-soft);color:var(--slate);}
+  .tag-powers{background:var(--violet-soft);color:#5333C9;}
+  .section-sub{font-size:12.5px;color:var(--slate);margin-bottom:16px;}
+
+  .field-card{padding:22px 24px;}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .field-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field-label{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px;}
+  .field-label .req{color:var(--destructive);}
+  .field-input, .field-select{
+    border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 13px;font-size:13.5px;color:var(--ink);
+    background:var(--white);width:100%;
+  }
+  .field-input:focus, .field-select:focus{outline:2px solid var(--royal);outline-offset:1px;border-color:var(--royal);}
+  .field-hint{font-size:11px;color:var(--slate);}
+  .field-hint.ok{color:var(--teal-text);}
+  .field-hint.warn{color:var(--destructive);}
+  .divider{border-top:1px solid var(--border);margin:18px 0;}
+
+  .radio-row, .check-row{display:flex;align-items:center;gap:9px;padding:9px 0;font-size:13.5px;}
+  .radio-dot{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .radio-dot.on{border-color:var(--royal);}
+  .radio-dot.on::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--royal);}
+  .check-box{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--white);}
+  .check-box.on{background:var(--royal);border-color:var(--royal);}
+
+  .chip-select{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-opt{font-size:12.5px;font-weight:600;padding:8px 15px;border-radius:999px;border:1px solid var(--border);color:var(--slate);}
+  .chip-opt.on{background:var(--royal-soft);border-color:var(--royal);color:var(--royal-dark);}
+
+  input[type=range]{width:100%;accent-color:var(--royal);height:4px;}
+  .slider-row{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px;}
+  .slider-val{font-family:var(--mono);color:var(--royal);}
+  .slider-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate);margin-top:4px;}
+
+  .switch{width:34px;height:20px;border-radius:999px;background:var(--slate-soft);position:relative;flex-shrink:0;border:none;}
+  .switch::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--white);box-shadow:0 1px 2px rgba(0,0,0,.2);}
+  .switch.on{background:var(--royal);}
+  .switch.on::after{transform:translateX(14px);}
+
+  /* agency search */
+  .agency-search-result{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--royal);background:var(--royal-soft);border-radius:var(--r-md);}
+  .agency-search-logo{width:36px;height:36px;border-radius:10px;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;}
+  .agency-search-name{font-size:13.5px;font-weight:700;}
+  .agency-search-sub{font-size:11px;color:var(--slate);}
+
+  /* document wallet */
+  .doc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .doc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+  .doc-top{padding:16px 16px 14px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .doc-icon{width:36px;height:36px;border-radius:10px;background:var(--slate-soft);display:flex;align-items:center;justify-content:center;color:var(--ink);flex-shrink:0;}
+  .doc-card.have .doc-icon{background:var(--teal-soft);color:var(--teal-text);}
+  .doc-name{font-size:12.5px;font-weight:700;line-height:1.3;}
+  .doc-status{font-size:11px;margin-top:3px;}
+  .doc-status.ok{color:#00806C;}
+  .doc-status.warn{color:var(--ink);}
+  .doc-status.missing{color:var(--slate);}
+  .doc-req{font-size:9px;font-weight:700;letter-spacing:.03em;padding:2px 7px;border-radius:999px;flex-shrink:0;}
+  .doc-req.req{background:var(--destructive-soft);color:var(--destructive);}
+  .doc-req.opt{background:var(--slate-soft);color:var(--slate);}
+  .doc-perf{border-top:1px dashed var(--border);}
+  .doc-bottom{padding:11px 16px;display:flex;align-items:center;justify-content:space-between;background:var(--paper);}
+  .doc-share{font-size:10.5px;color:var(--slate);}
+  .switch-sm{width:26px;height:16px;}
+  .switch-sm::after{width:12px;height:12px;}
+  .switch-sm.on::after{transform:translateX(10px);}
+  .doc-upload-btn{width:100%;padding:16px;text-align:center;font-size:12px;font-weight:600;color:var(--royal);}
+
+  .privacy-note{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border-radius:var(--r-md);padding:14px 16px;font-size:12px;color:var(--slate);line-height:1.55;margin-top:16px;}
+  .privacy-note svg{flex-shrink:0;margin-top:2px;color:var(--slate);}
+
+  .save-footer{position:sticky;bottom:0;background:var(--white);border-top:1px solid var(--border);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;border-radius:var(--r-lg);margin-top:10px;box-shadow:0 -10px 24px -20px rgba(14,27,61,.3);}
+  .save-footer-note{font-size:11.5px;color:var(--slate);}
+
+  @media(max-width:960px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .field-grid, .field-grid.cols-3{grid-template-columns:1fr;}
+    .doc-grid{grid-template-columns:repeat(2,1fr);}
+    .complete-header{grid-template-columns:1fr;text-align:center;}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M3 12l7-8 3 3-6 6 6 6-3 3-7-8v-2z" fill="white"/></svg>
+      </div>
+      <div class="brand-name">aspire.world</div>
+    </div>
+    <div class="side-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input placeholder="Search routes, docs, funds…" />
+    </div>
+    <nav class="nav-group">
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item active" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        My Profile
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg>
+        Documents
+        <span class="nav-count">4/9</span>
+      </a>
+      <a class="nav-item" href="#">Scholarships</a>
+      <a class="nav-item" href="#">Universities</a>
+      <a class="nav-item" href="#">Finances</a>
+      <a class="nav-item" href="#">My agency</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="side-user">
+      <div class="avatar">S</div>
+      <div><div class="side-user-name">Samira Rahman</div><div class="side-user-sub">AW / 024813</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb">Home &nbsp;›&nbsp; <strong>My Profile</strong></div>
+      <div class="topbar-right">
+        <button class="icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></button>
+        <div class="avatar">S</div>
+      </div>
+    </div>
+
+    <div class="card complete-header">
+      <div class="complete-ring" style="background:conic-gradient(var(--royal) 0deg 281deg, var(--slate-soft) 281deg 360deg);">
+        <div class="complete-ring-inner">78%</div>
+      </div>
+      <div>
+        <div class="complete-title">Your profile is 78% complete</div>
+        <div class="complete-sub">A fuller profile means sharper matches, faster agency replies, and fewer surprises at application time.</div>
+        <div class="complete-flags">
+          <span class="complete-flag">Financial context — 2 fields left</span>
+          <span class="complete-flag">4 documents still needed</span>
+        </div>
+      </div>
+      <button class="btn btn-primary">Save changes</button>
+    </div>
+
+    <div class="subnav" id="subnav">
+      <a href="#personal" class="active">Personal</a>
+      <a href="#academic">Academic</a>
+      <a href="#scores">Test scores</a>
+      <a href="#preferences">Preferences</a>
+      <a href="#financial">Financial</a>
+      <a href="#agency">Agency</a>
+      <a href="#documents">Documents</a>
+    </div>
+
+    <!-- PERSONAL -->
+    <section id="personal">
+      <div class="section-head"><div class="section-title">Personal details</div><span class="section-tag tag-required">Required at signup</span></div>
+      <div class="section-sub">The essentials — used for your file, verification, and contacting you.</div>
+      <div class="card field-card">
+        <div class="field-grid">
+          <div class="field"><label class="field-label">Full name (as in passport) <span class="req">*</span></label><input class="field-input" value="Samira Rahman"></div>
+          <div class="field"><label class="field-label">Date of birth <span class="req">*</span></label><input class="field-input" value="14 March 2005"></div>
+          <div class="field"><label class="field-label">Gender</label><select class="field-select"><option>Female</option></select></div>
+          <div class="field"><label class="field-label">Nationality <span class="req">*</span></label><input class="field-input" value="Bangladeshi"></div>
+          <div class="field"><label class="field-label">NID or birth certificate no. <span class="req">*</span></label><input class="field-input" value="•••• •••• 4821"></div>
+          <div class="field"><label class="field-label">Current city</label><select class="field-select"><option>Dhaka</option></select></div>
+          <div class="field"><label class="field-label">Phone number <span class="req">*</span></label><input class="field-input" value="+880 1XXX XXXXXX"></div>
+          <div class="field"><label class="field-label">Email <span class="req">*</span></label><input class="field-input" value="samira.rahman@email.com"><span class="field-hint ok">Verified</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-grid">
+          <div class="field"><label class="field-label">Parent / guardian name</label><input class="field-input" value="Rafiqul Rahman"></div>
+          <div class="field"><label class="field-label">Parent / guardian phone</label><input class="field-input" value="+880 1XXX XXXXXX"><span class="field-hint">Only contacted if you enable Parent View</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACADEMIC -->
+    <section id="academic">
+      <div class="section-head"><div class="section-title">Academic background</div><span class="section-tag tag-powers">Powers matching &amp; eligibility checks</span></div>
+      <div class="section-sub">This is what university and scholarship matching runs against.</div>
+      <div class="card field-card">
+        <div class="field-grid cols-3">
+          <div class="field full"><label class="field-label">Current education level <span class="req">*</span></label><select class="field-select"><option>Bachelor's — final year</option></select></div>
+          <div class="field"><label class="field-label">Institution name <span class="req">*</span></label><input class="field-input" value="University of Dhaka"></div>
+          <div class="field"><label class="field-label">Field of study / group <span class="req">*</span></label><input class="field-input" value="Statistics"></div>
+          <div class="field"><label class="field-label">Board / curriculum</label><select class="field-select"><option>National Curriculum</option></select></div>
+          <div class="field"><label class="field-label">CGPA <span class="req">*</span></label><input class="field-input" value="3.30"></div>
+          <div class="field"><label class="field-label">Scale</label><select class="field-select"><option>out of 4.00</option></select></div>
+          <div class="field"><label class="field-label">Expected / actual graduation year <span class="req">*</span></label><input class="field-input" value="2026"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEST SCORES -->
+    <section id="scores">
+      <div class="section-head"><div class="section-title">Test scores</div><span class="section-tag tag-powers">Powers eligibility checks &amp; expiry alerts</span></div>
+      <div class="section-sub">We calculate certificate expiry automatically from your test date.</div>
+      <div class="card field-card">
+        <div class="field-grid cols-3">
+          <div class="field"><label class="field-label">IELTS overall <span class="req">*</span></label><input class="field-input" value="6.5"></div>
+          <div class="field"><label class="field-label">Lowest band score</label><input class="field-input" value="6.0"></div>
+          <div class="field"><label class="field-label">Test date <span class="req">*</span></label><input class="field-input" value="3 Mar 2025"><span class="field-hint warn">Certificate expires in 42 days</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-grid cols-3">
+          <div class="field"><label class="field-label">TOEFL (if taken instead)</label><input class="field-input" placeholder="Not added"></div>
+          <div class="field"><label class="field-label">GRE / GMAT (if required)</label><input class="field-input" placeholder="Not applicable"></div>
+          <div class="field"><label class="field-label">Duolingo English Test</label><input class="field-input" placeholder="Not added"></div>
+        </div>
+        <div class="check-row"><div class="check-box"></div>I haven't taken an English test yet</div>
+      </div>
+    </section>
+
+    <!-- PREFERENCES -->
+    <section id="preferences">
+      <div class="section-head"><div class="section-title">Study preferences</div><span class="section-tag tag-powers">Powers university &amp; scholarship matching</span></div>
+      <div class="section-sub">The core inputs behind everything we recommend you.</div>
+      <div class="card field-card">
+        <div class="field full" style="margin-bottom:16px;">
+          <label class="field-label">Target degree level <span class="req">*</span></label>
+          <div class="chip-select"><span class="chip-opt">Bachelor's</span><span class="chip-opt on">Master's</span><span class="chip-opt">PhD</span><span class="chip-opt">Diploma</span></div>
+        </div>
+        <div class="field full" style="margin-bottom:16px;">
+          <label class="field-label">Target countries <span class="req">*</span></label>
+          <div class="chip-select"><span class="chip-opt on">United Kingdom</span><span class="chip-opt">Canada</span><span class="chip-opt">Australia</span><span class="chip-opt">Germany</span><span class="chip-opt">USA</span><span class="chip-opt">+ Add another</span></div>
+        </div>
+        <div class="field-grid">
+          <div class="field"><label class="field-label">Target field / major <span class="req">*</span></label><input class="field-input" value="Data Science"></div>
+          <div class="field"><label class="field-label">Target intake <span class="req">*</span></label><select class="field-select"><option>September 2026</option></select></div>
+        </div>
+        <div class="divider"></div>
+        <div class="field full">
+          <div class="slider-row"><span>Budget per year, all-in</span><span class="slider-val">৳ 22,00,000</span></div>
+          <input type="range" min="500000" max="4000000" step="100000" value="2200000">
+          <div class="slider-scale"><span>৳5L</span><span>৳40L</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIAL -->
+    <section id="financial">
+      <div class="section-head"><div class="section-title">Financial context</div><span class="section-tag tag-powers">Powers loan eligibility &amp; Student File tools</span></div>
+      <div class="section-sub">Never shown publicly — only used to match you to realistic loan options.</div>
+      <div class="card field-card">
+        <div class="field full" style="margin-bottom:16px;">
+          <label class="field-label">Funding source <span class="req">*</span></label>
+          <div class="radio-row"><div class="radio-dot"></div>Self-funded</div>
+          <div class="radio-row"><div class="radio-dot on"></div>Family funded</div>
+          <div class="radio-row"><div class="radio-dot"></div>Will need a loan</div>
+          <div class="radio-row"><div class="radio-dot"></div>Seeking full scholarship</div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-grid">
+          <div class="field"><label class="field-label">Collateral available <span style="color:var(--destructive);font-size:10.5px;font-weight:600;">— not yet answered</span></label><select class="field-select"><option>Select an option</option></select></div>
+          <div class="field"><label class="field-label">Guardian's monthly income bracket <span style="color:var(--destructive);font-size:10.5px;font-weight:600;">— not yet answered</span></label><select class="field-select"><option>Select a range</option></select></div>
+          <div class="field"><label class="field-label">Existing bank relationship</label><select class="field-select"><option>Pubali Bank</option></select></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AGENCY -->
+    <section id="agency">
+      <div class="section-head"><div class="section-title">Agency connection</div><span class="section-tag tag-optional">Optional</span></div>
+      <div class="section-sub">Connecting shares a summary of your profile — you choose which documents to share, below.</div>
+      <div class="card field-card">
+        <div class="radio-row"><div class="radio-dot on"></div>I'm already working with a verified agency</div>
+        <div class="radio-row"><div class="radio-dot"></div>Not yet — help me find one</div>
+        <div class="divider"></div>
+        <div class="agency-search-result">
+          <div class="agency-search-logo">ED</div>
+          <div><div class="agency-search-name">EduBridge Bangladesh</div><div class="agency-search-sub">Connected · Dhaka, Chattogram · UK, Canada</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTS -->
+    <section id="documents">
+      <div class="section-head"><div class="section-title">Document wallet</div><span class="section-tag tag-required">Needed before applying</span></div>
+      <div class="section-sub">Upload once, reuse everywhere — every university and bank page checks against this automatically.</div>
+
+      <div class="doc-grid">
+        <div class="doc-card have">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c0-2 1.8-3 4-3s4 1 4 3"/></svg></div><span class="doc-req opt">OPTIONAL</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">Passport</div><div class="doc-status ok">Valid to 2031</div></div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom"><span class="doc-share">Shared with agency</span><button class="switch switch-sm on"></button></div>
+        </div>
+
+        <div class="doc-card have">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">IELTS certificate</div><div class="doc-status warn">Expires in 42 days</div></div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom"><span class="doc-share">Shared with agency</span><button class="switch switch-sm on"></button></div>
+        </div>
+
+        <div class="doc-card have">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div><span class="doc-req opt">OPTIONAL</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">Offer letter</div><div class="doc-status ok">Verified copy on file</div></div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom"><span class="doc-share">Shared with agency</span><button class="switch switch-sm on"></button></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">Bank statement, 6 months</div><div class="doc-status missing">Needs refresh</div></div>
+          <div class="doc-perf"></div>
+          <div class="doc-bottom"><span class="doc-share">Shared with agency</span><button class="switch switch-sm"></button></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">NID — applicant &amp; guarantor</div><div class="doc-status missing">Not yet added</div></div>
+          <button class="doc-upload-btn">+ Upload</button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M15 4v5h5"/></svg></div><span class="doc-req req">REQUIRED</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">Academic transcripts</div><div class="doc-status missing">Not yet added</div></div>
+          <button class="doc-upload-btn">+ Upload</button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><span class="doc-req opt">OPTIONAL</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">Statement of Purpose</div><div class="doc-status missing">Not yet added</div></div>
+          <button class="doc-upload-btn">+ Upload</button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-top"><div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><span class="doc-req opt">OPTIONAL</span></div>
+          <div style="padding:0 16px 12px;"><div class="doc-name">Recommendation letters</div><div class="doc-status missing">Not yet added</div></div>
+          <button class="doc-upload-btn">+ Upload</button>
+        </div>
+      </div>
+
+      <div class="privacy-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+        Documents are private by default. Turning on "Shared with agency" for a document gives your connected agency view access — you can revoke it anytime, per document.
+      </div>
+    </section>
+
+    <div class="save-footer">
+      <span class="save-footer-note">Last saved 4 minutes ago</span>
+      <button class="btn btn-primary">Save changes</button>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.subnav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      document.querySelectorAll('.subnav a').forEach(function(l){ l.classList.remove('active'); });
+      link.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.switch').forEach(function(sw){
+    sw.addEventListener('click', function(){ sw.classList.toggle('on'); });
+  });
+</script>
+</body>
+</html>
